@@ -1,0 +1,837 @@
+{
+ "categories": [
+  "커피",
+  "라떼",
+  "에이드·스무디",
+  "티"
+ ],
+ "menus": [
+  {
+   "id": "americano",
+   "name": "아메리카노",
+   "category": "커피",
+   "price": 2500,
+   "image_url": null,
+   "description": "에스프레소에 물을 더한 깔끔한 커피예요. 쌉쌀하고 진한 맛이에요.",
+   "tags": [
+    "진한",
+    "고소",
+    "커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#5b3a29",
+   "featured": true,
+   "hotExtra": 0
+  },
+  {
+   "id": "coldbrew",
+   "name": "콜드브루",
+   "category": "커피",
+   "price": 3500,
+   "image_url": null,
+   "description": "찬물에 오래 우려내 부드럽고 쓴맛이 적은 차가운 커피예요.",
+   "tags": [
+    "진한",
+    "부드러운",
+    "커피"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#3d2a20",
+   "featured": true,
+   "hotExtra": 0
+  },
+  {
+   "id": "latte",
+   "name": "카페라떼",
+   "category": "라떼",
+   "price": 3500,
+   "image_url": null,
+   "description": "에스프레소에 우유를 듬뿍 넣은 부드럽고 고소한 커피예요.",
+   "tags": [
+    "부드러운",
+    "고소",
+    "우유",
+    "커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#b98a62",
+   "featured": true,
+   "hotExtra": 0
+  },
+  {
+   "id": "vanilla",
+   "name": "바닐라라떼",
+   "category": "라떼",
+   "price": 3800,
+   "image_url": null,
+   "description": "라떼에 바닐라 시럽을 더한 달콤한 커피예요.",
+   "tags": [
+    "달콤한",
+    "부드러운",
+    "우유",
+    "커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#d9b98a",
+   "featured": true,
+   "hotExtra": 0
+  },
+  {
+   "id": "caramel",
+   "name": "카라멜마키아토",
+   "category": "라떼",
+   "price": 4000,
+   "image_url": null,
+   "description": "우유 위에 에스프레소와 카라멜 소스를 올린 달콤한 커피예요.",
+   "tags": [
+    "달콤한",
+    "우유",
+    "커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#c0792f",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "condensed",
+   "name": "연유라떼",
+   "category": "라떼",
+   "price": 4200,
+   "image_url": null,
+   "description": "연유로 진하게 달콤한 맛을 낸 고소한 라떼예요.",
+   "tags": [
+    "달콤한",
+    "고소",
+    "우유",
+    "커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "샷 추가",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#e3cfae",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "choco",
+   "name": "초콜릿라떼",
+   "category": "라떼",
+   "price": 4000,
+   "image_url": null,
+   "description": "커피 없이 초콜릿과 우유로 만든 달콤한 음료예요.",
+   "tags": [
+    "달콤한",
+    "부드러운",
+    "우유",
+    "논커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#6b3f2e",
+   "featured": true,
+   "hotExtra": 0
+  },
+  {
+   "id": "greentea",
+   "name": "녹차라떼",
+   "category": "라떼",
+   "price": 4000,
+   "image_url": null,
+   "description": "커피 없이 녹차 가루와 우유로 만든 고소하고 은은한 음료예요.",
+   "tags": [
+    "고소",
+    "부드러운",
+    "우유",
+    "논커피"
+   ],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#8fae6a",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "lemonade",
+   "name": "레몬에이드",
+   "category": "에이드·스무디",
+   "price": 3800,
+   "image_url": null,
+   "description": "레몬의 상큼함과 탄산이 시원한 음료예요. 커피가 들어가지 않아요.",
+   "tags": [
+    "상큼한",
+    "시원한",
+    "과일",
+    "논커피",
+    "탄산"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#f2d94a",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "grapefruit",
+   "name": "자몽에이드",
+   "category": "에이드·스무디",
+   "price": 4000,
+   "image_url": null,
+   "description": "새콤달콤한 자몽과 탄산을 섞은 시원한 음료예요.",
+   "tags": [
+    "상큼한",
+    "달콤한",
+    "시원한",
+    "과일",
+    "논커피",
+    "탄산"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#ee7b6b",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "strawberry",
+   "name": "딸기스무디",
+   "category": "에이드·스무디",
+   "price": 4300,
+   "image_url": null,
+   "description": "딸기를 갈아 만든 달콤하고 시원한 음료예요.",
+   "tags": [
+    "달콤한",
+    "시원한",
+    "과일",
+    "논커피"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#ef8fa0",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "cookie",
+   "name": "쿠키프라페",
+   "category": "에이드·스무디",
+   "price": 4500,
+   "image_url": null,
+   "description": "쿠키와 우유를 갈아 만든 달콤하고 고소한 음료예요.",
+   "tags": [
+    "달콤한",
+    "고소",
+    "시원한",
+    "우유",
+    "논커피"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "whip",
+     "label": "휘핑크림",
+     "required": false,
+     "help": "음료 위에 올리는 부드러운 크림이에요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "안 올림",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "올리기",
+       "price": 500
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#a98a6a",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "peachtea",
+   "name": "복숭아아이스티",
+   "category": "티",
+   "price": 3300,
+   "image_url": null,
+   "description": "복숭아 향이 나는 달콤하고 시원한 차예요.",
+   "tags": [
+    "달콤한",
+    "시원한",
+    "과일",
+    "논커피"
+   ],
+   "temperature": [
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ]
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#f5b48a",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "yuja",
+   "name": "유자차",
+   "category": "티",
+   "price": 3500,
+   "image_url": null,
+   "description": "유자 건더기가 들어간 새콤달콤한 따뜻한 차예요.",
+   "tags": [
+    "달콤한",
+    "상큼한",
+    "과일",
+    "논커피"
+   ],
+   "temperature": [
+    "HOT"
+   ],
+   "options": [],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#f0c23c",
+   "featured": false,
+   "hotExtra": 0
+  },
+  {
+   "id": "chamomile",
+   "name": "캐모마일",
+   "category": "티",
+   "price": 3000,
+   "image_url": null,
+   "description": "꽃향기가 나는 편안한 따뜻한 차예요. 단맛은 거의 없어요.",
+   "tags": [
+    "부드러운",
+    "논커피"
+   ],
+   "temperature": [
+    "HOT"
+   ],
+   "options": [],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#e8dcae",
+   "featured": false,
+   "hotExtra": 0
+  }
+ ]
+}
