@@ -22,6 +22,18 @@
 4. **Manual Deploy → Deploy latest commit** 실행 후 Events 탭에서 배포된 커밋이 `experiment/ai-poc`의 최신 커밋인지 확인
 5. 무료 플랜은 유휴 시 잠들 수 있어 첫 요청이 느릴 수 있습니다.
 
+### 배포 후 연결 확인
+
+배포가 끝나면 브라우저에서 `https://hk06-uxpresso.onrender.com/api/ai/status`를 엽니다. 서버가 Gemini를 실제로 한 번 호출하고 결과를 JSON으로 보여줍니다 (60초 캐시, 키 값은 포함되지 않음).
+
+| 필드 | 의미 |
+|---|---|
+| `configured` | `false`면 서버가 `GEMINI_API_KEY`를 읽지 못한 것 (환경변수 이름·저장 여부 확인) |
+| `ok` | `true`면 모델 목록 조회와 `generateContent`가 모두 성공하고 JSON 파싱까지 된 것 |
+| `model` | 사용된 모델 (`GEMINI_MODEL`이 없으면 자동 선택) |
+| `calls[].ms` | Gemini 응답 시간 |
+| `error` | 실패 원인 (예: `API key not valid`면 키 오류, `HTTP 429`면 한도 초과) |
+
 ### 키 보안
 
 - 키는 서버 환경변수로만 사용합니다. 코드, 클라이언트, 로그, GitHub에 값을 쓰지 않습니다.
@@ -33,7 +45,7 @@
 | PHASE | 내용 | 상태 |
 |---|---|---|
 | 1 | 브랜치 생성, 기존 코드 점검 | 완료 |
-| 2 | Gemini 실제 API 연결 검증 (`scripts/gemini-check.mjs`) | 스크립트 작성, 실제 호출 확인은 키 필요 |
+| 2 | Gemini 실제 API 연결 검증 (`GET /api/ai/status`, `scripts/gemini-check.mjs`) | 코드 작성·로컬 검증 완료. **실제 키로 호출한 결과는 아직 없음** (Render 배포 후 `/api/ai/status` 확인 필요) |
 | 3 | 텍스트 기반 주문 분석 (서버 검증 포함) | 미착수 |
 | 4 | 실제 마이크 음성 인식(Web Speech API) 연결 | 미착수 |
 | 5 | 자연어 메뉴 추천·비교 | 미착수 |

@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { checkGemini } from './lib/gemini.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -56,6 +57,13 @@ async function pay(req, res) {
   send(res, 200, txView(t));
 }
 
+// AI PoC: real Gemini connectivity check. Cached for 60s so repeated visits cannot spam the API (no key is ever returned).
+let aiCache = null;
+const aiStatus = () => {
+  if (!aiCache || Date.now() - aiCache.at > 60000) aiCache = { at: Date.now(), p: checkGemini({ runs: 1 }) };
+  return aiCache.p;
+};
+
 async function api(req, res, url) {
   const p = url.pathname;
   if (req.method === 'POST') {
@@ -72,6 +80,7 @@ async function api(req, res, url) {
   if (pay1) { const t = [...tx.values()].find((x) => x.txId === pay1[1]); return t ? send(res, 200, txView(t)) : send(res, 404, { error: 'not_found' }); }
   if (p === '/api/coupons') { const d = await load('coupons.json'); return send(res, 200, { types: d.types, codes: d.coupons.map(({ code, name, type }) => ({ code, name, type })) }); }
   if (p === '/api/payment-methods') return send(res, 200, await load('payments.json'));
+  if (p === '/api/ai/status') return send(res, 200, await aiStatus());
   const data = await load('menus.json');
   if (p === '/api/categories') return send(res, 200, data.categories);
   if (p === '/api/menus') {
