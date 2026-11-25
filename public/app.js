@@ -113,7 +113,7 @@ const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode
 const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}" aria-pressed="${on}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><span>${MODES[k].sub}</span><span class="chk">${on ? '✓ 선택됨' : ''}</span></button>`;
 
 function viewStart() {
-  return `<div class="screen"><div class="scroll startbody" data-node-id="8:379"><h1 data-node-id="8:381">혹시 포장해서 드시나요?</h1><p class="lead" data-node-id="8:384">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
+  return `<div class="screen">${hdr(logo, helpBtn)}<div class="scroll startbody" data-node-id="8:379"><h1 data-node-id="8:381">혹시 포장해서 드시나요?</h1><p class="lead" data-node-id="8:384">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
   <div class="modes" data-node-id="8:386">${modeBtn('dine', false)}${modeBtn('take', false)}</div>
   <button class="btn sec preb" data-act="precheck" data-node-id="8:410">쿠폰·결제 수단 미리 확인하기<small>선택 사항이에요</small></button></div>
   <div class="disc">메가MGC커피의 공식 프로젝트가 아닌 비공식 UX/UI 개선 프로토타입이에요. 메뉴·가격은 테스트 데이터예요.</div></div>`;
