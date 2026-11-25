@@ -1,6 +1,7 @@
 /* UXPRESSO — Kiosk UI Kit (unofficial). Stage is a fixed 1080x1920 portrait kiosk, scaled to fit the viewport. */
 :root{
-  --y:#FFC400; --y-soft:#FFF1B8; --ink:#1d1d1f; --mute:#5b5b62; --line:#e6e0cc; --bg:#FFFBF0; --card:#fff;
+  --y:#FFD400; --y-soft:#FFF4C2; --ink:#33190A; --mute:#5B4A3F; --line:#e6dfcf; --bg:#FAF8F2; --card:#fff;
+  --or:#FF9F1A; --or-press:#E88A00; --or-ink:#B34700; --cream:#FFF8DC;
   --ok:#17692f; --err:#b3261e; --r:28px; --s:24px;
   font-family:-apple-system,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
 }
@@ -271,3 +272,27 @@ details p{color:var(--mute);margin-top:8px;font-weight:500}
 .guide{margin-top:20px;padding:22px 28px;border-radius:var(--r);background:var(--y-soft);border:2px solid var(--ink);font-size:32px}
 .guide ol{margin:8px 0 8px 34px;font-weight:600}.guide p{font-size:26px;color:#3f3f45;font-weight:500}
 .vstack{display:flex;flex-direction:column;gap:16px;width:100%;margin-top:24px}
+
+/* ===== v4: AS-IS (Mega Coffee kiosk) patterns — yellow band, dark-brown, orange action ===== */
+.pri{background:var(--or)} .pri:active,.btn.pri.is-pressed{background:var(--or-press)}
+.tabband{flex:none;background:var(--y);padding:0 0 18px}
+.tabband .tabs{padding:0 48px}
+.tabband .tab{min-height:84px;font-size:34px;border:2px solid var(--ink);background:transparent;padding:0 32px}
+.tabband .tab[aria-pressed=true]{background:var(--ink);color:var(--y)}
+.chip{background:var(--cream)}
+.card .price,.hero .price,.mini span,.item .lp{color:var(--or-ink)}
+.foot.dark{background:var(--ink);border-top:0}
+.foot.dark .sum{color:#fff}.foot.dark .sum b{color:var(--y)}
+.foot.dark .btn:disabled{background:#6b5646;color:#efe6dc}
+.foot.dark .pri{border-color:var(--or)}
+.sheet-h{background:var(--y);padding:24px 48px}
+.sheet-h .title{font-size:42px}
+.dialog h2{background:var(--y);margin:-48px -48px 0;padding:28px 48px;border-radius:var(--r) var(--r) 0 0}
+.badge{background:var(--ink);color:var(--y)}
+.badge.opt{background:var(--y);color:var(--ink)}
+.choice{background:var(--cream)}
+.choice small{color:var(--or-ink)}.choice[aria-pressed=true] small{color:var(--y)}
+.choice[aria-pressed=true],.mode[aria-pressed=true],.method[aria-pressed=true]{background:var(--ink)}
+.group h4{border-left:12px solid var(--y);padding-left:16px}
+.modebar{background:var(--ink)}
+.note2,.note,.guide{background:var(--cream)}

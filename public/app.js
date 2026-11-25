@@ -99,15 +99,14 @@ function viewMenu() {
   let list = S.menus.filter((m) => (S.cat === 'ALL' || S.cat === '전체' || m.category === S.cat) && S.filters.every((t) => m.tags.includes(t)));
   const featured = S.menus.filter((m) => m.featured);
   const empty = `<div class="state">조건에 맞는 메뉴가 없어요<p>선택한 맛 버튼을 한 번 더 눌러 해제하면 다시 볼 수 있어요.</p><button class="btn sec" data-act="clearFilters">선택한 맛 모두 해제</button></div>`;
-  return `<div class="screen">${hdr(logo, helpBtn)}${modeBar()}
+  return `<div class="screen">${hdr(logo, helpBtn)}<div class="tabband"><div class="tabs" role="tablist">${['전체', ...S.cats].map((c) => `<button class="tab" aria-pressed="${S.cat === c}" data-act="cat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div></div>${modeBar()}
   <div class="scroll" data-keep>
    <div class="sect"><h3>주요 메뉴 · 바로 선택</h3></div><div class="strip">${featured.map((m) => `<button class="mini" data-act="open" data-id="${m.id}"><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span>${won(m.price)}</span></button>`).join('')}</div>
-   <div class="sect"><h3>전체 메뉴</h3></div><div class="tabs">${['전체', ...S.cats].map((c) => `<button class="tab" aria-pressed="${S.cat === c}" data-act="cat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>
    <div class="sect"><h3>취향으로 좁혀 보기 <span class="opt">(안 눌러도 돼요)</span></h3></div><div class="chips">${FILTERS.map(([t, l]) => `<button class="chip" aria-pressed="${S.filters.includes(t)}" data-act="filter" data-v="${t}">${l}</button>`).join('')}</div>
    <div class="count"><span>${S.cat === '전체' ? '전체' : S.cat}${S.filters.length ? ' · 필터 ' + S.filters.length + '개' : ''} · 메뉴 ${list.length}개</span>${S.filters.length ? '<button class="btn ghost" data-act="clearFilters">필터 해제</button>' : ''}</div>
    ${list.length ? `<div class="grid">${list.map(card).join('')}</div>` : empty}
   </div>
-  <div class="foot"><div class="cartbar"><div class="sum">담은 메뉴 ${cartCount()}개<b>${won(cartTotal())}</b></div><button class="btn pri" data-act="goCart" ${cartCount() ? '' : 'disabled'}>${cartCount() ? '장바구니 보기' : '메뉴를 담아 주세요'}</button></div></div></div>`;
+  <div class="foot dark"><div class="cartbar"><div class="sum">담은 메뉴 ${cartCount()}개<b>${won(cartTotal())}</b></div><button class="btn pri" data-act="goCart" ${cartCount() ? '' : 'disabled'}>${cartCount() ? '장바구니 보기' : '메뉴를 담아 주세요'}</button></div></div></div>`;
 }
 
 function viewDetail() {
