@@ -19,7 +19,8 @@
 | `docs/` | 요구사항·디자인 시스템·API 문서 (`docs/index.md` 참고) |
 
 ## 작업 원칙
-- 디자인 토큰은 AS-IS 분석(`docs/as-is-analysis.md`)을 따른다: 노란 헤더/제목 바, 진갈색 보조·선택, 주황 Primary, 가격은 진한 주황(`--or-ink`). 색 값을 바꾸면 `docs/design-system.md`도 갱신한다.
+- 디자인 시스템 2차 정의는 `docs/design-system/`(토큰: `tokens.json`/`tokens.css`). 값 출처는 [확인]/[추정]/[제안]/[확인 필요]로 구분하고, 공식 값처럼 쓰지 않는다. 프로토타입(`public/`)은 2차 토큰(색상·선택 상태·모서리·HOT/ICE 라벨)을 적용했고 타이포 스케일·Progress·세션 확인은 미적용이다.
+- 색 값을 바꾸면 `public/style.css` `:root`와 `docs/design-system/tokens.*`를 함께 맞춘다. (1차 참고: `docs/as-is-analysis.md`)
 - 화면은 1080×1920 고정 스테이지를 뷰포트에 맞춰 스케일한다. 터치 영역 최소 88px.
 - 선택 상태는 색상만 쓰지 않고 체크(✓) + 테두리로 표현한다.
 - UX Writing: 행동과 결과가 보이는 문구, 쉬운 한국어. 재촉·실수 지적 표현 금지. 오류는 **원인 + 해결 방법**을 함께 안내한다. 카운트다운·대기 인원 표시 금지.

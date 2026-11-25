@@ -1,0 +1,78 @@
+/* UXPRESSO Kiosk Design System — tokens (unofficial; values are proposals). Frame 1080x1920.
+   Mirrors tokens.json. Primitive -> Semantic -> Component. */
+:root {
+  /* Primitive */
+  --p-brand-yellow: #FFDC00;
+  --p-brand-yellow-pale: #FFF7D6;
+  --p-brand-yellow-pressed: #E6C500;
+  --p-brand-black: #171717;
+  --p-neutral-0: #FFFFFF; --p-neutral-50: #FAFAFA; --p-neutral-100: #F5F5F5; --p-neutral-200: #E0E0E0;
+  --p-neutral-300: #CFCFCF; --p-neutral-400: #A6A6A6; --p-neutral-500: #767676; --p-neutral-600: #595959;
+  --p-neutral-700: #3D3D3D; --p-neutral-800: #262626; --p-neutral-900: #171717;
+  --p-red-600: #C62828; --p-red-50: #FDECEA; --p-green-600: #237A45; --p-green-50: #E8F5EC;
+  --p-blue-600: #245DB5; --p-blue-50: #E8F0FB; --p-amber-700: #946200; --p-amber-50: #FFF4D6;
+  --space-4: 4px; --space-8: 8px; --space-16: 16px; --space-24: 24px; --space-32: 32px;
+  --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-80: 80px;
+  --radius-4: 4px; --radius-8: 8px; --radius-12: 12px; --radius-16: 16px; --radius-24: 24px; --radius-full: 999px;
+  --font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  /* Semantic */
+  --color-text-primary: var(--p-neutral-900);
+  --color-text-secondary: var(--p-neutral-600);
+  --color-text-disabled: var(--p-neutral-500);
+  --color-text-on-primary: var(--p-brand-black);
+  --color-text-on-inverse: var(--p-neutral-0);
+  --color-surface-default: var(--p-neutral-0);
+  --color-surface-secondary: var(--p-neutral-100);
+  --color-surface-selected: var(--p-brand-yellow-pale);
+  --color-surface-disabled: var(--p-neutral-200);
+  --color-surface-inverse: var(--p-neutral-900);
+  --color-surface-brand: var(--p-brand-yellow);
+  --color-action-primary: var(--p-brand-yellow);
+  --color-action-primary-pressed: var(--p-brand-yellow-pressed);
+  --color-action-secondary: var(--p-neutral-0);
+  --color-action-disabled: var(--p-neutral-200);
+  --color-action-destructive: var(--p-red-600);
+  --color-border-default: var(--p-neutral-500);
+  --color-border-selected: var(--p-neutral-900);
+  --color-border-error: var(--p-red-600);
+  --color-border-subtle: var(--p-neutral-300);
+  --color-status-success: var(--p-green-600); --color-status-success-bg: var(--p-green-50);
+  --color-status-warning: var(--p-amber-700); --color-status-warning-bg: var(--p-amber-50);
+  --color-status-error: var(--p-red-600); --color-status-error-bg: var(--p-red-50);
+  --color-status-information: var(--p-blue-600); --color-status-information-bg: var(--p-blue-50);
+
+  /* Typography (size / weight / line-height) */
+  --type-display: 700 56px/1.3 var(--font-family);
+  --type-heading-1: 700 40px/1.3 var(--font-family);
+  --type-heading-2: 700 32px/1.4 var(--font-family);
+  --type-title-large: 600 28px/1.4 var(--font-family);
+  --type-title-medium: 600 26px/1.4 var(--font-family);
+  --type-body-large: 500 24px/1.5 var(--font-family);
+  --type-body-default: 400 22px/1.5 var(--font-family);
+  --type-body-small: 400 20px/1.5 var(--font-family);
+  --type-caption: 400 18px/1.5 var(--font-family);
+  --type-button-large: 600 28px/1.3 var(--font-family);
+  --type-button-default: 600 24px/1.3 var(--font-family);
+  --type-price: 700 28px/1.3 var(--font-family);
+
+  /* Component */
+  --button-height-medium: 88px; --button-height-large: 104px; --button-height-xl: 120px;
+  --button-primary-background: var(--color-action-primary);
+  --button-primary-text: var(--color-text-on-primary);
+  --button-primary-height: var(--button-height-large);
+  --button-primary-radius: var(--radius-16);
+  --button-secondary-background: var(--color-action-secondary);
+  --button-secondary-border: 2px solid var(--color-border-selected);
+  --card-menu-background: var(--color-surface-default);
+  --card-menu-border: 2px solid var(--color-border-subtle);
+  --card-menu-padding: var(--space-24);
+  --card-menu-radius: var(--radius-12);
+  --selection-default-border: 2px solid var(--color-border-default);
+  --selection-selected-border: 3px solid var(--color-border-selected);
+  --selection-selected-background: var(--color-surface-selected);
+  --feedback-error-background: var(--color-status-error-bg);
+  --feedback-error-text: var(--color-status-error);
+  --feedback-success-background: var(--color-status-success-bg);
+  --touch-min-target: 88px; --touch-min-gap: 16px;
+}

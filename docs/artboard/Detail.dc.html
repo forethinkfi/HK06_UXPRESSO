@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>메뉴 상세·옵션</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="kiosk.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="stage" style="width:1080px;height:1920px">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cup" viewBox="0 0 100 124"><rect x="20" y="6" width="60" height="12" rx="5" fill="#2b2b2b"/><path d="M25 18h50l-6 92a6 6 0 0 1-6 5H37a6 6 0 0 1-6-5z" fill="#fff" stroke="#2b2b2b" stroke-width="3"/><path d="M28.5 46h43l-3.6 64.5a3 3 0 0 1-3 2.5H35.1a3 3 0 0 1-3-2.5z" fill="currentColor"/></symbol></svg>
+<div class="screen">
+<div class="hdr"><div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오스크 개선안</small></div><button class="helpbtn"><i>?</i>주문 도움</button></div>
+<div class="dim" style="top:150px">
+<div class="sheet" style="max-height:100%;height:100%">
+<div class="sheet-h"><button class="back">← 메뉴로</button><button class="helpbtn"><i>?</i>주문 도움</button></div>
+<div class="sheet-body">
+<div class="hero"><div class="thumb"><svg viewBox="0 0 100 124" style="color:#b98a62"><use href="#cup"/></svg></div><div><h2>카페라떼</h2><div class="price">3,500원</div><p>에스프레소에 우유를 듬뿍 넣은 부드럽고 고소한 커피예요.</p><div class="tags"><span>커피 들어감</span><span>부드러운</span><span>고소</span></div></div></div>
+<div class="det">영양·알레르기·출처 보기</div>
+<div class="group"><h4>온도<span class="badge">꼭 골라요</span></h4><p class="hlp">따뜻하게 또는 차갑게 중 하나를 골라 주세요.</p><div class="choices"><button class="choice">HOT 따뜻하게</button><button class="choice" aria-pressed="true">ICE 차갑게</button></div></div>
+<div class="note2">아래 옵션은 선택 사항이에요. 고르지 않아도 그대로 주문할 수 있어요.</div>
+<div class="group"><h4>커피를 더 진하게<span class="term">샷 추가</span><span class="badge opt">선택 사항</span></h4><p class="hlp">샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.</p><div class="choices"><button class="choice" aria-pressed="true">추가 안 함</button><button class="choice">샷 1개 추가<small>+500원</small></button><button class="choice">샷 2개 추가<small>+1,000원</small></button></div></div>
+<div class="group"><h4>더 달콤하게<span class="term">시럽 추가</span><span class="badge opt">선택 사항</span></h4><p class="hlp">단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.</p><div class="choices"><button class="choice" aria-pressed="true">추가 안 함</button><button class="choice">시럽 추가<small>+500원</small></button></div></div>
+<div class="group"><h4>휘핑크림 올리기<span class="term">휘핑크림</span><span class="badge opt">선택 사항</span></h4><p class="hlp">음료 위에 올리는 부드러운 크림이에요.</p><div class="choices"><button class="choice" aria-pressed="true">안 올림</button><button class="choice">올리기<small>+500원</small></button></div></div>
+<div class="group qty"><h4>수량</h4><div class="stepper"><b>−</b><output>1</output><b>＋</b></div></div>
+</div>
+<div class="foot"><div class="row2"><button class="btn sec" style="flex:none">옵션 선택 취소</button><button class="btn pri"><span>추가 옵션 없이 장바구니에 담기</span><small>3,500원</small></button></div></div>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

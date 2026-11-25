@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>주문 완료</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="kiosk.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="stage" style="width:1080px;height:1920px">
+<div class="screen done">
+<h1>주문이 접수되었어요.</h1>
+<div class="no">A-127</div>
+<p>주문번호가 호출되면 음료를 받아 주세요.</p>
+<p class="mut">매장에서 먹기 주문이에요.</p>
+<div class="sum-list">
+<div><span>카페라떼 × 1<small>ICE 차갑게 · 샷 1개 추가</small></span><span>4,000원</span></div>
+<div><span>아메리카노 × 1<small>ICE 차갑게</small></span><span>2,500원</span></div>
+<div><span>쿠폰 할인<small>10% 할인 쿠폰</small></span><span>− 650원</span></div>
+<div><span>결제 금액<small>신용·체크카드</small></span><span>5,850원</span></div>
+</div>
+<button class="btn" style="background:var(--ink);color:#fff;min-height:120px;font-size:44px;width:100%">처음 화면으로</button>
+<p class="mut" style="font-size:30px">잠시 뒤 자동으로 처음 화면으로 돌아가요.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

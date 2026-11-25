@@ -1,0 +1,5 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=768"><title>AS-IS screen</title><link rel="stylesheet" href="kiosk.css"></head>
+<body style="margin:0"><div id="root"></div><script src="screens.js"></script><script>
+const id=new URLSearchParams(location.search).get('id');const s=SCREENS.find(x=>x.id===id);
+document.getElementById('root').innerHTML=`<div class="scr">${s?s.html:'unknown'}</div>`;
+</script></body></html>

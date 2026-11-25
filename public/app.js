@@ -11,8 +11,8 @@ const MODES = {
   dine: { name: '매장에서 먹기', sub: '매장 안에서 드실 분', icon: 'store' },
   take: { name: '포장하기', sub: '음료를 가지고 가실 분', icon: 'bag' },
 };
-const TEMP = { HOT: '따뜻하게 (HOT)', ICE: '차갑게 (ICE)' };
-const TEMP_SHORT = { HOT: '따뜻하게', ICE: '차갑게' };
+const TEMP = { HOT: 'HOT 따뜻하게', ICE: 'ICE 차갑게' }; // HOT/ICE are the primary labels (DS v2)
+const TEMP_SHORT = { HOT: 'HOT 따뜻하게', ICE: 'ICE 차갑게' };
 // Quick filters: coffee pair is mutually exclusive, taste filters combine (AND).
 const FILTERS = [['커피', '커피가 들어간 음료'], ['논커피', '커피가 들어가지 않은 음료'], ['달콤한', '달콤한'], ['상큼한', '상큼한'], ['부드러운', '부드러운'], ['깔끔한', '깔끔한']];
 
@@ -81,7 +81,7 @@ const icon = (n) => ({
 })[n];
 const cup = (color) => `<svg viewBox="0 0 100 124" aria-hidden="true"><rect x="20" y="6" width="60" height="12" rx="5" fill="#2b2b2b"/><path d="M25 18h50l-6 92a6 6 0 0 1-6 5H37a6 6 0 0 1-6-5z" fill="#fff" stroke="#2b2b2b" stroke-width="3"/><path d="M28.5 46h43l-3.6 64.5a3 3 0 0 1-3 2.5H35.1a3 3 0 0 1-3-2.5z" fill="${color}"/></svg>`;
 const features = (m) => [m.tags.includes('커피') ? '커피 들어감' : '커피 없음', ...m.tags.filter((t) => t !== '커피' && t !== '논커피').slice(0, 2)];
-const card = (m) => `<button class="card" data-act="open" data-id="${m.id}"><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span class="sm">${esc(m.summary)}</span><span class="feat">${features(m).map((t) => `<em>${t}</em>`).join('')}</span><span class="temps">${m.temperature.map((t) => TEMP_SHORT[t]).join(' · ')}</span><span class="price">${won(m.price)}</span></button>`;
+const card = (m) => `<button class="card" data-act="open" data-id="${m.id}"><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span class="sm">${esc(m.summary)}</span><span class="feat">${features(m).map((t) => `<em>${t}</em>`).join('')}</span><span class="temps">${m.temperature.join(' · ')}</span><span class="price">${won(m.price)}</span></button>`;
 
 // ---------- help content (contextual, S-04) ----------
 const helpFor = () => {
