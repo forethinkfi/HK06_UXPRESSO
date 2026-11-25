@@ -144,11 +144,11 @@ const helpFor = () => {
 
 // ---------- views ----------
 const hdr = (left, right = '') => `<div class="hdr">${left}${right}</div>`;
-const helpBtn = `<button class="helpbtn" data-act="help"><i>?</i>주문 도움</button>`;
+const helpBtn = `<button class="helpbtn" data-act="help" aria-label="주문 도움"><i>?</i>주문 도움</button>`;
 const langBtn = `<button class="ibtn" data-act="dlg" data-v="lang" aria-label="언어 선택">${ico('globe')}</button>`;
 const homeBtn = `<button class="ibtn" data-act="goHome" aria-label="처음으로">${ico('home')}</button>`;
 const backB = (act, label) => `<button class="back2" data-act="${act}">${label}</button>`;
-const topbar = (left = '') => `<div class="hdr2"><span class="hl">${left}</span><b class="ttl">MEGA MGC COFFEE</b><span class="hr">${langBtn}${helpBtn}</span></div>`;
+const topbar = (left = '', mid = '') => `<div class="hdr2"><span class="hl">${left}</span><b class="ttl">MEGA MGC COFFEE</b><span class="hr">${langBtn}${mid}${helpBtn}</span></div>`;
 const crumbs = (n) => `<nav class="crumbs" aria-label="주문 단계">${['메뉴 선택', '주문 확인', '결제하기'].map((t, i) => `<span class="${i === n ? 'on' : ''}"${i === n ? ' aria-current="step"' : ''}>${t}</span>`).join('<i aria-hidden="true">›</i>')}</nav>`;
 const logo = `<div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오스크 개선안</small></div>`;
 const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode].icon)}</span><span><small>주문 방식</small><b>${MODES[S.mode].name}</b></span><button class="btn sec sm2" data-act="modeDlg">바꾸기</button></div>`;
@@ -174,7 +174,7 @@ function viewMenu() {
   const list = visibleMenus(), P = PRIMS.find((x) => x.id === S.prim);
   const empty = `<div class="state">${P?.empty ? esc(P.empty) : '조건에 맞는 메뉴가 없어요'}<p>${P?.empty ? '다른 분류를 눌러 메뉴를 볼 수 있어요.' : '선택한 조건을 해제하면 다시 볼 수 있어요.'}</p>${S.filters.length || S.vf ? '<button class="btn sec" data-act="clearFilters">선택한 조건 모두 해제</button>' : ''}</div>`;
   const v = S.voice;
-  return `<div class="screen">${topbar(homeBtn)}<div class="trow"><h1>${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}</h1><span class="tright"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</span></div>${vbar('menu')}
+  return `<div class="screen">${topbar(homeBtn + `<button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>`, v.on ? '' : `<button class="vtrig" data-act="vStart" aria-label="음성으로 주문하기"><span class="vi">${vicon('mic')}</span>음성 주문</button>`)}<h1 class="mtitle">${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}</h1>${vbar('menu')}
   <div class="scroll" data-keep>
    <div class="prims" role="tablist">${PRIMS.map((x) => `<button class="pm" aria-pressed="${S.prim === x.id}" data-act="prim" data-v="${x.id}">${S.prim === x.id ? '✓ ' : ''}${x.name}</button>`).join('')}</div>
    <div class="subs">${(P?.subs || []).map(([id, l]) => `<button class="sp" aria-pressed="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}<button class="sp taste" aria-expanded="${S.tasteOpen}" data-act="taste">취향으로 좁히기 ${S.tasteOpen ? '▲' : '▼'}</button></div>

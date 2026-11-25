@@ -503,3 +503,10 @@ i[data-lucide],svg.lucide{stroke-width:2.25}
 .cardpay{min-height:120px;margin:8px 40px 20px;border-width:2px;border-radius:16px}
 .stamp{min-height:104px;margin:8px 40px 20px}
 .ubar{border-top:2px solid var(--line)}.ubar button{min-height:90px}.ubar button+button{border-left:2px solid var(--line)}.ubar b{font-size:28px}
+
+/* Menu header: mode chip left, voice trigger beside language; help becomes icon-only here (ref: 110px title-only header) */
+.mtitle{flex:none;font-size:40px;font-weight:700;padding:20px 40px 0}
+.hdr2 .hl{display:flex;align-items:center;gap:4px}.hdr2 .modechip{min-height:64px;padding:0 12px;flex-direction:column;align-items:flex-start;gap:0;font-size:24px;line-height:1.2}.hdr2 .modechip small{font-size:22px}
+.hdr2 .vtrig{min-height:64px;padding:0 20px;font-size:24px;gap:10px}.hdr2 .vtrig svg{width:32px;height:32px}
+.hdr2 .hr{gap:8px}
+.hdr2 .helpbtn{font-size:0;gap:0;width:64px;padding:0;justify-content:center}.hdr2 .helpbtn i{width:48px;height:48px;font-size:28px}
