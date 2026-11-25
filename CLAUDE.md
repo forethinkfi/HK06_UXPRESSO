@@ -15,6 +15,7 @@
 | `public/app.js` | 화면·상태·인터랙션 (바닐라 JS, 상태 변경 시 전체 렌더) |
 | `public/style.css` | 디자인 토큰·컴포넌트 |
 | `public/kit.html` | 버튼 UI Kit |
+| `public/screens.html` | 시안 보드 (`?demo=` 프리셋 화면 모음, 프리셋은 `app.js`의 `demo()`) |
 | `docs/` | 요구사항·디자인 시스템·API 문서 (`docs/index.md` 참고) |
 
 ## 작업 원칙
@@ -30,6 +31,7 @@
 - 매장별 조정값은 `public/app.js` 상단 `PICKUP_TEXT`, `RETURN_MS`.
 
 ## 변경 시 체크
+- 화면을 추가·수정하면 `app.js`의 `demo()` 프리셋과 `public/screens.html` 시안 보드도 맞춘다.
 - 새 화면/문구를 추가하면 도움말(`helpFor`)에 해당 단계 항목이 있는지 확인한다.
 - 스타일 변경 시 `/kit.html` 컴포넌트 상태(Default·Pressed·Selected·Disabled)가 깨지지 않는지 확인한다.
 - 커밋 메시지는 영어 한 줄 요약 + 필요 시 본문.

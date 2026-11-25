@@ -27,6 +27,29 @@ const S = {
 const dbg = { taps: 0, t0: 0, help: 0, on: new URLSearchParams(location.search).has('debug') }; // usability-test logging (?debug=1)
 
 // ---------- data (API first, bundled JSON fallback) ----------
+// ---------- demo presets (?demo=name) — used by /screens.html design board ----------
+function demo(n) {
+  const add = (menuId, temp, opts = {}, qty = 1) => S.cart.push({ menuId, temp, opts, qty });
+  if (n === 'start') return;
+  if (n === 'pre') { S.screen = 'pre'; S.pre.res = { status: 'unusable', coupon: { name: '앱 전용 쿠폰' }, reason: '앱 전용 쿠폰은 키오스크에서 쓸 수 없어요.', alternative: '앱에서 주문하거나, 쿠폰 없이 이 키오스크에서 결제해 주세요.' }; S.typeOpen = 1; return; }
+  S.mode = 'dine'; S.screen = 'menu';
+  add('latte', 'ICE', { shot: '1' }); add('americano', 'ICE');
+  if (n === 'detail') { S.cart = []; openDetail('latte'); S.dtl.temp = 'ICE'; }
+  if (n === 'help') { S.help = true; S.helpOpen = 0; }
+  if (n === 'mode') S.modeDialog = true;
+  if (n === 'filter') { S.cart = []; S.filters = ['논커피', '달콤한']; }
+  if (n === 'cart') S.screen = 'cart';
+  if (n === 'confirm') S.screen = 'confirm';
+  if (n.startsWith('pay') || n === 'done') {
+    S.screen = 'pay'; S.pay.method = 'card';
+    if (n === 'pay-coupon') S.pay.cpn = { status: 'ok', coupon: { code: 'WELCOME10', name: '10% 할인 쿠폰', type: 'discount' }, discount: 650 };
+    if (n === 'pay-unusable') S.pay.cpn = { status: 'unusable', coupon: { name: '10% 할인 쿠폰' }, reason: '5,000원 이상 주문할 때 쓸 수 있어요. 지금은 2,500원이에요.', alternative: '2,500원 더 담으면 쓸 수 있어요. 아니면 쿠폰 없이 결제할 수 있어요.', hint: 'addMore' };
+    if (n === 'pay-fail') { S.pay.phase = 'failed'; S.pay.fail = { reason: '네이버페이 승인이 거절됐어요. 잔액이나 한도가 부족할 수 있어요.', solution: '다른 결제 수단을 고르거나 같은 수단으로 다시 시도해 주세요. 담은 메뉴는 그대로예요.' }; }
+    if (n === 'pay-pending') S.pay.phase = 'pending';
+    if (n === 'done') { S.order = { no: 'A-127', mode: 'dine', discount: 650, final: 5850, coupon: '10% 할인 쿠폰', method: '신용·체크카드', items: S.cart.map((it) => ({ name: menu(it.menuId).name, qty: it.qty, opt: optText(it), price: unit(it) * it.qty })) }; S.cart = []; S.screen = 'done'; }
+  }
+}
+
 async function boot() {
   try {
     const [m, c] = await Promise.all([fetch('/api/menus').then((r) => r.json()), fetch('/api/categories').then((r) => r.json())]);
@@ -37,6 +60,7 @@ async function boot() {
   }
   try { S.types = (await fetch('/api/coupons').then((r) => r.json())).types; } catch { S.types = (await fetch('/data/coupons.json').then((r) => r.json())).types; }
   try { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/api/payment-methods').then((r) => r.json()))); } catch { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/data/payments.json').then((r) => r.json()))); }
+  const dm = new URLSearchParams(location.search).get('demo'); if (dm) demo(dm);
   render();
 }
 const menu = (id) => S.menus.find((m) => m.id === id);

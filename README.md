@@ -18,6 +18,8 @@ npm start     # http://localhost:3000
 |---|---|
 | `/` | 키오스크 프로토타입 |
 | `/?debug=1` | 터치 수·경과 시간·도움 호출 횟수 표시 (사용성 테스트 기록용) |
+| `/screens.html` | 개선 시안 보드 — 핵심 화면 14장을 한눈에 보기 (누르면 해당 상태의 프로토타입이 열림) |
+| `/?demo=이름` | 특정 화면 상태로 바로 열기: `start` `pre` `menu` `filter` `mode` `detail` `cart` `confirm` `pay-coupon` `pay-unusable` `pay-fail` `pay-pending` `done` `help` |
 | `/kit.html` | UXPRESSO Kiosk UI Kit — 버튼 6종 × 4상태 |
 
 Node.js 18 이상이면 되고, 설치할 패키지는 없습니다.
@@ -89,6 +91,7 @@ public/index.html  키오스크 진입 페이지
 public/app.js      화면·상태·인터랙션
 public/style.css   디자인 토큰·컴포넌트 스타일
 public/kit.html    버튼 UI Kit
+public/screens.html 시안 보드 (iframe으로 ?demo= 화면 모음)
 docs/              요구사항·디자인 시스템·API 문서
 CLAUDE.md          Claude Code 작업 가이드
 ```
