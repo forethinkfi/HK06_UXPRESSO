@@ -1,0 +1,29 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-25T12:00:00Z" },
+  "title": "UXPRESSO 키오스크 아트보드",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1080, "h": 1920, "title": "S-01 주문 시작" },
+    "Precheck.dc.html": { "x": 1160, "y": 0, "w": 1080, "h": 1920, "title": "S-C1 쿠폰·결제 수단 미리 확인" },
+    "Menu.dc.html": { "x": 2320, "y": 0, "w": 1080, "h": 1920, "title": "S-02 메뉴 탐색" },
+    "Detail.dc.html": { "x": 3480, "y": 0, "w": 1080, "h": 1920, "title": "S-03 메뉴 상세·옵션" },
+    "Cart.dc.html": { "x": 0, "y": 2400, "w": 1080, "h": 1920, "title": "S-05 장바구니" },
+    "Confirm.dc.html": { "x": 1160, "y": 2400, "w": 1080, "h": 1920, "title": "S-06 주문 확인" },
+    "Help.dc.html": { "x": 2320, "y": 2400, "w": 1080, "h": 1920, "title": "S-04 상황별 주문 도움" },
+    "Done.dc.html": { "x": 3480, "y": 2400, "w": 1080, "h": 1920, "title": "S-08 주문 완료" },
+    "PayCoupon.dc.html": { "x": 0, "y": 4800, "w": 1080, "h": 1920, "title": "쿠폰 적용 성공" },
+    "PayUnusable.dc.html": { "x": 1160, "y": 4800, "w": 1080, "h": 1920, "title": "쿠폰 적용 불가" },
+    "PayFail.dc.html": { "x": 2320, "y": 4800, "w": 1080, "h": 1920, "title": "결제 실패·오류 복구" },
+    "PayPending.dc.html": { "x": 3480, "y": 4800, "w": 1080, "h": 1920, "title": "결제 승인 확인 중" }
+  },
+  "order": ["Main.dc.html", "Precheck.dc.html", "Menu.dc.html", "Detail.dc.html", "Cart.dc.html", "Confirm.dc.html", "Help.dc.html", "Done.dc.html", "PayCoupon.dc.html", "PayUnusable.dc.html", "PayFail.dc.html", "PayPending.dc.html"],
+  "notes": {
+    "r1": { "x": 0, "y": -300, "text": "시작 · 메뉴 탐색 · 옵션", "kind": "title1", "maxW": 4560 },
+    "r2": { "x": 0, "y": 2100, "text": "주문 · 도움 · 완료", "kind": "title1", "maxW": 4560 },
+    "r3": { "x": 0, "y": 4500, "text": "쿠폰 · 결제 · 오류 복구", "kind": "title1", "maxW": 4560 },
+    "n1": { "x": 4640, "y": 0, "w": 420, "text": "비공식 UX/UI 개선 시안 · Design System v2. 메뉴·가격·쿠폰은 테스트 데이터입니다. 색상(#FFDC00 노랑, #171717 검정 등)은 모바일 앱 레퍼런스에서 읽은 임시 제안값이며 공식 값이 아니에요.", "fill": "orange" }
+  },
+  "designSystems": []
+}

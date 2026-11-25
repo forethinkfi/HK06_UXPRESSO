@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>결제 실패·오류 복구</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="kiosk.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="stage" style="width:1080px;height:1920px">
+<div class="screen">
+<div class="hdr"><div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오스크 개선안</small></div><button class="helpbtn"><i>?</i>주문 도움</button></div>
+<div class="scroll">
+<div class="h2">결제가 완료되지 않았어요</div>
+<div class="res no" style="margin:0 48px"><b>✕ 아직 결제되지 않았어요</b><p><strong>이유</strong> 네이버페이 승인이 거절됐어요. 잔액이나 한도가 부족할 수 있어요.</p><p><strong>이렇게 해 보세요</strong> 다른 결제 수단을 고르거나 같은 수단으로 다시 시도해 주세요. 담은 메뉴는 그대로예요.</p></div>
+<div class="note">담은 메뉴 2개는 그대로 있어요. 처음부터 다시 하지 않아도 돼요.</div>
+<div class="vstack" style="padding:0 48px">
+<button class="btn pri block">같은 방법으로 다시 시도</button>
+<button class="btn sec block">다른 결제 수단 고르기</button>
+<button class="btn sec block">주문 수정하기</button>
+<button class="btn sec block">직원 도움 요청</button>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

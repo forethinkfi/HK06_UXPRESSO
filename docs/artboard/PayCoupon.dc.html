@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쿠폰 적용 성공</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="kiosk.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="stage" style="width:1080px;height:1920px">
+<div class="screen">
+<div class="hdr"><button class="back">← 주문 내역으로</button><button class="helpbtn"><i>?</i>주문 도움</button></div>
+<div class="scroll">
+<div class="sumcard"><div><span>주문 금액</span><span>6,500원</span></div><div><span>쿠폰 할인</span><span>− 650원</span></div><div class="fin"><span>최종 결제 금액</span><b>5,850원</b></div></div>
+<div class="sect"><h3>쿠폰이 있나요? <span class="opt">(없으면 그냥 넘어가요)</span></h3>
+<div class="res ok"><b>✓ 10% 할인 쿠폰 적용 완료</b><p>할인 650원이 반영됐어요. 아래 최종 결제 금액을 확인해 주세요.</p><div class="racts"><button class="btn sec">쿠폰 제거</button></div></div></div>
+<div class="sect"><h3>결제 수단 고르기</h3>
+<h4 class="gt">카드</h4><div class="mgrid"><button class="method" aria-pressed="true">신용·체크카드</button></div>
+<h4 class="gt">간편결제</h4><div class="mgrid"><button class="method">카카오페이</button><button class="method">네이버페이</button><button class="method" disabled>삼성페이<small>사용 불가 · 이 키오스크는 삼성페이를 지원하지 않아요.<br>카드나 다른 간편결제를 골라 주세요.</small></button></div>
+<div class="guide"><b>신용·체크카드로 이렇게 결제해요</b><ol><li>카드를 단말기에 꽂거나 대 주세요</li><li>결제가 끝나면 카드를 빼 주세요</li></ol><p>연습용이라 실제 결제는 되지 않고, 카드 정보도 받지 않아요.</p></div></div>
+</div>
+<div class="foot"><button class="btn pri block">5,850원 결제하기</button></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

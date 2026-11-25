@@ -11,6 +11,7 @@
 | [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
 | 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
+| [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장, Design System v2) |
 | [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
 
 ## 화면 흐름
