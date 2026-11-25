@@ -174,13 +174,12 @@ function viewMenu() {
   const list = visibleMenus(), P = PRIMS.find((x) => x.id === S.prim);
   const empty = `<div class="state">${P?.empty ? esc(P.empty) : '조건에 맞는 메뉴가 없어요'}<p>${P?.empty ? '다른 분류를 눌러 메뉴를 볼 수 있어요.' : '선택한 조건을 해제하면 다시 볼 수 있어요.'}</p>${S.filters.length || S.vf ? '<button class="btn sec" data-act="clearFilters">선택한 조건 모두 해제</button>' : ''}</div>`;
   const v = S.voice;
-  return `<div class="screen">${topbar(homeBtn)}<div class="hrow2"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</div>${vbar('menu')}
+  return `<div class="screen">${topbar(homeBtn)}<div class="trow"><h1>${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}</h1><span class="tright"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</span></div>${vbar('menu')}
   <div class="scroll" data-keep>
-   <h1 class="mh">어떤 메뉴를 드시겠어요?</h1>
    <div class="prims" role="tablist">${PRIMS.map((x) => `<button class="pm" aria-pressed="${S.prim === x.id}" data-act="prim" data-v="${x.id}">${S.prim === x.id ? '✓ ' : ''}${x.name}</button>`).join('')}</div>
    <div class="subs">${(P?.subs || []).map(([id, l]) => `<button class="sp" aria-pressed="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}<button class="sp taste" aria-expanded="${S.tasteOpen}" data-act="taste">취향으로 좁히기 ${S.tasteOpen ? '▲' : '▼'}</button></div>
    ${S.tasteOpen ? `<div class="chips" style="padding:0 0 16px">${FILTERS.map(([t, l]) => `<button class="chip" aria-pressed="${S.filters.includes(t)}" data-act="filter" data-v="${t}">${l}</button>`).join('')}</div>` : ''}
-   <div class="count2"><span>${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}${S.filters.length ? ' · 취향 ' + S.filters.length + '개' : ''} · 메뉴 ${list.length}개</span>${S.filters.length || S.vf ? '<button class="btn ghost" data-act="clearFilters">전체 메뉴 보기</button>' : ''}</div>
+   ${S.filters.length || S.vf ? `<div class="count2"><span>${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}${S.filters.length ? ' · 취향 ' + S.filters.length + '개' : ''} · 메뉴 ${list.length}개</span>${S.filters.length || S.vf ? '<button class="btn ghost" data-act="clearFilters">전체 메뉴 보기</button>' : ''}</div>` : ''}
    ${list.length ? `<div class="grid3">${list.map(card).join('')}</div>` : empty}
    ${v.on ? '' : `<div class="micbox"><p>원하는 메뉴를 찾기 어려우신가요?</p><button class="btn sec" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 메뉴 찾기</button></div>`}
   </div>${orderBar()}</div>`;
