@@ -12,6 +12,10 @@
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
 | 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
 | [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장, Design System v2) |
+| [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트 |
+| [meetings/](meetings/README.md) | 회의록 (템플릿 포함) |
+| [presentation/](presentation/README.md) | 발표 자료 |
+| [../CONTRIBUTING.md](../CONTRIBUTING.md) | **작업 방법** — 파일 올리는 위치, 브랜치 규칙, 커밋 메시지 |
 | [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
 
 ## 화면 흐름
