@@ -86,22 +86,24 @@
 
 | Style | Size | Weight | Line Height | 용도 |
 |---|---|---|---|---|
-| Display | 56px | Bold | 130% | 주문번호, 시작 화면 질문 |
-| Heading 1 | 40px | Bold | 130% | 화면 제목 |
-| Heading 2 | 32px | Bold | 140% | 섹션 제목 |
-| Title Large | 28px | SemiBold | 140% | 메뉴명, 그룹 제목 |
-| Title Medium | 26px | SemiBold | 140% | 보조 제목 |
-| Body Large | 24px | Medium | 150% | 핵심 안내 문구 |
-| Body Default | 22px | Regular | 150% | 일반 본문 |
-| Body Small | 20px | Regular | 150% | 보조 설명 |
-| Caption | 18px | Regular | 150% | 법적 고지 등 비핵심 정보만 |
-| Button Large | 28px | SemiBold | 130% | |
-| Button Default | 24px | SemiBold | 130% | |
-| Price | 28px | Bold | 130% | 가격·금액 |
+| Display | 56px | Bold | 72px | 시작 화면 핵심 문구, 주문번호 |
+| Heading 1 | 40px | Bold | 56px | 화면 제목 |
+| Heading 2 | 32px | Bold | 44px | 섹션 제목 |
+| Heading 3 | 28px | SemiBold | 40px | 메뉴명, 카드 제목 |
+| Body Large | 28px | Medium | 40px | 핵심 안내 문구 |
+| Body Default | 24px | Regular | 36px | 일반 정보 |
+| Body Small | 22px | Regular | 32px | 보조 정보 |
+| Caption | 18px | Medium | 28px | 비핵심 보조 정보만 |
+| Button Large | 32px | Bold | 44px | 주요 CTA |
+| Button Default | 28px | SemiBold | 40px | 일반 버튼 |
+| Price Large | 40px | Bold | 52px | 총 결제 금액 |
+| Price Default | 28px | Bold | 40px | 상품 가격 |
+
+> 글자 크기는 [uxpresso-kiosk-design-system-v1.md](uxpresso-kiosk-design-system-v1.md) 4.5절 기준으로 합쳤습니다(2차 초안의 22/24px 본문 → 24/28px).
 
 가이드: 제목과 주요 행동을 분명히 구분 · 가격·수량은 빨리 읽히게 · Regular 미만 굵기 금지 · **핵심 정보에 Caption 사용 금지** · 다국어에서 줄바꿈·길이 확장 고려 · 실제 화면 크기·시청 거리에서 가독성 검증.
 
-> 참고: 현재 프로토타입(`public/`)은 본문 32px 등 더 큰 값을 씁니다. 이 스케일의 본문 22px가 실제 기기에서 충분한지는 [확인 필요]이며, 실기기 검증 전에는 핵심 정보(메뉴명·가격·옵션·금액)를 **Body Large(24px) 이상**으로 쓰길 권장합니다.
+> 참고: 현재 프로토타입(`public/`)은 본문 32px 등 이 스케일보다 더 큰 값을 씁니다(최소 글자 22px 이상). 스케일 토큰 자체는 아직 CSS에 연결하지 않았고, 실기기 가독성은 [확인 필요]입니다.
 
 ## 6.3 Spacing (8px 기반)
 

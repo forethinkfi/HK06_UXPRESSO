@@ -42,25 +42,25 @@
   --color-status-error: var(--p-red-600); --color-status-error-bg: var(--p-red-50);
   --color-status-information: var(--p-blue-600); --color-status-information-bg: var(--p-blue-50);
 
-  /* Typography (size / weight / line-height) */
-  --type-display: 700 56px/1.3 var(--font-family);
-  --type-heading-1: 700 40px/1.3 var(--font-family);
-  --type-heading-2: 700 32px/1.4 var(--font-family);
-  --type-title-large: 600 28px/1.4 var(--font-family);
-  --type-title-medium: 600 26px/1.4 var(--font-family);
-  --type-body-large: 500 24px/1.5 var(--font-family);
-  --type-body-default: 400 22px/1.5 var(--font-family);
-  --type-body-small: 400 20px/1.5 var(--font-family);
-  --type-caption: 400 18px/1.5 var(--font-family);
-  --type-button-large: 600 28px/1.3 var(--font-family);
-  --type-button-default: 600 24px/1.3 var(--font-family);
-  --type-price: 700 28px/1.3 var(--font-family);
+  /* Typography (weight size/line-height) — v1 기준 */
+  --type-display: 700 56px/72px var(--font-family);
+  --type-heading-1: 700 40px/56px var(--font-family);
+  --type-heading-2: 700 32px/44px var(--font-family);
+  --type-heading-3: 600 28px/40px var(--font-family);
+  --type-body-large: 500 28px/40px var(--font-family);
+  --type-body-default: 400 24px/36px var(--font-family);
+  --type-body-small: 400 22px/32px var(--font-family);
+  --type-caption: 500 18px/28px var(--font-family);
+  --type-button-large: 700 32px/44px var(--font-family);
+  --type-button-default: 600 28px/40px var(--font-family);
+  --type-price-large: 700 40px/52px var(--font-family);
+  --type-price-default: 700 28px/40px var(--font-family);
 
   /* Component */
-  --button-height-medium: 88px; --button-height-large: 104px; --button-height-xl: 120px;
+  --button-height-general: 88px; --button-height-primary: 104px; --button-height-xl: 120px;
   --button-primary-background: var(--color-action-primary);
   --button-primary-text: var(--color-text-on-primary);
-  --button-primary-height: var(--button-height-large);
+  --button-primary-height: var(--button-height-primary);
   --button-primary-radius: var(--radius-16);
   --button-secondary-background: var(--color-action-secondary);
   --button-secondary-border: 2px solid var(--color-border-selected);
@@ -74,5 +74,5 @@
   --feedback-error-background: var(--color-status-error-bg);
   --feedback-error-text: var(--color-status-error);
   --feedback-success-background: var(--color-status-success-bg);
-  --touch-min-target: 88px; --touch-min-gap: 16px;
+  --touch-primary-min: 96px; --touch-general-min: 72px; --touch-icon-min: 64px; --touch-min-gap: 16px;
 }

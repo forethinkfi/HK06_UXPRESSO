@@ -1,6 +1,6 @@
 # 04. Component Library
 
-모든 컴포넌트는 Auto Layout · Variables · Text Style · Variants · Component Properties(Boolean, Instance Swap)로 만듭니다. 공통 규칙: **터치 영역 ≥ 88px, 인접 요소 간격 ≥ 16px, 선택 상태 = 색 + 테두리 + ✓, 상태 이름은 Default · Pressed · Selected · Disabled · Focused(+Loading/Error/Empty/Success)**. 모든 수치는 [제안]입니다.
+모든 컴포넌트는 Auto Layout · Variables · Text Style · Variants · Component Properties(Boolean, Instance Swap)로 만듭니다. 공통 규칙: **터치 영역: 주요 ≥ 96px · 일반 ≥ 72px · 아이콘 ≥ 64px, 인접 요소 간격 ≥ 16px, 선택 상태 = 색 + 테두리 + ✓, 상태 이름은 Default · Pressed · Selected · Disabled · Focused(+Loading/Error/Empty/Success)**. 모든 수치는 [제안]입니다.
 
 ---
 
@@ -9,7 +9,7 @@
 | 항목 | 내용 |
 |---|---|
 | Types | **Primary** 화면의 핵심 행동 1개(노랑 + 검정 글씨) · **Secondary** 보조 행동(흰 면 + 2px 검정 테두리) · **Tertiary** 텍스트 버튼(밑줄 없이 굵게) · **Destructive** 전체 주문 취소(흰 면 + 빨강 테두리/글씨, 확인 단계 필수) · **Icon Button** 아이콘 + 라벨 · **Help Button** `? 주문 도움`(검정 면 + 흰 글씨) |
-| Sizes | Medium 88 · Large 104(기본) · XL 120 |
+| Sizes | 일반 88 · 주요 104(기본) · XL 120 (v1: 주요 96~120, 일반 72~96) |
 | States | Default · Pressed(면 어둡게/`primary-pressed`) · Disabled(회색 면 + 이유 문구) · Loading(스피너 + 라벨 유지, 재터치 무시) · Focused(3px 포커스 링) |
 | Properties | Type · Size · State · Label · Leading Icon(boolean) · Trailing Icon(boolean) · Full Width(boolean) |
 
@@ -34,13 +34,13 @@ Do: `주문 내역 확인`(Primary) + `메뉴 더 담기`(Secondary). Don't: 같
 
 ## 8.4 Category Tab — `Navigation/CategoryTab`
 
-States: Default · Selected(검정 채움 + 흰 글씨 + ✓, 굵게) · Pressed · Disabled. 기존 메가커피 메뉴 분류와 이름을 그대로 유지. 가로 스크롤이면 잘린 탭 일부를 보이게 하고 끝 표시(그라데이션 금지 → 화살표 버튼). 탭 높이 ≥ 88px, 탭 간격 ≥ 16px.
+States: Default · Selected(검정 채움 + 흰 글씨 + ✓, 굵게) · Pressed · Disabled. 기존 메가커피 메뉴 분류와 이름을 그대로 유지. 가로 스크롤이면 잘린 탭 일부를 보이게 하고 끝 표시(그라데이션 금지 → 화살표 버튼). 탭 높이 ≥ 72px(권장 88px), 탭 간격 ≥ 16px.
 
 ## 8.5 Menu Card — `Card/Menu`
 
 | 항목 | 내용 |
 |---|---|
-| Anatomy | ① 제품 이미지(정사각, radius 12) ② 메뉴명(Title Large) ③ 한 줄 설명(Body Small, 말줄임 금지 → 2줄 한도) ④ 가격(Price) ⑤ 선택 배지(New/Recommended — 근거 있을 때만) ⑥ 가용 상태 |
+| Anatomy | ① 제품 이미지(정사각, radius 12) ② 메뉴명(Heading 3) ③ 한 줄 설명(Body Small, 말줄임 금지 → 2줄 한도) ④ 가격(Price) ⑤ 선택 배지(New/Recommended — 근거 있을 때만) ⑥ 가용 상태 |
 | Variants | Default · Description · New · Recommended · Sold Out · Pressed |
 | Properties | Image · Menu Name · Description · Price · Badge · Availability |
 
@@ -65,7 +65,7 @@ States: Default · Selected(검정 채움 + 흰 글씨 + ✓, 굵게) · Pressed
 
 ## 8.9 Quantity Stepper — `Input/QuantityStepper`
 
-[−] 수량 [＋], 각 버튼 ≥ 88px. States: Default · Minimum(− 비활성) · Maximum(＋ 비활성 + 이유) · Disabled. 연속 터치 방지: 터치당 ±1, 300ms 디바운스, 길게 눌러 가속 금지. 최소·최대 수량은 실제 정책 기준([확인 필요]).
+[−] 수량 [＋], 각 버튼 ≥ 72px(권장 88px). States: Default · Minimum(− 비활성) · Maximum(＋ 비활성 + 이유) · Disabled. 연속 터치 방지: 터치당 ±1, 300ms 디바운스, 길게 눌러 가속 금지. 최소·최대 수량은 실제 정책 기준([확인 필요]).
 
 ## 8.10 Cart Item — `Cart/Item`
 
@@ -89,7 +89,7 @@ Types: Insert Card · Tap Card · Scan Barcode · Scan QR · Processing · Appro
 
 ## 8.15 Dialog & Modal — `Dialog/Confirmation|Error|Help|SessionTimeout`
 
-Types: Information · Confirmation · Warning · Error · Help · Session Timeout. Anatomy: 상태 아이콘 · 제목 · 설명 · Primary · Secondary. 단순 설명은 인라인 안내 우선(모달 최소화). 주요 행동과 취소는 모양·위치로 구분. **닫아도 주문 정보 유지.** 중첩 모달 금지. 모달 안 버튼도 88px 이상.
+Types: Information · Confirmation · Warning · Error · Help · Session Timeout. Anatomy: 상태 아이콘 · 제목 · 설명 · Primary · Secondary. 단순 설명은 인라인 안내 우선(모달 최소화). 주요 행동과 취소는 모양·위치로 구분. **닫아도 주문 정보 유지.** 중첩 모달 금지. 모달 안 버튼도 일반 72px·주요 96px 이상.
 
 ## 8.16 Feedback & Error Recovery — `Feedback/Success|Warning|Error|Loading`
 

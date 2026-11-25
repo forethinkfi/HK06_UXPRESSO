@@ -42,7 +42,7 @@
 |---|---|
 | `button/primary/background` | `color/action/primary` |
 | `button/primary/text` | `color/text/on-primary` |
-| `button/primary/height` | 104px (Medium 88 · Large 104 · XL 120) |
+| `button/primary/height` | 104px (일반 88 · 주요 104 · XL 120) |
 | `button/primary/radius` | `radius/16` |
 | `button/secondary/background` | `color/action/secondary` |
 | `button/secondary/border` | 2px `color/border/selected` |
@@ -55,7 +55,10 @@
 | `selection/selected/background` | `color/surface/selected` |
 | `feedback/error/background · text` | `status/error-bg` · `status/error` |
 | `feedback/success/background` | `status/success-bg` |
-| `touch/min-target · min-gap` | 88px · 16px |
+| `touch/primary-min` | 96px (주요 버튼 96~120) |
+| `touch/general-min` | 72px (일반 버튼 72~96) |
+| `touch/icon-min` | 64px (아이콘 버튼) |
+| `touch/min-gap` | 16px |
 
 ## Figma Variables 구조
 
@@ -64,7 +67,7 @@
 | `Primitives` | — | color · spacing · radius |
 | `Semantic` | Default (확장: High Contrast) | color/text · surface · action · border · status |
 | `Component` | — | button · card · selection · feedback |
-| `Typography` | — | Text Styles 12종(02-foundations) |
+| `Typography` | — | Text Styles 12종(02-foundations, v1 크기 기준) |
 
 ## 네이밍 가이드
 

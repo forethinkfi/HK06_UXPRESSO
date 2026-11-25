@@ -211,7 +211,7 @@ details p{color:var(--mute);margin-top:8px;font-weight:500}
 .btn.sm2{min-height:72px;font-size:30px;padding:0 28px;color:var(--ink)}
 .sect h3 .opt{font-weight:600;font-size:26px}
 .count{display:flex;justify-content:space-between;align-items:center;padding:20px 48px 0;font-size:30px;font-weight:800}
-.count .btn{min-height:64px;font-size:28px}
+.count .btn{min-height:72px;font-size:28px}
 .grid{grid-template-columns:repeat(2,1fr)}
 .card{min-height:520px;gap:6px}
 .card .thumb{height:220px}
