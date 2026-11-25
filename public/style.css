@@ -463,3 +463,11 @@ i[data-lucide],svg.lucide{stroke-width:2.25}
 .c2 .thumb{height:170px}.c2 .thumb img{height:160px;width:160px;border-radius:16px}
 .vspin,svg.lucide-loader-circle{animation:vs 1s linear infinite}@keyframes vs{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){svg.lucide-loader-circle{animation:none}}
 .adimg{background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),url('https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=1000&q=75') center/cover!important;border:0!important;color:#fff}.adimg *{color:#fff!important}
+
+/* Order progress steps (ref: UIBowl 더벤티/바나프레소 order status timeline) */
+.steps{list-style:none;display:flex;gap:16px;width:100%;padding:0}
+.steps li{flex:1;background:#fff;border:3px solid var(--b-default);border-radius:16px;padding:20px 12px;font-size:28px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--mute)}
+.steps li small{font-size:22px;font-weight:500}
+.steps li i{width:56px;height:56px;border-radius:50%;border:3px solid currentColor;display:grid;place-items:center;font-style:normal;font-size:28px}
+.steps li.on{border-color:var(--ink);color:var(--ink);box-shadow:0 0 0 3px var(--ink) inset}
+.steps li.on i{background:var(--ink);color:var(--y);border-color:var(--ink)}.steps li.on i svg{width:32px;height:32px}

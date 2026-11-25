@@ -213,7 +213,7 @@ function viewCart() {
   <div class="scroll" data-keep><div class="h2 split"><span>장바구니 <small>${cartCount()}개</small></span><button class="btn dng" data-act="askCancel">전체 주문 취소</button></div><div class="list">${S.cart.map((it, i) => { const m = menu(it.menuId); return `<div class="item"><div class="thumb">${pic(m)}</div><div><h4>${esc(m.name)}</h4><div class="opts">${optText(it)}</div><div class="opts">개당 ${won(unit(it))}</div></div><div class="lp">${won(unit(it) * it.qty)}</div>
    <div class="acts"><div class="stepper sm"><button data-act="cq" data-i="${i}" data-v="-1" aria-label="수량 줄이기" ${it.qty <= 1 ? 'disabled' : ''}>−</button><output>${it.qty}</output><button data-act="cq" data-i="${i}" data-v="1" aria-label="수량 늘리기" ${it.qty >= 20 ? 'disabled' : ''}>＋</button></div><span style="display:flex;gap:12px"><button class="btn sec" data-act="edit" data-i="${i}">옵션 수정</button><button class="btn sec" data-act="del" data-i="${i}">메뉴 삭제</button></span></div></div>`; }).join('')}</div></div>
   <div class="total"><span>최종 주문 금액</span><b>${won(cartTotal())}</b></div>
-  <div class="foot"><button class="btn sec" data-act="toMenu">메뉴 더 담기</button><button class="btn pri" data-act="toConfirm">주문 내역 확인</button></div></div>`;
+  <div class="foot"><button class="btn sec" data-act="toMenu">메뉴 더 담기</button><button class="btn pri" data-act="toConfirm">주문 내역 확인 · ${cartCount()}개 ${won(cartTotal())}</button></div></div>`;
 }
 
 function viewConfirm() {
@@ -287,7 +287,7 @@ function viewPay() {
 function viewDone() {
   const o = S.order;
   return `<div class="screen done"><h1>주문이 접수되었어요.</h1><div class="no" aria-label="주문번호 ${o.no}">${o.no}</div>
-  <p>${PICKUP_TEXT}</p><p class="mut">${MODES[o.mode].name} 주문이에요.</p>
+  <ol class="steps" aria-label="주문 진행 단계"><li class="on" aria-current="step"><i>${ico('check')}</i>주문 접수<small>지금 여기예요</small></li><li><i>2</i>음료 준비<small>접수 후 시작해요</small></li><li><i>3</i>준비 완료<small>번호를 불러요</small></li></ol><p>${PICKUP_TEXT}</p><p class="mut">${MODES[o.mode].name} 주문이에요.</p>
   <div class="sum-list">${o.items.map((l) => `<div><span>${esc(l.name)} × ${l.qty}<small>${l.opt}</small></span><span>${won(l.price)}</span></div>`).join('')}${o.discount ? `<div><span>쿠폰 할인<small>${esc(o.coupon)}</small></span><span>− ${won(o.discount)}</span></div>` : ''}<div><span>결제 금액<small>${esc(o.method)}</small></span><span>${won(o.final)}</span></div></div>
   <button class="btn" data-act="reset" style="background:var(--ink);color:#fff;min-height:120px;font-size:44px;width:100%">처음 화면으로</button><p class="mut" style="font-size:30px">잠시 뒤 자동으로 처음 화면으로 돌아가요.</p></div>`;
 }
