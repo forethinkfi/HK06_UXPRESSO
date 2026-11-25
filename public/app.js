@@ -9,16 +9,32 @@ const RETURN_MS = 30000; // silent return to start screen (no countdown shown)
 const SESS_IDLE_MS = 120000, SESS_GRACE_MS = 60000; // PRD v3 FR-17 proposal: 120s idle -> warning, 60s grace -> reset (to be confirmed on site)
 
 const MODES = {
-  dine: { name: '매장에서 먹기', sub: '매장 안에서 드실 분', icon: 'store' },
-  take: { name: '포장하기', sub: '음료를 가지고 가실 분', icon: 'bag' },
+  dine: { name: '매장에서 먹기', sub: '매장 안에서 드실 분', icon: 'store', en: 'Dine in', tag: '매장 식사' },
+  take: { name: '포장하기', sub: '음료를 가지고 가실 분', icon: 'bag', en: 'Takeout', tag: '포장 주문' },
 };
 const TEMP = { HOT: 'HOT 따뜻하게', ICE: 'ICE 차갑게' }; // HOT/ICE are the primary labels (DS v2)
 const TEMP_SHORT = { HOT: 'HOT 따뜻하게', ICE: 'ICE 차갑게' };
 // Quick filters: coffee pair is mutually exclusive, taste filters combine (AND).
-const FILTERS = [['커피', '커피가 들어간 음료'], ['논커피', '커피가 들어가지 않은 음료'], ['달콤한', '달콤한'], ['상큼한', '상큼한'], ['부드러운', '부드러운'], ['깔끔한', '깔끔한'], ['디카페인', '디카페인 커피']];
+const FILTERS = [['커피', '커피가 들어간 음료'], ['논커피', '커피가 들어가지 않은 음료'], ['달콤한', '달콤한'], ['상큼한', '상큼한'], ['부드러운', '부드러운'], ['깔끔한', '깔끔한']];
+
+// 8 primary categories (PRD v3 FR-02). Categories without data show an honest empty state instead of invented menus.
+const TSUBS = [['all', '전체'], ['HOT', 'HOT 따뜻하게'], ['ICE', 'ICE 차갑게']];
+const PRIMS = [
+  { id: 'new', name: '신메뉴', fn: () => false, empty: '신메뉴로 표시된 메뉴가 아직 없어요.' },
+  { id: 'rec', name: '추천메뉴', fn: (m) => m.featured, subs: [['all', '추천·인기']], badge: '추천' },
+  { id: 'coffee', name: '커피', fn: (m) => m.category === '커피', subs: TSUBS },
+  { id: 'decaf', name: '디카페인', fn: (m) => m.tags.includes('디카페인'), subs: TSUBS },
+  { id: 'drink', name: '음료', fn: (m) => m.category === '라떼' || m.category === '에이드·스무디', subs: [['all', '전체'], ['latte', '라떼·밀크'], ['ade', '에이드·스무디']] },
+  { id: 'tea', name: '티', fn: (m) => m.category === '티', subs: TSUBS },
+  { id: 'food', name: '푸드', fn: () => false, empty: '푸드 메뉴는 이 시안 데이터에 없어요.' },
+  { id: 'goods', name: '상품', fn: () => false, empty: '상품은 이 시안 데이터에 없어요.' },
+];
+const SUBFN = { all: () => true, HOT: (m) => m.temperature.includes('HOT'), ICE: (m) => m.temperature.includes('ICE'), latte: (m) => m.category === '라떼', ade: (m) => m.category === '에이드·스무디' };
+const visibleMenus = () => { const P = PRIMS.find((x) => x.id === S.prim); return S.menus.filter((m) => (!P || P.fn(m)) && (SUBFN[S.sub] || SUBFN.all)(m) && S.filters.every((t) => m.tags.includes(t)) && (!S.vf?.max || m.price <= S.vf.max)); };
+const goPrim = (id, sub = 'all') => { S.prim = id; S.sub = sub; S.filters = []; S.vf = null; };
 
 const S = {
-  screen: 'start', menus: [], cats: [], cat: '전체', filters: [],
+  screen: 'start', menus: [], cats: [], prim: 'rec', sub: 'all', tasteOpen: false, dlg: null, filters: [],
   cart: [], detail: null, dtl: null, help: false, helpOpen: -1,
   mode: null, modeDialog: false, confirmCancel: false, toast: '', order: null, apiDown: false,
   types: [], methods: [], groups: [], typeOpen: -1,
@@ -26,7 +42,7 @@ const S = {
   voice: { on: false, st: 'idle', heard: '', say: '', next: '', pend: null, ask: null, cands: null, req: 0 }, // mock voice order (PRD v3 FR-07~13)
   usedVoice: false, vf: null, // vf = list filter set by voice/touch: { label, rec?, max? }
   sess: { last: Date.now(), warn: 0, freeze: false },
-  pay: { method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null }, // pay flow
+  pay: { method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null, benefit: null, cpnOpen: false, stamp: false }, // pay flow
 };
 const dbg = { taps: 0, t0: 0, help: 0, on: new URLSearchParams(location.search).has('debug') }; // usability-test logging (?debug=1)
 
@@ -38,13 +54,14 @@ function demo(n) {
   const V = S.voice;
   if (n === 'start') return;
   if (n === 'voice-start') { V.on = true; V.st = 'listening'; S.usedVoice = true; return; }
+  if (n === 'menu-coffee') { S.mode = 'take'; S.screen = 'menu'; S.prim = 'coffee'; add('latte', 'ICE', {}, 2); return; }
   if (n === 'pre') { S.screen = 'pre'; S.pre.res = { status: 'unusable', coupon: { name: '앱 전용 쿠폰' }, reason: '앱 전용 쿠폰은 키오스크에서 쓸 수 없어요.', alternative: '앱에서 주문하거나, 쿠폰 없이 이 키오스크에서 결제해 주세요.' }; S.typeOpen = 1; return; }
   S.mode = 'dine'; S.screen = 'menu';
   add('latte', 'ICE', { shot: '1' }); add('americano', 'ICE');
   if (n === 'detail') { S.cart = []; openDetail('latte'); S.dtl.temp = 'ICE'; }
   if (n === 'help') { S.help = true; S.helpOpen = 0; }
   if (n === 'mode') S.modeDialog = true;
-  if (n === 'filter') { S.cart = []; S.filters = ['논커피', '달콤한']; }
+  if (n === 'filter') { S.cart = []; S.prim = 'all'; S.filters = ['논커피', '달콤한']; }
   if (n.startsWith('voice-')) {
     S.cart = []; V.on = true; S.usedVoice = true;
     if (n === 'voice-idle') { V.on = false; }
@@ -53,10 +70,12 @@ function demo(n) {
     if (n === 'voice-confirm') { V.st = 'confirming'; V.heard = '아이스 아메리카노 두 잔 주세요'; V.say = '이렇게 담아드릴까요?'; V.next = '맞으면 담고, 다르면 수정해 주세요.'; V.pend = { menuId: 'americano', temp: 'ICE', qty: 2 }; }
     if (n === 'voice-ask') { V.st = 'idle'; V.heard = '카페라떼 주세요'; V.say = '따뜻하게 드릴까요, 차갑게 드릴까요?'; V.next = '말하거나 화면을 눌러 주세요.'; V.ask = 'latte'; }
     if (n === 'voice-error') { V.st = 'error'; V.say = ''; V.next = '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.'; }
-    if (n === 'voice-recommend') { V.st = 'idle'; V.heard = '메뉴 추천해 줘'; V.say = '추천 메뉴를 보여드릴게요.'; V.next = '원하는 메뉴를 말하거나 화면에서 선택해 주세요.'; S.vf = { label: '추천 메뉴', rec: true }; }
+    if (n === 'voice-recommend') { V.st = 'idle'; V.heard = '메뉴 추천해 줘'; V.say = '추천 메뉴를 보여드릴게요.'; V.next = '원하는 메뉴를 말하거나 화면에서 선택해 주세요.'; S.prim = 'rec'; }
     if (n === 'voice-end') { V.on = false; S.screen = 'confirm'; S.cart = []; add('americano', 'ICE', {}, 2); }
   }
   if (n === 'session') { S.sess.warn = Date.now() - 18000; }
+  if (n === 'pay-benefit') { S.screen = 'pay'; S.pay.benefit = 'tmem'; S.pay.method = 'kakao'; }
+  if (n === 'lang') S.dlg = 'lang';
   if (n === 'cart') S.screen = 'cart';
   if (n === 'voice-end') { S.screen = 'confirm'; }
   if (n === 'confirm') S.screen = 'confirm';
@@ -79,7 +98,7 @@ async function boot() {
     S.menus = d.menus; S.cats = d.categories; S.apiDown = true;
   }
   try { S.types = (await fetch('/api/coupons').then((r) => r.json())).types; } catch { S.types = (await fetch('/data/coupons.json').then((r) => r.json())).types; }
-  try { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/api/payment-methods').then((r) => r.json()))); } catch { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/data/payments.json').then((r) => r.json()))); }
+  try { Object.assign(S, (({ methods, groups, benefits }) => ({ methods, groups, benefits }))(await fetch('/api/payment-methods').then((r) => r.json()))); } catch { Object.assign(S, (({ methods, groups, benefits }) => ({ methods, groups, benefits }))(await fetch('/data/payments.json').then((r) => r.json()))); }
   const dm = new URLSearchParams(location.search).get('demo'); if (dm) demo(dm);
   render();
 }
@@ -99,9 +118,17 @@ const icon = (n) => ({
   store: '<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22h32v14a14 14 0 0 1-14 14h-4a14 14 0 0 1-14-14z"/><path d="M44 27h3a6 6 0 0 1 0 12h-3"/><path d="M8 57h44"/></svg>',
   bag: '<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 24h36l-3 33H17z"/><path d="M23 24v-4a9 9 0 0 1 18 0v4"/></svg>',
 })[n];
+const ICO = {
+  home: '<path d="M10 30L32 10l22 20M16 26v26h32V26M26 52V38h12v14"/>',
+  globe: '<path d="M10 14h26M23 8v6M14 14c2 10 8 16 18 18M32 14c-2 10-8 16-18 18M34 54l10-24 10 24M37 47h14"/>',
+  clock: '<circle cx="32" cy="32" r="22"/><path d="M32 18v15l10 6"/>',
+  chev: '<path d="M24 12l20 20-20 20"/>',
+  hand: '<path d="M22 34V16a4 4 0 0 1 8 0v14M30 30V12a4 4 0 0 1 8 0v18M38 30V16a4 4 0 0 1 8 0v22c0 12-7 18-16 18-8 0-12-4-16-12l-6-12a4 4 0 0 1 7-4l5 8"/>',
+  check: '<path d="M14 34l12 12 24-26"/>',
+};
+const ico = (n) => `<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${ICO[n]}</svg>`;
 const cup = (color) => `<svg viewBox="0 0 100 124" aria-hidden="true"><rect x="20" y="6" width="60" height="12" rx="5" fill="#2b2b2b"/><path d="M25 18h50l-6 92a6 6 0 0 1-6 5H37a6 6 0 0 1-6-5z" fill="#fff" stroke="#2b2b2b" stroke-width="3"/><path d="M28.5 46h43l-3.6 64.5a3 3 0 0 1-3 2.5H35.1a3 3 0 0 1-3-2.5z" fill="${color}"/></svg>`;
 const features = (m) => [m.tags.includes('커피') ? '커피 들어감' : '커피 없음', ...m.tags.filter((t) => t !== '커피' && t !== '논커피').slice(0, 2)];
-const card = (m) => `<button class="card" data-act="open" data-id="${m.id}"><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span class="sm">${esc(m.summary)}</span><span class="feat">${features(m).map((t) => `<em>${t}</em>`).join('')}</span><span class="temps">${m.temperature.join(' · ')}</span><span class="price">${won(m.price)}</span></button>`;
 
 // ---------- help content (contextual, S-04) ----------
 const helpFor = () => {
@@ -128,30 +155,45 @@ const helpFor = () => {
 // ---------- views ----------
 const hdr = (left, right = '') => `<div class="hdr">${left}${right}</div>`;
 const helpBtn = `<button class="helpbtn" data-act="help"><i>?</i>주문 도움</button>`;
+const langBtn = `<button class="ibtn" data-act="dlg" data-v="lang" aria-label="언어 선택">${ico('globe')}</button>`;
+const homeBtn = `<button class="ibtn" data-act="goHome" aria-label="처음으로">${ico('home')}</button>`;
+const backB = (act, label) => `<button class="back2" data-act="${act}">${label}</button>`;
+const topbar = (left = '') => `<div class="hdr2"><span class="hl">${left}</span><b class="ttl">MEGA MGC COFFEE</b><span class="hr">${langBtn}${helpBtn}</span></div>`;
+const crumbs = (n) => `<nav class="crumbs" aria-label="주문 단계">${['메뉴 선택', '주문 확인', '결제하기'].map((t, i) => `<span class="${i === n ? 'on' : ''}"${i === n ? ' aria-current="step"' : ''}>${t}</span>`).join('<i aria-hidden="true">›</i>')}</nav>`;
 const logo = `<div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오스크 개선안</small></div>`;
 const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode].icon)}</span><span><small>주문 방식</small><b>${MODES[S.mode].name}</b></span><button class="btn sec sm2" data-act="modeDlg">바꾸기</button></div>`;
 const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}" aria-pressed="${on}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><span>${MODES[k].sub}</span><span class="chk">${on ? '✓ 선택됨' : ''}</span></button>`;
 
 function viewStart() {
-  return `<div class="screen">${hdr(logo, helpBtn)}<div class="scroll startbody"><h1>어디에서 드시나요?</h1><p class="lead">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
-  <div class="modes">${modeBtn('dine', false)}${modeBtn('take', false)}</div>
-  ${vbar()}
-  <button class="btn sec preb" data-act="precheck">쿠폰·결제 수단 미리 확인하기<small>선택 사항이에요</small></button></div>
+  const tile = (k) => `<button class="mt" data-act="setMode" data-v="${k}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><small>${MODES[k].en}</small></button>`;
+  return `<div class="screen">${topbar()}<div class="scroll start2">
+  <div class="ad"><small>SEASON SPECIAL</small><h2>새로운 계절, 새로운 즐거움</h2><p>시즌 신메뉴 &amp; 콜라보레이션</p><div class="adimg"><b>AD IMAGE</b><span>신메뉴 및 콜라보 광고 이미지 (자리 표시)</span></div></div>
+  <div class="ask2"><h1>어디에서 드시나요?</h1><div class="mts">${tile('dine')}${tile('take')}</div>${vbar('start')}
+  <div class="utils"><button data-act="dlg" data-v="lang"><b>언어 선택</b><small>Language</small></button><button data-act="dlg" data-v="access"><b>접근성 설정</b><small>Accessibility</small></button><button data-act="precheck"><b>쿠폰·상품권</b><small>사용 가능 여부 확인</small></button></div></div></div>
   <div class="disc">메가MGC커피의 공식 프로젝트가 아닌 비공식 UX/UI 개선 프로토타입이에요. 메뉴·가격은 테스트 데이터예요.</div></div>`;
 }
 
+const orderBar = () => {
+  const n = cartCount(), L = S.cart.slice(0, 2).map((it) => `<li>${it.temp} ${esc(menu(it.menuId).name)} × ${it.qty}</li>`).join('') + (S.cart.length > 2 ? `<li>외 ${S.cart.length - 2}개</li>` : '');
+  return `<div class="obar"><div class="orow"><span class="oclock">${ico('clock')}미사용 시 종료까지 2분</span><button class="btn sec" data-act="sessKeep">시간 연장</button></div>
+  <div class="osum"><b>주문내역 (${n})</b>${n ? `<ul>${L}</ul>` : ''}<div class="ototal"><span>총 결제 금액</span><b>${won(cartTotal())}</b></div></div>
+  <div class="oacts">${n ? '<button class="btn sec" data-act="askCancel">주문 취소</button>' : ''}<button class="btn pri" data-act="goCart" ${n ? '' : 'disabled'}>주문 확인</button></div></div>`;
+};
+const card = (m) => { const P = PRIMS.find((x) => x.id === S.prim); return `<button class="c2" data-act="open" data-id="${m.id}"><em class="bdg">${P?.badge && m.featured ? P.badge : ''}</em><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span class="tm">${m.temperature.join(' · ')}</span><span class="price">${won(m.price)}</span><span class="more">상세 정보 +</span></button>`; };
 function viewMenu() {
-  let list = S.menus.filter((m) => (S.cat === 'ALL' || S.cat === '전체' || m.category === S.cat) && S.filters.every((t) => m.tags.includes(t)) && (!S.vf?.rec || m.featured) && (!S.vf?.max || m.price <= S.vf.max));
-  const featured = S.menus.filter((m) => m.featured);
-  const empty = `<div class="state">조건에 맞는 메뉴가 없어요<p>선택한 맛 버튼을 한 번 더 눌러 해제하면 다시 볼 수 있어요.</p><button class="btn sec" data-act="clearFilters">선택한 맛 모두 해제</button></div>`;
-  return `<div class="screen">${hdr(logo, helpBtn)}${vbar()}<div class="tabband"><div class="tabs" role="tablist">${['전체', ...S.cats].map((c) => `<button class="tab" aria-pressed="${S.cat === c}" data-act="cat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div></div>${modeBar()}${sessNote()}
+  const list = visibleMenus(), P = PRIMS.find((x) => x.id === S.prim);
+  const empty = `<div class="state">${P?.empty ? esc(P.empty) : '조건에 맞는 메뉴가 없어요'}<p>${P?.empty ? '다른 분류를 눌러 메뉴를 볼 수 있어요.' : '선택한 조건을 해제하면 다시 볼 수 있어요.'}</p>${S.filters.length || S.vf ? '<button class="btn sec" data-act="clearFilters">선택한 조건 모두 해제</button>' : ''}</div>`;
+  const v = S.voice;
+  return `<div class="screen">${topbar(homeBtn)}<div class="hrow2"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</div>${vbar('menu')}
   <div class="scroll" data-keep>
-   <div class="sect"><h3>주요 메뉴 · 바로 선택</h3></div><div class="strip">${featured.map((m) => `<button class="mini" data-act="open" data-id="${m.id}"><div class="thumb">${cup(m.color)}</div><b>${esc(m.name)}</b><span>${won(m.price)}</span></button>`).join('')}</div>
-   <div class="sect"><h3>취향으로 좁혀 보기 <span class="opt">(안 눌러도 돼요)</span></h3></div><div class="chips">${FILTERS.map(([t, l]) => `<button class="chip" aria-pressed="${S.filters.includes(t)}" data-act="filter" data-v="${t}">${l}</button>`).join('')}</div>
-   <div class="count"><span>${S.vf ? S.vf.label : S.cat === '전체' ? '전체' : S.cat}${S.filters.length ? ' · 필터 ' + S.filters.length + '개' : ''} · 메뉴 ${list.length}개</span>${S.filters.length || S.vf ? '<button class="btn ghost" data-act="clearFilters">' + (S.vf ? '전체 메뉴 보기' : '필터 해제') + '</button>' : ''}</div>
-   ${list.length ? `<div class="grid">${list.map(card).join('')}</div>` : empty}
-  </div>
-  <div class="foot dark"><div class="cartbar"><div class="sum">담은 메뉴 ${cartCount()}개<b>${won(cartTotal())}</b></div><button class="btn pri" data-act="goCart" ${cartCount() ? '' : 'disabled'}>${cartCount() ? '장바구니 보기' : '메뉴를 담아 주세요'}</button></div></div></div>`;
+   <h1 class="mh">어떤 메뉴를 드시겠어요?</h1>
+   <div class="prims" role="tablist">${PRIMS.map((x) => `<button class="pm" aria-pressed="${S.prim === x.id}" data-act="prim" data-v="${x.id}">${S.prim === x.id ? '✓ ' : ''}${x.name}</button>`).join('')}</div>
+   <div class="subs">${(P?.subs || []).map(([id, l]) => `<button class="sp" aria-pressed="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}<button class="sp taste" aria-expanded="${S.tasteOpen}" data-act="taste">취향으로 좁히기 ${S.tasteOpen ? '▲' : '▼'}</button></div>
+   ${S.tasteOpen ? `<div class="chips" style="padding:0 0 16px">${FILTERS.map(([t, l]) => `<button class="chip" aria-pressed="${S.filters.includes(t)}" data-act="filter" data-v="${t}">${l}</button>`).join('')}</div>` : ''}
+   <div class="count2"><span>${S.vf ? esc(S.vf.label) : P ? P.name : '전체'}${S.filters.length ? ' · 취향 ' + S.filters.length + '개' : ''} · 메뉴 ${list.length}개</span>${S.filters.length || S.vf ? '<button class="btn ghost" data-act="clearFilters">전체 메뉴 보기</button>' : ''}</div>
+   ${list.length ? `<div class="grid3">${list.map(card).join('')}</div>` : empty}
+   ${v.on ? '' : `<div class="micbox"><p>원하는 메뉴를 찾기 어려우신가요?</p><button class="btn sec" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 메뉴 찾기</button></div>`}
+  </div>${orderBar()}</div>`;
 }
 
 function viewDetail() {
@@ -176,8 +218,8 @@ function viewDetail() {
 }
 
 function viewCart() {
-  if (!S.cart.length) return `<div class="screen">${hdr(`<button class="back" data-act="toMenu">← 메뉴로</button>`, helpBtn)}${vbar()}<div class="empty">장바구니가 비어 있어요<p>메뉴를 골라 장바구니에 담아 보세요.</p><button class="btn pri" data-act="toMenu">메뉴 보러 가기</button></div></div>`;
-  return `<div class="screen">${hdr(`<button class="back" data-act="toMenu">← 메뉴로</button>`, helpBtn)}${modeBar()}${sessNote()}${vbar()}
+  if (!S.cart.length) return `<div class="screen">${topbar(backB('toMenu', '← 메뉴로'))}${crumbs(1)}${vbar()}<div class="empty">장바구니가 비어 있어요<p>메뉴를 골라 장바구니에 담아 보세요.</p><button class="btn pri" data-act="toMenu">메뉴 보러 가기</button></div></div>`;
+  return `<div class="screen">${topbar(backB('toMenu', '← 메뉴로'))}${crumbs(1)}${modeBar()}${vbar()}
   <div class="scroll" data-keep><div class="h2 split"><span>장바구니 <small>${cartCount()}개</small></span><button class="btn dng" data-act="askCancel">전체 주문 취소</button></div><div class="list">${S.cart.map((it, i) => { const m = menu(it.menuId); return `<div class="item"><div class="thumb">${cup(m.color)}</div><div><h4>${esc(m.name)}</h4><div class="opts">${optText(it)}</div><div class="opts">개당 ${won(unit(it))}</div></div><div class="lp">${won(unit(it) * it.qty)}</div>
    <div class="acts"><div class="stepper sm"><button data-act="cq" data-i="${i}" data-v="-1" aria-label="수량 줄이기" ${it.qty <= 1 ? 'disabled' : ''}>−</button><output>${it.qty}</output><button data-act="cq" data-i="${i}" data-v="1" aria-label="수량 늘리기" ${it.qty >= 20 ? 'disabled' : ''}>＋</button></div><span style="display:flex;gap:12px"><button class="btn sec" data-act="edit" data-i="${i}">옵션 수정</button><button class="btn sec" data-act="del" data-i="${i}">메뉴 삭제</button></span></div></div>`; }).join('')}</div></div>
   <div class="total"><span>최종 주문 금액</span><b>${won(cartTotal())}</b></div>
@@ -185,10 +227,14 @@ function viewCart() {
 }
 
 function viewConfirm() {
-  return `<div class="screen">${hdr(`<button class="back" data-act="goCart">← 장바구니로</button>`, helpBtn)}${modeBar()}${sessNote()}
-  <div class="scroll">${S.usedVoice ? '<div class="vnote" role="status"><b>이제 화면을 눌러 진행해 주세요.</b>할인, 적립 및 결제는 직접 선택해 주세요. 음성 주문은 끝났고, 담은 메뉴는 그대로예요.</div>' : ''}<div class="h2 split"><span>주문 내역을 확인해 주세요</span><button class="btn sec" data-act="goCart">주문 수정</button></div><div class="sum-list">${S.cart.map((it) => `<div><span>${esc(menu(it.menuId).name)} × ${it.qty}<small>${optText(it)}</small></span><span>${won(unit(it) * it.qty)}</span></div>`).join('')}</div></div>
+  const v = S.usedVoice;
+  const rows = S.cart.map((it) => `<div><span>${esc(menu(it.menuId).name)} × ${it.qty}<small>${optText(it)}</small></span><span>${won(unit(it) * it.qty)}</span></div>`).join('');
+  return `<div class="screen">${topbar(backB('goCart', '← 장바구니로'))}${crumbs(1)}${modeBar()}
+  <div class="scroll">${v ? `<div class="hand"><span class="okc">${ico('check')}</span><h1>메뉴를 모두 담았어요!</h1><p>지금까지 주문한 메뉴를 확인해 주세요.</p></div>` : `<div class="h2 split"><span>주문 내역을 확인해 주세요</span><button class="btn sec" data-act="goCart">주문 수정</button></div>`}
+   <div class="sum-list">${rows}</div>
+   ${v ? `<div class="vnote" role="status"><span class="vi">${ico('hand')}</span><span><b>이제 화면을 눌러 진행해 주세요.</b>할인, 적립 및 결제는 직접 선택해 주세요.</span></div>` : ''}</div>
   <div class="total"><span>최종 결제 금액</span><b>${won(cartTotal())}</b></div>
-  <div class="foot"><button class="btn pri block" data-act="toPay">결제 방법 고르기 · ${won(cartTotal())}</button></div></div>`;
+  <div class="foot col2"><button class="btn pri block" data-act="toPay">결제 방법 고르기 · ${won(cartTotal())}</button><button class="btn sec block" data-act="toMenu">${v ? `<span class="vi">${vicon('mic')}</span>` : ''}메뉴 더 담기</button></div></div>`;
 }
 
 // ---------- coupon / payment views ----------
@@ -224,14 +270,28 @@ function viewPay() {
   <div class="vstack" style="padding:0 48px"><button class="btn pri block" data-act="retryPay">같은 방법으로 다시 시도</button><button class="btn sec block" data-act="otherMethod">다른 결제 수단 고르기</button><button class="btn sec block" data-act="goCart">주문 수정하기</button><button class="btn sec block" data-act="staff">직원 도움 요청</button></div></div></div>`;
   const sel = S.methods.find((m) => m.id === p.method);
   const label = final === 0 ? '쿠폰으로 주문 완료하기' : sel ? `${won(final)} 결제하기` : '결제 수단을 골라 주세요';
-  return `<div class="screen">${hdr(`<button class="back" data-act="toConfirm">← 주문 내역으로</button>`, helpBtn)}
+  const pt = (m, cls = '') => `<button class="pt ${cls}" data-act="selMethod" data-v="${m.id}" aria-pressed="${p.method === m.id}">${p.method === m.id ? '<i class="ck">✓ 선택됨</i>' : ''}${m.mark ? `<b class="mk" style="color:${m.color}">${esc(m.mark)}</b>` : `<b>${esc(m.name)}</b>`}<small>${esc(m.sub)}</small></button>`;
+  const by = (g) => S.methods.filter((m) => m.group === g);
+  const bn = S.benefits || [];
+  return `<div class="screen">${topbar(backB('toConfirm', '← 주문 내역'))}${crumbs(2)}
   <div class="scroll" data-keep>
-   <div class="sumcard"><div><span>주문 금액</span><span>${won(total)}</span></div><div><span>쿠폰 할인</span><span>${disc ? '− ' + won(disc) : '없음'}</span></div><div class="fin"><span>최종 결제 금액</span><b>${won(final)}</b></div></div>
-   <div class="sect"><h3>쿠폰이 있나요? <span class="opt">(없으면 그냥 넘어가요)</span></h3>${p.cpn?.status === 'ok' ? resCard(p.cpn, 'pay') : `${cform('pay')}${resCard(p.cpn, 'pay')}`}</div>
-   ${final === 0 ? '<div class="note">쿠폰으로 전액 결제돼요. 따로 결제 수단을 고르지 않아도 돼요.</div>' : `<div class="sect"><h3>결제 수단 고르기</h3>${S.groups.map((g) => `<h4 class="gt">${g}</h4><div class="mgrid">${S.methods.filter((m) => m.group === g).map((m) => `<button class="method" data-act="selMethod" data-v="${m.id}" aria-pressed="${p.method === m.id}" ${m.supported ? '' : 'disabled'}><span class="nm">${esc(m.name)}</span>${m.supported ? '' : `<small>사용 불가 · ${esc(m.reason)}<br>${esc(m.alternative)}</small>`}</button>`).join('')}</div>`).join('')}
-   ${sel ? `<div class="guide"><b>${esc(sel.name)}으로 이렇게 결제해요</b><ol>${sel.howTo.map((h) => `<li>${esc(h)}</li>`).join('')}</ol><p>연습용이라 실제 결제는 되지 않고, 카드 정보도 받지 않아요.</p></div>` : ''}</div>`}
-   <div style="height:30px"></div></div>
-  <div class="foot"><button class="btn pri block" data-act="payNow" ${final === 0 || sel ? '' : 'disabled'}>${label}</button></div></div>`;
+   <div class="amt"><div><span>결제할 금액</span><b>${won(final)}</b></div><small>주문 금액 ${won(total)} · 적용된 할인 ${won(disc)}</small></div>
+   <div class="sec2"><h2>받을 수 있는 혜택이 있나요?</h2><span class="optl">선택 사항</span></div><p class="sub2">이용하는 멤버십이나 쿠폰이 있다면 선택해 주세요.</p>
+   <div class="box"><h3>통신사·제휴 멤버십</h3><div class="bgrid">${bn.map((b) => `<button class="pt" data-act="benefit" data-v="${b.id}" aria-pressed="${p.benefit === b.id}">${p.benefit === b.id ? '<i class="ck">✓ 선택됨</i>' : ''}<b class="mk" style="color:${b.color}">${esc(b.mark)}</b><small>${esc(b.name)}</small></button>`).join('')}</div>
+    ${p.benefit ? '<p class="mock">연습용 시안이라 멤버십 정보는 받지 않고 할인도 적용되지 않아요. 결제는 그대로 진행돼요.</p>' : ''}
+    <button class="rowbtn" data-act="cpnToggle" aria-expanded="${p.cpnOpen || p.cpn?.status === 'ok'}"><span class="m">M</span><span>메가커피 앱 쿠폰</span><span class="chev">${ico('chev')}</span></button>
+    ${p.cpnOpen || p.cpn?.status === 'ok' ? `<div class="cpnbox">${p.cpn?.status === 'ok' ? resCard(p.cpn, 'pay') : `${cform('pay')}${resCard(p.cpn, 'pay')}`}</div>` : ''}</div>
+   <p class="sub2 c">해당되는 혜택이 없다면 아래에서 바로 결제하세요.</p><hr class="hr2">
+   <div class="sec2"><h2>어떻게 결제하시겠어요?</h2></div>
+   ${final === 0 ? '<div class="note">쿠폰으로 전액 결제돼요. 따로 결제 수단을 고르지 않아도 돼요.</div>' : `
+   <h3 class="gl">카드 결제</h3>${by('카드 결제').map((m) => `<button class="cardpay" data-act="selMethod" data-v="${m.id}" aria-pressed="${p.method === m.id}"><span class="ci"><svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><rect x="6" y="14" width="52" height="36" rx="5"/><path d="M6 26h52M14 40h12"/></svg></span><span><b>${esc(m.name)}</b><small>${esc(m.sub)}</small></span>${p.method === m.id ? '<i class="ck2">✓ 선택됨</i>' : `<span class="chev">${ico('chev')}</span>`}</button>`).join('')}
+   <div class="box"><h3 class="gl">휴대폰으로 결제</h3><div class="mgrid4">${by('휴대폰으로 결제').map((m) => pt(m, m.id === 'appcard' ? 'wide' : '')).join('')}</div></div>
+   <div class="box"><h3 class="gl">상품권·선불카드</h3><div class="bgrid">${by('상품권·선불카드').map((m) => pt(m)).join('')}</div></div>`}
+   <button class="rowbtn stamp" data-act="stamp" aria-pressed="${p.stamp}"><span class="m">M</span><span><b>메가커피 스탬프 적립하기</b><small>${p.stamp ? '✓ 적립 선택됨 · 연습용이라 번호를 받지 않아요' : '휴대폰 번호로 적립 · 선택 사항'}</small></span><span class="chev">${ico('chev')}</span></button>
+   ${sel ? `<div class="guide"><b>${esc(sel.name)}으로 이렇게 결제해요</b><ol>${sel.howTo.map((h) => `<li>${esc(h)}</li>`).join('')}</ol><p>연습용이라 실제 결제는 되지 않고, 카드 정보도 받지 않아요.</p></div>` : ''}
+   <div style="height:24px"></div></div>
+  <div class="foot col2"><button class="btn pri block" data-act="payNow" ${final === 0 || sel ? '' : 'disabled'}>${label}</button></div>
+  <div class="ubar"><button data-act="dlg" data-v="lang"><b>언어 선택</b><small>Language</small></button><button data-act="dlg" data-v="access"><b>접근성 설정</b><small>Accessibility</small></button><button data-act="help"><b>결제 도움말</b><small>Help</small></button></div></div>`;
 }
 
 function viewDone() {
@@ -256,7 +316,7 @@ const dialogCancel = () => `<div class="dim center" style="z-index:25"><div clas
 function render() {
   const keep = [...document.querySelectorAll('[data-keep]')].map((e) => e.scrollTop);
   const v = { start: viewStart, pre: viewPre, menu: viewMenu, cart: viewCart, confirm: viewConfirm, pay: viewPay, done: viewDone }[S.screen]();
-  $('#stage').innerHTML = v + (S.detail ? viewDetail() : '') + (S.help ? viewHelp() : '') + (S.modeDialog ? dialogMode() : '') + (S.confirmCancel ? dialogCancel() : '') + (S.sess.warn ? dialogSess() : '') +
+  $('#stage').innerHTML = v + (S.detail ? viewDetail() : '') + (S.help ? viewHelp() : '') + (S.modeDialog ? dialogMode() : '') + (S.confirmCancel ? dialogCancel() : '') + (S.dlg ? dialogInfo() : '') + (S.sess.warn ? dialogSess() : '') +
     (S.toast ? `<div class="toast" role="status">${esc(S.toast)}</div>` : '') + (S.apiDown ? '<div class="dbg" style="left:auto;right:8px;color:#fc0">기본 메뉴 데이터 사용 중</div>' : '') +
     (dbg.on ? `<div class="dbg" id="dbg"></div>` : '');
   document.querySelectorAll('[data-keep]').forEach((e, i) => { if (keep[i]) e.scrollTop = keep[i]; });
@@ -272,8 +332,8 @@ const openDetail = (id, edit) => {
   S.dtl = edit ? { temp: edit.temp, opts: { ...edit.opts }, qty: edit.qty, editIdx: edit.idx } : { temp: m.temperature.length === 1 ? m.temperature[0] : '', opts: {}, qty: 1, editIdx: null };
   render();
 };
-const freshPay = () => ({ method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null });
-const reset = () => { clearTimeout(reset.t); clearInterval(S.pay.poll); vOff(); Object.assign(S, { usedVoice: false, vf: null, sess: { last: Date.now(), warn: 0, freeze: S.sess.freeze }, pay: freshPay(), pre: { code: '', res: null, busy: false }, typeOpen: -1, screen: 'start', cart: [], detail: null, help: false, cat: '전체', filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null }); dbg.t0 = 0; render(); };
+const freshPay = () => ({ method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null, benefit: null, cpnOpen: false, stamp: false });
+const reset = () => { clearTimeout(reset.t); clearInterval(S.pay.poll); vOff(); Object.assign(S, { usedVoice: false, vf: null, sess: { last: Date.now(), warn: 0, freeze: S.sess.freeze }, pay: freshPay(), pre: { code: '', res: null, busy: false }, typeOpen: -1, screen: 'start', cart: [], detail: null, help: false, prim: 'rec', sub: 'all', tasteOpen: false, dlg: null, filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null }); dbg.t0 = 0; render(); };
 const merge = () => { // merge identical lines after an edit
   const out = [];
   for (const it of S.cart) { const k = JSON.stringify([it.menuId, it.temp, it.opts]); const f = out.find((o) => JSON.stringify([o.menuId, o.temp, o.opts]) === k); f ? (f.qty = Math.min(20, f.qty + it.qty)) : out.push(it); }
@@ -345,9 +405,12 @@ const vUtts = () => {
   if (S.voice.ask || S.detail) return ['차갑게 주세요', '따뜻하게 주세요', ...(S.detail ? ['두 잔 주세요', '이걸로 담아줘'] : []), noise];
   return ['메뉴 추천해 줘', '디카페인 보여줘', '달달한 음료 추천해 줘', '3천 원 이하 커피 보여줘', '아이스 아메리카노 두 잔 주세요', '카페라떼 주세요', '결제해 줘', '이제 됐어', noise];
 };
-function vbar() {
+function vbar(ctx) {
   if (['confirm', 'pay', 'pre', 'done'].includes(S.screen)) return ''; // Hidden: order review, payment, completion
-  const v = S.voice, key = !v.on ? 'idle' : ({ listening: 'listening', processing: 'processing', confirming: 'confirm', error: 'error' }[v.st] || 'idle');
+  const v = S.voice;
+  if (!v.on && ctx === 'menu') return ''; // menu: compact trigger lives in the header row
+  if (!v.on && ctx === 'start') return `<button class="vstart" data-act="vStart"><span class="vi">${vicon('mic')}</span><span><b>음성으로 주문하기</b><small>원하는 메뉴를 말해 주세요.</small></span></button>`;
+  const key = !v.on ? 'idle' : ({ listening: 'listening', processing: 'processing', confirming: 'confirm', error: 'error' }[v.st] || 'idle');
   const [ic, label, sub] = VB[key];
   const bar = key === 'idle'
     ? `<button class="vb vb-idle" data-act="vStart"><span class="vi">${vicon(ic)}</span>${label}</button>`
@@ -409,24 +472,23 @@ function vResolve(t) {
   if (/하나 더|더 주문|추가/.test(t)) { go('menu'); return vSet('idle', '메뉴를 더 담을 수 있어요.', '원하는 메뉴를 말하거나 화면에서 선택해 주세요.'); }
   if (S.screen === 'cart') go('menu');
   S.vf = null;
-  if (/디카페인/.test(t) && !t.includes('디카페인 아메리카노')) { S.cat = '전체'; S.filters = ['디카페인']; return vSet('idle', '디카페인 메뉴를 보여드릴게요.', '원하는 메뉴를 말하거나 눌러 주세요.'); }
-  if (/새로 나온|신메뉴|신상/.test(t)) return vSet('idle', '신메뉴 표시가 있는 메뉴가 아직 없어요.', '다른 메뉴를 말하거나 화면에서 선택해 주세요.');
-  if (/먹을 것|푸드|디저트|빵/.test(t)) return vSet('idle', '푸드 메뉴는 이 시안 데이터에 없어요.', '음료 메뉴를 말하거나 화면에서 선택해 주세요.');
+  const catOf = (x) => (/라떼/.test(x) ? ['drink', 'latte'] : /에이드|스무디/.test(x) ? ['drink', 'ade'] : /커피/.test(x) ? ['coffee', 'all'] : /티/.test(x) ? ['tea', 'all'] : null);
+  if (/디카페인/.test(t) && !t.includes('디카페인 아메리카노')) { goPrim('decaf'); return vSet('idle', '디카페인 메뉴를 보여드릴게요.', '원하는 메뉴를 말하거나 눌러 주세요.'); }
+  if (/새로 나온|신메뉴|신상/.test(t)) { goPrim('new'); } if (/새로 나온|신메뉴|신상/.test(t)) return vSet('idle', '신메뉴 표시가 있는 메뉴가 아직 없어요.', '다른 메뉴를 말하거나 화면에서 선택해 주세요.');
+  if (/먹을 것|푸드|디저트|빵/.test(t)) { goPrim('food'); } if (/먹을 것|푸드|디저트|빵/.test(t)) return vSet('idle', '푸드 메뉴는 이 시안 데이터에 없어요.', '음료 메뉴를 말하거나 화면에서 선택해 주세요.');
   const mx = t.match(/(\d+)천\s*원\s*이하/) || t.match(/(\d{3,5})\s*원\s*이하/);
   const max = mx ? (/천/.test(mx[0]) ? +mx[1] * 1000 : +mx[1]) : 0;
   const taste = ['달콤한', '상큼한', '부드러운', '깔끔한'].find((k) => t.includes(k.slice(0, 2)) || (k === '달콤한' && /달달/.test(t)));
-  const cat = S.cats.find((c) => c.split('·').some((w) => t.includes(w))) || (/커피/.test(t) ? '커피' : '');
+  const cat = catOf(t);
   if (max || taste || (/추천/.test(t) && !findMenus(t).length)) {
-    S.cat = cat && max ? cat : '전체'; S.filters = taste ? [taste] : [];
-    if (max) S.vf = { label: `${max.toLocaleString('ko-KR')}원 이하${cat ? ' ' + cat : ''}`, max };
-    else if (!taste) S.vf = { label: '추천 메뉴', rec: true };
-    const n = S.menus.filter((m) => (!taste || m.tags.includes(taste)) && (!max || m.price <= max) && (!cat || !max || m.category === cat) && (!S.vf?.rec || m.featured)).length;
+    if (max || taste) { goPrim(cat ? cat[0] : 'all', cat ? cat[1] : 'all'); if (taste) S.filters = [taste]; if (max) S.vf = { label: `${max.toLocaleString('ko-KR')}원 이하`, max }; } else goPrim('rec');
+    const n = visibleMenus().length;
     return vSet('idle', !n ? '조건에 맞는 메뉴가 없어요.' : max ? '조건에 맞는 메뉴를 찾아봤어요.' : taste ? `${taste} 음료를 찾아봤어요.` : '추천 메뉴를 보여드릴게요.', !n ? '조건을 바꾸거나 “전체 메뉴 보기”를 눌러 주세요.' : '원하는 메뉴를 말하거나 화면에서 선택해 주세요.');
   }
   const ms = findMenus(t);
   if (ms.length === 1) return vStartPend(ms[0], tmp, qty);
   if (ms.length > 1) { vSet('idle', '어느 메뉴인가요?', '아래에서 골라 주세요.'); v.cands = ms.slice(0, 6).map((m) => m.id); v.qty = qty; return; }
-  if (cat) { S.cat = cat; return vSet('idle', `${cat} 메뉴를 보여드릴게요.`, '원하는 메뉴를 말하거나 눌러 주세요.'); }
+  if (cat) { goPrim(cat[0], cat[1]); return vSet('idle', `${PRIMS.find((x) => x.id === cat[0]).name} 메뉴를 보여드릴게요.`, '원하는 메뉴를 말하거나 눌러 주세요.'); }
   return vSet('error', '', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.');
 }
 function vUtter(text) {
@@ -437,9 +499,10 @@ function vUtter(text) {
 }
 // ---------- session (PRD v3 FR-17) ----------
 const sessOn = () => ['menu', 'cart', 'confirm', 'pay', 'pre'].includes(S.screen) && !['processing', 'pending'].includes(S.pay.phase) && !(S.voice.on && ['listening', 'processing'].includes(S.voice.st));
-const sessNote = () => `<div class="sessnote"><span>2분 동안 조작이 없으면 종료 안내가 표시돼요.</span><button class="btn sec" data-act="sessKeep">시간 연장</button></div>`;
 const sessLeft = () => Math.max(0, Math.ceil((SESS_GRACE_MS - (Date.now() - S.sess.warn)) / 1000));
-const dialogSess = () => `<div class="dim center" style="z-index:40"><div class="dialog" role="alertdialog" aria-label="아직 주문 중이신가요?"><h2>아직 주문 중이신가요?</h2><p style="font-size:34px">계속 주문하기를 누르면 선택한 메뉴가 그대로 유지돼요.</p><p class="sessleft" aria-live="polite">${sessLeft()}초 후 주문 내역이 초기화됩니다.</p><div class="row"><button class="btn sec" data-act="sessEnd">주문 종료하기</button><button class="btn pri" data-act="sessKeep">계속 주문하기</button></div></div></div>`;
+const dialogSess = () => `<div class="dim center" style="z-index:40"><div class="dialog sess" role="alertdialog" aria-label="아직 주문 중이신가요?"><span class="sc">${ico('clock')}</span><h2>아직 주문 중이신가요?</h2><p class="sd">계속 주문하기를 누르면<br>선택한 메뉴가 그대로 유지돼요.</p><p class="sessleft" aria-live="polite">${sessLeft()}초 후 주문 내역이 초기화됩니다.</p><button class="btn pri block" data-act="sessKeep">계속 주문하기</button><button class="btn sec block" data-act="sessEnd">주문 종료하기</button></div></div>`
+const INFO = { lang: ['언어 선택', [['한국어', true], ['English', false], ['中文', false], ['日本語', false]], '다른 언어는 준비 중이에요. 한국어로 계속 주문할 수 있어요.'], access: ['접근성 설정', [['글자·화면 확대', false], ['화면 대비', false], ['음성 안내 크기·속도', false]], '이 설정들은 준비 중이에요. 지금도 "시간 연장"과 "주문 도움"을 쓸 수 있어요.'] };
+const dialogInfo = () => { const [t, rows, note] = INFO[S.dlg]; return `<div class="dim center" style="z-index:30"><div class="dialog" role="dialog" aria-label="${t}"><h2>${t}</h2><div class="inforows">${rows.map(([n, on]) => `<div class="${on ? 'on' : ''}"><b>${on ? '✓ ' : ''}${n}</b><small>${on ? '선택됨' : '준비 중'}</small></div>`).join('')}</div><p style="font-size:28px;color:var(--mute)">${note}</p><button class="btn pri block" data-act="dlg" data-v="">닫기</button></div></div>`; };
 setInterval(() => {
   const s = S.sess; if (s.freeze) return;
   if (!sessOn()) { s.last = Date.now(); if (s.warn) { s.warn = 0; render(); } return; }
@@ -463,14 +526,21 @@ const A = {
   help: () => { S.help = true; S.helpOpen = -1; dbg.help++; render(); },
   closeHelp, faq: (e) => { S.helpOpen = S.helpOpen === +e.i ? -1 : +e.i; render(); },
   staff: () => { closeHelp(); toast('직원에게 알렸어요. 주문 내용은 그대로 두었어요.'); },
-  cat: (e) => { S.cat = e.v; render(); },
+  prim: (e) => { goPrim(e.v); render(); },
+  sub: (e) => { S.sub = e.v; render(); },
+  taste: () => { S.tasteOpen = !S.tasteOpen; render(); },
+  dlg: (e) => { S.dlg = e.v || null; render(); },
+  goHome: () => (S.cart.length ? A.askCancel() : reset()),
+  benefit: (e) => { S.pay.benefit = S.pay.benefit === e.v ? null : e.v; render(); },
+  cpnToggle: () => { S.pay.cpnOpen = !S.pay.cpnOpen; render(); },
+  stamp: () => { S.pay.stamp = !S.pay.stamp; render(); },
   filter: (e) => {
     const t = e.v;
     if (S.filters.includes(t)) S.filters = S.filters.filter((x) => x !== t);
     else S.filters = [...S.filters.filter((x) => !(['커피', '논커피'].includes(t) && ['커피', '논커피'].includes(x))), t];
     render();
   },
-  clearFilters: () => { S.filters = []; S.vf = null; render(); },
+  clearFilters: () => { S.filters = []; S.vf = null; if (S.prim === 'all') S.prim = 'rec'; render(); },
   open: (e) => openDetail(e.id),
   closeDetail: () => { S.detail = null; render(); },
   temp: (e) => { S.dtl.temp = e.v; menu(S.detail).options.forEach((g) => { if (g.onlyTemp && g.onlyTemp !== e.v) delete S.dtl.opts[g.id]; }); render(); },

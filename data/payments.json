@@ -1,10 +1,266 @@
 {
- "groups": ["카드", "간편결제", "그 밖의 방법"],
- "methods": [
-  {"id":"card","group":"카드","name":"신용·체크카드","supported":true,"mock":"ok","howTo":["카드를 단말기에 꽂거나 대 주세요","결제가 끝나면 카드를 빼 주세요"]},
-  {"id":"kakao","group":"간편결제","name":"카카오페이","supported":true,"mock":"pending","howTo":["화면에 나온 QR을 앱에서 스캔해 주세요","앱에서 결제를 승인해 주세요"]},
-  {"id":"naver","group":"간편결제","name":"네이버페이","supported":true,"mock":"fail-once","howTo":["화면에 나온 QR을 앱에서 스캔해 주세요","앱에서 결제를 승인해 주세요"]},
-  {"id":"samsung","group":"간편결제","name":"삼성페이","supported":false,"reason":"이 키오스크는 삼성페이를 지원하지 않아요.","alternative":"카드나 다른 간편결제를 골라 주세요."},
-  {"id":"cash","group":"그 밖의 방법","name":"현금","supported":false,"reason":"키오스크는 현금을 받지 않아요.","alternative":"직원 도움 요청을 눌러 카운터에서 결제할 수 있어요."}
- ]
+  "groups": [
+    "카드 결제",
+    "휴대폰으로 결제",
+    "상품권·선불카드",
+    "그 밖의 방법"
+  ],
+  "methods": [
+    {
+      "id": "card",
+      "group": "카드 결제",
+      "name": "신용·체크카드 / 삼성페이",
+      "mark": "",
+      "color": "#171717",
+      "sub": "카드 리더기로 결제",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "카드를 단말기에 꽂거나 대 주세요",
+        "결제가 끝나면 카드를 빼 주세요"
+      ]
+    },
+    {
+      "id": "kakao",
+      "group": "휴대폰으로 결제",
+      "name": "카카오페이",
+      "mark": "kakao pay",
+      "color": "#171717",
+      "sub": "카카오페이",
+      "supported": true,
+      "mock": "pending",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "naver",
+      "group": "휴대폰으로 결제",
+      "name": "네이버페이",
+      "mark": "N pay",
+      "color": "#1c8a3e",
+      "sub": "네이버페이",
+      "supported": true,
+      "mock": "fail-once",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "payco",
+      "group": "휴대폰으로 결제",
+      "name": "PAYCO",
+      "mark": "PAYCO",
+      "color": "#c62828",
+      "sub": "페이코",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "zero",
+      "group": "휴대폰으로 결제",
+      "name": "제로페이",
+      "mark": "zero pay",
+      "color": "#171717",
+      "sub": "제로페이",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "paybook",
+      "group": "휴대폰으로 결제",
+      "name": "BC페이북",
+      "mark": "페이북",
+      "color": "#c62828",
+      "sub": "BC페이북",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "kbpay",
+      "group": "휴대폰으로 결제",
+      "name": "KB Pay",
+      "mark": "KB Pay",
+      "color": "#171717",
+      "sub": "KB Pay",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "hana",
+      "group": "휴대폰으로 결제",
+      "name": "하나Pay",
+      "mark": "하나Pay",
+      "color": "#0b7a75",
+      "sub": "하나Pay",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "sol",
+      "group": "휴대폰으로 결제",
+      "name": "신한 SOL페이",
+      "mark": "SOL Pay",
+      "color": "#245db5",
+      "sub": "신한 SOL페이",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "daangn",
+      "group": "휴대폰으로 결제",
+      "name": "당근페이",
+      "mark": "당근 pay",
+      "color": "#c4501a",
+      "sub": "당근페이",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "alipay",
+      "group": "휴대폰으로 결제",
+      "name": "알리·위챗페이",
+      "mark": "Alipay+",
+      "color": "#245db5",
+      "sub": "알리·위챗페이",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "appcard",
+      "group": "휴대폰으로 결제",
+      "name": "앱카드",
+      "mark": "앱카드",
+      "color": "#171717",
+      "sub": "QR / 바코드 결제",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "휴대폰의 결제 화면을 열어 주세요",
+        "스캐너에 QR이나 바코드를 보여 주세요"
+      ]
+    },
+    {
+      "id": "mobilegift",
+      "group": "상품권·선불카드",
+      "name": "모바일 상품권",
+      "mark": "",
+      "color": "#171717",
+      "sub": "교환권·금액권",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "prepaid",
+      "group": "상품권·선불카드",
+      "name": "메가선불페이",
+      "mark": "",
+      "color": "#171717",
+      "sub": "충전 금액 사용",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "cjgift",
+      "group": "상품권·선불카드",
+      "name": "CJ기프트카드",
+      "mark": "",
+      "color": "#171717",
+      "sub": "기프트카드 사용",
+      "supported": true,
+      "mock": "ok",
+      "howTo": [
+        "화면에 나온 QR을 앱에서 스캔해 주세요",
+        "앱에서 결제를 승인해 주세요"
+      ]
+    },
+    {
+      "id": "cash",
+      "group": "그 밖의 방법",
+      "name": "현금",
+      "supported": false,
+      "reason": "키오스크는 현금을 받지 않아요.",
+      "alternative": "직원 도움 요청을 눌러 카운터에서 결제할 수 있어요."
+    }
+  ],
+  "benefits": [
+    {
+      "id": "kt",
+      "name": "KT 멤버십",
+      "mark": "kt",
+      "color": "#171717"
+    },
+    {
+      "id": "tmem",
+      "name": "T멤버십",
+      "mark": "T membership",
+      "color": "#c62828"
+    },
+    {
+      "id": "uju",
+      "name": "SKT 우주패스",
+      "mark": "T 우주",
+      "color": "#171717"
+    },
+    {
+      "id": "cjone",
+      "name": "CJ ONE 포인트",
+      "mark": "CJ ONE",
+      "color": "#c62828"
+    },
+    {
+      "id": "kia",
+      "name": "기아멤버스",
+      "mark": "KIA",
+      "color": "#171717"
+    },
+    {
+      "id": "mpoint",
+      "name": "현대 M포인트",
+      "mark": "M POINT",
+      "color": "#171717"
+    }
+  ]
 }
