@@ -19,7 +19,10 @@ const FILTERS = [['커피', '커피가 들어간 음료'], ['논커피', '커피
 const S = {
   screen: 'start', menus: [], cats: [], cat: '전체', filters: [],
   cart: [], detail: null, dtl: null, help: false, helpOpen: -1,
-  mode: null, modeDialog: false, confirmCancel: false, toast: '', order: null, paying: false, apiDown: false,
+  mode: null, modeDialog: false, confirmCancel: false, toast: '', order: null, apiDown: false,
+  types: [], methods: [], groups: [], typeOpen: -1,
+  pre: { code: '', res: null, busy: false }, // precheck screen (S-C1)
+  pay: { method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null }, // pay flow
 };
 const dbg = { taps: 0, t0: 0, help: 0, on: new URLSearchParams(location.search).has('debug') }; // usability-test logging (?debug=1)
 
@@ -32,6 +35,8 @@ async function boot() {
     const d = await fetch('/data/menus.json').then((r) => r.json());
     S.menus = d.menus; S.cats = d.categories; S.apiDown = true;
   }
+  try { S.types = (await fetch('/api/coupons').then((r) => r.json())).types; } catch { S.types = (await fetch('/data/coupons.json').then((r) => r.json())).types; }
+  try { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/api/payment-methods').then((r) => r.json()))); } catch { Object.assign(S, (({ methods, groups }) => ({ methods, groups }))(await fetch('/data/payments.json').then((r) => r.json()))); }
   render();
 }
 const menu = (id) => S.menus.find((m) => m.id === id);
@@ -70,7 +75,8 @@ const helpFor = () => {
     menu: ['메뉴 고르기 도움', [['메뉴를 못 정하겠어요', '위 "주요 메뉴"에서 바로 고르거나, 취향 버튼(달콤한, 상큼한 등)을 눌러 범위를 좁혀 보세요.'], ['커피를 안 마셔요', '"커피가 들어가지 않은 음료" 버튼을 누르면 해당 메뉴만 보여요.'], ['담은 메뉴는 어디서 봐요?', '아래 "장바구니 보기"를 누르세요.'], ['매장/포장을 바꾸고 싶어요', '위쪽 "바꾸기"를 누르면 담은 메뉴는 그대로 두고 바꿀 수 있어요.']]],
     cart: ['장바구니 도움', [['수량을 바꾸고 싶어요', '＋ − 버튼으로 바꿔요.'], ['옵션을 바꾸고 싶어요', '"옵션 수정"을 누르면 메뉴는 그대로 두고 옵션만 바꿀 수 있어요.'], ['전부 취소하고 싶어요', '"전체 주문 취소"를 누르면 한 번 더 물어봐요.']]],
     confirm: ['주문 확인 도움', [['내용을 고치고 싶어요', '"주문 수정"을 누르면 장바구니로 돌아가요. 담은 내용은 그대로예요.'], ['매장/포장을 바꾸고 싶어요', '"바꾸기"를 눌러 다시 고를 수 있어요.']]],
-    pay: ['결제 도움', [['결제가 안 돼요', '아래 "직원 도움 요청"을 눌러 주세요. 주문 내용은 그대로 남아요.'], ['어떤 방법이 있나요?', '카드·간편결제·쿠폰 중 고르세요. 연습용이라 실제 결제는 되지 않아요.']]],
+    pay: ['결제 도움', [['쿠폰은 어떻게 써요?', '"쿠폰이 있나요?"에 쿠폰 번호를 넣고 "적용하기"를 누르세요. 할인 금액이 바로 보여요. 쿠폰이 없으면 그냥 넘어가면 돼요.'], ['쿠폰이 안 돼요', '화면에 이유와 해결 방법이 나와요. 다른 쿠폰을 넣거나, 쿠폰 없이 결제하거나, 주문을 고칠 수 있어요. 담은 메뉴는 그대로예요.'], ['결제가 안 돼요', '화면의 안내에 따라 다른 결제 수단을 고르거나 다시 시도하세요. 막히면 "직원 도움 요청"을 눌러 주세요.'], ['결제가 두 번 되나요?', '아니요. 같은 주문은 한 번만 결제돼요.']]],
+    pre: ['쿠폰·결제 수단 도움', [['꼭 해야 하나요?', '아니요. 쿠폰이 궁금할 때만 확인하세요. 안 해도 바로 주문할 수 있어요.'], ['목록에 없는 쿠폰이에요', '키오스크에서 확인할 수 없는 쿠폰은 직원 확인이 필요해요. "직원 도움 요청"을 눌러 주세요.']]],
   }[S.screen] || ['주문 도움', []];
   return { title: by[0], items: by[1] };
 };
@@ -84,7 +90,8 @@ const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}
 
 function viewStart() {
   return `<div class="screen">${hdr(logo, helpBtn)}<div class="scroll startbody"><h1>어디에서 드시나요?</h1><p class="lead">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
-  <div class="modes">${modeBtn('dine', false)}${modeBtn('take', false)}</div></div>
+  <div class="modes">${modeBtn('dine', false)}${modeBtn('take', false)}</div>
+  <button class="btn sec preb" data-act="precheck">쿠폰·결제 수단 미리 확인하기<small>선택 사항이에요</small></button></div>
   <div class="disc">메가MGC커피의 공식 프로젝트가 아닌 비공식 UX/UI 개선 프로토타입이에요. 메뉴·가격은 테스트 데이터예요.</div></div>`;
 }
 
@@ -137,23 +144,57 @@ function viewConfirm() {
   return `<div class="screen">${hdr(`<button class="back" data-act="goCart">← 장바구니로</button>`, helpBtn)}${modeBar()}
   <div class="scroll"><div class="h2 split"><span>주문 내역을 확인해 주세요</span><button class="btn sec" data-act="goCart">주문 수정</button></div><div class="sum-list">${S.cart.map((it) => `<div><span>${esc(menu(it.menuId).name)} × ${it.qty}<small>${optText(it)}</small></span><span>${won(unit(it) * it.qty)}</span></div>`).join('')}</div></div>
   <div class="total"><span>최종 결제 금액</span><b>${won(cartTotal())}</b></div>
-  <div class="foot"><button class="btn pri block" data-act="toPay">${won(cartTotal())} 결제하기</button></div></div>`;
+  <div class="foot"><button class="btn pri block" data-act="toPay">결제 방법 고르기 · ${won(cartTotal())}</button></div></div>`;
+}
+
+// ---------- coupon / payment views ----------
+const post = (u, b) => fetch(u, { method: 'POST', body: JSON.stringify(b) }).then((r) => r.json());
+const payFinal = () => { const c = S.pay.cpn; const d = c?.status === 'ok' ? c.discount : 0; return { total: cartTotal(), disc: d, final: Math.max(0, cartTotal() - d) }; };
+const cform = (ctx) => { const v = S[ctx].code; return `<form class="cform" data-form="${ctx}"><input id="${ctx}code" value="${esc(v)}" placeholder="쿠폰 번호 입력" aria-label="쿠폰 번호" autocomplete="off"><button class="btn pri" type="submit">${ctx === 'pre' ? '확인하기' : '적용하기'}</button></form><p class="hint">테스트용 번호: WELCOME10 · DRINK1000 · FREEAMERICANO · GIFT5000 · APP-ONLY · OLD2024</p>`; };
+const resCard = (r, ctx) => {
+  if (!r) return '';
+  const staff = '<button class="btn sec" data-act="staff">직원 도움 요청</button>';
+  if (r.status === 'busy') return '<div class="res"><div class="spin sm"></div>쿠폰을 확인하고 있어요…</div>';
+  if (r.status === 'ok') return `<div class="res ok" role="status"><b>✓ ${esc(r.coupon.name)}${ctx === 'pay' ? ' 적용 완료' : ' · 키오스크에서 사용할 수 있어요'}</b><p>${ctx === 'pay' ? `할인 ${won(r.discount)}이 반영됐어요. 아래 최종 결제 금액을 확인해 주세요.` : '주문 후 결제 화면에서 쿠폰 번호를 입력하면 적용돼요. 최소 주문 금액 등 조건은 담은 메뉴에 따라 달라질 수 있어요.'}</p>${ctx === 'pay' ? '<div class="racts"><button class="btn sec" data-act="cpnClear">쿠폰 제거</button></div>' : ''}</div>`;
+  if (r.status === 'unusable') return `<div class="res no" role="alert"><b>✕ ${esc(r.coupon.name)} · 지금은 사용할 수 없어요</b><p><strong>이유</strong> ${esc(r.reason)}</p><p><strong>이렇게 해 보세요</strong> ${esc(r.alternative)}</p>${ctx === 'pay' ? `<div class="racts"><button class="btn sec" data-act="cpnRetry">다른 쿠폰 입력</button><button class="btn sec" data-act="cpnClear">쿠폰 없이 결제하기</button>${r.hint === 'addMore' ? '<button class="btn sec" data-act="toMenu">메뉴 더 담기</button>' : ''}<button class="btn sec" data-act="goCart">주문 수정</button></div>` : ''}</div>`;
+  if (r.status === 'unknown') return `<div class="res no" role="alert"><b>? 확인할 수 없는 쿠폰이에요</b><p><strong>이유</strong> 번호가 틀렸거나, 키오스크에서 확인할 수 없는 쿠폰이에요.</p><p><strong>이렇게 해 보세요</strong> 번호를 다시 입력해 보세요. 그래도 안 되면 직원 확인이 필요해요.</p><div class="racts">${ctx === 'pay' ? '<button class="btn sec" data-act="cpnRetry">다른 쿠폰 입력</button><button class="btn sec" data-act="cpnClear">쿠폰 없이 결제하기</button>' : ''}${staff}</div></div>`;
+  return `<div class="res no" role="alert"><b>✕ 쿠폰을 확인하지 못했어요</b><p><strong>이유</strong> 연결이 불안정해요.</p><p><strong>이렇게 해 보세요</strong> 잠시 뒤 다시 시도하거나, 쿠폰 없이 결제해 주세요. 담은 메뉴는 그대로예요.</p><div class="racts">${ctx === 'pay' ? '<button class="btn sec" data-act="cpnClear">쿠폰 없이 결제하기</button>' : ''}${staff}</div></div>`;
+};
+const mchip = (m) => (m.supported ? '<span class="chip2 ok">✓ 사용 가능</span>' : '<span class="chip2 no">✕ 사용 불가</span>');
+
+function viewPre() {
+  return `<div class="screen">${hdr(`<button class="back" data-act="toStart">← 처음으로</button>`, helpBtn)}
+  <div class="scroll" data-keep><div class="h2" style="padding-bottom:8px">쿠폰·결제 수단 미리 확인</div><p class="lead2">주문 전에 확인하고 싶을 때만 쓰세요. 건너뛰고 바로 주문해도 돼요.</p>
+  <div class="sect"><h3>쿠폰 번호로 확인하기</h3>${cform('pre')}${resCard(S.pre.res, 'pre')}</div>
+  <div class="sect"><h3>쿠폰 종류와 쓰는 방법</h3><div class="faq">${S.types.map((t, i) => `<div style="margin-top:12px"><button class="q" data-act="typeOpen" data-i="${i}" aria-expanded="${S.typeOpen === i}"><span>${esc(t.name)} ${t.kioskUsable ? '<span class="chip2 ok">✓ 사용 가능</span>' : '<span class="chip2 no">✕ 키오스크 사용 불가</span>'}</span><span>${S.typeOpen === i ? '▲' : '▼'}</span></button>${S.typeOpen === i ? `<div class="a"><p>${esc(t.purpose)}</p>${t.kioskUsable ? `<h5>사용 조건</h5><ul>${t.conditions.map((c) => `<li>${esc(c)}</li>`).join('')}</ul><h5>사용 방법</h5><ol>${t.howTo.map((c) => `<li>${esc(c)}</li>`).join('')}</ol>` : `<h5>사용할 수 없는 이유</h5><p>${esc(t.reason)}</p><h5>대신 이렇게 해 보세요</h5><p>${esc(t.alternative)}</p>`}</div>` : ''}</div>`).join('')}</div></div>
+  <div class="sect"><h3>쓸 수 있는 결제 수단</h3>${S.groups.map((g) => `<h4 class="gt">${g}</h4>${S.methods.filter((m) => m.group === g).map((m) => `<div class="mrow"><div><b>${esc(m.name)}</b>${m.supported ? '' : `<small>${esc(m.reason)} ${esc(m.alternative)}</small>`}</div>${mchip(m)}</div>`).join('')}`).join('')}</div><div style="height:40px"></div></div>
+  <div class="foot"><button class="btn pri block" data-act="toStart">주문 시작하기</button></div></div>`;
 }
 
 function viewPay() {
-  if (S.paying) return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">결제하고 있어요</h1><p>잠시만 기다려 주세요 (연습용 결제)</p></div>`;
+  const p = S.pay, { total, disc, final } = payFinal();
+  if (p.phase === 'processing') return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">결제하고 있어요</h1><p>화면을 그대로 두고 잠시만 기다려 주세요.<br>같은 결제가 두 번 되지는 않아요.</p></div>`;
+  if (p.phase === 'pending') return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">결제 승인을 확인하고 있어요</h1><p>승인이 확인되면 자동으로 넘어가요.<br>이미 결제가 요청됐어서, 다시 결제하지 않아도 돼요. 중복 결제는 되지 않아요.</p><div class="vstack"><button class="btn sec block" data-act="checkTx">승인 상태 다시 확인하기</button><button class="btn sec block" data-act="staff">직원 도움 요청</button></div></div>`;
+  if (p.phase === 'failed') return `<div class="screen">${hdr(logo, helpBtn)}<div class="scroll"><div class="h2">결제가 완료되지 않았어요</div><div class="res no" style="margin:0 48px" role="alert"><b>✕ 아직 결제되지 않았어요</b><p><strong>이유</strong> ${esc(p.fail.reason)}</p><p><strong>이렇게 해 보세요</strong> ${esc(p.fail.solution)}</p></div>
+  <div class="note">담은 메뉴 ${cartCount()}개${p.cpn?.status === 'ok' ? '와 쿠폰' : ''}은 그대로 있어요. 처음부터 다시 하지 않아도 돼요.</div>
+  <div class="vstack" style="padding:0 48px"><button class="btn pri block" data-act="retryPay">같은 방법으로 다시 시도</button><button class="btn sec block" data-act="otherMethod">다른 결제 수단 고르기</button><button class="btn sec block" data-act="goCart">주문 수정하기</button><button class="btn sec block" data-act="staff">직원 도움 요청</button></div></div></div>`;
+  const sel = S.methods.find((m) => m.id === p.method);
+  const label = final === 0 ? '쿠폰으로 주문 완료하기' : sel ? `${won(final)} 결제하기` : '결제 수단을 골라 주세요';
   return `<div class="screen">${hdr(`<button class="back" data-act="toConfirm">← 주문 내역으로</button>`, helpBtn)}
-  <div class="scroll"><div class="h2">결제 방법을 골라 주세요</div>
-  <div class="pay">${['신용·체크카드', '간편결제', '쿠폰·기프티콘'].map((p) => `<button class="big" data-act="pay" data-v="${p}">${p}</button>`).join('')}</div>
-  <div class="note">연습용 화면이에요. 실제 결제는 이루어지지 않고, 카드 정보도 받지 않아요.</div></div>
-  <div class="total"><span>결제 금액</span><b>${won(cartTotal())}</b></div></div>`;
+  <div class="scroll" data-keep>
+   <div class="sumcard"><div><span>주문 금액</span><span>${won(total)}</span></div><div><span>쿠폰 할인</span><span>${disc ? '− ' + won(disc) : '없음'}</span></div><div class="fin"><span>최종 결제 금액</span><b>${won(final)}</b></div></div>
+   <div class="sect"><h3>쿠폰이 있나요? <span class="opt">(없으면 그냥 넘어가요)</span></h3>${p.cpn?.status === 'ok' ? resCard(p.cpn, 'pay') : `${cform('pay')}${resCard(p.cpn, 'pay')}`}</div>
+   ${final === 0 ? '<div class="note">쿠폰으로 전액 결제돼요. 따로 결제 수단을 고르지 않아도 돼요.</div>' : `<div class="sect"><h3>결제 수단 고르기</h3>${S.groups.map((g) => `<h4 class="gt">${g}</h4><div class="mgrid">${S.methods.filter((m) => m.group === g).map((m) => `<button class="method" data-act="selMethod" data-v="${m.id}" aria-pressed="${p.method === m.id}" ${m.supported ? '' : 'disabled'}><span class="nm">${esc(m.name)}</span>${m.supported ? '' : `<small>사용 불가 · ${esc(m.reason)}<br>${esc(m.alternative)}</small>`}</button>`).join('')}</div>`).join('')}
+   ${sel ? `<div class="guide"><b>${esc(sel.name)}으로 이렇게 결제해요</b><ol>${sel.howTo.map((h) => `<li>${esc(h)}</li>`).join('')}</ol><p>연습용이라 실제 결제는 되지 않고, 카드 정보도 받지 않아요.</p></div>` : ''}</div>`}
+   <div style="height:30px"></div></div>
+  <div class="foot"><button class="btn pri block" data-act="payNow" ${final === 0 || sel ? '' : 'disabled'}>${label}</button></div></div>`;
 }
 
 function viewDone() {
   const o = S.order;
   return `<div class="screen done"><h1>주문이 접수되었어요.</h1><div class="no" aria-label="주문번호 ${o.no}">${o.no}</div>
   <p>${PICKUP_TEXT}</p><p class="mut">${MODES[o.mode].name} 주문이에요.</p>
-  <div class="sum-list">${o.items.map((l) => `<div><span>${esc(l.name)} × ${l.qty}<small>${l.opt}</small></span><span>${won(l.price)}</span></div>`).join('')}<div><span>결제 금액</span><span>${won(o.total)}</span></div></div>
+  <div class="sum-list">${o.items.map((l) => `<div><span>${esc(l.name)} × ${l.qty}<small>${l.opt}</small></span><span>${won(l.price)}</span></div>`).join('')}${o.discount ? `<div><span>쿠폰 할인<small>${esc(o.coupon)}</small></span><span>− ${won(o.discount)}</span></div>` : ''}<div><span>결제 금액<small>${esc(o.method)}</small></span><span>${won(o.final)}</span></div></div>
   <button class="btn" data-act="reset" style="background:var(--ink);color:#fff;min-height:120px;font-size:44px;width:100%">처음 화면으로</button><p class="mut" style="font-size:30px">잠시 뒤 자동으로 처음 화면으로 돌아가요.</p></div>`;
 }
 
@@ -170,7 +211,7 @@ const dialogCancel = () => `<div class="dim center" style="z-index:25"><div clas
 
 function render() {
   const keep = [...document.querySelectorAll('[data-keep]')].map((e) => e.scrollTop);
-  const v = { start: viewStart, menu: viewMenu, cart: viewCart, confirm: viewConfirm, pay: viewPay, done: viewDone }[S.screen]();
+  const v = { start: viewStart, pre: viewPre, menu: viewMenu, cart: viewCart, confirm: viewConfirm, pay: viewPay, done: viewDone }[S.screen]();
   $('#stage').innerHTML = v + (S.detail ? viewDetail() : '') + (S.help ? viewHelp() : '') + (S.modeDialog ? dialogMode() : '') + (S.confirmCancel ? dialogCancel() : '') +
     (S.toast ? `<div class="toast" role="status">${esc(S.toast)}</div>` : '') + (S.apiDown ? '<div class="dbg" style="left:auto;right:8px;color:#fc0">기본 메뉴 데이터 사용 중</div>' : '') +
     (dbg.on ? `<div class="dbg" id="dbg"></div>` : '');
@@ -187,12 +228,54 @@ const openDetail = (id, edit) => {
   S.dtl = edit ? { temp: edit.temp, opts: { ...edit.opts }, qty: edit.qty, editIdx: edit.idx } : { temp: m.temperature.length === 1 ? m.temperature[0] : '', opts: {}, qty: 1, editIdx: null };
   render();
 };
-const reset = () => { clearTimeout(reset.t); Object.assign(S, { screen: 'start', cart: [], detail: null, help: false, cat: '전체', filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null, paying: false }); dbg.t0 = 0; render(); };
+const freshPay = () => ({ method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null });
+const reset = () => { clearTimeout(reset.t); clearInterval(S.pay.poll); Object.assign(S, { pay: freshPay(), pre: { code: '', res: null, busy: false }, typeOpen: -1, screen: 'start', cart: [], detail: null, help: false, cat: '전체', filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null }); dbg.t0 = 0; render(); };
 const merge = () => { // merge identical lines after an edit
   const out = [];
   for (const it of S.cart) { const k = JSON.stringify([it.menuId, it.temp, it.opts]); const f = out.find((o) => JSON.stringify([o.menuId, o.temp, o.opts]) === k); f ? (f.qty = Math.min(20, f.qty + it.qty)) : out.push(it); }
   S.cart = out;
 };
+
+// ---------- coupon + payment logic ----------
+const cartItems = () => S.cart.map(({ menuId, qty, opts }) => ({ menuId, qty, opts }));
+async function applyCpn(code) {
+  if (!code.trim()) return;
+  S.pay.cpn = { status: 'busy' }; render();
+  try { S.pay.cpn = await post('/api/coupons/apply', { code, items: cartItems() }); if (S.pay.cpn.status === 'ok') S.pay.code = ''; } catch { S.pay.cpn = { status: 'error' }; }
+  render();
+}
+async function checkPre(code) {
+  if (!code.trim()) return;
+  S.pre.res = { status: 'busy' }; render();
+  try { S.pre.res = await post('/api/coupons/apply', { code }); } catch { S.pre.res = { status: 'error' }; }
+  render();
+}
+function complete(txId) {
+  clearInterval(S.pay.poll);
+  const { disc, final } = payFinal(), p = S.pay;
+  S.order = { no: 'A-' + String(100 + Math.floor(Math.random() * 900)), mode: S.mode, discount: disc, final, coupon: p.cpn?.status === 'ok' ? p.cpn.coupon.name : '', method: final === 0 ? '쿠폰으로 전액 결제' : S.methods.find((m) => m.id === p.method).name, items: S.cart.map((it) => ({ name: menu(it.menuId).name, qty: it.qty, opt: optText(it), price: unit(it) * it.qty })) };
+  S.cart = []; S.pay = freshPay(); // previous customer's order cleared after approval
+  go('done');
+  reset.t = setTimeout(reset, RETURN_MS);
+}
+async function payNow() {
+  const p = S.pay, { final } = payFinal();
+  if (p.busy) return; // double-tap guard
+  if (final === 0) return complete();
+  p.busy = true; p.phase = 'processing'; p.attempt++; render();
+  await new Promise((r) => setTimeout(r, 900));
+  try {
+    const r = await post('/api/pay', { method: p.method, amount: final, key: p.key, attempt: p.attempt }); // same key => server never charges twice
+    if (r.status === 'approved') { p.busy = false; return complete(r.txId); }
+    if (r.status === 'pending') { p.busy = false; p.phase = 'pending'; p.tx = r.txId; clearInterval(p.poll); p.poll = setInterval(checkTx, 1500); return render(); }
+    p.phase = 'failed'; p.fail = r;
+  } catch { p.phase = 'failed'; p.fail = { reason: '연결이 불안정해서 결제 결과를 확인하지 못했어요.', solution: '같은 방법으로 다시 시도해도 중복 결제는 되지 않아요. 담은 메뉴는 그대로예요.' }; }
+  p.busy = false; render();
+}
+async function checkTx() {
+  const p = S.pay;
+  try { const r = await fetch('/api/pay/' + p.tx).then((x) => x.json()); if (r.status === 'approved') complete(r.txId); else if (!document.hidden) toast('아직 승인 확인 중이에요. 조금만 기다려 주세요.'); } catch { toast('연결이 불안정해요. 잠시 뒤 다시 확인해 주세요.'); }
+}
 
 const A = {
   setMode: (e) => { const first = !S.mode; S.mode = e.v; S.modeDialog = false; if (first) { dbg.t0 = Date.now(); go('menu'); } else render(); },
@@ -228,17 +311,21 @@ const A = {
   edit: (e) => { const it = S.cart[+e.i]; openDetail(it.menuId, { ...it, idx: +e.i }); },
   askCancel: () => { S.confirmCancel = true; render(); }, keep: () => { S.confirmCancel = false; render(); },
   reset,
-  toConfirm: () => go('confirm'), toPay: () => go('pay'),
-  pay: () => {
-    S.paying = true; render();
-    setTimeout(() => {
-      S.paying = false;
-      S.order = { no: 'A-' + String(100 + Math.floor(Math.random() * 900)), mode: S.mode, total: cartTotal(), items: S.cart.map((it) => ({ name: menu(it.menuId).name, qty: it.qty, opt: optText(it), price: unit(it) * it.qty })) };
-      S.cart = []; // previous customer's order cleared right after payment
-      go('done');
-      reset.t = setTimeout(reset, RETURN_MS);
-    }, 1600);
+  toConfirm: () => go('confirm'),
+  toStart: () => go('start'), precheck: () => { S.pre = { code: '', res: null, busy: false }; go('pre'); },
+  typeOpen: (e) => { S.typeOpen = S.typeOpen === +e.i ? -1 : +e.i; render(); },
+  toPay: async () => {
+    const p = S.pay;
+    if (p.phase !== 'pending') { Object.assign(p, { key: crypto.randomUUID?.() || Date.now() + '-' + Math.random(), attempt: 0, phase: 'choose', fail: null }); }
+    go('pay');
+    if (p.cpn?.status === 'ok') await applyCpn(p.cpn.coupon.code); // cart may have changed -> re-check coupon
   },
+  cpnClear: () => { S.pay.cpn = null; S.pay.code = ''; render(); },
+  cpnRetry: () => { S.pay.cpn = null; S.pay.code = ''; render(); $('#paycode')?.focus(); },
+  selMethod: (e) => { S.pay.method = e.v; render(); },
+  payNow, checkTx,
+  retryPay: () => payNow(),
+  otherMethod: () => { Object.assign(S.pay, { phase: 'choose', method: null, fail: null }); render(); },
 };
 
 document.addEventListener('click', (ev) => {
@@ -246,6 +333,13 @@ document.addEventListener('click', (ev) => {
   const el = ev.target.closest('[data-act]');
   if (el && A[el.dataset.act]) A[el.dataset.act](el.dataset);
 });
+
+document.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const c = ev.target.dataset.form;
+  if (c === 'pre') checkPre(S.pre.code); else if (c === 'pay') applyCpn(S.pay.code);
+});
+document.addEventListener('input', (ev) => { if (ev.target.id === 'precode') S.pre.code = ev.target.value; if (ev.target.id === 'paycode') S.pay.code = ev.target.value; });
 
 // scale the fixed 1080x1920 kiosk stage into the viewport
 const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); const st = $('#stage'); st.style.transform = `scale(${s})`; st.style.left = (innerWidth - 1080 * s) / 2 + 'px'; st.style.top = (innerHeight - 1920 * s) / 2 + 'px'; };

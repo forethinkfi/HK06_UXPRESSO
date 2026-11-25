@@ -1,0 +1,10 @@
+{
+ "groups": ["카드", "간편결제", "그 밖의 방법"],
+ "methods": [
+  {"id":"card","group":"카드","name":"신용·체크카드","supported":true,"mock":"ok","howTo":["카드를 단말기에 꽂거나 대 주세요","결제가 끝나면 카드를 빼 주세요"]},
+  {"id":"kakao","group":"간편결제","name":"카카오페이","supported":true,"mock":"pending","howTo":["화면에 나온 QR을 앱에서 스캔해 주세요","앱에서 결제를 승인해 주세요"]},
+  {"id":"naver","group":"간편결제","name":"네이버페이","supported":true,"mock":"fail-once","howTo":["화면에 나온 QR을 앱에서 스캔해 주세요","앱에서 결제를 승인해 주세요"]},
+  {"id":"samsung","group":"간편결제","name":"삼성페이","supported":false,"reason":"이 키오스크는 삼성페이를 지원하지 않아요.","alternative":"카드나 다른 간편결제를 골라 주세요."},
+  {"id":"cash","group":"그 밖의 방법","name":"현금","supported":false,"reason":"키오스크는 현금을 받지 않아요.","alternative":"직원 도움 요청을 눌러 카운터에서 결제할 수 있어요."}
+ ]
+}

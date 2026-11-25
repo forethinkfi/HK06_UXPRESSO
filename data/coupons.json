@@ -1,0 +1,24 @@
+{
+ "types": [
+  {"id":"discount","name":"할인 쿠폰","purpose":"주문 금액에서 정해진 금액이나 비율만큼 깎아 줘요.","kioskUsable":true,
+   "conditions":["최소 주문 금액이 있을 수 있어요","할인 한도가 있을 수 있어요"],
+   "howTo":["결제 화면의 '쿠폰이 있나요?'에 쿠폰 번호를 입력해요","'적용하기'를 누르면 할인 금액이 바로 보여요"]},
+  {"id":"voucher","name":"상품 교환권","purpose":"정해진 음료 1잔을 무료로 바꿔 줘요.","kioskUsable":true,
+   "conditions":["교환권에 적힌 메뉴가 장바구니에 있어야 해요","추가한 옵션 금액은 따로 결제해요"],
+   "howTo":["먼저 교환할 메뉴를 장바구니에 담아요","결제 화면에서 교환권 번호를 입력해요"]},
+  {"id":"giftcard","name":"금액권","purpose":"남은 금액만큼 결제 금액에서 빼 줘요.","kioskUsable":true,
+   "conditions":["남은 금액까지만 쓸 수 있어요","모자란 금액은 다른 결제 수단으로 결제해요"],
+   "howTo":["결제 화면에서 금액권 번호를 입력해요","남은 금액이 부족하면 나머지를 카드 등으로 결제해요"]},
+  {"id":"app","name":"앱 전용 쿠폰","purpose":"모바일 앱에서 주문할 때만 쓸 수 있는 쿠폰이에요.","kioskUsable":false,
+   "reason":"앱 전용 쿠폰은 키오스크에서 쓸 수 없어요.","alternative":"앱에서 주문하거나, 쿠폰 없이 이 키오스크에서 결제해 주세요."}
+ ],
+ "coupons": [
+  {"code":"WELCOME10","type":"discount","name":"10% 할인 쿠폰","kind":"percent","value":10,"maxDiscount":3000,"minOrder":5000,"kioskUsable":true},
+  {"code":"DRINK1000","type":"discount","name":"1,000원 할인 쿠폰","kind":"amount","value":1000,"minOrder":3000,"kioskUsable":true},
+  {"code":"FREEAMERICANO","type":"voucher","name":"아메리카노 교환권","menuId":"americano","kioskUsable":true},
+  {"code":"GIFT5000","type":"giftcard","name":"5,000원 금액권","balance":5000,"kioskUsable":true},
+  {"code":"APP-ONLY","type":"app","name":"앱 전용 쿠폰","kioskUsable":false,
+   "reason":"앱 전용 쿠폰은 키오스크에서 쓸 수 없어요.","alternative":"앱에서 주문하거나, 쿠폰 없이 이 키오스크에서 결제해 주세요."},
+  {"code":"OLD2024","type":"discount","name":"2024 연말 쿠폰","kind":"amount","value":2000,"expires":"2024-12-31","kioskUsable":true}
+ ]
+}
