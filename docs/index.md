@@ -15,6 +15,7 @@
 | [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트 |
 | [meetings/](meetings/README.md) | 회의록 (템플릿 포함) |
 | [presentation/](presentation/README.md) | 발표 자료 |
+| [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | UXPRESSO 팀 Figma 파일 — 카페 키오스크 개선 시안 (Figma 계정 필요) |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | **작업 방법** — 파일 올리는 위치, 브랜치 규칙, 커밋 메시지 |
 | [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
 

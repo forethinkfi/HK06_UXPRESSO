@@ -78,7 +78,7 @@ API 호출이 실패하면 `data/menus.json` 기본 데이터로 자동 전환�
 
 ## 문서
 
-[`docs/index.md`](docs/index.md)에서 요구사항 요약, 디자인 시스템, API 문서를 볼 수 있고, Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)에 있습니다. 팀원이 자료를 올리는 위치와 브랜치 규칙은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를 보세요.
+[`docs/index.md`](docs/index.md)에서 요구사항 요약, 디자인 시스템, API 문서를 볼 수 있고, Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)에 있습니다. 팀원이 자료를 올리는 위치와 브랜치 규칙은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를 보세요. 디자인 시안은 [Figma 파일](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1)에서 볼 수 있습니다.
 
 디자인 시스템(2차, 모바일 앱 레퍼런스 기반)은 [`docs/design-system/`](docs/design-system/README.md)에 있습니다. 토큰: [`tokens.json`](docs/design-system/tokens.json), [`tokens.css`](docs/design-system/tokens.css).
 
