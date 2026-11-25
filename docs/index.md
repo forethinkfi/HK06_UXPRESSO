@@ -12,6 +12,11 @@
 | [design-system/uxpresso-kiosk-design-system-v1.md](design-system/uxpresso-kiosk-design-system-v1.md) | **Kiosk Design System v1.0 원문 (팀 제공)** — 음성 주문(Voice-Driven UI)·세션·결제 구조 포함. 글자 크기·터치 높이는 토큰에 반영, 음성 CTA·세션 안내는 프로토타입에 구현(모의). 나머지 항목은 [prd-v3-summary.md](prd-v3-summary.md) 참고 |
 | [design-system/voice-cta-states.md](design-system/voice-cta-states.md) | 음성 주문 CTA 상태 5종(Default·Listening·Processing·Confirm·Error) + Hidden 정의 — 시안 이미지 기준 |
 | [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
+| [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | UXPRESSO 팀 Figma 파일 — 카페 키오스크 개선 시안 (Figma 계정 필요) |
+| [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트 |
+| [meetings/](meetings/README.md) | 회의록 (템플릿 포함) |
+| [presentation/](presentation/README.md) | 발표 자료 |
+| [../CONTRIBUTING.md](../CONTRIBUTING.md) | **작업 방법** — 파일 올리는 위치, 브랜치 규칙, 커밋 메시지 |
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
 | 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
 | [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장, Design System v2) |
