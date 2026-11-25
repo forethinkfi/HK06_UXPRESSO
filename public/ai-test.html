@@ -4,37 +4,78 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>UXPRESSO AI Lab</title>
-<link rel="stylesheet" href="ai-test.css">
+<style>
+  :root{--y:#FFDC00;--ink:#171717;--mute:#595959;--line:#CFCFCF;--ok:#237A45;--ok-bg:#E8F5EC;--err:#C62828;--err-bg:#FDECEC;--warn:#8A5A00;--warn-bg:#FFF4D6;
+    font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f5f5f5;line-height:1.5}
+  header{background:var(--ink);color:#fff;padding:14px 16px}
+  header h1{margin:0;font-size:20px}header h1 span{background:var(--y);color:var(--ink);padding:2px 8px;border-radius:8px;margin-left:4px}
+  header p{margin:4px 0 0;font-size:13px;color:#ddd}
+  main{max-width:760px;margin:0 auto;padding:12px;display:grid;gap:12px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  h2{margin:0 0 10px;font-size:17px}
+  button,textarea,input{font:inherit;color:inherit}
+  button{min-height:48px;padding:0 16px;border-radius:12px;border:2px solid var(--ink);background:var(--y);font-weight:800;cursor:pointer}
+  button.sec{background:#fff}button:disabled{background:#eee;color:#767676;border-color:#bbb;cursor:not-allowed}
+  button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #0B57D0;outline-offset:2px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .mic{min-width:120px;background:#fff}.mic[aria-pressed=true]{background:var(--err);color:#fff;border-color:var(--err)}
+  textarea{width:100%;min-height:76px;padding:10px;border:2px solid var(--ink);border-radius:12px;resize:vertical;font-size:17px}
+  .note{font-size:13px;color:var(--mute);margin:6px 0}
+  .interim{min-height:24px;margin:8px 0 4px;color:var(--mute);font-style:italic}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .chip{min-height:40px;padding:0 12px;border-radius:999px;background:#fff;font-size:14px}
+  .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;border:1px solid}
+  .badge.ok{color:var(--ok);background:var(--ok-bg);border-color:var(--ok)}.badge.err{color:var(--err);background:var(--err-bg);border-color:var(--err)}.badge.warn{color:var(--warn);background:var(--warn-bg);border-color:var(--warn)}
+  .box{border-radius:10px;padding:10px 12px;margin:8px 0;border:1px solid var(--line)}
+  .box.ok{background:var(--ok-bg);border-color:var(--ok)}.box.err{background:var(--err-bg);border-color:var(--err)}.box.warn{background:var(--warn-bg);border-color:var(--warn)}
+  table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}td.n,th.n{text-align:right}
+  .pick{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fffdf0}
+  .pick b{font-size:17px}.pick .meta{color:var(--mute);font-size:13px}.tag{display:inline-block;background:#f0f0f0;border-radius:6px;padding:0 6px;margin:2px 4px 0 0;font-size:12px}
+  .info{font-size:13px;color:var(--mute);margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}.info span{background:#f0f0f0;border-radius:6px;padding:2px 8px}
+  pre{background:#171717;color:#f3f3f3;padding:10px;border-radius:8px;overflow:auto;font-size:12px;max-height:260px;white-space:pre-wrap;word-break:break-word}
+  ul.l{margin:6px 0;padding-left:20px;font-size:14px}
+  a{color:#0B57D0}
+</style>
 </head>
 <body>
-<header class="top">
-  <div>
-    <h1>UXPRESSO <span>AI Lab</span></h1>
-    <p>Gemini API 실험 페이지 · 비공식 · 메뉴와 가격은 테스트 데이터예요.</p>
-  </div>
-  <a class="link" href="/">기존 키오스크로 가기 (AI Lab 버튼으로 같은 화면에서 테스트)</a>
+<header>
+  <h1>UXPRESSO <span>AI Lab</span></h1>
+  <p>간단 테스트 · 비공식 · 메뉴와 가격은 테스트 데이터예요.</p>
 </header>
+<main>
+  <section class="card" id="conn" aria-label="서버 상태">
+    <div class="row"><b id="connText">서버 확인 중…</b><button class="sec" id="btnCheck">API 연결 테스트</button></div>
+    <label id="tokenBox" hidden class="note">접근 토큰 <input id="token" type="password" autocomplete="off" placeholder="운영자가 알려준 토큰"></label>
+    <div id="checkOut"></div>
+  </section>
 
-<main class="lab" id="lab" data-tab="order">
-  <section class="stage" aria-label="키오스크 미리보기">
-    <div class="kiosk" id="kiosk">
-      <nav class="tabs" id="tabs" role="tablist" aria-label="AI 기능"></nav>
-      <div class="k-head" id="kHead"></div>
-      <div class="k-body" id="kBody"></div>
+  <section class="card" aria-label="입력">
+    <h2>① 말하거나 입력하기</h2>
+    <div class="row">
+      <button class="mic" id="mic" aria-pressed="false" type="button">🎤 말하기</button>
+      <span id="micState" class="note" role="status" aria-live="polite">마이크를 누르고 한국어로 말해 보세요.</span>
     </div>
-    <p class="cap">키오스크 미리보기 (540 × 960, 9:16) · 실제 키오스크 화면이 아니라 실험용 화면이에요.</p>
+    <p id="interim" class="interim" aria-live="polite"></p>
+    <textarea id="text" maxlength="120" aria-label="주문 또는 추천 요청 문장" placeholder="예: 아아 하나 주세요 / 달달한 거 추천해 줘"></textarea>
+    <div class="row">
+      <button id="btnOrder" type="button">주문 분석</button>
+      <button id="btnRec" type="button">메뉴 추천</button>
+      <span class="note" id="count">0/120</span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p class="note">음성은 브라우저의 음성 인식 서비스(Chrome은 Google 서버)가 글자로 바꿔요. 이 서버에는 글자만 보내요. Chrome·Edge, HTTPS 주소에서 동작해요.</p>
   </section>
 
-  <section class="dev" id="dev" aria-label="개발자 테스트 패널">
-    <div id="devConn"></div>
-    <div id="devFeature"></div>
-    <article class="card">
-      <h2>로그 <button class="mini" id="btnClear">지우기</button></h2>
-      <p class="note" id="counter">이 페이지에서 보낸 요청 0건</p>
-      <ol class="log" id="log"></ol>
-    </article>
+  <section class="card" aria-label="결과">
+    <h2>② 결과 <span id="kind" class="note"></span></h2>
+    <div id="result" aria-live="polite"><p class="note">아직 결과가 없어요. 위에서 말하거나 입력한 뒤 버튼을 눌러 주세요.</p></div>
+    <div class="info" id="info"></div>
+    <div id="raw"></div>
   </section>
+  <p class="note"><a href="/">기존 키오스크</a> · <a href="/ai-lab.html">전체 AI Lab(실험용 탭 구조)</a></p>
 </main>
-<script src="ai-test.js" type="module"></script>
+<script type="module" src="ai-simple.js"></script>
 </body>
 </html>

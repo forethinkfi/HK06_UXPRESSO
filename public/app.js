@@ -164,8 +164,8 @@ const logo = `<div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오�
 const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode].icon)}</span><span><small>주문 방식</small><b>${MODES[S.mode].name}</b></span><button class="btn sec sm2" data-act="modeDlg">바꾸기</button></div>`;
 const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}" aria-pressed="${on}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><span>${MODES[k].sub}</span><span class="chk">${on ? '✓ 선택됨' : ''}</span></button>`;
 
-// AI Lab entry (experiment/ai-poc). `?ailab=0` hides it. The lab itself runs in an overlay outside #stage — see "AI Lab bridge" below.
-const aiLabOn = new URLSearchParams(location.search).get('ailab') !== '0';
+// AI Lab entry (experiment/ai-poc). Opt-in: add `?ailab=1` to the URL to show it (off by default). The lab itself runs in an overlay outside #stage — see "AI Lab bridge" below.
+const aiLabOn = new URLSearchParams(location.search).get('ailab') === '1';
 const aiLabEntry = (where) => (!aiLabOn ? '' : where === 'start'
   ? `<button class="vstart ailabentry" data-act="ailab"><span class="vi">${vicon('wave')}</span><span><b>AI Lab<em>실험</em></b><small>AI로 주문·추천 테스트하기</small></span></button>`
   : `<button class="vtrig ailabtn" data-act="ailab">AI Lab</button>`);
@@ -599,7 +599,7 @@ document.addEventListener('submit', (ev) => {
 document.addEventListener('input', (ev) => { if (ev.target.id === 'precode') S.pre.code = ev.target.value; if (ev.target.id === 'paycode') S.pay.code = ev.target.value; });
 
 // ---------- AI Lab bridge (experiment/ai-poc) ----------
-// The overlay lives OUTSIDE #stage (render() replaces #stage's content) and hosts /ai-test.html?embed=1 in an iframe
+// The overlay lives OUTSIDE #stage (render() replaces #stage's content) and hosts /ai-lab.html?embed=1 in an iframe
 // (540×900 scaled ×2 = the 1080×1800 area under the bar). The only coupling is postMessage, same origin only:
 //   AI Lab → kiosk: { source:'ai-lab', type:'add-items'|'view-cart'|'close'|'activity', ... }
 //   kiosk → AI Lab: { source:'kiosk', type:'ack', id, ok, cartCount, cartTotal, needMode, error }
@@ -614,7 +614,7 @@ function aiLabOpen() {
   let o = document.getElementById('ailab');
   if (!o) {
     o = document.createElement('div'); o.id = 'ailab';
-    o.innerHTML = '<div class="al-bar"><span><b>AI Lab</b><small>실험 기능 · 초안 화면 위에서 테스트</small></span><button class="btn sec" data-act="ailabClose">닫기</button></div><div class="al-frame"><iframe title="AI Lab" src="/ai-test.html?embed=1" allow="microphone"></iframe></div>';
+    o.innerHTML = '<div class="al-bar"><span><b>AI Lab</b><small>실험 기능 · 초안 화면 위에서 테스트</small></span><button class="btn sec" data-act="ailabClose">닫기</button></div><div class="al-frame"><iframe title="AI Lab" src="/ai-lab.html?embed=1" allow="microphone"></iframe></div>';
     document.body.appendChild(o);
   }
   o.hidden = false; aiLabPlace();

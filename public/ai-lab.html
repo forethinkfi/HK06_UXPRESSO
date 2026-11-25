@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UXPRESSO AI Lab</title>
+<link rel="stylesheet" href="ai-lab.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>UXPRESSO <span>AI Lab</span></h1>
+    <p>Gemini API 실험 페이지 · 비공식 · 메뉴와 가격은 테스트 데이터예요.</p>
+  </div>
+  <a class="link" href="/">기존 키오스크로 가기 (AI Lab 버튼으로 같은 화면에서 테스트)</a>
+</header>
+
+<main class="lab" id="lab" data-tab="order">
+  <section class="stage" aria-label="키오스크 미리보기">
+    <div class="kiosk" id="kiosk">
+      <nav class="tabs" id="tabs" role="tablist" aria-label="AI 기능"></nav>
+      <div class="k-head" id="kHead"></div>
+      <div class="k-body" id="kBody"></div>
+    </div>
+    <p class="cap">키오스크 미리보기 (540 × 960, 9:16) · 실제 키오스크 화면이 아니라 실험용 화면이에요.</p>
+  </section>
+
+  <section class="dev" id="dev" aria-label="개발자 테스트 패널">
+    <div id="devConn"></div>
+    <div id="devFeature"></div>
+    <article class="card">
+      <h2>로그 <button class="mini" id="btnClear">지우기</button></h2>
+      <p class="note" id="counter">이 페이지에서 보낸 요청 0건</p>
+      <ol class="log" id="log"></ol>
+    </article>
+  </section>
+</main>
+<script src="ai-lab.js" type="module"></script>
+</body>
+</html>
