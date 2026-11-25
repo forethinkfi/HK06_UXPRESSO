@@ -456,3 +456,16 @@ details p{color:var(--mute);margin-top:8px;font-weight:500}
 .inforows{display:flex;flex-direction:column;gap:12px}
 .inforows div{display:flex;justify-content:space-between;align-items:center;min-height:80px;border:2px solid var(--line);border-radius:12px;padding:0 24px;font-size:30px}
 .inforows .on{border:3px solid var(--ink);background:var(--y-soft)}.inforows small{font-size:24px;color:var(--mute)}
+
+/* ---- AI Lab entry + overlay (experiment/ai-poc) ---- */
+.hr2g{display:flex;gap:12px;align-items:center}
+.vtrig.ailabtn{background:#fff;color:var(--ink);border:3px solid var(--ink)}
+.vstart.ailabentry{margin-top:16px}
+.ailabentry b em{font-style:normal;font-size:20px;background:var(--y);border:2px solid var(--ink);border-radius:8px;padding:0 8px;margin-left:10px;vertical-align:middle}
+#ailab{position:fixed;width:1080px;height:1920px;transform-origin:0 0;background:#fff;z-index:60;display:flex;flex-direction:column}
+#ailab[hidden]{display:none}
+.al-bar{height:120px;flex:none;background:var(--y);border-bottom:4px solid var(--ink);display:flex;justify-content:space-between;align-items:center;padding:0 32px}
+.al-bar b{font-size:40px}.al-bar small{display:block;font-size:24px}
+.al-bar .btn{min-height:88px;padding:0 40px}
+.al-frame{flex:1;overflow:hidden}
+.al-frame iframe{display:block;width:540px;height:900px;border:0;transform:scale(2);transform-origin:0 0}

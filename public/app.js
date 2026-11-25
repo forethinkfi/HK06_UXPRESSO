@@ -164,11 +164,17 @@ const logo = `<div class="logo">MEGA MGC COFFEE<small>UXPRESSO 비공식 키오�
 const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode].icon)}</span><span><small>주문 방식</small><b>${MODES[S.mode].name}</b></span><button class="btn sec sm2" data-act="modeDlg">바꾸기</button></div>`;
 const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}" aria-pressed="${on}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><span>${MODES[k].sub}</span><span class="chk">${on ? '✓ 선택됨' : ''}</span></button>`;
 
+// AI Lab entry (experiment/ai-poc). `?ailab=0` hides it. The lab itself runs in an overlay outside #stage — see "AI Lab bridge" below.
+const aiLabOn = new URLSearchParams(location.search).get('ailab') !== '0';
+const aiLabEntry = (where) => (!aiLabOn ? '' : where === 'start'
+  ? `<button class="vstart ailabentry" data-act="ailab"><span class="vi">${vicon('wave')}</span><span><b>AI Lab<em>실험</em></b><small>AI로 주문·추천 테스트하기</small></span></button>`
+  : `<button class="vtrig ailabtn" data-act="ailab">AI Lab</button>`);
+
 function viewStart() {
   const tile = (k) => `<button class="mt" data-act="setMode" data-v="${k}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><small>${MODES[k].en}</small></button>`;
   return `<div class="screen">${topbar()}<div class="scroll start2">
   <div class="ad"><small>SEASON SPECIAL</small><h2>새로운 계절, 새로운 즐거움</h2><p>시즌 신메뉴 &amp; 콜라보레이션</p><div class="adimg"><b>AD IMAGE</b><span>신메뉴 및 콜라보 광고 이미지 (자리 표시)</span></div></div>
-  <div class="ask2"><h1>어디에서 드시나요?</h1><div class="mts">${tile('dine')}${tile('take')}</div>${vbar('start')}
+  <div class="ask2"><h1>어디에서 드시나요?</h1><div class="mts">${tile('dine')}${tile('take')}</div>${vbar('start')}${aiLabEntry('start')}
   <div class="utils"><button data-act="dlg" data-v="lang"><b>언어 선택</b><small>Language</small></button><button data-act="dlg" data-v="access"><b>접근성 설정</b><small>Accessibility</small></button><button data-act="precheck"><b>쿠폰·상품권</b><small>사용 가능 여부 확인</small></button></div></div></div>
   <div class="disc">메가MGC커피의 공식 프로젝트가 아닌 비공식 UX/UI 개선 프로토타입이에요. 메뉴·가격은 테스트 데이터예요.</div></div>`;
 }
@@ -184,7 +190,7 @@ function viewMenu() {
   const list = visibleMenus(), P = PRIMS.find((x) => x.id === S.prim);
   const empty = `<div class="state">${P?.empty ? esc(P.empty) : '조건에 맞는 메뉴가 없어요'}<p>${P?.empty ? '다른 분류를 눌러 메뉴를 볼 수 있어요.' : '선택한 조건을 해제하면 다시 볼 수 있어요.'}</p>${S.filters.length || S.vf ? '<button class="btn sec" data-act="clearFilters">선택한 조건 모두 해제</button>' : ''}</div>`;
   const v = S.voice;
-  return `<div class="screen">${topbar(homeBtn)}<div class="hrow2"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button>${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</div>${vbar('menu')}
+  return `<div class="screen">${topbar(homeBtn)}<div class="hrow2"><button class="modechip" data-act="modeDlg">${MODES[S.mode].tag}<small>바꾸기</small></button><span class="hr2g">${aiLabEntry('menu')}${v.on ? '' : `<button class="vtrig" data-act="vStart"><span class="vi">${vicon('mic')}</span>음성으로 주문하기</button>`}</span></div>${vbar('menu')}
   <div class="scroll" data-keep>
    <h1 class="mh">어떤 메뉴를 드시겠어요?</h1>
    <div class="prims" role="tablist">${PRIMS.map((x) => `<button class="pm" aria-pressed="${S.prim === x.id}" data-act="prim" data-v="${x.id}">${S.prim === x.id ? '✓ ' : ''}${x.name}</button>`).join('')}</div>
@@ -498,7 +504,7 @@ function vUtter(text) {
   setTimeout(() => { if (v.req !== req || !v.on) return; vResolve(v.heard); render(); }, 800); // stale responses are dropped (req token)
 }
 // ---------- session (PRD v3 FR-17) ----------
-const sessOn = () => ['menu', 'cart', 'confirm', 'pay', 'pre'].includes(S.screen) && !['processing', 'pending'].includes(S.pay.phase) && !(S.voice.on && ['listening', 'processing'].includes(S.voice.st));
+const sessOn = () => !S.ailab && ['menu', 'cart', 'confirm', 'pay', 'pre'].includes(S.screen) &&!['processing', 'pending'].includes(S.pay.phase) && !(S.voice.on && ['listening', 'processing'].includes(S.voice.st));
 const sessLeft = () => Math.max(0, Math.ceil((SESS_GRACE_MS - (Date.now() - S.sess.warn)) / 1000));
 const dialogSess = () => `<div class="dim center" style="z-index:40"><div class="dialog sess" role="alertdialog" aria-label="아직 주문 중이신가요?"><span class="sc">${ico('clock')}</span><h2>아직 주문 중이신가요?</h2><p class="sd">계속 주문하기를 누르면<br>선택한 메뉴가 그대로 유지돼요.</p><p class="sessleft" aria-live="polite">${sessLeft()}초 후 주문 내역이 초기화됩니다.</p><button class="btn pri block" data-act="sessKeep">계속 주문하기</button><button class="btn sec block" data-act="sessEnd">주문 종료하기</button></div></div>`
 const INFO = { lang: ['언어 선택', [['한국어', true], ['English', false], ['中文', false], ['日本語', false]], '다른 언어는 준비 중이에요. 한국어로 계속 주문할 수 있어요.'], access: ['접근성 설정', [['글자·화면 확대', false], ['화면 대비', false], ['음성 안내 크기·속도', false]], '이 설정들은 준비 중이에요. 지금도 "시간 연장"과 "주문 도움"을 쓸 수 있어요.'] };
@@ -523,6 +529,7 @@ const A = {
   sessEnd: () => reset(),
   setMode: (e) => { const first = !S.mode; S.mode = e.v; S.modeDialog = false; if (first) { dbg.t0 = Date.now(); go('menu'); } else render(); },
   modeDlg: () => { S.modeDialog = true; render(); }, closeModeDlg: () => { S.modeDialog = false; render(); },
+  ailab: () => aiLabOpen(), ailabClose: () => aiLabClose(),
   help: () => { S.help = true; S.helpOpen = -1; dbg.help++; render(); },
   closeHelp, faq: (e) => { S.helpOpen = S.helpOpen === +e.i ? -1 : +e.i; render(); },
   staff: () => { closeHelp(); toast('직원에게 알렸어요. 주문 내용은 그대로 두었어요.'); },
@@ -591,8 +598,59 @@ document.addEventListener('submit', (ev) => {
 });
 document.addEventListener('input', (ev) => { if (ev.target.id === 'precode') S.pre.code = ev.target.value; if (ev.target.id === 'paycode') S.pay.code = ev.target.value; });
 
+// ---------- AI Lab bridge (experiment/ai-poc) ----------
+// The overlay lives OUTSIDE #stage (render() replaces #stage's content) and hosts /ai-test.html?embed=1 in an iframe
+// (540×900 scaled ×2 = the 1080×1800 area under the bar). The only coupling is postMessage, same origin only:
+//   AI Lab → kiosk: { source:'ai-lab', type:'add-items'|'view-cart'|'close'|'activity', ... }
+//   kiosk → AI Lab: { source:'kiosk', type:'ack', id, ok, cartCount, cartTotal, needMode, error }
+// Order lines are re-validated here against the kiosk's own menu data before they touch the real cart.
+function aiLabPlace() {
+  const o = document.getElementById('ailab'); if (!o) return;
+  const s = Math.min(innerWidth / 1080, innerHeight / 1920);
+  o.style.transform = `scale(${s})`; o.style.left = (innerWidth - 1080 * s) / 2 + 'px'; o.style.top = (innerHeight - 1920 * s) / 2 + 'px';
+}
+function aiLabOpen() {
+  S.ailab = true; S.sess.last = Date.now();
+  let o = document.getElementById('ailab');
+  if (!o) {
+    o = document.createElement('div'); o.id = 'ailab';
+    o.innerHTML = '<div class="al-bar"><span><b>AI Lab</b><small>실험 기능 · 초안 화면 위에서 테스트</small></span><button class="btn sec" data-act="ailabClose">닫기</button></div><div class="al-frame"><iframe title="AI Lab" src="/ai-test.html?embed=1" allow="microphone"></iframe></div>';
+    document.body.appendChild(o);
+  }
+  o.hidden = false; aiLabPlace();
+}
+function aiLabClose() { S.ailab = false; S.sess.last = Date.now(); const o = document.getElementById('ailab'); if (o) o.hidden = true; }
+const aiLine = (it) => { // -> clean cart line, or null when anything does not match the menu data
+  const m = it && menu(it.menuId);
+  if (!m || m.available === false || !m.temperature.includes(it.temp) || !Number.isInteger(it.qty) || it.qty < 1 || it.qty > 10) return null;
+  const opts = {};
+  for (const [g, c] of Object.entries(it.opts && typeof it.opts === 'object' && !Array.isArray(it.opts) ? it.opts : {})) {
+    const grp = m.options.find((x) => x.id === g), ch = grp && grp.choices.find((x) => x.id === String(c));
+    if (!ch || (grp.onlyTemp && grp.onlyTemp !== it.temp)) return null;
+    if (ch.id !== '0') opts[g] = ch.id;
+  }
+  return { menuId: m.id, temp: it.temp, opts, qty: it.qty };
+};
+addEventListener('message', (e) => {
+  const fr = document.querySelector('#ailab iframe');
+  if (!fr || e.source !== fr.contentWindow || e.origin !== location.origin) return;
+  const d = e.data;
+  if (!d || d.source !== 'ai-lab') return;
+  S.sess.last = Date.now();
+  if (d.type === 'add-items') {
+    const reply = (m) => e.source.postMessage({ source: 'kiosk', type: 'ack', id: d.id, ...m }, location.origin);
+    const lines = (Array.isArray(d.items) ? d.items.slice(0, 10) : []).map(aiLine);
+    if (!lines.length || lines.some((l) => !l)) return reply({ ok: false, error: '키오스크 메뉴 정보와 맞지 않는 항목이 있어요.' });
+    S.cart.push(...lines); merge(); render();
+    reply({ ok: true, added: lines.reduce((s, l) => s + l.qty, 0), cartCount: cartCount(), cartTotal: cartTotal(), needMode: !S.mode });
+  } else if (d.type === 'view-cart') {
+    aiLabClose();
+    if (S.mode) go('cart'); else { go('start'); toast('주문 방식을 골라 주세요. 담은 메뉴는 그대로예요.'); }
+  } else if (d.type === 'close') aiLabClose();
+});
+
 // scale the fixed 1080x1920 kiosk stage into the viewport
-const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); const st = $('#stage'); st.style.transform = `scale(${s})`; st.style.left = (innerWidth - 1080 * s) / 2 + 'px'; st.style.top = (innerHeight - 1920 * s) / 2 + 'px'; };
+const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); const st = $('#stage'); st.style.transform = `scale(${s})`; st.style.left = (innerWidth - 1080 * s) / 2 + 'px'; st.style.top = (innerHeight - 1920 * s) / 2 + 'px'; aiLabPlace(); };
 addEventListener('resize', fit); fit();
 if (dbg.on) setInterval(() => { const d = $('#dbg'); if (d) d.textContent = `taps ${dbg.taps} · ${dbg.t0 ? Math.round((Date.now() - dbg.t0) / 1000) : 0}s · help ${dbg.help}`; }, 500);
 boot();

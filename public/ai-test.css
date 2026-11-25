@@ -10,9 +10,6 @@ button,input,textarea{font:inherit;color:inherit}
 .top h1{margin:0;font-size:22px}
 .top h1 span{background:var(--y);color:var(--ink);padding:2px 8px;border-radius:8px;margin-left:4px}
 .top p{margin:2px 0 0;font-size:14px;color:#ddd}
-.top-r{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.top-r label{font-size:14px}
-.top-r input{padding:8px;border-radius:8px;border:1px solid #888;background:#fff;color:var(--ink);min-height:40px}
 .link{color:var(--y);font-weight:700;min-height:40px;display:inline-flex;align-items:center}
 .lab{display:grid;gap:16px;padding:16px;max-width:1280px;margin:0 auto}
 @media (min-width:1000px){.lab{grid-template-columns:minmax(0,560px) minmax(0,1fr);align-items:start}.dev{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}
@@ -84,3 +81,23 @@ details summary{cursor:pointer;font-weight:700;margin:6px 0}
 @media (max-width:999px){.kiosk{aspect-ratio:auto}.k-body{overflow:visible}}
 .log .ok,.log .err,.log .warn{flex:none;white-space:nowrap}
 .kv li>span:first-child{flex:none;white-space:nowrap}
+
+/* ---- tabs (feature modules) ---- */
+.tabs{display:flex;gap:6px;padding:8px 8px 0;background:var(--ink)}
+.tab{flex:1;min-height:44px;border:2px solid var(--y);border-bottom:0;border-radius:10px 10px 0 0;background:#2a2a2a;color:#fff;font-weight:800;cursor:pointer;padding:0 6px}
+.tab small{font-size:11px;font-weight:600;color:#bbb}
+.tab[aria-selected=true]{background:var(--y);color:var(--ink)}.tab[aria-selected=true] small{color:var(--ink)}
+.tab:focus-visible{outline:3px solid #fff;outline-offset:-3px}
+.tokenbox{display:block;margin:0 0 10px;font-size:14px}
+.tokenbox input{width:100%;margin-top:4px;padding:8px;border:2px solid var(--ink);border-radius:8px;min-height:44px}
+.k-feature,.d-feature{display:flex;flex-direction:column;gap:12px}
+.k-feature[hidden],.d-feature[hidden]{display:none}
+
+/* ---- embedded in the kiosk overlay (public/app.js): 540×900 viewport scaled ×2 by the kiosk ---- */
+html.embed body{background:#fff}
+html.embed .top,html.embed .cap{display:none}
+html.embed .lab{display:block;padding:0;max-width:none}
+html.embed .kiosk{max-width:none;border:0;border-radius:0;aspect-ratio:auto;height:100vh;margin:0}
+html.embed .dev{position:static;max-height:none;overflow:visible;padding:10px;background:var(--bg);min-height:100vh}
+html.embed .lab[data-tab="dev"] .stage{display:none}
+html.embed .lab:not([data-tab="dev"]) .dev{display:none}
