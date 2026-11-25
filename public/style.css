@@ -186,3 +186,51 @@ details p{color:var(--mute);margin-top:8px;font-weight:500}
 .toast{position:absolute;left:50%;bottom:260px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:24px 44px;border-radius:60px;font-size:36px;font-weight:800;z-index:30;max-width:960px;text-align:center;animation:ti .25s}
 @keyframes ti{from{opacity:0;transform:translate(-50%,20px)}}
 .dbg{position:absolute;top:8px;left:8px;z-index:40;background:#000c;color:#0f0;font:20px monospace;padding:6px 12px;border-radius:10px}
+
+/* ===== v2: mode selection, menu card, destructive, kit states ===== */
+.stage *{animation:none!important}
+.startbody{display:flex;flex-direction:column;align-items:center;padding:120px 48px 0}
+.startbody h1{font-size:84px;font-weight:900;letter-spacing:-2px}
+.lead{font-size:36px;color:var(--mute);font-weight:600;margin:16px 0 80px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:32px;width:100%}
+.mode{min-height:560px;border-radius:var(--r);border:4px solid var(--ink);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px;font-size:34px;font-weight:600;text-align:center}
+.mode b{font-size:56px;font-weight:900;line-height:1.15}
+.mode .mi{width:200px;height:200px;border-radius:50%;background:var(--y-soft);display:grid;place-items:center;color:var(--ink);padding:38px}
+.mode:active,.mode.is-pressed{background:var(--y-soft)}
+.mode[aria-pressed=true]{background:var(--ink);color:#fff;box-shadow:inset 0 0 0 6px var(--y)}
+.mode[aria-pressed=true] .mi{background:#fff}
+.mode .chk{min-height:44px;font-size:34px;font-weight:900;color:var(--y)}
+.modes.in .mode{min-height:400px}.modes.in .mode b{font-size:44px}.modes.in .mode .mi{width:140px;height:140px;padding:26px}
+.dialog .modes{margin:0}
+.modebar{flex:none;display:flex;align-items:center;gap:20px;padding:14px 48px;background:var(--ink);color:#fff}
+.modebar .mi{width:64px;height:64px;border-radius:50%;background:#fff;color:var(--ink);padding:12px;display:grid;place-items:center}
+.modebar span:nth-child(2){flex:1;line-height:1.2}.modebar small{display:block;font-size:24px;opacity:.85;font-weight:600}.modebar b{font-size:36px}
+.btn.sm2{min-height:72px;font-size:30px;padding:0 28px;color:var(--ink)}
+.sect h3 .opt{font-weight:600;font-size:26px}
+.count{display:flex;justify-content:space-between;align-items:center;padding:20px 48px 0;font-size:30px;font-weight:800}
+.count .btn{min-height:64px;font-size:28px}
+.grid{grid-template-columns:repeat(2,1fr)}
+.card{min-height:520px;gap:6px}
+.card .thumb{height:220px}
+.card b{font-size:40px}
+.card .sm{font-size:28px;color:#3f3f45;font-weight:500;min-height:80px;line-height:1.3}
+.feat{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.feat em{font-style:normal;font-size:24px;font-weight:800;background:var(--y-soft);border-radius:16px;padding:2px 14px}
+.card .temps{font-size:26px;color:var(--mute);font-weight:700;display:block}
+.card .price{font-size:38px;font-weight:900;margin-top:4px}
+.btn.dng{background:#fff;color:var(--err);border-color:var(--err);min-height:80px;font-size:30px;padding:0 28px}
+.btn.dng:active,.btn.dng.is-pressed{background:#fde7e5}
+.dialog .btn.dng{background:var(--err);color:#fff;min-height:104px;font-size:40px}
+.split{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.split small{font-size:32px;color:var(--mute)}
+.term{font-size:26px;font-weight:600;color:var(--mute)}
+.note2{margin-top:36px;padding:18px 28px;border-radius:var(--r);background:var(--y-soft);font-size:30px;font-weight:700}
+.group.qty{display:flex;align-items:center;justify-content:space-between}
+.foot.col{flex-direction:column}.row2{display:flex;gap:20px;width:100%}
+.row2 .pri{flex:1;flex-direction:column;gap:2px;line-height:1.15;font-size:38px}.row2 .pri small{font-size:34px;font-weight:900}
+.mut{color:var(--mute)!important}
+.done.plain{background:var(--bg)}
+.disc{position:absolute;bottom:36px;left:0;right:0;text-align:center;font-size:24px;font-weight:600;color:var(--mute);padding:0 48px}
+.choice.is-pressed,.btn.is-pressed.sec,.back.is-pressed{background:var(--y-soft)}
+.btn.pri.is-pressed{background:#e6b000}
+.choice[aria-pressed=true].is-pressed{background:#000}

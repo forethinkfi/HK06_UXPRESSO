@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UXPRESSO Kiosk UI Kit</title>
+<link rel="stylesheet" href="style.css">
+<style>html,body{overflow:auto;height:auto;background:#fff}body{padding:40px;font-size:24px}
+h1{font-size:40px}h2{font-size:26px;margin:36px 0 8px}table{border-collapse:collapse}th,td{padding:10px 18px;border-bottom:1px solid #ddd;text-align:left;vertical-align:middle}th{font-size:20px;color:#555}
+.btn,.choice,.back,.helpbtn{min-width:260px}.choice{flex:none}.kitdesc{font-size:20px;color:#555}</style></head><body>
+<h1>UXPRESSO — Kiosk UI Kit · Buttons</h1><p class="kitdesc">비공식 개선 디자인 시스템. 화면 기준 1080×1920. 선택 상태는 색상 + 체크 + 테두리로 표현해요.</p>
+<table>
+<tr><th>컴포넌트</th><th>Default</th><th>Pressed</th><th>Selected</th><th>Disabled</th></tr>
+<tr><td>Primary<br><span class="kitdesc">현재 단계의 핵심 행동</span></td><td><button class="btn pri">4,500원 결제하기</button></td><td><button class="btn pri is-pressed">4,500원 결제하기</button></td><td>—</td><td><button class="btn pri" disabled>4,500원 결제하기</button></td></tr>
+<tr><td>Secondary<br><span class="kitdesc">메뉴 더 담기, 수정</span></td><td><button class="btn sec">메뉴 더 담기</button></td><td><button class="btn sec is-pressed">메뉴 더 담기</button></td><td>—</td><td><button class="btn sec" disabled>메뉴 더 담기</button></td></tr>
+<tr><td>Selection<br><span class="kitdesc">매장·포장·온도·옵션</span></td><td><button class="choice"><span class="nm">차갑게 (ICE)</span></button></td><td><button class="choice is-pressed"><span class="nm">차갑게 (ICE)</span></button></td><td><button class="choice" aria-pressed="true"><span class="nm">차갑게 (ICE)</span></button></td><td><button class="choice" disabled><span class="nm">차갑게 (ICE)</span></button></td></tr>
+<tr><td>Navigation<br><span class="kitdesc">이전·메뉴로 이동</span></td><td><button class="back">← 메뉴로</button></td><td><button class="back is-pressed">← 메뉴로</button></td><td>—</td><td><button class="back" disabled style="background:#e6e3d8;color:#55555a;border-color:transparent">← 메뉴로</button></td></tr>
+<tr><td>Help<br><span class="kitdesc">주문 도움</span></td><td><button class="helpbtn"><i>?</i>주문 도움</button></td><td><button class="helpbtn" style="background:#444"><i>?</i>주문 도움</button></td><td>—</td><td><button class="helpbtn" disabled style="background:#e6e3d8;color:#55555a;border-color:transparent"><i>?</i>주문 도움</button></td></tr>
+<tr><td>Destructive<br><span class="kitdesc">전체 주문 취소</span></td><td><button class="btn dng">전체 주문 취소</button></td><td><button class="btn dng is-pressed">전체 주문 취소</button></td><td>—</td><td><button class="btn dng" disabled>전체 주문 취소</button></td></tr>
+</table>
+<h2>Mode selection (동등한 선택지)</h2>
+<div style="display:flex;gap:24px;width:900px"><button class="mode" style="min-height:360px"><span class="mi"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22h32v14a14 14 0 0 1-14 14h-4a14 14 0 0 1-14-14z"/><path d="M44 27h3a6 6 0 0 1 0 12h-3"/><path d="M8 57h44"/></svg></span><b>매장에서 먹기</b><span>매장 안에서 드실 분</span></button><button class="mode" aria-pressed="true" style="min-height:360px"><span class="mi"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 24h36l-3 33H17z"/><path d="M23 24v-4a9 9 0 0 1 18 0v4"/></svg></span><b>포장하기</b><span>음료를 가지고 가실 분</span><span class="chk">✓ 선택됨</span></button></div>
+<h2>Tokens</h2><p class="kitdesc">Yellow #FFC400 · Ink #1D1D1F · Soft yellow #FFF1B8 · Mute #5B5B62 · Error #B3261E · Radius 28px · 터치 영역 최소 88px · 본문 32px</p>
+</body></html>

@@ -16,7 +16,8 @@
    "tags": [
     "진한",
     "고소",
-    "커피"
+    "커피",
+    "깔끔한"
    ],
    "temperature": [
     "HOT",
@@ -25,7 +26,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -43,6 +44,26 @@
        "id": "2",
        "label": "샷 2개 추가",
        "price": 1000
+      }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
       }
      ]
     },
@@ -63,7 +84,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -72,7 +94,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#5b3a29",
    "featured": true,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "쌉쌀하고 깔끔한 기본 커피"
   },
   {
    "id": "coldbrew",
@@ -84,7 +107,8 @@
    "tags": [
     "진한",
     "부드러운",
-    "커피"
+    "커피",
+    "깔끔한"
    ],
    "temperature": [
     "ICE"
@@ -92,7 +116,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -110,6 +134,26 @@
        "id": "2",
        "label": "샷 2개 추가",
        "price": 1000
+      }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
       }
      ]
     },
@@ -130,7 +174,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -139,7 +184,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#3d2a20",
    "featured": true,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "부드럽고 쓴맛이 적은 찬 커피"
   },
   {
    "id": "latte",
@@ -161,7 +207,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -180,11 +226,31 @@
        "label": "샷 2개 추가",
        "price": 1000
       }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
+      }
      ]
     },
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -198,7 +264,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     },
     {
      "id": "ice",
@@ -217,7 +284,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -226,7 +294,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#b98a62",
    "featured": true,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "우유가 듬뿍, 고소하고 부드러워요"
   },
   {
    "id": "vanilla",
@@ -248,7 +317,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -267,11 +336,31 @@
        "label": "샷 2개 추가",
        "price": 1000
       }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
+      }
      ]
     },
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -285,7 +374,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     },
     {
      "id": "ice",
@@ -304,7 +394,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -313,7 +404,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#d9b98a",
    "featured": true,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "바닐라 향의 달콤한 라떼"
   },
   {
    "id": "caramel",
@@ -334,7 +426,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -353,11 +445,31 @@
        "label": "샷 2개 추가",
        "price": 1000
       }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
+      }
      ]
     },
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -371,7 +483,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     },
     {
      "id": "ice",
@@ -390,7 +503,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -399,7 +513,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#c0792f",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "카라멜 소스가 올라간 달콤한 커피"
   },
   {
    "id": "condensed",
@@ -421,7 +536,7 @@
    "options": [
     {
      "id": "shot",
-     "label": "샷 추가",
+     "label": "커피를 더 진하게",
      "required": false,
      "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
      "choices": [
@@ -439,6 +554,26 @@
        "id": "2",
        "label": "샷 2개 추가",
        "price": 1000
+      }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
       }
      ]
     },
@@ -459,7 +594,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -468,7 +604,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#e3cfae",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "연유로 진하게 단 고소한 라떼"
   },
   {
    "id": "choco",
@@ -490,7 +627,7 @@
    "options": [
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -504,7 +641,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     },
     {
      "id": "ice",
@@ -523,7 +661,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -532,7 +671,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#6b3f2e",
    "featured": true,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "커피 없는 달콤한 초콜릿 우유"
   },
   {
    "id": "greentea",
@@ -553,8 +693,27 @@
    ],
    "options": [
     {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
+      }
+     ]
+    },
+    {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -568,7 +727,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     },
     {
      "id": "ice",
@@ -587,7 +747,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -596,7 +757,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#8fae6a",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "커피 없는 고소한 녹차 우유"
   },
   {
    "id": "lemonade",
@@ -610,7 +772,8 @@
     "시원한",
     "과일",
     "논커피",
-    "탄산"
+    "탄산",
+    "깔끔한"
    ],
    "temperature": [
     "ICE"
@@ -622,7 +785,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#f2d94a",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "상큼한 레몬과 시원한 탄산"
   },
   {
    "id": "grapefruit",
@@ -637,7 +801,8 @@
     "시원한",
     "과일",
     "논커피",
-    "탄산"
+    "탄산",
+    "깔끔한"
    ],
    "temperature": [
     "ICE"
@@ -649,7 +814,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#ee7b6b",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "새콤달콤한 자몽 탄산 음료"
   },
   {
    "id": "strawberry",
@@ -670,7 +836,7 @@
    "options": [
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -684,7 +850,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     }
    ],
    "nutrition": null,
@@ -693,7 +860,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#ef8fa0",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "달콤하게 간 시원한 딸기"
   },
   {
    "id": "cookie",
@@ -715,7 +883,7 @@
    "options": [
     {
      "id": "whip",
-     "label": "휘핑크림",
+     "label": "휘핑크림 올리기",
      "required": false,
      "help": "음료 위에 올리는 부드러운 크림이에요.",
      "choices": [
@@ -729,7 +897,8 @@
        "label": "올리기",
        "price": 500
       }
-     ]
+     ],
+     "term": "휘핑크림"
     }
    ],
    "nutrition": null,
@@ -738,7 +907,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#a98a6a",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "쿠키가 들어간 달콤한 프라페"
   },
   {
    "id": "peachtea",
@@ -774,7 +944,8 @@
        "label": "적게",
        "price": 0
       }
-     ]
+     ],
+     "term": "얼음 양"
     }
    ],
    "nutrition": null,
@@ -783,7 +954,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#f5b48a",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "복숭아 향의 달콤한 차"
   },
   {
    "id": "yuja",
@@ -808,7 +980,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#f0c23c",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "새콤달콤한 따뜻한 유자차"
   },
   {
    "id": "chamomile",
@@ -819,7 +992,8 @@
    "description": "꽃향기가 나는 편안한 따뜻한 차예요. 단맛은 거의 없어요.",
    "tags": [
     "부드러운",
-    "논커피"
+    "논커피",
+    "깔끔한"
    ],
    "temperature": [
     "HOT"
@@ -831,7 +1005,8 @@
    "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
    "color": "#e8dcae",
    "featured": false,
-   "hotExtra": 0
+   "hotExtra": 0,
+   "summary": "단맛 없이 편안한 꽃향기 차"
   }
  ]
 }
