@@ -1,5 +1,7 @@
 # UXPRESSO — Kiosk UI Kit
 
+> **2차 버전이 [`docs/design-system/`](design-system/README.md)에 있습니다.** 이 문서는 키오스크 화면 기준 1차 버전이며 현재 프로토타입(`public/`)이 사용합니다.
+
 메가MGC커피의 공식 디자인 시스템이 아닌, 기존 화면 관찰을 바탕으로 만든 **비공식 개선 디자인 시스템**입니다. 브랜드 정체성(노랑·검정·흰색)을 유지합니다. 컴포넌트 데모: `/kit.html`
 
 ## Foundations

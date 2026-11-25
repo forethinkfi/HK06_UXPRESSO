@@ -80,6 +80,8 @@ API 호출이 실패하면 `data/menus.json` 기본 데이터로 자동 전환�
 
 [`docs/index.md`](docs/index.md)에서 요구사항 요약, 디자인 시스템, API 문서를 볼 수 있고, Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)에 있습니다.
 
+디자인 시스템(2차, 모바일 앱 레퍼런스 기반)은 [`docs/design-system/`](docs/design-system/README.md)에 있습니다. 토큰: [`tokens.json`](docs/design-system/tokens.json), [`tokens.css`](docs/design-system/tokens.css).
+
 ## 구조
 
 ```
