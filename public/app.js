@@ -52,7 +52,7 @@ function demo(n) {
     if (n === 'voice-processing') { V.st = 'processing'; V.heard = '아이스 아메리카노 두 잔 주세요'; }
     if (n === 'voice-confirm') { V.st = 'confirming'; V.heard = '아이스 아메리카노 두 잔 주세요'; V.say = '이렇게 담아드릴까요?'; V.next = '맞으면 담고, 다르면 수정해 주세요.'; V.pend = { menuId: 'americano', temp: 'ICE', qty: 2 }; }
     if (n === 'voice-ask') { V.st = 'idle'; V.heard = '카페라떼 주세요'; V.say = '따뜻하게 드릴까요, 차갑게 드릴까요?'; V.next = '말하거나 화면을 눌러 주세요.'; V.ask = 'latte'; }
-    if (n === 'voice-error') { V.st = 'error'; V.say = '잘 듣지 못했어요.'; V.next = '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.'; }
+    if (n === 'voice-error') { V.st = 'error'; V.say = ''; V.next = '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.'; }
     if (n === 'voice-recommend') { V.st = 'idle'; V.heard = '메뉴 추천해 줘'; V.say = '추천 메뉴를 보여드릴게요.'; V.next = '원하는 메뉴를 말하거나 화면에서 선택해 주세요.'; S.vf = { label: '추천 메뉴', rec: true }; }
     if (n === 'voice-end') { V.on = false; S.screen = 'confirm'; S.cart = []; add('americano', 'ICE', {}, 2); }
   }
@@ -327,9 +327,9 @@ async function checkTx() {
 const VB = {
   idle: ['mic', '음성으로 주문하기', '메뉴 탐색 및 상품 구성'],
   listening: ['wave', '듣고 있어요', '사용자 음성 입력 중'],
-  processing: ['spin', '주문을 확인하고 있어요', '음성 인식 결과 처리'],
-  confirm: ['check', '이 메뉴를 담을까요?', '메뉴 및 옵션 확인'],
-  error: ['micoff', '다시 말해 주세요', '인식 실패 및 재시도'],
+  processing: ['spin', '말씀하신 내용을 확인하고 있어요', '음성 인식 결과 처리'],
+  confirm: ['check', '이 메뉴가 맞나요?', '메뉴 및 옵션 확인'],
+  error: ['micoff', '잘 듣지 못했어요', '인식 실패 및 재시도'],
 };
 const VICON = {
   mic: '<path d="M32 8a8 8 0 0 0-8 8v14a8 8 0 0 0 16 0V16a8 8 0 0 0-8-8z"/><path d="M16 28a16 16 0 0 0 32 0M32 44v10M24 54h16"/>',
@@ -383,7 +383,7 @@ const vStartPend = (m, temp, qty) => {
 };
 function vResolve(t) {
   const v = S.voice, tmp = tempOf(t), qty = qtyOf(t);
-  if (!t) return vSet('error', '잘 듣지 못했어요.', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.');
+  if (!t) return vSet('error', '', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.');
   if (/결제|계산|쿠폰|적립|카드/.test(t)) return vSet('idle', '결제, 쿠폰, 적립은 직접 선택해야 해요.', '메뉴를 다 담은 뒤 “이제 됐어”라고 말하거나 주문 확인을 눌러 주세요.');
   if (S.screen === 'start') {
     const k = /매장|먹고/.test(t) ? 'dine' : /포장|가져|테이크/.test(t) ? 'take' : '';
@@ -399,7 +399,7 @@ function vResolve(t) {
       if (tmp) A.temp({ v: tmp }); if (qty) d.qty = qty;
       return vSet('idle', `선택을 바꿨어요: ${[tmp && (tmp === 'ICE' ? '차갑게' : '따뜻하게'), qty && qty + '잔'].filter(Boolean).join(', ')}.`, '맞으면 “이걸로 담아줘”라고 말하거나 화면에서 담아 주세요.');
     }
-    return vSet('error', '잘 듣지 못했어요.', '온도나 수량을 말하거나 화면에서 선택해 주세요.');
+    return vSet('error', '', '온도나 수량을 말하거나 화면에서 선택해 주세요.');
   }
   if (v.ask && tmp) return vStartPend(menu(v.ask), tmp, v.qty);
   if (/이제 됐|다 됐|그만|주문 확인|끝났/.test(t)) {
@@ -427,7 +427,7 @@ function vResolve(t) {
   if (ms.length === 1) return vStartPend(ms[0], tmp, qty);
   if (ms.length > 1) { vSet('idle', '어느 메뉴인가요?', '아래에서 골라 주세요.'); v.cands = ms.slice(0, 6).map((m) => m.id); v.qty = qty; return; }
   if (cat) { S.cat = cat; return vSet('idle', `${cat} 메뉴를 보여드릴게요.`, '원하는 메뉴를 말하거나 눌러 주세요.'); }
-  return vSet('error', '잘 듣지 못했어요.', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.');
+  return vSet('error', '', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.');
 }
 function vUtter(text) {
   const v = S.voice;
