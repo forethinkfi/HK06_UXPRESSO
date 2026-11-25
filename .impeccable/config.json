@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "public/style.css"
+        ],
+        "createdAt": "2026-11-25T01:59:54.766Z",
+        "reason": "Intentional: mirrors AS-IS Mega Coffee kiosk option-group yellow side tag (docs/as-is-analysis.md); applied to h4 headings, not cards. Decided by assistant, not user-confirmed."
+      }
+    ]
+  }
+}
