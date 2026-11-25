@@ -93,7 +93,7 @@
 | Body Large | 28px | Medium | 40px | 핵심 안내 문구 |
 | Body Default | 24px | Regular | 36px | 일반 정보 |
 | Body Small | 22px | Regular | 32px | 보조 정보 |
-| Caption | 18px | Medium | 28px | 비핵심 보조 정보만 |
+| Caption | 22px | Medium | 32px | 비핵심 보조 정보만 |
 | Button Large | 32px | Bold | 44px | 주요 CTA |
 | Button Default | 28px | SemiBold | 40px | 일반 버튼 |
 | Price Large | 40px | Bold | 52px | 총 결제 금액 |
