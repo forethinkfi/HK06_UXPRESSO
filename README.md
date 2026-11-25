@@ -74,6 +74,10 @@ Node.js 18 이상이면 되고, 설치할 패키지는 없습니다.
 API 호출이 실패하면 `data/menus.json` 기본 데이터로 자동 전환되어 주문을 이어갈 수 있습니다.
 영양·알레르기 정보는 확인된 공식 정보가 없어 "확인되지 않았어요"로 표시합니다.
 
+## 문서
+
+[`docs/index.md`](docs/index.md)에서 요구사항 요약, 디자인 시스템, API 문서를 볼 수 있고, Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)에 있습니다.
+
 ## 구조
 
 ```
@@ -85,6 +89,8 @@ public/index.html  키오스크 진입 페이지
 public/app.js      화면·상태·인터랙션
 public/style.css   디자인 토큰·컴포넌트 스타일
 public/kit.html    버튼 UI Kit
+docs/              요구사항·디자인 시스템·API 문서
+CLAUDE.md          Claude Code 작업 가이드
 ```
 
 매장별로 조정할 값은 `public/app.js` 상단의 `PICKUP_TEXT`(수령 안내 문구), `RETURN_MS`(자동 복귀 시간)입니다.
