@@ -76,8 +76,8 @@ const optText = (it) => [TEMP_SHORT[it.temp], ...menu(it.menuId).options.filter(
 
 // ---------- visuals ----------
 const icon = (n) => ({
-  store: '<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22h32v14a14 14 0 0 1-14 14h-4a14 14 0 0 1-14-14z"/><path d="M44 27h3a6 6 0 0 1 0 12h-3"/><path d="M8 57h44"/></svg>',
-  bag: '<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 24h36l-3 33H17z"/><path d="M23 24v-4a9 9 0 0 1 18 0v4"/></svg>',
+  store: '<img src="/assets/f20c1.svg" alt="">',
+  bag: '<img src="/assets/09670.svg" alt="">',
 })[n];
 const cup = (color) => `<svg viewBox="0 0 100 124" aria-hidden="true"><rect x="20" y="6" width="60" height="12" rx="5" fill="#2b2b2b"/><path d="M25 18h50l-6 92a6 6 0 0 1-6 5H37a6 6 0 0 1-6-5z" fill="#fff" stroke="#2b2b2b" stroke-width="3"/><path d="M28.5 46h43l-3.6 64.5a3 3 0 0 1-3 2.5H35.1a3 3 0 0 1-3-2.5z" fill="${color}"/></svg>`;
 const features = (m) => [m.tags.includes('커피') ? '커피 들어감' : '커피 없음', ...m.tags.filter((t) => t !== '커피' && t !== '논커피').slice(0, 2)];
@@ -113,9 +113,9 @@ const modeBar = () => `<div class="modebar"><span class="mi">${icon(MODES[S.mode
 const modeBtn = (k, on) => `<button class="mode" data-act="setMode" data-v="${k}" aria-pressed="${on}"><span class="mi">${icon(MODES[k].icon)}</span><b>${MODES[k].name}</b><span>${MODES[k].sub}</span><span class="chk">${on ? '✓ 선택됨' : ''}</span></button>`;
 
 function viewStart() {
-  return `<div class="screen">${hdr(logo, helpBtn)}<div class="scroll startbody"><h1>어디에서 드시나요?</h1><p class="lead">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
-  <div class="modes">${modeBtn('dine', false)}${modeBtn('take', false)}</div>
-  <button class="btn sec preb" data-act="precheck">쿠폰·결제 수단 미리 확인하기<small>선택 사항이에요</small></button></div>
+  return `<div class="screen"><div class="scroll startbody" data-node-id="8:379"><h1 data-node-id="8:381">혹시 포장해서 드시나요?</h1><p class="lead" data-node-id="8:384">고른 뒤에도 주문 확인 화면에서 바꿀 수 있어요.</p>
+  <div class="modes" data-node-id="8:386">${modeBtn('dine', false)}${modeBtn('take', false)}</div>
+  <button class="btn sec preb" data-act="precheck" data-node-id="8:410">쿠폰·결제 수단 미리 확인하기<small>선택 사항이에요</small></button></div>
   <div class="disc">메가MGC커피의 공식 프로젝트가 아닌 비공식 UX/UI 개선 프로토타입이에요. 메뉴·가격은 테스트 데이터예요.</div></div>`;
 }
 
