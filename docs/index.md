@@ -8,7 +8,7 @@
 | [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |
 | [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안) — 메가커피 실제 화면 수집 자료 기반, TO-BE 유지/개선 표 |
 | [design-system/](design-system/README.md) | **UXPRESSO Kiosk Design System (2차, 모바일 앱 레퍼런스 기반)** — Reference Audit, Foundations, Tokens, Components, Patterns, UX Writing, Accessibility, 의사결정·QA |
-| [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준, 현재 프로토타입이 사용) — 2차로 대체 예정 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
+| [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
 | 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
 | [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
