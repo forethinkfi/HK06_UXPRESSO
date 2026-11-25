@@ -97,6 +97,96 @@
    "hotExtra": 0,
    "summary": "쌉쌀하고 깔끔한 기본 커피"
   },
+    {
+   "id": "decaf",
+   "name": "디카페인 아메리카노",
+   "category": "커피",
+   "price": 3000,
+   "image_url": null,
+   "description": "카페인을 줄인 원두로 내린 아메리카노예요. 맛은 아메리카노와 비슷하게 깔끔해요.",
+   "tags": [
+    "진한",
+    "고소",
+    "커피",
+    "깔끔한", "디카페인"],
+   "temperature": [
+    "HOT",
+    "ICE"
+   ],
+   "options": [
+    {
+     "id": "shot",
+     "label": "커피를 더 진하게",
+     "required": false,
+     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "샷 1개 추가",
+       "price": 500
+      },
+      {
+       "id": "2",
+       "label": "샷 2개 추가",
+       "price": 1000
+      }
+     ],
+     "term": "샷 추가"
+    },
+    {
+     "id": "syrup",
+     "label": "더 달콤하게",
+     "term": "시럽 추가",
+     "required": false,
+     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "추가 안 함",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "시럽 추가",
+       "price": 500
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "label": "얼음 양",
+     "required": false,
+     "onlyTemp": "ICE",
+     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+     "choices": [
+      {
+       "id": "0",
+       "label": "보통",
+       "price": 0
+      },
+      {
+       "id": "1",
+       "label": "적게",
+       "price": 0
+      }
+     ],
+     "term": "얼음 양"
+    }
+   ],
+   "nutrition": null,
+   "allergens": null,
+   "available": true,
+   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+   "color": "#7a5a46",
+   "featured": false,
+   "hotExtra": 0,
+   "summary": "카페인을 줄인 깔끔한 커피"
+  },
   {
    "id": "coldbrew",
    "name": "콜드브루",

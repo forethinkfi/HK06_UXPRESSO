@@ -5,10 +5,11 @@
 | 문서 | 내용 |
 |---|---|
 | [prd.md](prd.md) | **PRD 원문 (Ver. 2.0)** — 기획 단계 원본. 일부 항목(자연어 검색·AI Q&A 등)은 이후 요구사항으로 대체됨 |
+| [prd-v3-summary.md](prd-v3-summary.md) | **PRD v3.0 요약·구현 매핑** — 음성 주문(Voice-Driven UI)·세션 정책, 구현/미구현 표 (원문 미보관) |
 | [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |
 | [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안) — 메가커피 실제 화면 수집 자료 기반, TO-BE 유지/개선 표 |
 | [design-system/](design-system/README.md) | **UXPRESSO Kiosk Design System (2차, 모바일 앱 레퍼런스 기반)** — Reference Audit, Foundations, Tokens, Components, Patterns, UX Writing, Accessibility, 의사결정·QA |
-| [design-system/uxpresso-kiosk-design-system-v1.md](design-system/uxpresso-kiosk-design-system-v1.md) | **Kiosk Design System v1.0 원문 (팀 제공)** — 음성 주문(Voice-Driven UI)·세션·결제 구조 포함. 프로토타입 미반영, 기본 플로우와 충돌 항목은 확인 필요 |
+| [design-system/uxpresso-kiosk-design-system-v1.md](design-system/uxpresso-kiosk-design-system-v1.md) | **Kiosk Design System v1.0 원문 (팀 제공)** — 음성 주문(Voice-Driven UI)·세션·결제 구조 포함. 글자 크기·터치 높이는 토큰에 반영, 음성 CTA·세션 안내는 프로토타입에 구현(모의). 나머지 항목은 [prd-v3-summary.md](prd-v3-summary.md) 참고 |
 | [design-system/voice-cta-states.md](design-system/voice-cta-states.md) | 음성 주문 CTA 상태 5종(Default·Listening·Processing·Confirm·Error) + Hidden 정의 — 시안 이미지 기준 |
 | [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
@@ -34,6 +35,8 @@
 | 쿠폰 미리 확인·적용, 결제 수단 선택, 오류 복구, 승인 확인 중 | 구현 (모의) |
 | UI Audit (공개 자료 기반 초안) | 작성 — 매장 직접 관찰로 보완 필요 |
 | AS-IS 재현 프로토타입·사용성 테스트 결과 | 미작성 (리서치 필요) |
-| 자연어 검색·AI 질의응답 | 제외 (기본 플로우에 넣지 않음) |
+| 음성 주문(모의 입력), 음성 CTA 5상태, 종료 전 안내(120s/60s) | 구현 (PRD v3) |
+| 자연어 검색·AI 질의응답(챗봇형) | 제외 (허용된 Intent만 기존 화면 연결) |
+| 8개 대분류, 상단 AD, 언어·접근성 설정, 사용성 이벤트 | 미구현 |
 
 > 본 프로젝트는 메가MGC커피의 공식 프로젝트가 아닙니다. 메뉴·가격·쿠폰·결제는 모두 테스트 데이터입니다.
