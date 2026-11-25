@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UXPRESSO AI Lab</title>
+<link rel="stylesheet" href="ai-test.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>UXPRESSO <span>AI Lab</span></h1>
+    <p>Gemini API 실험 페이지 · 비공식 · 메뉴와 가격은 테스트 데이터예요.</p>
+  </div>
+  <div class="top-r">
+    <label id="tokenBox" hidden>접근 토큰 <input id="token" type="password" autocomplete="off" placeholder="필요한 경우만"></label>
+    <a class="link" href="/">기존 키오스크 보기</a>
+  </div>
+</header>
+
+<main class="lab">
+  <section class="stage" aria-label="키오스크 미리보기">
+    <div class="kiosk" id="kiosk">
+      <div class="k-head">말로 주문해 보세요</div>
+      <div class="k-body" id="kBody"></div>
+    </div>
+    <p class="cap">키오스크 미리보기 (540 × 960, 9:16) · 실제 키오스크 화면이 아니라 실험용 화면이에요.</p>
+  </section>
+
+  <section class="dev" aria-label="개발자 테스트 패널">
+    <article class="card">
+      <h2>1 API 연결 상태</h2>
+      <ul class="kv" id="connInfo"></ul>
+      <button class="btn" id="btnCheck">실제 API 연결 테스트</button>
+      <p class="note">버튼을 누르면 서버가 Google Gemini를 실제로 호출해요. 모의 응답으로 대신하지 않아요.</p>
+      <div id="checkResult" class="result" hidden></div>
+    </article>
+
+    <article class="card" id="detailCard" hidden></article>
+
+    <article class="card">
+      <h2>로그 <button class="mini" id="btnClear">지우기</button></h2>
+      <p class="note" id="counter">이 페이지에서 보낸 요청 0건</p>
+      <ol class="log" id="log"></ol>
+    </article>
+  </section>
+</main>
+<script src="ai-test.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+:root{
+  --y:#FFDC00; --y-soft:#FFF7D6; --ink:#171717; --mute:#595959; --line:#CFCFCF; --bg:#F5F5F5; --card:#fff;
+  --ok:#237A45; --ok-bg:#E8F5EC; --err:#C62828; --err-bg:#FDECEC; --warn:#8A5A00; --warn-bg:#FFF4D6; --r:14px;
+  font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:var(--ink);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-size:16px;line-height:1.5}
+button,input,textarea{font:inherit;color:inherit}
+.top{background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px}
+.top h1{margin:0;font-size:22px}
+.top h1 span{background:var(--y);color:var(--ink);padding:2px 8px;border-radius:8px;margin-left:4px}
+.top p{margin:2px 0 0;font-size:14px;color:#ddd}
+.top-r{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top-r label{font-size:14px}
+.top-r input{padding:8px;border-radius:8px;border:1px solid #888;background:#fff;color:var(--ink);min-height:40px}
+.link{color:var(--y);font-weight:700;min-height:40px;display:inline-flex;align-items:center}
+.lab{display:grid;gap:16px;padding:16px;max-width:1280px;margin:0 auto}
+@media (min-width:1000px){.lab{grid-template-columns:minmax(0,560px) minmax(0,1fr);align-items:start}.dev{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}
+.stage .cap{font-size:13px;color:var(--mute);margin:8px 4px}
+.kiosk{width:100%;max-width:540px;aspect-ratio:9/16;background:#fff;border:3px solid var(--ink);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;margin:0 auto}
+.k-head{background:var(--y);font-weight:800;font-size:20px;padding:14px 16px;text-align:center}
+.k-body{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 10px;font-size:18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.note{font-size:13px;color:var(--mute);margin:8px 0}
+.btn{min-height:48px;padding:0 18px;border-radius:12px;border:2px solid var(--ink);background:var(--y);font-weight:800;cursor:pointer}
+.btn:hover{background:#E6C500}.btn:focus-visible,.mini:focus-visible,input:focus-visible,textarea:focus-visible,.chip:focus-visible{outline:3px solid #0B57D0;outline-offset:2px}
+.btn:disabled{background:#eee;color:#767676;border-color:#bbb;cursor:not-allowed}
+.btn.sec{background:#fff}
+.mini{min-height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:13px;cursor:pointer}
+.kv{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px}
+.kv li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:4px;font-size:15px}
+.kv b{font-weight:700}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;border:1px solid}
+.badge.ok{color:var(--ok);background:var(--ok-bg);border-color:var(--ok)}
+.badge.err{color:var(--err);background:var(--err-bg);border-color:var(--err)}
+.badge.warn{color:var(--warn);background:var(--warn-bg);border-color:var(--warn)}
+.badge.mock{color:#4a3b00;background:var(--y);border-color:var(--ink)}
+.result{margin-top:10px;border-radius:10px;padding:12px;border:1px solid var(--line);background:#fafafa}
+.result.ok{border-color:var(--ok);background:var(--ok-bg)}.result.err{border-color:var(--err);background:var(--err-bg)}
+.result h3{margin:0 0 8px;font-size:16px}
+.hint{background:#fff;border-left:4px solid var(--err);padding:8px 10px;margin:8px 0;border-radius:6px}
+pre{background:#171717;color:#f3f3f3;padding:10px;border-radius:8px;overflow:auto;font-size:13px;line-height:1.45;margin:6px 0;max-height:260px;white-space:pre-wrap;word-break:break-word}
+details summary{cursor:pointer;font-weight:700;margin:6px 0}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:4px;max-height:220px;overflow:auto;font-size:13px}
+.log li{display:flex;gap:8px;align-items:baseline;border-bottom:1px solid #eee;padding:3px 0}
+.log time{color:var(--mute);flex:none}
+.log .ok{color:var(--ok);font-weight:700}.log .err{color:var(--err);font-weight:700}.log .warn{color:var(--warn);font-weight:700}
