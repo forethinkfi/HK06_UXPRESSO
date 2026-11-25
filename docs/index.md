@@ -13,7 +13,7 @@
 | [design-system/voice-cta-states.md](design-system/voice-cta-states.md) | 음성 주문 CTA 상태 5종(Default·Listening·Processing·Confirm·Error) + Hidden 정의 — 시안 이미지 기준 |
 | [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 | UXPRESSO — Kiosk UI Kit: 토큰, 버튼 6종, 접근성 기준, UX Writing 규칙 |
 | [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | UXPRESSO 팀 Figma 파일 — 카페 키오스크 개선 시안 (Figma 계정 필요) |
-| [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트 |
+| [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트, [UIBowl 레퍼런스](research/uibowl-references.md) |
 | [meetings/](meetings/README.md) | 회의록 (템플릿 포함) |
 | [presentation/](presentation/README.md) | 발표 자료 |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | **작업 방법** — 파일 올리는 위치, 브랜치 규칙, 커밋 메시지 |
