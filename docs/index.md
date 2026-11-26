@@ -5,8 +5,8 @@
 | 문서 | 내용 |
 |---|---|
 | [prd-v3.0.md](prd-v3.0.md) | **PRD v3.0 전문 (팀 제공)** — 음성 주문·세션 정책 포함 원문 (검증 전 제안) |
-| [design-system/uxpresso-design-system-v6.md](design-system/uxpresso-design-system-v6.md) | **디자인 시스템 v6.0 (팀 제공, 현재 기준)** — `mega-ver.2` 새 화면의 기준. 제안 / 하드웨어 검증 전 |
-| [design-system/uxpresso-selection-refinement.md](design-system/uxpresso-selection-refinement.md) | **선택 상태·외곽선 개선 (팀 제공)** — v6과 다르면 이 문서 우선 |
+| [design-system/uxpresso-design-system-v6.md](design-system/uxpresso-design-system-v6.md) | **디자인 시스템 v6.0 (팀 제공 원본)** — `mega-ver.2` 새 화면의 바탕. 제안 / 하드웨어 검증 전 |
+| [design-system/uxpresso-selection-refinement.md](design-system/uxpresso-selection-refinement.md) | **현재 적용 규칙 (v6 개선, 팀 요청 반영)** — v6과 다르면 이 문서 우선 |
 | [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |
 | [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안) — 메가커피 실제 화면 수집 자료 기반, TO-BE 유지/개선 표 |
 | [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | UXPRESSO 팀 Figma 파일 — 카페 키오스크 개선 시안 (Figma 계정 필요) |

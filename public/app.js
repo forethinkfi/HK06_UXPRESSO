@@ -116,13 +116,18 @@ const SCREENS = {
     return `<div class="screen">${header()}${guide()}
     <nav class="cats" role="tablist" aria-label="메뉴 분류">${CATS.map((c) => `<button class="cat" role="tab" aria-selected="${c.id === S.cat}" data-act="cat" data-v="${c.id}">${c.name}</button>`).join('')}</nav>
     ${subs.length ? `<div class="subs" role="tablist">${[['all', '전체'], ...subs].map(([id, l]) => `<button class="subtab" role="tab" aria-selected="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}</div>` : ''}
+    <div class="scroll-wrap">
     <div class="scroll" data-keep="${S.cat}/${S.sub}">
       ${list.length ? `<div class="grid">${list.map((m) => {
         const out = m.available === false;
-        const badge = out ? '<span class="badge soldout">품절</span>' : '';
+        // NEW follows the homepage's new-menu list. BEST shows only for `best: true` in the menu data (needs real sales data).
+        const tags = out ? ['<span class="badge soldout">품절</span>'] : [m.cats.includes('신메뉴') && '<span class="badge">NEW</span>', m.best && '<span class="badge">BEST</span>'].filter(Boolean);
+        const badge = tags.length ? `<span class="badges">${tags.join('')}</span>` : '';
         return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button></article>`;
       }).join('')}</div>`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
+    </div>
+    <div class="updown" hidden>${iconBtn('chevron-up', '위로 보기', 'scroll', { val: -1, line: true })}${iconBtn('chevron-down', '아래로 보기', 'scroll', { val: 1, line: true })}</div>
     </div>
     <div class="cart">
       <div class="row between summary"><div class="grow"><p>${last ? `${esc(menu(last.menuId).name)} × ${last.qty}${S.cart.length > 1 ? ` 외 ${S.cart.length - 1}건` : ''}` : '담은 메뉴가 없어요.'}</p><p>2분 동안 조작이 없으면 종료 안내가 표시돼요.</p></div>${btn('시간 연장', 'extend', { v: 'tertiary', ic: 'clock' })}${S.cart.length ? btn('전체 삭제', 'dlg', { v: 'destructive', ic: 'trash-2', val: 'clear' }) : ''}</div>
@@ -244,6 +249,7 @@ function render() {
   const view = `${S.screen}/${dlg || ''}`;
   if (view !== shown) { shown = view; $(dlg ? '.dialog h2' : '#stage h1')?.focus({ preventScroll: true }); } // v6 8.2: move focus on screen change
   else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i]?.[0] === e.dataset.keep ? keep[i][1] : 0; });
+  syncUpDown();
 }
 
 // ---------- navigation, voice, payment ----------
@@ -365,6 +371,8 @@ addEventListener('click', (e) => {
   const act = el.dataset.act;
   if (act !== 'say') seq++;
   const { v } = el.dataset;
+  // up/down buttons: move most of a screen, no re-render
+  if (act === 'scroll') { const sc = $('.scroll-wrap .scroll'); return sc.scrollBy({ top: v * sc.clientHeight * 0.8, behavior: 'smooth' }); }
   ACT[act](v);
   if (act !== 'reset') render();
   if (e.detail) document.activeElement?.blur?.(); // no focus ring left behind after touch
@@ -372,6 +380,19 @@ addEventListener('click', (e) => {
   else if (document.activeElement === document.body) $(`[data-act="${act}"]${v ? `[data-v="${v}"]` : ''}`)?.focus({ preventScroll: true });
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
+
+// ---------- product list up/down buttons ----------
+// shown only when the list is longer than the screen; each end disables its button
+const syncUpDown = () => {
+  const sc = $('.scroll-wrap .scroll'), box = $('.updown');
+  if (!sc || !box) return;
+  const max = sc.scrollHeight - sc.clientHeight;
+  box.hidden = max <= 1;
+  const [up, down] = box.children;
+  up.disabled = sc.scrollTop <= 1;
+  down.disabled = sc.scrollTop >= max - 1;
+};
+addEventListener('scroll', (e) => { if (e.target.parentElement?.className === 'scroll-wrap') { sess.last = Date.now(); syncUpDown(); } }, true);
 
 // ---------- category swipe ----------
 // touch swipes natively; a mouse (demo in a desktop browser) needs drag-to-scroll

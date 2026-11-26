@@ -3,7 +3,7 @@
 메가MGC커피 키오스크 UX/UI 개선 **비공식** 프로토타입 (팀 UXPRESSO). 공식 프로젝트·공식 디자인 시스템·공식 API가 아니다.
 
 ## 현재 상태 (`mega-ver.2`)
-디자인 시스템 v6으로 화면(`public/`)을 새로 만든 브랜치다. 이전 화면과 이전 디자인 시스템 문서는 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v6.md`](docs/design-system/uxpresso-design-system-v6.md)이며, 선택 상태·외곽선·색상은 [`docs/design-system/uxpresso-selection-refinement.md`](docs/design-system/uxpresso-selection-refinement.md)가 v6보다 우선한다. 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
+디자인 시스템 v6으로 화면(`public/`)을 새로 만든 브랜치다. 이전 화면과 이전 디자인 시스템 문서는 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v6.md`](docs/design-system/uxpresso-design-system-v6.md)이며, 팀 요청으로 바뀐 현재 규칙(색상·상태·카테고리·상품 목록·상품 화면·접근성)은 [`docs/design-system/uxpresso-selection-refinement.md`](docs/design-system/uxpresso-selection-refinement.md)가 v6보다 우선한다. 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
 
 ## 명령어
 - 실행: `npm start` → http://localhost:3000 (`?demo=menu|option|review|pay|guide|done|voice|session` 으로 화면 바로 열기)
@@ -21,9 +21,9 @@
 | `docs/` | PRD v3.0·요구사항·API 문서 (`docs/index.md` 참고) |
 
 ## 작업 원칙
-- 화면은 1080×1920 세로 키오스크 기준. 색·글자·간격·상태는 디자인 시스템 v6을 따른다.
+- 화면은 1080×1920 세로 키오스크 기준. 색·글자·간격·상태는 현재 적용 규칙을 먼저, 그 밖은 디자인 시스템 v6을 따른다.
 - 추천 요청은 데이터 기준이며 인기·BEST를 지어내지 않는다.
-- 선택 상태는 색상만 쓰지 않고 라디오·체크 인디케이터 + 1px 테두리로 표현한다.
+- 옵션의 선택 상태는 색상만 쓰지 않고 라디오 인디케이터 + 1px 테두리로 표현한다(카테고리 탭은 노랑 채움).
 - UX Writing: 행동과 결과가 보이는 문구, 쉬운 한국어. 재촉·실수 지적 표현 금지. 오류는 **원인 + 해결 방법**을 함께 안내한다. 대기 인원 표시 금지. 카운트다운은 종료 전 안내 대화상자(실제 남은 초)에만 쓰고 그 외 화면에는 표시하지 않는다(미사용 120초 → 60초 유예).
 - 주문 상태 유지: 도움말·오류·뒤로가기 후에도 장바구니와 쿠폰은 유지한다.
 - 음성 주문은 PRD v3 기준 **선택 기능**(모의 입력)이다. 대화형 챗봇·긴 자연어 입력 UI는 넣지 않고, 허용된 의도(Intent)만 기존 화면으로 연결한다. 결제·쿠폰·적립은 음성으로 실행하지 않으며 주문 확인부터 마이크를 끈다. 터치만으로 전체 주문이 가능해야 한다.
