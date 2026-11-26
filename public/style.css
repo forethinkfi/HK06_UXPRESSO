@@ -454,7 +454,8 @@ details p{color:var(--mute);margin-top:8px;font-weight:500}
 .sess .sd{font-size:28px;color:var(--mute)}
 .sess .sessleft{width:100%;background:var(--y-soft);border-radius:12px;padding:20px;font-size:28px}
 .inforows{display:flex;flex-direction:column;gap:12px}
-.inforows div{display:flex;justify-content:space-between;align-items:center;min-height:80px;border:2px solid var(--line);border-radius:12px;padding:0 24px;font-size:28px}
+.inforows div,.inforows button{display:flex;justify-content:space-between;align-items:center;min-height:80px;border:2px solid var(--line);border-radius:12px;padding:0 24px;font-size:28px;background:#fff;width:100%}
+.inforows button:active{background:var(--y-soft)}
 .inforows .on{border:3px solid var(--ink);background:var(--y-soft)}.inforows small{font-size:24px;color:var(--mute)}
 
 /* Lucide + photo thumbs */
@@ -510,3 +511,9 @@ i[data-lucide],svg.lucide{stroke-width:2.25}
 .hdr2 .vtrig{min-height:64px;padding:0 20px;font-size:24px;gap:10px}.hdr2 .vtrig svg{width:32px;height:32px}
 .hdr2 .hr{gap:8px}
 .hdr2 .helpbtn{font-size:0;gap:0;width:64px;padding:0;justify-content:center}.hdr2 .helpbtn i{width:48px;height:48px;font-size:28px}
+.vb-speaking{background:#E8F5EC;color:var(--ok)}
+.vtext{display:flex;gap:12px;margin-top:4px}
+.vtext input{flex:1;min-width:0;height:76px;border-radius:var(--r);border:2px solid var(--ink);padding:0 20px;font-size:28px;background:#fff;user-select:text}
+.vtext input::placeholder{color:#707078}
+.vtext .btn{min-height:76px;padding:0 24px;font-size:28px;flex:none}
+.vsub-row{display:flex;justify-content:space-between;align-items:center;gap:12px}

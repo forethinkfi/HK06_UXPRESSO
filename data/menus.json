@@ -1,1104 +1,4015 @@
 {
- "categories": [
-  "커피",
-  "라떼",
-  "에이드·스무디",
-  "티"
- ],
- "menus": [
-  {
-   "id": "americano",
-   "name": "아메리카노",
-   "category": "커피",
-   "price": 2500,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "에스프레소에 물을 더한 깔끔한 커피예요. 쌉쌀하고 진한 맛이에요.",
-   "tags": [
-    "진한",
-    "고소",
+  "schema_version": "1.0",
+  "brand": "MEGA MGC COFFEE",
+  "checked_at": "2026-11-26",
+  "currency": "KRW",
+  "scope": "프로토타입용 부분 검증 메뉴 목록. 전국 전체 메뉴 또는 실시간 판매 여부를 보장하지 않음.",
+  "price_basis": "패스오더 개봉사거리점 표시 가격. 지점 및 주문 채널별로 다를 수 있음.",
+  "integration_notes": [
+    "기존 메뉴 ID와 이름을 매핑하고 중복 등록하지 않는다.",
+    "null은 미확인 정보이며 가격 0원, 무카페인, 옵션 없음으로 해석하지 않는다.",
+    "기존 앱에서 검증된 온도 및 옵션을 유지한다.",
+    "가격이 null이면 결제를 확정하지 않는다.",
+    "알레르기 안전 여부는 이 데이터만으로 판단하지 않는다.",
+    "별칭은 음성 인식용으로 추가한 비공식 표현이다.",
+    "시즌 및 판매 여부는 미검증이다."
+  ],
+  "categories": [
     "커피",
-    "깔끔한"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
+    "라떼",
+    "음료",
+    "에이드·스무디",
+    "에이드&주스",
+    "스무디&프라페",
+    "티",
+    "푸드"
+  ],
+  "menus": [
     {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
+      "id": "americano",
+      "name": "아메리카노",
+      "category": "커피",
+      "price": 2000,
+      "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "에스프레소와 물",
+      "tags": [
+        "진한",
+        "고소",
+        "커피",
+        "깔끔한"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#5b3a29",
+      "featured": true,
+      "hotExtra": 0,
+      "summary": "에스프레소와 물",
+      "aliases": [
+        "핫 아메리카노",
+        "아이스 아메리카노",
+        "뜨아",
+        "따뜻한 아메리카노",
+        "hot americano",
+        "아아",
+        "아이스 아메",
+        "iced americano"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "tempPrices": {
+        "HOT": 1700,
+        "ICE": 2000
       },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
+      "megaIds": [
+        "mega_002",
+        "mega_003"
+      ]
     },
     {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
+      "id": "decaf",
+      "name": "디카페인 아메리카노",
+      "category": "커피",
+      "price": 3000,
+      "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "카페인을 줄인 원두로 내린 아메리카노예요. 맛은 아메리카노와 비슷하게 깔끔해요.",
+      "tags": [
+        "진한",
+        "고소",
+        "커피",
+        "깔끔한",
+        "디카페인"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#7a5a46",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "카페인을 줄인 깔끔한 커피",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
     },
     {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
+      "id": "coldbrew",
+      "name": "콜드브루",
+      "category": "커피",
+      "price": 3500,
+      "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "찬물에 오래 우려내 부드럽고 쓴맛이 적은 차가운 커피예요.",
+      "tags": [
+        "진한",
+        "부드러운",
+        "커피",
+        "깔끔한"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#3d2a20",
+      "featured": true,
+      "hotExtra": 0,
+      "summary": "부드럽고 쓴맛이 적은 찬 커피",
+      "aliases": [
+        "콜드브루 오리지널",
+        "cold brew"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_025"
+      ]
+    },
+    {
+      "id": "latte",
+      "name": "카페라떼",
+      "category": "라떼",
+      "price": 2900,
+      "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "에스프레소와 우유",
+      "tags": [
+        "부드러운",
+        "고소",
+        "우유",
+        "커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#b98a62",
+      "featured": true,
+      "hotExtra": 0,
+      "summary": "우유가 듬뿍, 고소하고 부드러워요",
+      "aliases": [
+        "카페 라테",
+        "cafe latte"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_008"
+      ]
+    },
+    {
+      "id": "vanilla",
+      "name": "바닐라라떼",
+      "category": "라떼",
+      "price": 3400,
+      "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "바닐라 풍미의 라떼",
+      "tags": [
+        "달콤한",
+        "부드러운",
+        "우유",
+        "커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#d9b98a",
+      "featured": true,
+      "hotExtra": 0,
+      "summary": "바닐라 향의 달콤한 라떼",
+      "aliases": [
+        "바라",
+        "vanilla latte"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_015"
+      ]
+    },
+    {
+      "id": "caramel",
+      "name": "카라멜마키아토",
+      "category": "라떼",
+      "price": 3700,
+      "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "우유 위에 에스프레소와 카라멜 소스를 올린 달콤한 커피예요.",
+      "tags": [
+        "달콤한",
+        "우유",
+        "커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#c0792f",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "카라멜 소스가 올라간 달콤한 커피",
+      "aliases": [
+        "카라멜마끼아또",
+        "카라멜 마키아토",
+        "caramel macchiato"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_016"
+      ]
+    },
+    {
+      "id": "condensed",
+      "name": "연유라떼",
+      "category": "라떼",
+      "price": 3900,
+      "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "연유로 진하게 달콤한 맛을 낸 고소한 라떼예요.",
+      "tags": [
+        "달콤한",
+        "고소",
+        "우유",
+        "커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "shot",
+          "label": "커피를 더 진하게",
+          "required": false,
+          "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "샷 1개 추가",
+              "price": 500
+            },
+            {
+              "id": "2",
+              "label": "샷 2개 추가",
+              "price": 1000
+            }
+          ],
+          "term": "샷 추가"
+        },
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#e3cfae",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "연유로 진하게 단 고소한 라떼",
+      "aliases": [
+        "condensed milk latte"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_020"
+      ]
+    },
+    {
+      "id": "choco",
+      "name": "초콜릿라떼",
+      "category": "라떼",
+      "price": 4000,
+      "image_url": "https://images.unsplash.com/photo-1590080876209-c70d0f0bf6a3?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "커피 없이 초콜릿과 우유로 만든 달콤한 음료예요.",
+      "tags": [
+        "달콤한",
+        "부드러운",
+        "우유",
+        "논커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#6b3f2e",
+      "featured": true,
+      "hotExtra": 0,
+      "summary": "커피 없는 달콤한 초콜릿 우유",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
+    },
+    {
+      "id": "greentea",
+      "name": "녹차라떼",
+      "category": "라떼",
+      "price": 4000,
+      "image_url": "https://images.unsplash.com/photo-1686794154608-e45c831ef567?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "커피 없이 녹차 가루와 우유로 만든 고소하고 은은한 음료예요.",
+      "tags": [
+        "고소",
+        "부드러운",
+        "우유",
+        "논커피"
+      ],
+      "temperature": [
+        "HOT",
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "syrup",
+          "label": "더 달콤하게",
+          "term": "시럽 추가",
+          "required": false,
+          "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "추가 안 함",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "시럽 추가",
+              "price": 500
+            }
+          ]
+        },
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        },
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#8fae6a",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "커피 없는 고소한 녹차 우유",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
+    },
+    {
+      "id": "lemonade",
+      "name": "레몬에이드",
+      "category": "에이드·스무디",
+      "price": 3800,
+      "image_url": "https://images.unsplash.com/photo-1643836791063-18c8a3a3731e?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "레몬의 상큼함과 탄산이 시원한 음료예요. 커피가 들어가지 않아요.",
+      "tags": [
+        "상큼한",
+        "시원한",
+        "과일",
+        "논커피",
+        "탄산",
+        "깔끔한"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#f2d94a",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "상큼한 레몬과 시원한 탄산",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
+    },
+    {
+      "id": "grapefruit",
+      "name": "자몽에이드",
+      "category": "에이드·스무디",
+      "price": 3500,
+      "image_url": "https://images.unsplash.com/photo-1640283943282-e2e230154ade?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "새콤달콤한 자몽과 탄산을 섞은 시원한 음료예요.",
+      "tags": [
+        "상큼한",
+        "달콤한",
+        "시원한",
+        "과일",
+        "논커피",
+        "탄산",
+        "깔끔한"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#ee7b6b",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "새콤달콤한 자몽 탄산 음료",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_051"
+      ]
+    },
+    {
+      "id": "strawberry",
+      "name": "딸기스무디",
+      "category": "에이드·스무디",
+      "price": 4300,
+      "image_url": "https://images.unsplash.com/photo-1638176311291-36b0eacc6b08?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "딸기를 갈아 만든 달콤하고 시원한 음료예요.",
+      "tags": [
+        "달콤한",
+        "시원한",
+        "과일",
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#ef8fa0",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "달콤하게 간 시원한 딸기",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
+    },
+    {
+      "id": "cookie",
+      "name": "쿠키프라페",
+      "category": "에이드·스무디",
+      "price": 3900,
+      "image_url": "https://images.unsplash.com/photo-1638176066390-d1a2b56cc99c?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "쿠키와 우유 기반 프라페",
+      "tags": [
+        "달콤한",
+        "고소",
+        "시원한",
+        "우유",
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "whip",
+          "label": "휘핑크림 올리기",
+          "required": false,
+          "help": "음료 위에 올리는 부드러운 크림이에요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "안 올림",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "올리기",
+              "price": 500
+            }
+          ],
+          "term": "휘핑크림"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#a98a6a",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "쿠키가 들어간 달콤한 프라페",
+      "aliases": [
+        "쿠프",
+        "cookie frappe"
+      ],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_028"
+      ]
+    },
+    {
+      "id": "peachtea",
+      "name": "복숭아아이스티",
+      "category": "티",
+      "price": 3300,
+      "image_url": "https://images.unsplash.com/photo-1470752354724-60a1d2b1907f?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "복숭아 향이 나는 달콤하고 시원한 차예요.",
+      "tags": [
+        "달콤한",
+        "시원한",
+        "과일",
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [
+        {
+          "id": "ice",
+          "label": "얼음 양",
+          "required": false,
+          "onlyTemp": "ICE",
+          "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
+          "choices": [
+            {
+              "id": "0",
+              "label": "보통",
+              "price": 0
+            },
+            {
+              "id": "1",
+              "label": "적게",
+              "price": 0
+            }
+          ],
+          "term": "얼음 양"
+        }
+      ],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#f5b48a",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "복숭아 향의 달콤한 차",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true
+    },
+    {
+      "id": "yuja",
+      "name": "유자차",
+      "category": "티",
+      "price": 3300,
+      "image_url": "https://images.unsplash.com/photo-1615484477112-677decb29c57?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "유자 건더기가 들어간 새콤달콤한 따뜻한 차예요.",
+      "tags": [
+        "달콤한",
+        "상큼한",
+        "과일",
+        "논커피"
+      ],
+      "temperature": [
+        "HOT"
+      ],
+      "options": [],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#f0c23c",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "새콤달콤한 따뜻한 유자차",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_064"
+      ]
+    },
+    {
+      "id": "chamomile",
+      "name": "캐모마일",
+      "category": "티",
+      "price": 2500,
+      "image_url": "https://images.unsplash.com/photo-1630543378528-10043e324452?auto=format&fit=crop&w=480&h=480&q=75",
+      "description": "꽃향기가 나는 편안한 따뜻한 차예요. 단맛은 거의 없어요.",
+      "tags": [
+        "부드러운",
+        "논커피",
+        "깔끔한"
+      ],
+      "temperature": [
+        "HOT"
+      ],
+      "options": [],
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus / UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
+      "color": "#e8dcae",
+      "featured": false,
+      "hotExtra": 0,
+      "summary": "단맛 없이 편안한 꽃향기 차",
+      "aliases": [],
+      "caffeine_mg": null,
+      "optionsConfirmed": true,
+      "megaIds": [
+        "mega_067"
+      ]
+    },
+    {
+      "id": "mega_001",
+      "name": "메가리카노",
+      "category": "커피",
+      "price": 3300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_004",
+      "name": "헤이즐넛아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_005",
+      "name": "바닐라아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_006",
+      "name": "꿀아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_007",
+      "name": "할메가미숫커피",
+      "category": "커피",
+      "price": 3100,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_009",
+      "name": "카푸치노",
+      "category": "커피",
+      "price": 2900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_010",
+      "name": "왕메가카페라떼",
+      "category": "커피",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_011",
+      "name": "라이트 바닐라 아몬드라떼",
+      "category": "커피",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_012",
+      "name": "왕메가 헛개리카노",
+      "category": "커피",
+      "price": 3400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_013",
+      "name": "헛개리카노",
+      "category": "커피",
+      "price": 2400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_014",
+      "name": "헤이즐넛라떼",
+      "category": "커피",
+      "price": 3400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_017",
+      "name": "카페모카",
+      "category": "커피",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_018",
+      "name": "티라미수라떼",
+      "category": "커피",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_019",
+      "name": "큐브라떼",
+      "category": "커피",
+      "price": 4200,
+      "image_url": null,
+      "description": "커피 얼음, 연유, 우유",
+      "summary": "커피 얼음, 연유, 우유",
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_021",
+      "name": "초코젤라또 말차라떼",
+      "category": "커피",
+      "price": 4400,
+      "image_url": null,
+      "description": "초코 젤라또와 말차 및 커피",
+      "summary": "초코 젤라또와 말차 및 커피",
+      "aliases": [
+        "초코 말차 라떼"
+      ],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 213.5,
+      "nutrition": {
+        "caffeine_mg": 213.5
       },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_022",
+      "name": "하우스밀크 라떼",
+      "category": "커피",
+      "price": 3500,
+      "image_url": null,
+      "description": "하우스밀크와 에스프레소",
+      "summary": "하우스밀크와 에스프레소",
+      "aliases": [
+        "하우스 밀크",
+        "house milk latte"
+      ],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 118,
+      "nutrition": {
+        "caffeine_mg": 118
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_023",
+      "name": "할메가커피",
+      "category": "커피",
+      "price": 2300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_024",
+      "name": "왕할메가커피",
+      "category": "커피",
+      "price": 3400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_026",
+      "name": "초코 허니 퐁크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_027",
+      "name": "슈크림 허니 퐁크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_029",
+      "name": "스트로베리치즈홀릭",
+      "category": "스무디&프라페",
+      "price": 4500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_030",
+      "name": "민트프라페",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_031",
+      "name": "코코넛커피 스무디",
+      "category": "스무디&프라페",
+      "price": 4800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_032",
+      "name": "블루베리요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_033",
+      "name": "커피프라페",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_034",
+      "name": "플레인요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_035",
+      "name": "망고요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_036",
+      "name": "딸기요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_037",
+      "name": "골드망고스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_038",
+      "name": "그린키위 콕콕 딸키스무디",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_039",
+      "name": "밀크쉐이크",
+      "category": "스무디&프라페",
+      "price": 2900,
+      "image_url": null,
+      "description": "우유 기반 쉐이크",
+      "summary": "우유 기반 쉐이크",
+      "aliases": [
+        "밀크셰이크",
+        "milkshake"
+      ],
+      "tags": [
+        "논커피",
+        "디카페인"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 0,
+      "nutrition": {
+        "caffeine_mg": 0
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_040",
+      "name": "멋쟁이 토마토 스무디",
+      "category": "스무디&프라페",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_041",
+      "name": "복숭아 퐁당 요거트 스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_042",
+      "name": "초당옥수수 프라페",
+      "category": "스무디&프라페",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_043",
+      "name": "포도녹차 젤리 크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_044",
+      "name": "파인망고코코 스무디",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_045",
+      "name": "수박소르베 밀키 스무디",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_046",
+      "name": "수박 리치코코 슬러시",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_047",
+      "name": "자몽 톡톡 스무디",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_048",
+      "name": "애플머스캣 요거트 스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_049",
+      "name": "딥 초코 체리 프라페",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d69f7e",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_050",
+      "name": "메가에이드",
+      "category": "에이드&주스",
+      "price": 3900,
+      "image_url": null,
+      "description": "레몬, 라임, 자몽",
+      "summary": "레몬, 라임, 자몽",
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_052",
+      "name": "청포도에이드",
+      "category": "에이드&주스",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_053",
+      "name": "유니콘매직에이드(핑크)",
+      "category": "에이드&주스",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_054",
+      "name": "유니콘매직에이드(블루)",
+      "category": "에이드&주스",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_055",
+      "name": "라임모히또",
+      "category": "에이드&주스",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_056",
+      "name": "제로 부스트 에이드",
+      "category": "에이드&주스",
+      "price": 3000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_057",
+      "name": "제로 체리콜라",
+      "category": "에이드&주스",
+      "price": 3300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_058",
+      "name": "블루베리플럼주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_059",
+      "name": "골드키위주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_060",
+      "name": "꿀수박주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_061",
+      "name": "M망고 G구아바 C캐럿 주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_062",
+      "name": "허니자몽블랙티",
+      "category": "티",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_063",
+      "name": "자몽차",
+      "category": "티",
+      "price": 3300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_065",
+      "name": "레몬차",
+      "category": "티",
+      "price": 3300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_066",
+      "name": "녹차",
+      "category": "티",
+      "price": 2500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_068",
+      "name": "페퍼민트",
+      "category": "티",
+      "price": 2500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_069",
+      "name": "얼그레이",
+      "category": "티",
+      "price": 2500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_070",
+      "name": "왕메가사과유자차",
+      "category": "티",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_071",
+      "name": "제로 복숭아 아이스티",
+      "category": "티",
+      "price": 3000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_072",
+      "name": "왕메가아이스티",
+      "category": "티",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_073",
+      "name": "제로 레몬말차 아이스티",
+      "category": "티",
+      "price": 2400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_074",
+      "name": "망고폼 자스민 티플레저",
+      "category": "티",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_075",
+      "name": "저당 골든애플 블랙티",
+      "category": "티",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_076",
+      "name": "매실 모과차",
+      "category": "티",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_077",
+      "name": "쫀득 모찌 밀크티",
+      "category": "티",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_078",
+      "name": "무카페인 오르조라떼",
+      "category": "음료",
+      "price": 3300,
+      "image_url": null,
+      "description": "오르조와 우유",
+      "summary": "오르조와 우유",
+      "aliases": [
+        "오르조",
+        "오르조 라테",
+        "orzo latte"
+      ],
+      "tags": [
+        "논커피",
+        "디카페인"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 0,
+      "nutrition": {
+        "caffeine_mg": 0
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_079",
+      "name": "딸기라떼",
+      "category": "음료",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_080",
+      "name": "오레오초코라떼",
+      "category": "음료",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_081",
+      "name": "곡물라떼",
+      "category": "음료",
+      "price": 3300,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_082",
+      "name": "고구마라떼",
+      "category": "음료",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_083",
+      "name": "흑당버블라떼",
+      "category": "음료",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_084",
+      "name": "핫초코",
+      "category": "음료",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "HOT"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_085",
+      "name": "왕메가초코",
+      "category": "음료",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_086",
+      "name": "저당 꿀배 XO야쿠르트",
+      "category": "음료",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_087",
+      "name": "슈크림라떼",
+      "category": "음료",
+      "price": 3700,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "논커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_088",
+      "name": "커피초코칩 젤라또 슈크림라떼",
+      "category": "음료",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#b98a62",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_089",
+      "name": "와앙 핫 치즈스틱 & 딥",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_090",
+      "name": "엠지씨네 통쏘시지 김볶밥",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_091",
+      "name": "치즈케이크 딸기요거트 크레페",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_092",
+      "name": "말차 젤라또 팥빙 파르페",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_093",
+      "name": "내 맘대로 더블 젤라또",
+      "category": "푸드",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_094",
+      "name": "버터가 쫀득해떡",
+      "category": "푸드",
+      "price": 1400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_095",
+      "name": "에그머니 머핀인줄 브런치빵",
+      "category": "푸드",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_096",
+      "name": "엠지씨네 양념 컵치킨",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_097",
+      "name": "중식마녀 마라크림 새우토스트",
+      "category": "푸드",
+      "price": 4600,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_098",
+      "name": "밤고구마호박팥크림치즈빵",
+      "category": "푸드",
+      "price": 4200,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_099",
+      "name": "바삭허니 엠지씨네 컵치킨",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_100",
+      "name": "엠지씨네 마라 떡볶이",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_101",
+      "name": "메가베리 아사이볼",
+      "category": "푸드",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_102",
+      "name": "대파 송송 치즈 감자빵",
+      "category": "푸드",
+      "price": 3200,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_103",
+      "name": "버터버터 마늘 크로크무슈",
+      "category": "푸드",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_104",
+      "name": "멕시칸 미트칠리 핫도그",
+      "category": "푸드",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_105",
+      "name": "요거젤라또 씨리얼 초코베리믹스",
+      "category": "푸드",
+      "price": 3900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_106",
+      "name": "감자빵",
+      "category": "푸드",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_107",
+      "name": "초코스모어쿠키",
+      "category": "푸드",
+      "price": 2900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_108",
+      "name": "말차스모어쿠키",
+      "category": "푸드",
+      "price": 2900,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_109",
+      "name": "플레인크로플",
+      "category": "푸드",
+      "price": 2500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_110",
+      "name": "아이스크림크로플",
+      "category": "푸드",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_111",
+      "name": "쿠키프라페마카롱",
+      "category": "푸드",
+      "price": 2100,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_112",
+      "name": "딸기 크림치즈 쫀득빵",
+      "category": "푸드",
+      "price": 3200,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_113",
+      "name": "메가쿠키(초코칩)",
+      "category": "푸드",
+      "price": 2000,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_114",
+      "name": "치즈케익",
+      "category": "푸드",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_115",
+      "name": "초코무스케익",
+      "category": "푸드",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_116",
+      "name": "티라미수케익",
+      "category": "푸드",
+      "price": 3500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_117",
+      "name": "허니브레드",
+      "category": "푸드",
+      "price": 4500,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_118",
+      "name": "크로크무슈",
+      "category": "푸드",
+      "price": 3800,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_119",
+      "name": "핫 불고기&바비큐 반반 브리또",
+      "category": "푸드",
+      "price": 3600,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_120",
+      "name": "팥빙 젤라또 파르페",
+      "category": "푸드",
+      "price": 4400,
+      "image_url": null,
+      "description": null,
+      "summary": null,
+      "aliases": [],
+      "tags": [
+        "푸드"
+      ],
+      "temperature": null,
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": null,
+      "nutrition": null,
+      "allergens": null,
+      "available": true,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus",
+      "color": "#d9a96c",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_121",
+      "name": "나 혼자만 드랍 UP! 은랑 큐브 레몬에이드",
+      "category": "에이드&주스",
+      "price": null,
+      "image_url": null,
+      "description": "블루베리 레몬에이드와 나타드코코",
+      "summary": "블루베리 레몬에이드와 나타드코코",
+      "aliases": [],
+      "tags": [
+        "논커피",
+        "디카페인"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 0,
+      "nutrition": {
+        "caffeine_mg": 0
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://www.mega-mgccoffee.com/menu/",
+      "color": "#f0c84b",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_122",
+      "name": "음, 괜찮은 휴식이군 블레이드 초코크림커피",
+      "category": "커피",
+      "price": null,
+      "image_url": null,
+      "description": "아메리카노와 초코 크림",
+      "summary": "아메리카노와 초코 크림",
+      "aliases": [],
+      "tags": [
+        "커피"
+      ],
+      "temperature": [
+        "ICE"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 242.7,
+      "nutrition": {
+        "caffeine_mg": 242.7
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://www.mega-mgccoffee.com/menu/",
+      "color": "#5b3a29",
+      "featured": false,
+      "hotExtra": 0
+    },
+    {
+      "id": "mega_123",
+      "name": "유자생강차",
+      "category": "티",
+      "price": null,
+      "image_url": null,
+      "description": "유자와 생강",
+      "summary": "유자와 생강",
+      "aliases": [],
+      "tags": [
+        "논커피",
+        "디카페인"
+      ],
+      "temperature": [
+        "HOT"
+      ],
+      "options": [],
+      "optionsConfirmed": false,
+      "caffeine_mg": 0,
+      "nutrition": {
+        "caffeine_mg": 0
+      },
+      "allergens": null,
+      "available": true,
+      "source": "https://www.mega-mgccoffee.com/menu/",
+      "color": "#c9a65b",
+      "featured": false,
+      "hotExtra": 0
     }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#5b3a29",
-   "featured": true,
-   "hotExtra": 0,
-   "summary": "쌉쌀하고 깔끔한 기본 커피"
-  },
-  {
-   "id": "decaf",
-   "name": "디카페인 아메리카노",
-   "category": "커피",
-   "price": 3000,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "카페인을 줄인 원두로 내린 아메리카노예요. 맛은 아메리카노와 비슷하게 깔끔해요.",
-   "tags": [
-    "진한",
-    "고소",
-    "커피",
-    "깔끔한",
-    "디카페인"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#7a5a46",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "카페인을 줄인 깔끔한 커피"
-  },
-  {
-   "id": "coldbrew",
-   "name": "콜드브루",
-   "category": "커피",
-   "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "찬물에 오래 우려내 부드럽고 쓴맛이 적은 차가운 커피예요.",
-   "tags": [
-    "진한",
-    "부드러운",
-    "커피",
-    "깔끔한"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#3d2a20",
-   "featured": true,
-   "hotExtra": 0,
-   "summary": "부드럽고 쓴맛이 적은 찬 커피"
-  },
-  {
-   "id": "latte",
-   "name": "카페라떼",
-   "category": "라떼",
-   "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "에스프레소에 우유를 듬뿍 넣은 부드럽고 고소한 커피예요.",
-   "tags": [
-    "부드러운",
-    "고소",
-    "우유",
-    "커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#b98a62",
-   "featured": true,
-   "hotExtra": 0,
-   "summary": "우유가 듬뿍, 고소하고 부드러워요"
-  },
-  {
-   "id": "vanilla",
-   "name": "바닐라라떼",
-   "category": "라떼",
-   "price": 3800,
-   "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "라떼에 바닐라 시럽을 더한 달콤한 커피예요.",
-   "tags": [
-    "달콤한",
-    "부드러운",
-    "우유",
-    "커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#d9b98a",
-   "featured": true,
-   "hotExtra": 0,
-   "summary": "바닐라 향의 달콤한 라떼"
-  },
-  {
-   "id": "caramel",
-   "name": "카라멜마키아토",
-   "category": "라떼",
-   "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "우유 위에 에스프레소와 카라멜 소스를 올린 달콤한 커피예요.",
-   "tags": [
-    "달콤한",
-    "우유",
-    "커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#c0792f",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "카라멜 소스가 올라간 달콤한 커피"
-  },
-  {
-   "id": "condensed",
-   "name": "연유라떼",
-   "category": "라떼",
-   "price": 4200,
-   "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "연유로 진하게 달콤한 맛을 낸 고소한 라떼예요.",
-   "tags": [
-    "달콤한",
-    "고소",
-    "우유",
-    "커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "shot",
-     "label": "커피를 더 진하게",
-     "required": false,
-     "help": "샷은 에스프레소 한 번 분량이에요. 추가하면 커피 맛이 더 진해져요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "샷 1개 추가",
-       "price": 500
-      },
-      {
-       "id": "2",
-       "label": "샷 2개 추가",
-       "price": 1000
-      }
-     ],
-     "term": "샷 추가"
-    },
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#e3cfae",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "연유로 진하게 단 고소한 라떼"
-  },
-  {
-   "id": "choco",
-   "name": "초콜릿라떼",
-   "category": "라떼",
-   "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1590080876209-c70d0f0bf6a3?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "커피 없이 초콜릿과 우유로 만든 달콤한 음료예요.",
-   "tags": [
-    "달콤한",
-    "부드러운",
-    "우유",
-    "논커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#6b3f2e",
-   "featured": true,
-   "hotExtra": 0,
-   "summary": "커피 없는 달콤한 초콜릿 우유"
-  },
-  {
-   "id": "greentea",
-   "name": "녹차라떼",
-   "category": "라떼",
-   "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1686794154608-e45c831ef567?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "커피 없이 녹차 가루와 우유로 만든 고소하고 은은한 음료예요.",
-   "tags": [
-    "고소",
-    "부드러운",
-    "우유",
-    "논커피"
-   ],
-   "temperature": [
-    "HOT",
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "syrup",
-     "label": "더 달콤하게",
-     "term": "시럽 추가",
-     "required": false,
-     "help": "단맛이 나는 시럽을 넣어요. 더 달게 마시고 싶을 때 골라요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "추가 안 함",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "시럽 추가",
-       "price": 500
-      }
-     ]
-    },
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    },
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#8fae6a",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "커피 없는 고소한 녹차 우유"
-  },
-  {
-   "id": "lemonade",
-   "name": "레몬에이드",
-   "category": "에이드·스무디",
-   "price": 3800,
-   "image_url": "https://images.unsplash.com/photo-1643836791063-18c8a3a3731e?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "레몬의 상큼함과 탄산이 시원한 음료예요. 커피가 들어가지 않아요.",
-   "tags": [
-    "상큼한",
-    "시원한",
-    "과일",
-    "논커피",
-    "탄산",
-    "깔끔한"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#f2d94a",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "상큼한 레몬과 시원한 탄산"
-  },
-  {
-   "id": "grapefruit",
-   "name": "자몽에이드",
-   "category": "에이드·스무디",
-   "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1640283943282-e2e230154ade?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "새콤달콤한 자몽과 탄산을 섞은 시원한 음료예요.",
-   "tags": [
-    "상큼한",
-    "달콤한",
-    "시원한",
-    "과일",
-    "논커피",
-    "탄산",
-    "깔끔한"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#ee7b6b",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "새콤달콤한 자몽 탄산 음료"
-  },
-  {
-   "id": "strawberry",
-   "name": "딸기스무디",
-   "category": "에이드·스무디",
-   "price": 4300,
-   "image_url": "https://images.unsplash.com/photo-1638176311291-36b0eacc6b08?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "딸기를 갈아 만든 달콤하고 시원한 음료예요.",
-   "tags": [
-    "달콤한",
-    "시원한",
-    "과일",
-    "논커피"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#ef8fa0",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "달콤하게 간 시원한 딸기"
-  },
-  {
-   "id": "cookie",
-   "name": "쿠키프라페",
-   "category": "에이드·스무디",
-   "price": 4500,
-   "image_url": "https://images.unsplash.com/photo-1638176066390-d1a2b56cc99c?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "쿠키와 우유를 갈아 만든 달콤하고 고소한 음료예요.",
-   "tags": [
-    "달콤한",
-    "고소",
-    "시원한",
-    "우유",
-    "논커피"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "whip",
-     "label": "휘핑크림 올리기",
-     "required": false,
-     "help": "음료 위에 올리는 부드러운 크림이에요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "안 올림",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "올리기",
-       "price": 500
-      }
-     ],
-     "term": "휘핑크림"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#a98a6a",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "쿠키가 들어간 달콤한 프라페"
-  },
-  {
-   "id": "peachtea",
-   "name": "복숭아아이스티",
-   "category": "티",
-   "price": 3300,
-   "image_url": "https://images.unsplash.com/photo-1470752354724-60a1d2b1907f?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "복숭아 향이 나는 달콤하고 시원한 차예요.",
-   "tags": [
-    "달콤한",
-    "시원한",
-    "과일",
-    "논커피"
-   ],
-   "temperature": [
-    "ICE"
-   ],
-   "options": [
-    {
-     "id": "ice",
-     "label": "얼음 양",
-     "required": false,
-     "onlyTemp": "ICE",
-     "help": "얼음을 적게 넣으면 음료가 더 많이 담겨요.",
-     "choices": [
-      {
-       "id": "0",
-       "label": "보통",
-       "price": 0
-      },
-      {
-       "id": "1",
-       "label": "적게",
-       "price": 0
-      }
-     ],
-     "term": "얼음 양"
-    }
-   ],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#f5b48a",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "복숭아 향의 달콤한 차"
-  },
-  {
-   "id": "yuja",
-   "name": "유자차",
-   "category": "티",
-   "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1615484477112-677decb29c57?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "유자 건더기가 들어간 새콤달콤한 따뜻한 차예요.",
-   "tags": [
-    "달콤한",
-    "상큼한",
-    "과일",
-    "논커피"
-   ],
-   "temperature": [
-    "HOT"
-   ],
-   "options": [],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#f0c23c",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "새콤달콤한 따뜻한 유자차"
-  },
-  {
-   "id": "chamomile",
-   "name": "캐모마일",
-   "category": "티",
-   "price": 3000,
-   "image_url": "https://images.unsplash.com/photo-1630543378528-10043e324452?auto=format&fit=crop&w=480&h=480&q=75",
-   "description": "꽃향기가 나는 편안한 따뜻한 차예요. 단맛은 거의 없어요.",
-   "tags": [
-    "부드러운",
-    "논커피",
-    "깔끔한"
-   ],
-   "temperature": [
-    "HOT"
-   ],
-   "options": [],
-   "nutrition": null,
-   "allergens": null,
-   "available": true,
-   "source": "UXPRESSO 테스트 데이터(비공식, 가격·설명은 예시)",
-   "color": "#e8dcae",
-   "featured": false,
-   "hotExtra": 0,
-   "summary": "단맛 없이 편안한 꽃향기 차"
-  }
- ]
+  ]
 }
