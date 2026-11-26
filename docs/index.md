@@ -7,6 +7,8 @@
 | [prd.md](prd.md) | **PRD 원문 (Ver. 2.0)** — 기획 단계 원본. 일부 항목(자연어 검색·AI Q&A 등)은 이후 요구사항으로 대체됨 |
 | [prd-v3-summary.md](prd-v3-summary.md) | **PRD v3.0 요약·구현 매핑** — 음성 주문(Voice-Driven UI)·세션 정책, 구현/미구현 표 (원문 미보관) |
 | [prd-v3.0.md](prd-v3.0.md) | **PRD v3.0 전문 (팀 제공)** — 음성 주문·세션 정책 포함 원문 (검증 전 제안) |
+| [ai-integration.md](ai-integration.md) | **AI 음성 주문 통합 안내 (v6, integration/v2-ai-test-r2)** — Gemini Live 구조, Render 환경변수, 테스트·한계 (비공식, 테스트 브랜치) |
+| [ai-menu-price-comparison.md](ai-menu-price-comparison.md) | AI 메뉴 128개 ↔ v6 메뉴 192개 가격·이름 비교 보고 (수정하지 않음) |
 | [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |
 | [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안) — 메가커피 실제 화면 수집 자료 기반, TO-BE 유지/개선 표 |
 | [design-system/](design-system/README.md) | **UXPRESSO Kiosk Design System (2차, 모바일 앱 레퍼런스 기반)** — Reference Audit, Foundations, Tokens, Components, Patterns, UX Writing, Accessibility, 의사결정·QA |

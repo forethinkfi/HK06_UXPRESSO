@@ -4,6 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { WebSocketServer } from 'ws';
+import { handleLiveConnection, liveConfigured, liveModel, apiKey } from './lib/live-kiosk.js';
+import { liveEnabled, originAllowed, clientIp, acquire, limits as liveLimits, activeSessions, rate } from './lib/live-guard.js';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -56,8 +59,34 @@ async function pay(req, res) {
   send(res, 200, txView(t));
 }
 
+let modelCheck = null; // cached 60 s: does the configured live model exist for this key and support bidiGenerateContent?
+async function liveModelStatus() {
+  if (!liveConfigured()) return { checked: false };
+  if (modelCheck && Date.now() - modelCheck.at < 60000) return modelCheck.v;
+  let v;
+  try {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(liveModel())}`, { headers: { 'x-goog-api-key': apiKey() }, signal: AbortSignal.timeout(8000) });
+    const j = await r.json().catch(() => ({}));
+    v = r.status === 200
+      ? { checked: true, found: true, supportsLive: (j.supportedGenerationMethods || []).includes('bidiGenerateContent'), methods: j.supportedGenerationMethods || [] }
+      : { checked: true, found: false, httpStatus: r.status, reason: r.status === 400 || r.status === 401 || r.status === 403 ? 'key_rejected' : r.status === 404 ? 'model_not_found' : 'google_error' };
+  } catch { v = { checked: true, found: false, reason: 'network' }; }
+  modelCheck = { at: Date.now(), v };
+  return v;
+}
+
 async function api(req, res, url) {
   const p = url.pathname;
+  if (p === '/api/live/health' && req.method === 'GET') {
+    if (!rate(clientIp(req), 'live-health', 12)) return send(res, 429, { error: 'rate_limited' });
+    const L = liveLimits();
+    return send(res, 200, {
+      enabled: liveEnabled(), keyConfigured: liveConfigured(), model: liveModel(), wsPath: '/api/live',
+      nodeVersion: process.version, activeSessions: activeSessions(),
+      limits: { maxSessions: L.maxSessions, maxPerIp: L.maxPerIp, perHour: L.perHour, maxSeconds: L.maxSeconds, idleSeconds: L.idleSeconds },
+      modelStatus: await liveModelStatus(),
+    });
+  }
   if (req.method === 'POST') {
     if (p === '/api/pay') return pay(req, res);
     if (p === '/api/coupons/apply') {
@@ -86,7 +115,7 @@ async function api(req, res, url) {
   send(res, 404, { error: 'not_found' });
 }
 
-createServer(async (req, res) => {
+const server = createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
@@ -98,4 +127,29 @@ createServer(async (req, res) => {
     res.writeHead(200, { 'content-type': (MIME[extname(f)] || 'application/octet-stream') + '; charset=utf-8' });
     res.end(buf);
   } catch { send(res, 404, { error: 'not_found' }); }
-}).listen(PORT, () => console.log(`UXPRESSO kiosk → http://localhost:${PORT}`));
+});
+
+// ---- Gemini Live voice ordering: WebSocket /api/live (see docs/live-integration.md) ----
+// The browser never gets the API key. Before a socket is accepted: kill switch, same-site Origin, and session limits.
+const wss = new WebSocketServer({ noServer: true, maxPayload: liveLimits().maxPayload });
+const refuse = (socket, code, text) => { try { socket.write(`HTTP/1.1 ${code} ${text}\r\nConnection: close\r\nContent-Length: 0\r\n\r\n`); } catch {} socket.destroy(); };
+server.on('upgrade', (req, socket, head) => {
+  let path = '';
+  try { path = new URL(req.url, 'http://x').pathname; } catch {}
+  if (path !== '/api/live') return refuse(socket, 404, 'Not Found');
+  if (!liveEnabled()) return refuse(socket, 404, 'Not Found');
+  if (!originAllowed(req)) { console.log('[live] refused: origin'); return refuse(socket, 403, 'Forbidden'); }
+  const slot = acquire(clientIp(req));
+  if (!slot.release) { console.log(`[live] refused: ${slot.reason}`); return refuse(socket, 429, 'Too Many Requests'); }
+  wss.handleUpgrade(req, socket, head, (clientWs) => {
+    console.log(`[live] session start active=${activeSessions()}`);
+    // createClient is a test hook (scripts/fake-live.mjs); it is undefined in production, so the real Gemini client is used
+    handleLiveConnection(clientWs, load, { release: slot.release, catalog: new URL(req.url, 'http://x').searchParams.get('catalog') === 'ai128' ? 'ai128' : 'v6', createClient: globalThis.__UXPRESSO_TEST_LIVE_FACTORY }).catch((err) => {
+      console.log(`[live] connection failed: ${String(err?.message || err).slice(0, 120)}`);
+      try { clientWs.send(JSON.stringify({ type: 'error', code: 'UNKNOWN' })); clientWs.close(); } catch {}
+      slot.release();
+    });
+  });
+});
+
+server.listen(Number(PORT) || 3000, '0.0.0.0', () => console.log(`UXPRESSO kiosk → http://0.0.0.0:${PORT}`));

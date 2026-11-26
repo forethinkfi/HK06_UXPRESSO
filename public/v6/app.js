@@ -1,4 +1,5 @@
 // v2-I 시안의 흐름·모션을 디자인 시스템 v6로 옮긴 비공식 프로토타입. 가격·분류는 시연용(menu-data.json).
+import { createLive } from './live-adapter.js'; // Gemini Live 음성 주문 연결부 (AI 코드는 live-adapter.js·../live-client.js·서버 lib/에 있다)
 const IMG = 'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/';
 const { categories: CATS, recommended, products } = await (await fetch('menu-data.json')).json();
 const P = Object.fromEntries(products.map((p) => [p.id, p]));
@@ -260,7 +261,7 @@ function syncReview(redraw) {
 function show(name) {
   clearTimers();
   S.screen = name;
-  if (!['menu', 'opt'].includes(name)) S.voice = null; // 주문 확인부터 마이크를 끈다
+  if (!['menu', 'opt'].includes(name)) { S.voice = null; live?.stop(); } // 주문 확인부터 마이크를 끈다
   screen.innerHTML = VIEWS[name]();
   if (name === 'menu') syncMenu();
   if (name === 'opt') syncOpt();
@@ -357,17 +358,19 @@ function stampDialog() {
 /* ---------- 음성 (모의 입력) ---------- */
 const V = (o) => { S.voice = { status: 'listening', said: '', reply: '', next: '', pending: null, ...S.voice, ...o }; renderVoice(); };
 const NEXT = '원하는 메뉴를 말하거나 눌러 주세요.';
-function endVoice() { S.voice = null; renderVoice(); }
+function endVoice() { live?.stop(); S.voice = null; renderVoice(); }
 function renderVoice() {
   const v = S.voice, b = $('#vbtn');
   if (b) { b.className = `btn ${v ? 'btn-secondary' : 'btn-voice'}`; b.innerHTML = `${icon('mic')}${v ? '음성 종료' : '음성 주문'}`; }
   voiceEl.hidden = !v;
   if (!v) { voiceEl.innerHTML = ''; return icons(); }
   voiceEl.classList.toggle('low', S.screen === 'opt');
-  const title = { listening: '듣고 있어요.', processing: '확인하고 있어요.', confirming: '이 메뉴가 맞나요?', asking: '알려 주세요.', success: '담았어요!', error: '잘 듣지 못했어요.' }[v.status] || '화면을 확인해 주세요.';
+  const title = { listening: '듣고 있어요.', processing: '확인하고 있어요.', confirming: '이 메뉴가 맞나요?', asking: '알려 주세요.', success: '담았어요!', speaking: '답하고 있어요.', error: v.live === 'off' && v.reply ? '음성 주문을 쓸 수 없어요.' : '잘 듣지 못했어요.' }[v.status] || '화면을 확인해 주세요.';
   const live = ['listening', 'processing'].includes(v.status);
   const p = v.pending && P[v.pending.pid];
   const chips = (S.screen === 'opt' ? ['hot', 'shot', 'two', 'add', 'pay', 'fail'] : ['recommend', 'decaf', 'newm', 'ice2', 'latte', 'pay', 'done', 'fail']);
+  const typing = document.activeElement?.id === 'vtext', draft = typing ? document.activeElement.value : (v.draft || '');
+  const liveOn = v.live === 'ready';
   voiceEl.innerHTML = `<div class="head"><span class="mic ${live ? 'pulse' : ''}">${icon('mic')}</span><b aria-live="polite">${title}</b>
       <span class="bars ${live ? 'live' : ''}" aria-hidden="true">${[30, 45, 60, 37, 52, 33, 48, 56, 40].map((h, i) => `<i style="height:${h}px;animation-delay:${i * 100}ms"></i>`).join('')}</span>
       <button class="btn btn-secondary" data-a="endVoice" style="color:var(--black)">종료</button></div>
@@ -377,8 +380,10 @@ function renderVoice() {
       <button class="btn btn-secondary" data-a="editPending">수정</button><button class="btn btn-primary" data-a="confirmPending" style="height:88px">담기</button></div>` : ''}
     ${v.status === 'asking' ? '<div class="pair"><button class="btn btn-secondary" style="color:var(--black)" data-a="askTemp" data-v="HOT">HOT 따뜻하게</button><button class="btn btn-secondary" style="color:var(--black)" data-a="askTemp" data-v="ICE">ICE 차갑게</button></div>' : ''}
     ${v.status === 'error' ? '<div class="pair"><button class="btn btn-primary" style="height:88px" data-a="retry">다시 말하기</button><button class="btn btn-secondary" style="color:var(--black)" data-a="endVoice">화면에서 선택하기</button></div>' : ''}
-    ${['processing', 'confirming', 'asking'].includes(v.status) ? '' : `<div><p class="cap">모의 음성 입력 · 시연용이에요. 말하는 대신 눌러 보세요.</p><div class="chips">${chips.map((k) => `<button data-a="say" data-v="${k}">${UTT[k]}</button>`).join('')}</div></div>`}`;
+    ${liveOn && !['confirming', 'asking'].includes(v.status) ? `<form class="vtext" data-form="vtext"><input id="vtext" maxlength="200" autocomplete="off" aria-label="말 대신 입력하기" placeholder="말 대신 여기에 입력해도 돼요" value="${draft.replace(/"/g, '&quot;')}"><button class="btn btn-secondary" type="submit" style="color:var(--black)">보내기</button></form>` : ''}
+    ${liveOn || ['processing', 'confirming', 'asking'].includes(v.status) ? '' : `<div><p class="cap">모의 음성 입력 · 시연용이에요. 말하는 대신 눌러 보세요.</p><div class="chips">${chips.map((k) => `<button data-a="say" data-v="${k}">${UTT[k]}</button>`).join('')}</div></div>`}`;
   icons();
+  if (typing) { const i = $('#vtext'); i.focus(); i.setSelectionRange(draft.length, draft.length); }
 }
 function say(k) {
   V({ status: 'processing', said: UTT[k], reply: '', next: '', pending: null });
@@ -427,8 +432,8 @@ const A = {
   },
   cat: (v) => { S.cat = +v; S.sub = 0; nav('menu'); },
   center: (v) => { openOpt(v); },
-  startVoice: () => { S.cat = 1; S.sub = 0; S.voice = null; show('menu'); V({}); },
-  voice: () => (S.voice ? endVoice() : V({})),
+  startVoice: () => { S.cat = 1; S.sub = 0; S.voice = null; show('menu'); V({}); live.start(); },
+  voice: () => { if (S.voice) endVoice(); else { V({}); live.start(); } },
   endVoice,
   selCat: (v) => selCat(+v),
   selSub: (v) => { S.sub = +v; syncMenu(); },
@@ -457,11 +462,13 @@ const A = {
   stamp: () => { S.stamp = true; dlg.close(); show('pay'); },
   pay: (v) => { dlg.close(); pay(v); },
   receipt: (v) => { $('#rmsg').textContent = v; },
-  say, retry: () => V({ status: 'listening', said: '', reply: '', next: '' }),
+  say, retry: () => live.start(),
   confirmPending: () => { add({ ...S.voice.pending }); added(); },
   editPending: () => { const p = S.voice.pending; openOpt(p.pid, { temp: p.temp, qty: p.qty }); V({ status: 'responding', pending: null, reply: '옵션 화면에서 직접 고쳐 주세요.', next: '말로도, 눌러서도 바꿀 수 있어요.' }); },
   askTemp: (v) => V({ status: 'confirming', pending: { ...S.voice.pending, temp: v }, reply: '선택한 메뉴를 확인해 주세요.', next: '맞으면 담기를 눌러 주세요.' }),
 };
+voiceEl.addEventListener('input', (e) => { if (e.target.id === 'vtext' && S.voice) S.voice.draft = e.target.value; });
+voiceEl.addEventListener('submit', (e) => { e.preventDefault(); const i = $('#vtext'); if (S.voice) S.voice.draft = ''; live.sendText(i ? i.value : ''); });
 stage.addEventListener('click', (e) => {
   const el = e.target.closest('[data-a]');
   if (!el || el.disabled || $('.wipe', fx)) return;
@@ -488,6 +495,14 @@ const onUse = () => { if (!warning) armIdle(); };
 addEventListener('pointerdown', onUse);
 addEventListener('keydown', onUse);
 
+// AI 연결부: 음성과 터치가 같은 S.items를 쓴다. app.js의 상태·함수만 넘기고, AI 쪽은 화면을 직접 그리지 않는다.
+const live = createLive({
+  S: () => S, P, products, CATS, REC, SUBS,
+  count, total, unit,
+  optLabels: (i) => chosen(i.pid, i.opts).map(({ group, choice }) => (group.id === 'ice' ? `얼음 ${choice.label}` : choice.label)),
+  add, openOpt, selCat, nav, askClear: () => A.askClear(), endVoice, V,
+  afterCartChange: () => { S.key = ''; S.attempt = 0; if (S.screen === 'menu') syncCart(); },
+});
 const fit = () => { stage.style.transform = `translate(-50%,-50%) scale(${Math.min(innerWidth / 1080, innerHeight / 1920)})`; };
 addEventListener('resize', fit);
 fit();
