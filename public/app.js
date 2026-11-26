@@ -163,23 +163,23 @@ const SCREENS = {
     <div class="footer">${btn('메뉴 더 담기', 'toMenu', { v: 'secondary' })}${btn('결제하기', 'toPay')}</div></div>`,
 
   pay: () => {
-    const tile = (m, cls = '') => `<button class="tile ${cls}" data-act="method" data-v="${m.id}" ${m.supported ? '' : 'disabled'}><b>${esc(m.name)}</b>${m.supported && m.sub === m.name ? '' : `<small>${esc(m.supported ? m.sub : '이 키오스크에서 쓸 수 없어요')}</small>`}</button>`;
+    const tile = (m) => `<button class="tile" data-act="method" data-v="${m.id}" ${m.supported ? '' : 'disabled'}><b>${esc(m.name)}</b>${m.sub && m.sub !== m.name ? `<small>${esc(m.sub)}</small>` : ''}</button>`;
     const by = (g) => DB.methods.filter((m) => m.group === g);
-    const c = S.coupon;
+    const title = (ic, text, extra = '') => `<h2 class="section">${icon(ic)}${text}${extra}</h2>`;
+    const c = S.coupon, off = DB.methods.filter((m) => !m.supported).map((m) => m.name);
     return `<div class="screen">${header({ back: 'review', voice: false })}${steps(2)}
-    <div class="scroll" data-keep>
-      <section class="group"><div class="total"><h1 class="section" style="margin:0" tabindex="-1">결제할 금액</h1><b>${won(due())}</b></div>${c?.status === 'ok' ? `<p class="sub">주문 ${won(total())} · 쿠폰 할인 ${won(c.discount)}</p>` : ''}</section>
-      <section class="group"><h2 class="section">할인·적립 <span class="tag">선택</span></h2><div class="stack">
-        <div class="tiles">${DB.benefits.map((b) => `<button class="tile" data-act="dlg" data-v="benefit:${b.id}"><b>${esc(b.name)}</b></button>`).join('')}</div>
-        <div class="tiles">
-          <button class="tile" data-act="dlg" data-v="coupon">${icon(c?.status === 'ok' ? 'circle-check' : 'ticket')}<b>${c?.status === 'ok' ? '쿠폰 적용됨' : '메가 쿠폰'}</b>${c?.status === 'ok' ? `<small>${esc(c.coupon.name)}</small>` : ''}</button>
-          <button class="tile" data-act="dlg" data-v="stamp">${icon(S.stamp ? 'circle-check' : 'stamp')}<b>${S.stamp ? '적립 번호 입력됨' : '스탬프 적립'}</b>${S.stamp ? '<small>연습용 · 저장하지 않아요</small>' : ''}</button>
-          <button class="tile" data-act="dlg" data-v="staff">${icon('circle-help')}<b>직원 도움</b></button></div></div></section>
-      ${due() === 0 ? `<section class="group">${feedback('success', '쿠폰으로 전액 결제돼요.', '결제 수단을 고르지 않아도 돼요.')}</section>` : `
-      <section class="group"><h2 class="section">어떻게 결제하시겠어요?</h2><div class="stack">
-        <div class="tiles">${by('카드 결제').map((m) => tile(m, 'wide')).join('')}</div>
-        <div class="tiles">${by('휴대폰으로 결제').map((m) => tile(m)).join('')}</div></div></section>
-      <section class="group"><h2 class="section">상품권·선불카드</h2><div class="tiles">${by('상품권·선불카드').map((m) => tile(m)).join('')}${by('그 밖의 방법').map((m) => tile(m, 'wide')).join('')}</div></section>`}
+    <div class="scroll pay" data-keep>
+      <div class="paysum"><div><h1 class="section" tabindex="-1">결제할 금액</h1><p class="sub">${MODE[S.mode].name} · ${count()}개${c?.status === 'ok' ? ` · 주문 ${won(total())} - 쿠폰 ${won(c.discount)}` : ''}</p></div><b>${won(due())}</b></div>
+      <section>${title('ticket', '할인·적립', ' <span class="tag">선택</span>')}
+        <div class="tiles">${DB.benefits.map((b) => `<button class="tile" data-act="dlg" data-v="benefit:${b.id}"><b>${esc(b.name)}</b></button>`).join('')}
+          <button class="tile" data-act="dlg" data-v="coupon">${icon(c?.status === 'ok' ? 'circle-check' : 'ticket')}<b>${c?.status === 'ok' ? '쿠폰 적용됨' : '메가 쿠폰'}</b></button>
+          <button class="tile" data-act="dlg" data-v="stamp">${icon(S.stamp ? 'circle-check' : 'stamp')}<b>${S.stamp ? '적립 번호 입력됨' : '스탬프 적립'}</b></button></div></section>
+      ${due() === 0 ? feedback('success', '쿠폰으로 전액 결제돼요.', '결제 수단을 고르지 않아도 돼요.') : `
+      <section>${title('credit-card', '어떻게 결제하시겠어요?')}
+        ${by('카드 결제').map((m) => `<button class="tile card-pay" data-act="method" data-v="${m.id}">${icon('credit-card')}<span><b>${esc(m.name)}</b><small>${esc(m.sub)}</small></span>${icon('chevron-right')}</button>`).join('')}</section>
+      <section>${title('smartphone', '휴대폰으로 결제')}<div class="tiles">${by('휴대폰으로 결제').map(tile).join('')}</div></section>
+      <section>${title('gift', '상품권·선불카드')}<div class="tiles three">${by('상품권·선불카드').map(tile).join('')}</div></section>`}
+      <div class="row between"><p class="sub">${off.length ? `${off.join(', ')}은 이 키오스크에서 쓸 수 없어요.` : ''}</p>${btn('직원 도움', 'dlg', { v: 'secondary', ic: 'circle-help', val: 'staff' })}</div>
     </div>${due() === 0 ? `<div class="footer">${btn('쿠폰으로 주문 완료하기', 'free')}</div>` : ''}</div>`;
   },
 
