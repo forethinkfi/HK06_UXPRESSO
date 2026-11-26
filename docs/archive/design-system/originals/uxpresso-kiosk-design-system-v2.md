@@ -1,5 +1,7 @@
 # UXPRESSO — MEGA MGC COFFEE Kiosk Design System
 
+> **보관 문서.** 팀이 제공한 디자인 시스템 원문입니다(이전 경로 `docs/design-system/`). 현행: [DS v6.0](../../../design-system/README.md) · 버전 기록: [../README.md](../README.md)
+
 Version: 2.0  
 Status: Proposed / Pre-validation  
 Platform: Self-service Kiosk  

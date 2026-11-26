@@ -1,6 +1,6 @@
 # UXPRESSO PRD v3.0 요약과 구현 매핑
 
-PRD v3.0(Voice-Driven & Inclusive UX)을 읽고 정리한 요약입니다. **원문 전체는 이 저장소에 보관하지 않았습니다**(요청 시 `docs/prd-v3.md`로 추가). 기준 디자인 시스템은 [Kiosk Design System v1.0](design-system/uxpresso-kiosk-design-system-v1.md)입니다. 비공식 프로젝트이며 모든 효과는 검증 전 가설입니다.
+PRD v3.0(Voice-Driven & Inclusive UX)을 읽고 정리한 요약입니다. 원문 전체는 [prd-v3.0.md](prd-v3.0.md)에 있습니다. 기준 디자인 시스템은 [Kiosk Design System v1.0](../archive/design-system/originals/uxpresso-kiosk-design-system-v1.md)입니다. 비공식 프로젝트이며 모든 효과는 검증 전 가설입니다.
 
 ## v2.0 → v3.0 핵심 변화
 - 터치와 음성이 **하나의 주문 흐름·공유 장바구니**를 쓴다 (One Flow, Multiple Ways).

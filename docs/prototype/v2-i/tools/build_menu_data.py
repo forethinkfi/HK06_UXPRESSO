@@ -3,7 +3,7 @@
 
 - HOT/ICE로 나뉜 같은 이름의 항목은 상품 하나로 합칩니다.
 - 카테고리·서브메뉴는 이름으로 나눈 시안용 분류이고, 가격은 시연용 예시입니다. 실제 메가MGC커피 데이터가 아닙니다.
-실행: python3 docs/artboard/v2-i/tools/build_menu_data.py
+실행: python3 docs/prototype/v2-i/tools/build_menu_data.py
 """
 import json, re
 from pathlib import Path

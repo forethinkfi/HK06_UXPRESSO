@@ -1,7 +1,9 @@
 # MEGA MGC COFFEE Kiosk Design System — UXPRESSO v7.1
 
-> `mega-ver.2` 화면에 실제로 적용된 **현재 기준**. [v6.0](uxpresso-design-system-v6.md)(팀 원본)에 이후 팀 요청과 **Kiosk UI Refinement v2.1**을 합쳤다.
-> 비공식 제안이며 실제 키오스크 검증 전이다. 값은 [`public/tokens.css`](../../public/tokens.css)와 [`public/style.css`](../../public/style.css)가 기준이다.
+> **보관 문서(현행 아님).** `mega-ver.2` 브랜치(`cf9209c`, designoh)에서 그대로 복사했습니다. 이 문서는 mega-ver.2 재구성안 기준이며, 문서 안 링크는 그 커밋의 파일을 가리킵니다. 현행 디자인 시스템: [DS v6.0](../../../design-system/README.md) · 아카이브 안내: [../README.md](../README.md)
+
+> `mega-ver.2` 화면에 실제로 적용된 **현재 기준**. [v6.0](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/design-system/uxpresso-design-system-v6.md)(팀 원본)에 이후 팀 요청과 **Kiosk UI Refinement v2.1**을 합쳤다.
+> 비공식 제안이며 실제 키오스크 검증 전이다. 값은 [`public/tokens.css`](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/tokens.css)와 [`public/style.css`](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/style.css)가 기준이다.
 
 - 기준일: 2026-11-26 · 캔버스 1080 × 1920 · 좌우 여백 40
 
@@ -81,7 +83,7 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 - **Cart / ReviewItem** 이미지 144×160, 이름·가격 34/700, 온도 라벨, 추가 옵션 26, 수량(88 버튼, 36/700), 옵션 변경·삭제 88.
 - **Cart / BottomActions** 메뉴 더 담기 : 할인·결제하기 = 1 : 2, 112.
 - **Navigation / StepIndicator** 높이 120, 원 48, 28.
-- **결제** 금액 요약(`주문금액`, 할인 후 `최종 결제금액`) → 할인·적립 → 카드 → 휴대폰 → 상품권. 타일 4열, 이름 28/600, 로고 자리(공식 파일만, [방법](../../public/logos/README.md)).
+- **결제** 금액 요약(`주문금액`, 할인 후 `최종 결제금액`) → 할인·적립 → 카드 → 휴대폰 → 상품권. 타일 4열, 이름 28/600, 로고 자리(공식 파일만, [방법](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/logos/README.md)).
 - **Voice** 안내 영역에 상태, 말한 내용, 확인 줄(상품·온도·수량·옵션·금액), 다음 행동, 음성 안내 ON/OFF, 종료. 터치와 같은 상태·같은 컴포넌트를 쓰고, 확인 없이 담지 않는다.
 - **대화상자** 겹치지 않는다. 닫기는 Secondary.
 

@@ -1,13 +1,15 @@
 # UXPRESSO PRD v3.1 — `mega-ver.2` 구현 기준
 
+> **보관 문서(현행 아님).** `mega-ver.2` 브랜치(`cf9209c`, designoh)에서 그대로 복사한 PRD v3.1(mega-ver.2 재구성안 기준)입니다. 문서 안 링크는 그 커밋의 파일을 가리킵니다. 현행 PRD: [../../prd/prd-v3.0.md](../../prd/prd-v3.0.md)
+
 > 메가MGC커피 셀프오더 키오스크 UX/UI 개선 **비공식** 프로토타입.
-> 이 문서는 [PRD v3.0](prd-v3.0.md)(팀 원문)을 바탕으로 **지금 실제로 만들어진 것**과 팀 요청으로 바뀐 결정을 정리한다.
+> 이 문서는 [PRD v3.0](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/prd-v3.0.md)(팀 원문)을 바탕으로 **지금 실제로 만들어진 것**과 팀 요청으로 바뀐 결정을 정리한다.
 > 배경·사용자·JTBD·문제 가설은 v3.0 00~06장을 그대로 따른다. 개선 효과는 검증 전 가설이다.
 
 - 기준일: 2026-11-26
 - 브랜치: `mega-ver.2`
 - 화면: 1080 × 1920 세로, 한국어
-- 화면 규칙: [디자인 시스템 v7.1](design-system/uxpresso-design-system-v7.md) · [v2.1 적용 결과](refinement-v2.1.md)
+- 화면 규칙: [디자인 시스템 v7.1](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/design-system/uxpresso-design-system-v7.md) · [v2.1 적용 결과](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/refinement-v2.1.md)
 
 ## 1. 목표
 
@@ -79,11 +81,11 @@
 | 항목 | 내용 | 출처 |
 |---|---|---|
 | 메뉴 192종 | 신메뉴 6, 커피 28, 디카페인 19, 음료(음료 21·에이드·주스 13·스무디·프라페 19), 티 15, 푸드 39, 상품 34. 한 메뉴가 여러 분류에 속할 수 있음 | 이름·분류·설명·영양·알레르기는 메가MGC커피 홈페이지(2026-11-26) |
-| 사진 | ImageKit 링크 | [menu-image-links](menu-image-links/README.md) |
+| 사진 | ImageKit 링크 | [menu-image-links](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/menu-image-links/README.md) |
 | 가격·옵션 | 시연용 | 팀 가정 |
 | 추천·BEST | 아메리카노, 콜드브루오리지널, 카페라떼, 바닐라라떼 | 시연용 지정(판매 데이터 아님) |
-| 쿠폰·결제 | 모의 | [api.md](api.md) |
-| 브랜드 로고 | 자리 표시 | [public/logos](../public/logos/README.md) |
+| 쿠폰·결제 | 모의 | [api.md](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/api.md) |
+| 브랜드 로고 | 자리 표시 | [public/logos](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/logos/README.md) |
 
 - API 실패 시 `data/` 기본 데이터로 주문을 이어간다.
 - 영양·알레르기 값이 없으면 지어내지 않고 직원 확인을 안내한다.

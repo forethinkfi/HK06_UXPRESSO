@@ -1,5 +1,7 @@
 # MEGA MGC COFFEE Kiosk Design System — UXPRESSO v6.0
 
+> **현행 디자인 시스템.** `mega-ver.2` 브랜치(`cf9209c`, designoh)의 팀 원문을 그대로 가져왔습니다. 문서 안 링크(예: `tokens/semantic.css`)는 그 커밋의 파일을 가리킵니다. 실제 서비스 값은 `public/v6/style.css`가 기준이며, 대조표는 [README.md](README.md)에 있습니다.
+
 > **Same Brand. Consistent Interface. Accessible Experience.**
 > 메가MGC커피 셀프오더 키오스크(1080 × 1920 세로형)를 위한 디자인 시스템이다.
 > 브랜드는 유지하고, 컴포넌트의 역할·상태·접근성을 일관되게 정리한다.

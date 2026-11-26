@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """메뉴 이미지(docs/menu-image-links 목록)를 내려받아 흰 배경을 지우고, 8×8 스프라이트 시트로 묶습니다.
 
-결과는 docs/artboard/v2-i/build/ 에 만들어지며 저장소에는 올리지 않습니다(.gitignore).
+결과는 docs/prototype/v2-i/build/ 에 만들어지며 저장소에는 올리지 않습니다(.gitignore).
 이미지는 메가MGC커피 홈페이지 자료로, 이 프로젝트의 시안 작업에만 씁니다. 다른 곳에 공개하거나 다시 올리지 않습니다.
-필요: Pillow, numpy.   실행: python3 docs/artboard/v2-i/tools/build_sprites.py
+필요: Pillow, numpy.   실행: python3 docs/prototype/v2-i/tools/build_sprites.py
 """
 import json, subprocess
 from concurrent.futures import ThreadPoolExecutor

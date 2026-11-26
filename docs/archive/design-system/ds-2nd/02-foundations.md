@@ -99,7 +99,7 @@
 | Price Large | 40px | Bold | 52px | 총 결제 금액 |
 | Price Default | 28px | Bold | 40px | 상품 가격 |
 
-> 글자 크기는 [uxpresso-kiosk-design-system-v1.md](uxpresso-kiosk-design-system-v1.md) 4.5절 기준으로 합쳤습니다(2차 초안의 22/24px 본문 → 24/28px).
+> 글자 크기는 [uxpresso-kiosk-design-system-v1.md](../originals/uxpresso-kiosk-design-system-v1.md) 4.5절 기준으로 합쳤습니다(2차 초안의 22/24px 본문 → 24/28px).
 
 가이드: 제목과 주요 행동을 분명히 구분 · 가격·수량은 빨리 읽히게 · Regular 미만 굵기 금지 · **핵심 정보에 Caption 사용 금지** · 다국어에서 줄바꿈·길이 확장 고려 · 실제 화면 크기·시청 거리에서 가독성 검증.
 

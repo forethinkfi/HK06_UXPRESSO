@@ -1,6 +1,6 @@
 # 음성 주문 CTA 상태 정의 (시안 이미지 기준)
 
-팀 제공 시안 "5. 음성 주문 컴포넌트 상태 정의"를 옮겨 적은 문서입니다. 색 값은 [추정](이미지에서 읽음)이며 토큰 매핑은 [제안]입니다. 원문 규칙은 [uxpresso-kiosk-design-system-v1.md](uxpresso-kiosk-design-system-v1.md) 9.4~9.6절을 따릅니다. 프로토타입(`public/app.js`의 `vbar()`, `style.css` `.vb-*`)과 `kit.html`에 반영했습니다.
+팀 제공 시안 "5. 음성 주문 컴포넌트 상태 정의"를 옮겨 적은 문서입니다. 색 값은 [추정](이미지에서 읽음)이며 토큰 매핑은 [제안]입니다. 원문 규칙은 [uxpresso-kiosk-design-system-v1.md](../archive/design-system/originals/uxpresso-kiosk-design-system-v1.md) 9.4~9.6절을 따릅니다. 프로토타입(`public/app.js`의 `vbar()`, `style.css` `.vb-*`)과 `kit.html`에 반영했습니다.
 
 공통: 가로 전체 폭 바, 높이 약 100px, 모서리 약 16px, 왼쪽 아이콘 + 텍스트, 바 아래 한 줄 보조 설명. 상태는 색상만이 아니라 **아이콘 + 문구**로도 구분합니다.
 

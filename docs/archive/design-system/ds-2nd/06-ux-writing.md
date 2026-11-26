@@ -78,4 +78,4 @@
 | 전환 | 이제 화면을 눌러 진행해 주세요. 할인, 적립 및 결제는 직접 선택해 주세요. |
 | 시간 안내 | 2분 동안 조작이 없으면 종료 안내가 표시돼요. / 아직 주문 중이신가요? |
 
-시안 이미지와 PRD의 문구 차이는 PRD 기준으로 통일했습니다([voice-cta-states.md](voice-cta-states.md) 참고).
+시안 이미지와 PRD의 문구 차이는 PRD 기준으로 통일했습니다([voice-cta-states.md](../../../design-system/voice-cta-states.md) 참고).

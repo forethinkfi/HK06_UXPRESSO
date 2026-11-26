@@ -3,6 +3,8 @@
 
 # UXPRESSO — Kiosk Design System v1.0
 
+> **보관 문서.** 팀이 제공한 디자인 시스템 원문입니다(이전 경로 `docs/design-system/`). 현행: [DS v6.0](../../../design-system/README.md) · 버전 기록: [../README.md](../README.md)
+
 > MEGA MGC COFFEE Kiosk UX/UI Redesign
 > Familiar Brand, Accessible Experience.
 > 누구나 쉽게, 혼자서도 자신 있게.
