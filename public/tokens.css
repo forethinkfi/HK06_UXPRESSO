@@ -1,6 +1,6 @@
 /* UXPRESSO design system v6.0 tokens — docs/design-system/uxpresso-design-system-v6.md. Unofficial.
    [v6] = value written in the document. [제안] = the document names the token but gives no value.
-   [r1] = selection & outline refinement, overrides v6 — docs/design-system/uxpresso-selection-refinement.md */
+   [r1] = selection & outline refinement, overrides v6 — docs/design-system/uxpresso-design-system-v7.md */
 :root{
   /* brand primitives [v6 §3.1; yellow-40 and black from r1] */
   --mc-yellow-40:#FFDC00; --mc-yellow-50:#E7BE0B; --mc-yellow-30:#FBE949; --mc-yellow-10:#FDFBC4; --mc-yellow-5:#FEFDE8;

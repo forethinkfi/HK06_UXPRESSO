@@ -8,7 +8,7 @@
 
 팀: **UXPRESSO**
 
-> **`mega-ver.2` 브랜치**: [디자인 시스템 v6](docs/design-system/uxpresso-design-system-v6.md)과 [현재 적용 규칙](docs/design-system/uxpresso-selection-refinement.md)으로 새로 만든 화면입니다. 이전 화면은 `main` 브랜치에 있습니다. 메뉴 사진은 [ImageKit 링크](docs/menu-image-links/README.md)를 씁니다.
+> **`mega-ver.2` 브랜치**: [디자인 시스템 v7](docs/design-system/uxpresso-design-system-v7.md)과 [PRD v3.1](docs/prd-mega-ver2.md) 기준의 화면입니다. 이전 화면은 `main` 브랜치에 있습니다. 메뉴 사진은 [ImageKit 링크](docs/menu-image-links/README.md)를 씁니다.
 
 ## 실행
 
@@ -60,7 +60,7 @@ API 호출이 실패하면 `data/menus.json` 기본 데이터로 자동 전환�
 ```
 server.js          정적 파일(public/) + 메뉴·쿠폰·모의 결제 API (의존성 없음)
 data/              테스트 데이터 (menus, coupons, payments)
-public/            키오스크 화면 (디자인 시스템 v6)
+public/            키오스크 화면 (디자인 시스템 v7)
 test.cjs           음성 의도 분류 확인 (node test.cjs)
 docs/              PRD·요구사항·API 문서, 리서치, 회의록, 발표 자료
 ```
