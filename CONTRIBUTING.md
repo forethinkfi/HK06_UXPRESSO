@@ -9,9 +9,13 @@
 | 회의록 | `docs/meetings/` | `YYYY-MM-DD-제목.md`. `_template.md`를 복사해서 작성 |
 | 리서치 (AS-IS 분석, 현장 관찰, 인터뷰) | `docs/research/<주제>/` | 폴더마다 `README.md`로 요약 + 원본 자료 |
 | 사용성 테스트 | `docs/research/usability-test/` | 시나리오, 기록, 결과 |
-| 페르소나·기획·요구사항 | `docs/` | `prd.md`, `requirements.md`처럼 문서 1개 = 파일 1개 |
-| 디자인 시스템 | `docs/design-system/` | 기존 번호 문서(01~08)에 이어서 작성. 대체된 옛 버전은 `docs/archive/` |
-| 시안 원본 | `docs/artboard/` | |
+| 페르소나 | `docs/personas/` | |
+| 기획·요구사항 (PRD) | `docs/prd/` | 문서 1개 = 파일 1개 |
+| 디자인 시스템 | `docs/design-system/` | 현행(DS v6.0)만 둡니다. 대체된 옛 버전은 `docs/archive/design-system/`로 옮기고 버전 기록 표에 한 줄 추가 |
+| 시안 원본·프로토타입 설명 | `docs/prototype/` | 현행이 아닌 시안은 `docs/archive/prototypes/` |
+| API·음성 주문 문서 | `docs/api/` | |
+| 테스트 결과 | `docs/testing/` | 모의 테스트와 실제 테스트를 구분해서 기록 |
+| 쓰지 않게 된 자료 | `docs/archive/` | 지우지 말고 옮긴 뒤 `docs/archive/README.md`에 기록 |
 | 발표 자료 | `docs/presentation/` | 최종본 PDF 또는 링크 |
 | 이미지 | 사용하는 문서와 같은 폴더의 `images/` | 문서에서 상대 경로로 연결 |
 | 프로토타입 코드 | `public/`, `data/`, `server.js` | 변경 시 `CLAUDE.md`의 "변경 시 체크" 확인 |
@@ -24,7 +28,7 @@
 
 - 기본 브랜치는 `main` 하나입니다. 개인 이름으로 오래 쓰는 브랜치는 만들지 않습니다.
 - 작업마다 짧게 쓰고 지우는 브랜치를 만듭니다: `docs/<주제>`, `feat/<주제>`, `fix/<주제>` (예: `docs/add-personas`).
-- 합친 브랜치는 바로 삭제합니다. 그래서 브랜치가 3~5개를 넘지 않게 유지합니다.
+- 합친 브랜치는 `archive/<브랜치>` 태그를 남긴 뒤 삭제합니다(`docs/archive/README.md`에 기록). 그래서 브랜치가 3~5개를 넘지 않게 유지합니다.
 - **새 파일만 추가**하는 경우(회의록, 이미지, 새 리서치 폴더)는 `main`에 바로 올려도 됩니다. 충돌이 나지 않기 때문입니다.
 - **기존 파일 수정**(코드, 기존 문서)은 브랜치를 만들어 Pull Request로 올리고, 팀원 한 명이 확인한 뒤 합칩니다.
 
