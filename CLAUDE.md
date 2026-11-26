@@ -3,7 +3,7 @@
 메가MGC커피 키오스크 UX/UI 개선 **비공식** 프로토타입 (팀 UXPRESSO). 공식 프로젝트·공식 디자인 시스템·공식 API가 아니다.
 
 ## 현재 상태 (`mega-ver.2`)
-디자인 시스템 v6으로 화면(`public/`)을 새로 만든 브랜치다. 이전 화면과 이전 디자인 시스템 문서는 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v7.md`](docs/design-system/uxpresso-design-system-v7.md), 요구사항의 현재 상태는 [`docs/prd-mega-ver2.md`](docs/prd-mega-ver2.md)이다(v6과 PRD v3.0은 팀 원본으로 고치지 않는다). 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
+화면(`public/`)을 새로 만든 브랜치다. 이전 화면과 이전 디자인 시스템 문서는 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v7.md`](docs/design-system/uxpresso-design-system-v7.md), 요구사항의 현재 상태는 [`docs/prd-mega-ver2.md`](docs/prd-mega-ver2.md)이다(v6과 PRD v3.0은 팀 원본으로 고치지 않는다). 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
 
 ## 명령어
 - 실행: `npm start` → http://localhost:3000 (`?demo=menu|option|review|pay|guide|done|voice|session` 으로 화면 바로 열기)
