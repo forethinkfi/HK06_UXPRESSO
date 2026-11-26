@@ -36,3 +36,6 @@ claude.ai Design 캔버스의 **v2-I** 보드(1080 × 1920) 소스 백업입니�
 - 신메뉴는 포스터에서 NEW로 확인된 5개와 콜라보 2개만 넣었고, 추천메뉴 12개는 시안용으로 직접 고른 것입니다(인기 순위 아님).
 - 결제 수단 타일의 동그라미 로고는 이름 첫 글자 자리 표시입니다(공식 로고 파일 없음).
 - 음성 주문은 마이크 대신 모의 입력 칩으로 시연합니다.
+
+## 앱으로 실행하기 (Figma Make용 브랜치)
+`feat/v2-i-prototype-app` 브랜치에서는 `npm start`(`node server.js`)로 열면 첫 화면(`/`)이 v2-I입니다. 이전 프로토타입은 `/legacy.html`로 옮겼고, `/screens.html`·`/kit.html`과 API는 그대로입니다. `.figma/make/`에 Figma Make가 쓰는 실행 스크립트(`dev`, `install`, `mise.toml`)를 넣었습니다.
