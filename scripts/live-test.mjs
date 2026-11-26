@@ -86,6 +86,7 @@ check('v6: show_menu_list category goods/new 허용', x.sent[0]?.args.category =
 console.log('--- error mapping / guard ---');
 const ce = (m) => K.classifyError(new Error(m)).code;
 check('오류 분류: 키 오류/권한/한도/모델/과부하', ce('API_KEY_INVALID') === 'AUTH' && ce('403 PERMISSION_DENIED') === 'AUTH' && ce('429 RESOURCE_EXHAUSTED') === 'QUOTA' && ce('404 model not found') === 'MODEL' && ce('503 UNAVAILABLE high demand') === 'MODEL_BUSY' && ce('boom') === 'UNKNOWN');
+check('크레딧 소진(1011 prepayment credits are depleted)은 BILLING으로 구분, 한도(429)·키 오류와 다름', ce('Error 1011: Your prepayment credits are depleted. Please go to AI Studio') === 'BILLING' && ce('429 RESOURCE_EXHAUSTED quota') === 'QUOTA' && ce('API_KEY_INVALID') === 'AUTH');
 check('오류 설명에서 키 값이 가려짐', !K.classifyError(new Error(`bad ${process.env.GEMINI_API_KEY}`)).detail.includes('TESTKEY'));
 const req = (origin, host = 'kiosk.test') => ({ headers: { origin, host }, socket: { remoteAddress: '1.2.3.4' } });
 check('출처 검사: Origin 없음 거절', G.originAllowed(req(undefined)) === false);
@@ -235,6 +236,16 @@ try {
   G1.ws.send(JSON.stringify({ type: 'text', text: 'FAKE_ERROR_AUTH' }));
   const er = await waitFor(() => G1.msgs.find((m2) => m2.type === 'error'));
   check('모델 오류는 코드(AUTH)만 브라우저로 전달', er?.code === 'AUTH' && Object.keys(er).sort().join() === 'code,type', JSON.stringify(er));
+  { const B1 = await openWs(srv.port); await waitFor(() => B1.msgs.find((m2) => m2.type === 'ready'));
+    B1.ws.send(JSON.stringify({ type: 'text', text: 'FAKE_ERROR_BILLING' }));
+    const eb = await waitFor(() => B1.msgs.find((m2) => m2.type === 'error'));
+    check('크레딧 소진 오류는 코드(BILLING)만 전달(원문·계정 안내는 브라우저로 안 감)', eb?.code === 'BILLING' && Object.keys(eb).sort().join() === 'code,type' && !JSON.stringify(B1.msgs).includes('prepayment'), JSON.stringify(eb));
+    try { B1.ws.close(); } catch {} await sleep(300);
+    const B2 = await openWs(srv.port); await waitFor(() => B2.msgs.find((m2) => m2.type === 'ready'));
+    B2.ws.send(JSON.stringify({ type: 'text', text: 'FAKE_CLOSE_BILLING' }));
+    const ec = await waitFor(() => B2.msgs.find((m2) => m2.type === 'error'));
+    check('Gemini가 사유와 함께 연결을 닫는 경우(1011)도 BILLING으로 전달(일반 끊김 아님)', ec?.code === 'BILLING' && !B2.msgs.some((m2) => m2.type === 'closed'), JSON.stringify(B2.msgs.filter((m2) => m2.type !== 'audio')));
+    try { B2.ws.close(); } catch {} await sleep(300); }
   check('모델 오류 뒤 서버가 세션을 닫고 슬롯 반환', await new Promise((res) => { if (G1.ws.readyState === WebSocket.CLOSED) res(true); G1.ws.on('close', () => res(true)); setTimeout(() => res(false), 2000); }));
   check('서버 로그에 API 키 값이 없음', !srv.out().includes('FAKEKEY-for-tests') && !srv.out().includes('TESTKEY'));
 

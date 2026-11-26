@@ -33,6 +33,8 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
     await sleep(600);
     const inits = sent.filter((m) => m.type === 'context' && m.init === true);
     ok('first greeting: exactly one context{init:true} per session, sent after the server said ready', inits.length === 1 && sent.findIndex((m) => m.init === true) > 0 && got.indexOf('ready') >= 0, JSON.stringify(sent.filter((m) => m.type === 'context')));
+    const noMock = async () => (await p.locator('[data-a=say], #voice .chips').count()) === 0 && !/시연용|모의|인식 실패/.test(await panel(p));
+    ok('no mock voice chips or demo buttons while connected', await noMock(), await panel(p));
     ok('AI greets before any customer input (greeting shown in the panel)', /어서 오세요/.test(await reply(p)) && !(await panel(p)).includes('말씀하신 내용'), await panel(p));
     ok('voice panel connects (ready: input row visible)', await p.isVisible('#vtext'));
     await sleep(2500); // the fake microphone makes the fake AI hear "아아 하나 주세요"
@@ -104,17 +106,25 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
     ({ ctx, p } = await open(b, 4031)); await startVoice(p);
     await type(p, 'fake_error_auth', 700);
     const t1 = await panel(p);
-    ok('API error → cause + next step shown, mock input still offered', /음성 주문을 쓸 수 없어요/.test(t1) && /화면에서 눌러 주문/.test(t1) && await p.isVisible('[data-a=retry]') && await p.isVisible('[data-a=say]'), t1);
+    ok('API error → cause + next step; only 다시 말하기 and 화면에서 선택하기 (no mock chips, no demo buttons)', /음성 주문을 쓸 수 없어요/.test(t1) && /화면에서 눌러 주문/.test(t1) && await p.isVisible('[data-a=retry]') && await p.isVisible('#voice .pair [data-a=endVoice]') && await p.locator('[data-a=say], #voice .chips').count() === 0 && !/시연용|모의|인식 실패/.test(t1), t1);
     await p.screenshot({ path: OUT + '/v6-api-error.png' });
-    await p.click('[data-a=say][data-v=recommend]'); await sleep(1700);
-    ok('after the error the touch-only mock input still works', await p.evaluate(() => [...document.querySelectorAll('.rail button')].findIndex((x) => x.getAttribute('aria-selected') === 'true')) === 1);
+    await p.click('#voice .pair [data-a=endVoice]'); await sleep(300);
+    ok('화면에서 선택하기 closes the panel and touch ordering continues', !(await p.isVisible('#voice')) && await p.isVisible('.grid .card'));
     ok('no page errors (api error)', p.errs.length === 0, p.errs.join('|'));
     await ctx.close();
 
+    for (const trigger of ['fake_error_billing', 'fake_close_billing']) {
+      ({ ctx, p } = await open(b, 4031)); await startVoice(p);
+      await type(p, '아아 하나'); await type(p, trigger, 800);
+      const tb = await panel(p);
+      ok(`credits depleted (${trigger}): own message, no retry button, 화면에서 선택하기 only, cart kept, no billing text shown`, /음성 주문을 지금은 이용할 수 없어요/.test(tb) && !/연결이 끊겼/.test(tb) && await p.locator('[data-a=retry]').count() === 0 && await p.isVisible('#voice .pair [data-a=endVoice]') && !/prepayment|credit|크레딧|결제/.test(tb) && await cartCount(p) === 1 && await p.locator('[data-a=say], #voice .chips').count() === 0, tb);
+      if (trigger === 'fake_error_billing') await p.screenshot({ path: OUT + '/v6-billing.png' });
+      await ctx.close();
+    }
     ({ ctx, p } = await open(b, 4031)); await startVoice(p);
     await type(p, '아아 하나'); await type(p, 'fake_drop', 800);
     const t2 = await panel(p);
-    ok('dropped connection → "음성 연결이 끊겼어요" + cart kept', /음성 연결이 끊겼어요/.test(t2) && await cartCount(p) === 1, t2);
+    ok('dropped connection → "음성 연결이 끊겼어요" + 다시 말하기 offered + cart kept', /음성 연결이 끊겼어요/.test(t2) && await p.isVisible('[data-a=retry]') && await cartCount(p) === 1, t2);
     await ctx.close();
 
     // ---- touch-only full order (voice never used) ----
@@ -135,7 +145,7 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
     const b2 = await chromium.launch({ args: srvOpts }); const { ctx, p } = await open(b2, 4032);
     await startVoice(p, '[data-a=retry]'); await sleep(900);
     const t = await panel(p);
-    ok(`${name}: error panel with cause + next step, mock input offered, no crash`, /음성 주문을 쓸 수 없어요|음성 연결/.test(t) && await p.isVisible('[data-a=say]') && p.errs.length === 0, t + p.errs.join('|'));
+    ok(`${name}: error panel with cause + next step, no mock chips, no crash`, /음성 주문을 쓸 수 없어요|음성 연결|이용할 수 없어요/.test(t) && await p.locator('[data-a=say], #voice .chips').count() === 0 && await p.isVisible('#voice .pair [data-a=endVoice]') && p.errs.length === 0, t + p.errs.join('|'));
     await p.screenshot({ path: `${OUT}/v6-${name}.png` });
     await ctx.close(); await b2.close(); s.kill();
   }

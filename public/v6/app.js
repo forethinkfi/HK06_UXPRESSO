@@ -368,7 +368,6 @@ function renderVoice() {
   const title = { listening: '듣고 있어요.', processing: '확인하고 있어요.', confirming: '이 메뉴가 맞나요?', asking: '알려 주세요.', success: '담았어요!', speaking: '답하고 있어요.', error: v.live === 'off' && v.reply ? '음성 주문을 쓸 수 없어요.' : '잘 듣지 못했어요.' }[v.status] || '화면을 확인해 주세요.';
   const live = ['listening', 'processing'].includes(v.status);
   const p = v.pending && P[v.pending.pid];
-  const chips = (S.screen === 'opt' ? ['hot', 'shot', 'two', 'add', 'pay', 'fail'] : ['recommend', 'decaf', 'newm', 'ice2', 'latte', 'pay', 'done', 'fail']);
   const typing = document.activeElement?.id === 'vtext', draft = typing ? document.activeElement.value : (v.draft || '');
   const liveOn = v.live === 'ready';
   voiceEl.innerHTML = `<div class="head"><span class="mic ${live ? 'pulse' : ''}">${icon('mic')}</span><b aria-live="polite">${title}</b>
@@ -379,9 +378,8 @@ function renderVoice() {
     ${v.status === 'confirming' && p ? `<div class="pending">${pic(p, v.pending.temp)}<div><b>${p.name}</b><p class="cap" style="color:var(--gray-70)">${v.pending.temp === 'HOT' ? 'HOT 따뜻하게' : 'ICE 차갑게'} · ${v.pending.qty}잔</p><strong>${won(unit(p.id, v.pending.temp) * v.pending.qty)}</strong></div>
       <button class="btn btn-secondary" data-a="editPending">수정</button><button class="btn btn-primary" data-a="confirmPending" style="height:88px">담기</button></div>` : ''}
     ${v.status === 'asking' ? '<div class="pair"><button class="btn btn-secondary" style="color:var(--black)" data-a="askTemp" data-v="HOT">HOT 따뜻하게</button><button class="btn btn-secondary" style="color:var(--black)" data-a="askTemp" data-v="ICE">ICE 차갑게</button></div>' : ''}
-    ${v.status === 'error' ? '<div class="pair"><button class="btn btn-primary" style="height:88px" data-a="retry">다시 말하기</button><button class="btn btn-secondary" style="color:var(--black)" data-a="endVoice">화면에서 선택하기</button></div>' : ''}
-    ${liveOn && !['confirming', 'asking'].includes(v.status) ? `<form class="vtext" data-form="vtext"><input id="vtext" maxlength="200" autocomplete="off" aria-label="말 대신 입력하기" placeholder="말 대신 여기에 입력해도 돼요" value="${draft.replace(/"/g, '&quot;')}"><button class="btn btn-secondary" type="submit" style="color:var(--black)">보내기</button></form>` : ''}
-    ${liveOn || ['processing', 'confirming', 'asking'].includes(v.status) ? '' : `<div><p class="cap">모의 음성 입력 · 시연용이에요. 말하는 대신 눌러 보세요.</p><div class="chips">${chips.map((k) => `<button data-a="say" data-v="${k}">${UTT[k]}</button>`).join('')}</div></div>`}`;
+    ${v.status === 'error' ? `<div class="pair">${v.noRetry ? '' : '<button class="btn btn-primary" style="height:88px" data-a="retry">다시 말하기</button>'}<button class="btn ${v.noRetry ? 'btn-primary' : 'btn-secondary'}" ${v.noRetry ? 'style="height:88px"' : 'style="color:var(--black)"'} data-a="endVoice">화면에서 선택하기</button></div>` : ''}
+    ${liveOn && !['confirming', 'asking'].includes(v.status) ? `<form class="vtext" data-form="vtext"><input id="vtext" maxlength="200" autocomplete="off" aria-label="말 대신 입력하기" placeholder="말 대신 여기에 입력해도 돼요" value="${draft.replace(/"/g, '&quot;')}"><button class="btn btn-secondary" type="submit" style="color:var(--black)">보내기</button></form>` : ''}`;
   icons();
   if (typing) { const i = $('#vtext'); i.focus(); i.setSelectionRange(draft.length, draft.length); }
 }

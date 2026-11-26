@@ -23,6 +23,8 @@ const add = (menuId, temp, qty = 1, extra = {}) => ({ name: 'add_to_cart', args:
 function plan(text) {
   const t = String(text).toLowerCase();
   if (/fake_error_auth/.test(t)) return { error: 'API_KEY_INVALID' };
+  if (/fake_error_billing/.test(t)) return { error: 'Error 1011: Your prepayment credits are depleted. Please go to AI Studio to manage your project and billing.' };
+  if (/fake_close_billing/.test(t)) return { closeReason: 'Your prepayment credits are depleted.' };
   if (/fake_drop/.test(t)) return { drop: true };
   if (/아아 하나랑 카페라떼 뜨거운/.test(t)) return { calls: [add('americano', 'ICE', 1), add('latte', 'HOT', 1)] };
   if (/아아 두 잔|two iced americano|两杯冰美式/.test(t)) return { calls: [add('americano', 'ICE', 2)] };
@@ -87,6 +89,7 @@ globalThis.__UXPRESSO_TEST_LIVE_FACTORY = () => ({
         const p = plan(text);
         if (p.error) return callbacks.onerror(new Error(p.error));
         if (p.drop) return callbacks.onclose({});
+        if (p.closeReason) return callbacks.onclose({ code: 1011, reason: p.closeReason });
         if (!p.calls) return finish(p.say);
         const ids = p.calls.map(() => `fc-${++seq}`);
         waiting = { n: p.calls.length, got: [], say: p.say };

@@ -7,9 +7,11 @@ const ERR = {
   AUTH: ['지금은 음성 주문을 쓸 수 없어요.', '화면에서 눌러 주문해 주세요. 담은 메뉴는 그대로예요.'],
   QUOTA: ['음성 주문이 많이 몰려 있어요.', '잠시 후 다시 말하거나 화면에서 선택해 주세요.'],
   SOCKET: ['음성 연결이 끊겼어요.', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.'],
+  BILLING: ['음성 주문을 지금은 이용할 수 없어요.', '화면에서 눌러 주문해 주세요. 담은 메뉴는 그대로예요. 계속 안 되면 직원에게 알려 주세요.'],
   OTHER: ['음성 연결에 문제가 있어요.', '다시 말하거나 화면에서 선택해 주세요. 담은 메뉴는 그대로예요.'],
 };
-const errCopy = (code) => (['MISSING_API_KEY', 'AUTH', 'MODEL'].includes(code) ? ERR.AUTH : ['QUOTA', 'MODEL_BUSY'].includes(code) ? ERR.QUOTA : code === 'SOCKET' ? ERR.SOCKET : ERR.OTHER);
+const NO_RETRY = ['BILLING']; // out of credit: trying again cannot help, so only 화면에서 선택하기 is offered (other connection failures keep 다시 말하기)
+const errCopy = (code) => (code === 'BILLING' ? ERR.BILLING : ['MISSING_API_KEY', 'AUTH', 'MODEL'].includes(code) ? ERR.AUTH : ['QUOTA', 'MODEL_BUSY'].includes(code) ? ERR.QUOTA : code === 'SOCKET' ? ERR.SOCKET : ERR.OTHER);
 const NO_MIC = { reply: '마이크를 쓸 수 없어요.', next: '아래에 입력하거나 화면에서 선택해 주세요.' };
 // shown under the AI's reply: without a microphone the customer must be told typing is the way
 const nextHint = () => (S0()?.voice?.mic === 'denied' ? '마이크를 쓸 수 없어요. 아래에 입력하거나 화면에서 선택해 주세요.' : null);
@@ -130,7 +132,7 @@ export function createLive(app) {
   const failVoice = (code) => {
     live().stop();
     const [reply, next] = errCopy(code);
-    app.V({ status: 'error', live: 'off', said: '', reply, next, pending: null });
+    app.V({ status: 'error', live: 'off', said: '', reply, next, pending: null, noRetry: NO_RETRY.includes(code) });
   };
 
   const handlers = {
@@ -157,7 +159,7 @@ export function createLive(app) {
   return {
     start() {
       if (!window.UXLive) return failVoice('UNKNOWN');
-      app.V({ live: 'connecting', mic: 'init', status: 'processing', said: '', reply: '연결하고 있어요.', next: '잠시만 기다려 주세요.', pending: null });
+      app.V({ live: 'connecting', mic: 'init', noRetry: false, status: 'processing', said: '', reply: '연결하고 있어요.', next: '잠시만 기다려 주세요.', pending: null });
       live().start(handlers);
     },
     stop() { if (window.UXLive) live().stop(); },
