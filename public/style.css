@@ -42,7 +42,9 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .mode-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--type-utility)}
 
 /* 9.5 / 9.6 tabs, filters */
-.cats{flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:24px 40px 16px}
+/* one row, swiped sideways; the 5th tab is cut in half to show there are more */
+.cats{position:relative;flex:none;display:flex;gap:8px;padding:24px 40px 16px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}
+.cats .cat{flex:0 0 224px}
 .cat{height:88px;font:var(--type-category)}
 .subs{flex:none;display:flex;gap:8px;padding:0 40px 16px;border-bottom:1px solid var(--border-color-subtle)}
 .subtab{height:80px;padding:0 32px;font:var(--type-utility)}
@@ -94,6 +96,8 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .opt[aria-checked=true] .radio{border-color:var(--indicator-on-bg);background:radial-gradient(circle,var(--indicator-on-mark) 0 7px,var(--indicator-on-bg) 8px)}
 .opt:disabled .radio{border-color:var(--disabled-text)}
 .opt .hot{color:var(--temp-hot)}.opt .ice{color:var(--temp-ice)}
+/* without a caption, an unavailable temperature must look unavailable */
+.opt:disabled .hot,.opt:disabled .ice{color:inherit}
 .tag{padding:4px 12px;border-radius:var(--radius-xs);background:var(--surface-subtle);font:var(--type-badge)}
 .hero{display:flex;gap:32px;padding:32px 40px;align-items:center;border-bottom:1px solid var(--border-color-subtle)}
 .hero .photo{width:320px;flex:none}

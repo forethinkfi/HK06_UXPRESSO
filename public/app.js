@@ -118,13 +118,12 @@ const SCREENS = {
   option: () => {
     const d = S.draft, m = menu(d.menuId);
     const radio = (checked, act, val, label, extra = '', off = false, cls = '') => `<button class="opt ${cls}" role="radio" aria-checked="${checked}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}><span class="radio"></span>${label}${extra ? `<span class="extra">${extra}</span>` : ''}</button>`;
-    const one = m.temperature.length === 1;
     return `<div class="screen">${header({ back: 'toMenu' })}${guide()}
     <div class="scroll" data-keep>
       <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p>${esc(m.description)}</p><b class="title">${won(m.price)}</b></div></div>
-      ${m.temperature.length ? `<section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>${one ? `<p class="sub" style="margin-bottom:16px">이 메뉴는 ${m.temperature[0]}만 만들 수 있어요. 자동으로 골랐어요.</p>` : ''}
+      ${m.temperature.length ? `<section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>
         <div class="opts" role="radiogroup" aria-label="온도">${[['HOT', 'flame', '따뜻하게'], ['ICE', 'snowflake', '차갑게']].map(([t, ic, l]) => radio(d.temp === t, 'temp', t, `<span class="${t.toLowerCase()} row">${icon(ic)}${t} ${l}</span>`, '', !m.temperature.includes(t), 'temp')).join('')}</div></section>` : ''}
-      ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2><p class="sub" style="margin-bottom:16px">${g.help || ''}</p>
+      ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2>
         <div class="opts" role="radiogroup" aria-label="${g.label}">${g.choices.map((c) => radio(choice(g, d) === c, 'opt', `${g.id}:${c.id}`, c.label, c.price ? `+${won(c.price)}` : '')).join('')}</div></section>`).join('')}
       <section class="group row between"><h2 class="section" style="margin:0">수량</h2><div class="stepper">${iconBtn('minus', '수량 줄이기', 'qty', { val: -1, off: d.qty <= 1, line: true })}<output>${d.qty}</output>${iconBtn('plus', '수량 늘리기', 'qty', { val: 1, off: d.qty >= 20, line: true })}</div></section>
     </div>
@@ -217,11 +216,18 @@ const DIALOGS = {
 let shown = '';
 function render() {
   const keep = [...document.querySelectorAll('[data-keep]')].map((e) => e.scrollTop);
+  const catsAt = $('.cats')?.scrollLeft || 0;
   const sw = $('[data-swipe]'), swiped = sw && [sw.dataset.swipe, sw.scrollLeft];
   const dlg = sess.warn ? 'session' : S.dlg;
   const [name, arg] = (dlg || '').split(':');
   $('#stage').innerHTML = SCREENS[S.screen]() + (dlg ? `<div class="scrim"><div class="dialog" role="dialog" aria-modal="true">${DIALOGS[name](arg)}</div></div>` : '');
   window.lucide?.createIcons();
+  const cats = $('.cats');
+  if (cats) {
+    const sel = cats.querySelector('[aria-selected=true]');
+    cats.scrollLeft = catsAt;
+    if (sel.offsetLeft - 40 < cats.scrollLeft || sel.offsetLeft + sel.offsetWidth + 40 > cats.scrollLeft + cats.clientWidth) cats.scrollLeft = sel.offsetLeft - (cats.clientWidth - sel.offsetWidth) / 2;
+  }
   const next = $('[data-swipe]');
   if (next) { if (swiped?.[0] === next.dataset.swipe) next.scrollLeft = swiped[1]; syncPager(next); }
   const view = `${S.screen}/${dlg || ''}`;
@@ -373,7 +379,7 @@ const syncPager = (g) => {
 addEventListener('scroll', (e) => { if (e.target.dataset?.swipe) { sess.last = Date.now(); syncPager(e.target); } }, true);
 let drag = null;
 addEventListener('pointerdown', (e) => {
-  const g = e.pointerType === 'mouse' && e.target.closest('[data-swipe]');
+  const g = e.pointerType === 'mouse' && e.target.closest('[data-swipe],.cats');
   drag = g ? { g, x: e.clientX, from: g.scrollLeft, moved: false } : null;
 });
 addEventListener('pointermove', (e) => {
