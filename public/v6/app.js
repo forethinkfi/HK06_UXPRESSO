@@ -318,7 +318,8 @@ fetch('/api/payment-methods').then((r) => r.json()).catch(() => fetch('/data/pay
 
 async function pay(id) {
   S.method = methods.find((m) => m.id === id);
-  S.key ||= crypto.randomUUID();
+  // randomUUID는 https·localhost에서만 있다 (IP 주소 접속 대비)
+  S.key ||= crypto.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
   S.attempt += 1;
   show('proc');
   const started = Date.now();

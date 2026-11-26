@@ -1,7 +1,7 @@
 // UXPRESSO kiosk prototype server: zero-dependency static host + self-made test APIs (not official MGC APIs).
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { extname, join, normalize } from 'node:path';
+import { extname, join, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 
@@ -92,7 +92,8 @@ createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     // 첫 주소는 v6 화면. 이전 화면은 /index.html 에 그대로 있고, 쿼리가 붙은 /?... 는 이전처럼 동작한다.
     if (url.pathname === '/' && !url.search) { res.writeHead(302, { location: '/v6/index.html' }); return res.end(); }
-    const f = normalize(url.pathname === '/' ? '/index.html' : url.pathname).replace(/^(\.\.[/\\])+/, '');
+    // URL 경로는 posix로 정리한다 (Windows의 path.normalize는 \로 바꿔 '/data/' 판별이 실패한다)
+    const f = posix.normalize(url.pathname === '/' ? '/index.html' : url.pathname).replace(/^(\.\.[/\\])+/, '');
     const base = f.startsWith('/data/') ? ROOT : join(ROOT, 'public');
     const buf = await readFile(join(base, f));
     res.writeHead(200, { 'content-type': (MIME[extname(f)] || 'application/octet-stream') + '; charset=utf-8' });

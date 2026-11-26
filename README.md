@@ -10,9 +10,65 @@
 
 ## 실행
 
+GitHub에 푸시한 것은 코드를 공유한 것이고 웹 배포가 아닙니다. `localhost`는 **자기 컴퓨터**를 뜻하므로 각자 아래 순서로 서버를 켜야 합니다.
+
+### 준비물
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org) 18 이상 (권장 24, `.nvmrc`)
+- 인터넷 연결 — 메뉴 이미지(ImageKit), 글꼴·아이콘(jsDelivr)을 불러옵니다
+
+설치할 npm 패키지가 없어 `npm install`과 빌드 과정은 없습니다.
+
+### 처음 받을 때
+
+1. 터미널(macOS: 터미널, Windows: PowerShell 또는 명령 프롬프트)을 엽니다.
+2. 버전을 확인합니다. `v18` 이상이어야 합니다.
+   ```bash
+   node -v
+   ```
+3. 저장소를 받습니다.
+   ```bash
+   git clone https://github.com/forethinkfi/HK06_UXPRESSO.git
+   ```
+4. 폴더로 이동합니다.
+   ```bash
+   cd HK06_UXPRESSO
+   ```
+5. `main`이 아닌 브랜치를 보려면 전환합니다.
+   ```bash
+   git switch feature/motion-mega-coffee
+   ```
+6. 서버를 켭니다. 터미널을 닫지 않고 둡니다.
+   ```bash
+   npm start
+   ```
+7. 브라우저에서 http://localhost:3000 을 엽니다.
+
+### 이미 받아 둔 경우
+켜 둔 서버를 `Ctrl+C`로 끈 뒤 최신 코드를 받고 다시 켭니다.
 ```bash
-npm start     # http://localhost:3000
+git pull
 ```
+```bash
+npm start
+```
+
+### 포트 바꾸기 (`EADDRINUSE` 오류가 날 때)
+3000번 포트를 다른 프로그램이 쓰고 있다는 뜻입니다. 다른 번호로 켭니다 (환경변수 목록: `.env.example`).
+
+| 환경 | 명령 |
+|---|---|
+| macOS · Linux | `PORT=3006 npm start` |
+| Windows PowerShell | `$env:PORT=3006; npm start` |
+| Windows 명령 프롬프트 | `set PORT=3006 && npm start` |
+
+### 자주 겪는 문제
+| 증상 | 원인과 해결 |
+|---|---|
+| 연결할 수 없음 | 서버가 꺼져 있습니다. `npm start`를 실행한 터미널을 켜 두세요 |
+| HTML 파일을 더블클릭하니 빈 화면 | 파일로는 동작하지 않습니다. 서버를 켜고 주소로 여세요 |
+| 예전 화면이 나옴 | 브랜치를 확인하고 `git pull` 후 서버를 다시 켜세요 |
+| 이미지·아이콘이 안 보임 | 인터넷 연결이나 회사·학교망의 차단 여부를 확인하세요 |
 
 | 주소 | 내용 |
 |---|---|
@@ -22,8 +78,6 @@ npm start     # http://localhost:3000
 | `/screens.html` | 개선 시안 보드 — 핵심 화면 14장을 한눈에 보기 (누르면 해당 상태의 프로토타입이 열림) |
 | `/?demo=이름` | 특정 화면 상태로 바로 열기: `start` `pre` `menu` `filter` `mode` `detail` `cart` `confirm` `pay-coupon` `pay-unusable` `pay-fail` `pay-pending` `done` `help` |
 | `/kit.html` | UXPRESSO Kiosk UI Kit — 버튼 6종 × 4상태 |
-
-Node.js 18 이상이면 되고, 설치할 패키지는 없습니다.
 
 ## 디자인 전략
 
