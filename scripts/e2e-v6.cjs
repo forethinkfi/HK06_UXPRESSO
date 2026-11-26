@@ -27,7 +27,13 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
   try {
     // ---- connection, mic audio -> AI -> cart ----
     let { ctx, p } = await open(b, 4030);
+    const sent = [], got = [];
+    p.on('websocket', (w) => { w.on('framesent', (f) => { try { sent.push(JSON.parse(f.payload)); } catch {} }); w.on('framereceived', (f) => { try { got.push(JSON.parse(f.payload).type); } catch {} }); });
     await startVoice(p);
+    await sleep(600);
+    const inits = sent.filter((m) => m.type === 'context' && m.init === true);
+    ok('first greeting: exactly one context{init:true} per session, sent after the server said ready', inits.length === 1 && sent.findIndex((m) => m.init === true) > 0 && got.indexOf('ready') >= 0, JSON.stringify(sent.filter((m) => m.type === 'context')));
+    ok('AI greets before any customer input (greeting shown in the panel)', /어서 오세요/.test(await reply(p)) && !(await panel(p)).includes('말씀하신 내용'), await panel(p));
     ok('voice panel connects (ready: input row visible)', await p.isVisible('#vtext'));
     await sleep(2500); // the fake microphone makes the fake AI hear "아아 하나 주세요"
     ok('mic audio → AI → cart (아이스 아메리카노 1잔)', await cartCount(p) === 1 && await cartTotal(p) === 2000, `${await cartCount(p)} / ${await cartTotal(p)}`);

@@ -94,7 +94,7 @@ globalThis.__UXPRESSO_TEST_LIVE_FACTORY = () => ({
       };
       const session = {
         sendRealtimeInput(inp) {
-          if (inp.text !== undefined) { if (/^\[(System|시스템|系统|システム)/.test(inp.text)) { log('init prompt received'); return; } run(inp.text); }
+          if (inp.text !== undefined) { if (/^\[(System|시스템|系统|システム)/.test(inp.text)) { log('init prompt received'); finish('어서 오세요. 무엇을 드릴까요?'); return; } run(inp.text); }
           if (inp.audio) { audioChunks++; if (audioChunks === 3 && !heard && !process.env.FAKE_LIVE_NO_MIC_TURN) { heard = true; log(`mic audio arrived (${audioChunks} chunks, ${inp.audio.mimeType})`); emit({ inputTranscription: { text: '아아 하나 주세요' } }); setTimeout(() => run('아아 하나 주세요'), 60); } }
         },
         sendToolResponse({ functionResponses }) {

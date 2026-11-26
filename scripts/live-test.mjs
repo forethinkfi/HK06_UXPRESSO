@@ -166,6 +166,10 @@ try {
   A.ws.send(JSON.stringify({ type: 'context', init: true, lang: 'ko', screen: 'menu', mode: 'dine', cartCount: 0, hasUnpriced: false }));
   await waitFor(() => /init prompt/.test(srv.out()));
   check('시작 시 안내 프롬프트가 모델에 전달됨', /init prompt received/.test(srv.out()));
+  check('init 안내 후 AI가 고객 발화 없이 먼저 말함(출력 자막·음성 전달)', await waitFor(() => A.msgs.find((m) => m.type === 'outputTranscript' && /어서 오세요/.test(m.text))) && A.msgs.some((m) => m.type === 'audio'));
+  A.ws.send(JSON.stringify({ type: 'context', init: true, lang: 'ko', screen: 'menu', mode: 'dine', cartCount: 0, hasUnpriced: false }));
+  await sleep(300);
+  check('세션당 첫 안내는 한 번만(init를 다시 보내도 중복 안내 없음)', (srv.out().match(/init prompt received/g) || []).length === 1, String((srv.out().match(/init prompt received/g) || []).length));
   check('모델에 도구 11개(수량 변경·취소·장바구니 조회 포함)와 메뉴 128종 프롬프트 전달', /tools=set_language,set_order_mode,show_menu_list,open_menu_detail,add_to_cart,update_cart_quantity,remove_from_cart,get_cart,request_cancel_order,finish_ordering_to_confirm/.test(srv.out()) && /sysPromptChars=\d{5,}/.test(srv.out()), srv.out().split('\n').find((l) => /connect model/.test(l)));
 
   let m = await say(A, '아아 두 잔 주세요');

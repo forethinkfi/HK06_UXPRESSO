@@ -11,11 +11,15 @@ const ERR = {
 };
 const errCopy = (code) => (['MISSING_API_KEY', 'AUTH', 'MODEL'].includes(code) ? ERR.AUTH : ['QUOTA', 'MODEL_BUSY'].includes(code) ? ERR.QUOTA : code === 'SOCKET' ? ERR.SOCKET : ERR.OTHER);
 const NO_MIC = { reply: '마이크를 쓸 수 없어요.', next: '아래에 입력하거나 화면에서 선택해 주세요.' };
+// shown under the AI's reply: without a microphone the customer must be told typing is the way
+const nextHint = () => (S0()?.voice?.mic === 'denied' ? '마이크를 쓸 수 없어요. 아래에 입력하거나 화면에서 선택해 주세요.' : null);
 const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, '');
 
+let S0 = () => null;
 export function createLive(app) {
   const { P, products, CATS, REC, SUBS } = app;
   const S = () => app.S();
+  S0 = S;
   const live = () => window.UXLive;
 
   const cart = () => ({
@@ -131,15 +135,15 @@ export function createLive(app) {
 
   const handlers = {
     path: '/api/live?catalog=v6',
-    context: () => ({ lang: 'ko', screen: S().screen, mode: null, cartCount: app.count(), hasUnpriced: false }),
+    context: (init) => ({ init: !!init, lang: 'ko', screen: S().screen, mode: null, cartCount: app.count(), hasUnpriced: false }), // init=true only once, when the engine reports 'ready' → the AI greets first
     onReady: () => app.V(S().voice?.mic === 'denied' ? { live: 'ready', status: 'listening', said: '', ...NO_MIC } : { live: 'ready', status: 'listening', said: '', reply: '', next: '' }),
     onMic: (st) => { app.V(st === 'denied' ? { mic: 'denied', ...(S().voice?.live === 'ready' ? { status: 'listening', ...NO_MIC } : {}) } : { mic: 'ready' }); },
     onInput: (text, newTurn) => app.V({ status: 'processing', said: newTurn ? text : (S().voice?.said || '') + text, reply: '', next: '', pending: null }),
-    onOutput: (text, newTurn) => app.V({ status: 'speaking', reply: newTurn ? text : (S().voice?.reply || '') + text, next: '' }),
+    onOutput: (text, newTurn) => app.V({ status: 'speaking', reply: newTurn ? text : (S().voice?.reply || '') + text, next: nextHint() || '' }),
     onSpeaking: () => { if (S().voice && S().voice.status !== 'speaking') app.V({ status: 'speaking' }); },
-    onSpeakEnd: () => { if (S().voice?.status === 'speaking') app.V({ status: 'listening', next: '더 말하거나 화면에서 눌러 주세요.' }); },
+    onSpeakEnd: () => { if (S().voice?.status === 'speaking') app.V({ status: 'listening', next: nextHint() || '더 말하거나 화면에서 눌러 주세요.' }); },
     onInterrupted: () => { if (S().voice) app.V({ status: 'listening' }); },
-    onTurnComplete: (silent) => { if (S().voice && silent && S().voice.status !== 'error') app.V({ status: 'listening', next: '더 말하거나 화면에서 눌러 주세요.' }); },
+    onTurnComplete: (silent) => { if (S().voice && silent && S().voice.status !== 'error') app.V({ status: 'listening', next: nextHint() || '더 말하거나 화면에서 눌러 주세요.' }); },
     onAction: ({ id, name, args }) => { let r; try { r = apply(name, args); } catch (e) { console.error('[live] action', name, e); r = err('kiosk_error'); } live().reply(id, r); },
     onError: failVoice,
     onClosed: (reason) => {
@@ -164,6 +168,6 @@ export function createLive(app) {
       app.V({ status: 'processing', said: t, reply: '', next: '', pending: null });
       live().sendText(t);
     },
-    sendContext() { if (window.UXLive && live().isReady()) live().sendContext(handlers.context()); },
+    sendContext() { if (window.UXLive && live().isReady()) live().sendContext(handlers.context(false)); },
   };
 }
