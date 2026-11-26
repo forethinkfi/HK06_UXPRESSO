@@ -153,9 +153,9 @@ const VIEWS = {
       <div class="pay-list">
         <div class="step-title"><span class="badge">STEP 1</span><h2>할인·적립을 선택해 주세요</h2></div>
         <div class="discounts">
+          <button class="tile wide" data-a="stampOpen">${mark('stamp')}<span>스탬프 적립</span>${S.stamp ? '<span class="stamp">적용됨</span>' : ''}</button>
           ${off('kt', 'KT 멤버십', 'wide')}${off('tmem', 'T 멤버십', 'wide')}${off('cjone', 'CJ ONE 포인트', 'wide')}
           ${off('kia', '기아멤버스', 'wide')}${off('uju', 'SKT 우주패스', 'wide')}${off('megacoupon', '메가쿠폰', 'wide')}
-          <button class="tile wide" data-a="stampOpen">${mark('stamp')}<span>스탬프 적립</span>${S.stamp ? '<span class="stamp">적용됨</span>' : ''}</button>
         </div>
         <p class="cap">지금은 스탬프 적립만 쓸 수 있어요. 할인이 없으면 아래에서 바로 결제해요.</p>
         <div class="step-title"><span class="badge">STEP 2</span><h2>결제 수단을 선택해 주세요</h2></div>
