@@ -19,10 +19,12 @@ Minimal Outline · Clear Selection Indicator · Familiar Brand Identity · Consi
 ## 4–8. States
 | State | Background | Border (1px) | Text | 기타 |
 |---|---|---|---|---|
-| Default | #FFFFFF | #B8B8B8 | #171717 / 500 | Radius 8, 그림자 없음. Radio: 흰 배경, #171717 테두리, 점 없음 |
+| Default | #FFFFFF | #949494 ¹ | #171717 / 500 | Radius 8, 그림자 없음. Radio: 흰 배경, #171717 테두리, 점 없음 |
 | Selected | #FFFFFF | #171717 | #171717 / 600 | Radius 8. Radio: #171717 + #FFDC00 점. Checkbox: #171717 + #FFDC00 체크 |
 | Pressed | #F2F2F2 | #171717 | — | 터치하는 순간만. 화면 전환을 지연하지 않는다 |
 | Disabled | #F5F5F5 | #D9D9D9 | #767676 | 그림자 없음 |
+
+¹ 원안은 #B8B8B8(흰 배경 대비 1.98:1)이었고, 팀 요청으로 3:1 이상인 #949494로 진하게 바꿨다.
 
 - 선택의 핵심 단서는 라디오·체크 인디케이터다. 색상 차이만으로 표현하지 않는다.
 - Focus Visible: #171717 2px, offset 3px. 키보드·보조 입력 전용. Selected와 독립적으로 관리한다.

@@ -6,7 +6,7 @@
   --mc-yellow-40:#FFDC00; --mc-yellow-50:#E7BE0B; --mc-yellow-30:#FBE949; --mc-yellow-10:#FDFBC4; --mc-yellow-5:#FEFDE8;
   --mc-black:#171717; --mc-ink:#0E0F0E; --mc-white:#FFFFFF;
   /* grays, status, temperature [제안] */
-  --gray-5:#F5F5F5; --gray-10:#E8E8E8; --gray-20:#D9D9D9; --gray-30:#C4C4C4; --gray-40:#A3A3A3; --gray-line:#B8B8B8; --gray-press:#F2F2F2; --gray-off:#767676; --gray-60:#6B6B6B; --gray-70:#555555; --gray-90:#2E2E2E;
+  --gray-5:#F5F5F5; --gray-10:#E8E8E8; --gray-20:#D9D9D9; --gray-30:#C4C4C4; --gray-40:#A3A3A3; --gray-line:#949494; --gray-press:#F2F2F2; --gray-off:#767676; --gray-60:#6B6B6B; --gray-70:#555555; --gray-90:#2E2E2E;
   --status-error:#C62828; --status-success:#237A45; --status-warning:#8A5B00; --temp-hot:#C62828; --temp-ice:#2459A6;
 
   /* semantic [v6 §3.2] */
