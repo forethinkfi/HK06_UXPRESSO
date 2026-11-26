@@ -3,7 +3,7 @@ const IMG = 'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%
 const { categories: CATS, recommended, products } = await (await fetch('menu-data.json')).json();
 const P = Object.fromEntries(products.map((p) => [p.id, p]));
 const REC = recommended.map((n) => products.find((p) => p.name === n)).filter(Boolean);
-const SHOT = 500, IDLE_MS = 120000, GRACE_S = 60;
+const IDLE_MS = 120000, GRACE_S = 60;
 const IDLE_COPY = '2분 동안 조작이 없으면 종료 안내가 표시돼요.';
 
 const tagged = (...t) => [{ n: '전체' }, ...t.map(([n, tag]) => ({ n, f: (p) => p.tags.includes(tag || n) }))];
@@ -27,7 +27,9 @@ const icon = (n) => `<i data-lucide="${n}"></i>`;
 const icons = () => window.lucide?.createIcons();
 const src = (p, temp) => { const f = p.images[temp] || p.images.ICE || p.images.HOT || p.images.one; return `${IMG}${f.split('_')[0]}/${f}`; };
 const pic = (p, temp, cls = '') => `<img class="mult ${cls}" src="${src(p, temp)}" alt="">`;
-const unit = (id, temp, shot = 0) => P[id].sample_price[temp || 'one'] + shot * SHOT;
+// 옵션: { shot: 1, syrup: 1 } — 값은 고른 항목의 순번, 0(기본)은 저장하지 않는다
+const chosen = (id, opts) => P[id].options.filter((g) => opts[g.id]).map((g) => ({ group: g, choice: g.choices.find((c) => +c.id === opts[g.id]) }));
+const unit = (id, temp, opts = {}) => P[id].sample_price[temp || (P[id].temps.length ? dtemp(P[id]) : 'one')] + chosen(id, opts).reduce((a, o) => a + o.choice.price, 0);
 const dtemp = (p) => (p.temps.includes('HOT') ? 'HOT' : p.temps[0] || null);
 
 const stage = $('#stage'), screen = $('#screen'), voiceEl = $('#voice'), fx = $('#fx'), dlg = $('#dlg');
@@ -37,7 +39,10 @@ const later = (fn, ms) => timers.push(setTimeout(fn, ms));
 const clearTimers = () => { timers.forEach(clearTimeout); timers = []; clearInterval(rotate); };
 const total = () => S.items.reduce((a, i) => a + i.unit * i.qty, 0);
 const count = () => S.items.reduce((a, i) => a + i.qty, 0);
-const itemName = (i) => P[i.pid].name + (i.temp ? ` (${i.temp}${i.shot ? ` · 샷 ${i.shot}개 추가` : ''})` : '');
+const itemName = (i) => {
+  const extra = [i.temp, ...chosen(i.pid, i.opts).map(({ group, choice }) => (group.id === 'ice' ? `얼음 ${choice.label}` : choice.label))].filter(Boolean);
+  return P[i.pid].name + (extra.length ? ` (${extra.join(' · ')})` : '');
+};
 
 const logo = '<img class="logo" src="logo.svg" alt="메가MGC커피">';
 const voiceBtn = () => `<button class="btn ${S.voice ? 'btn-secondary' : 'btn-voice'}" data-a="voice" id="vbtn">${icon('mic')}${S.voice ? '음성 종료' : '음성 주문'}</button>`;
@@ -49,6 +54,17 @@ const steps = (cur) => `<ol class="steps">${['메뉴 선택', '주문 확인', '
 const cupPath = 'M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z';
 const cupSvg = (id, w, h, stroke, inner) => `<svg viewBox="0 0 120 140" width="${w}" height="${h}" aria-hidden="true"><defs><clipPath id="${id}"><path d="${cupPath}"/></clipPath></defs><g clip-path="url(#${id})">${inner}</g><path d="${cupPath}" fill="none" stroke="${stroke}" stroke-width="5" stroke-linejoin="round"/><rect x="8" y="4" width="104" height="14" rx="4" fill="${stroke}"/></svg>`;
 const wavePath = (fill, cls) => `<path class="${cls}" d="M-120 0q30-14 60 0t60 0t60 0t60 0t60 0t60 0V240H-120z" fill="${fill}"/>`;
+
+// 공식 로고 파일이 있는 항목만 이미지로 보여준다. 결제사 로고는 그리지 않고 기능 아이콘으로 대신한다.
+// 로고를 받으면 LOGOS에 'id: 경로'를 추가하면 된다.
+const LOGOS = { megacoupon: 'logo.svg', prepaid: 'logo.svg' };
+const PAY_ICONS = { card: 'credit-card', appcard: 'qr-code', mobilegift: 'gift', cjgift: 'gift', cash: 'banknote', mpoint: 'coins', stamp: 'stamp', kt: 'ticket-percent', tmem: 'ticket-percent', cjone: 'coins', kia: 'ticket-percent', uju: 'ticket-percent' };
+const PAY_LABEL = { card: ['카드 결제', '삼성페이'], appcard: ['앱카드', 'QR·바코드'], mobilegift: ['모바일 상품권', '교환권·금액권'] };
+const mark = (id) => `<span class="mark">${LOGOS[id] ? `<img src="${LOGOS[id]}" alt="">` : icon(PAY_ICONS[id] || 'smartphone')}</span>`;
+
+// 고른 만큼 컵이 차오른다
+const SHOT_CUP = 'M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z';
+const shotCups = (n) => Array.from({ length: n }, () => `<svg class="shot-cup" viewBox="0 0 60 80" width="36" height="48" aria-hidden="true"><clipPath id="shotClip"><path d="${SHOT_CUP}"/></clipPath><g clip-path="url(#shotClip)"><rect x="0" y="8" width="60" height="70" fill="#6B4226"/></g><path d="${SHOT_CUP}" fill="none" stroke="#575757" stroke-width="4" stroke-linejoin="round"/></svg>`).join('');
 
 /* ---------- screens ---------- */
 const VIEWS = {
@@ -90,17 +106,23 @@ const VIEWS = {
   },
   opt() {
     const p = P[S.opt.pid];
-    const temps = p.temps.length ? `<div><div class="label"><h2>온도</h2><span class="badge">필수</span></div>
-      <div class="temp" role="radiogroup" aria-label="온도"><span class="thumb"></span>${['HOT', 'ICE'].map((t) => `<button role="radio" data-a="temp" data-v="${t}" ${p.temps.includes(t) ? '' : 'disabled'}><b>${t}</b>${t === 'HOT' ? '따뜻하게' : '차갑게'}</button>`).join('')}</div>
-      ${p.temps.length === 1 ? `<p class="cap">${p.temps[0] === 'ICE' ? '차갑게' : '따뜻하게'}만 주문할 수 있어요.</p>` : ''}</div>` : '';
-    const shots = p.coffee ? `<div class="line"><div><div class="label"><h2>샷 추가</h2><span class="badge opt">선택</span></div><p class="cap">컵을 눌러 에스프레소 샷을 채워요. 1샷 +500원</p></div>
-      <div class="shots">${[1, 2].map((n) => `<button data-a="shot" data-v="${n}" aria-label="샷 ${n}개"><svg viewBox="0 0 60 80" width="72" height="92" aria-hidden="true"><defs><clipPath id="shot${n}"><path d="M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z"/></clipPath></defs><g clip-path="url(#shot${n})"><rect x="0" y="8" width="60" height="70" fill="#6B4226"/></g><path d="M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z" fill="none" stroke="#575757" stroke-width="3" stroke-linejoin="round"/></svg>+${n * SHOT}원</button>`).join('')}</div></div>` : '';
+    const temps = p.temps.length ? `<section class="group"><div class="label"><h2>어떤 온도로 드시겠어요?</h2><span class="badge opt">필수</span></div>
+      <div class="choices temp" role="radiogroup" aria-label="온도"><span class="thumb" aria-hidden="true"></span>${['HOT', 'ICE'].map((t) => `<button role="radio" data-a="temp" data-v="${t}" ${p.temps.includes(t) ? '' : 'disabled'}><b>${t}</b>${t === 'HOT' ? '따뜻하게' : '차갑게'}</button>`).join('')}</div>
+      ${p.temps.length === 1 ? `<p class="cap">${p.temps[0] === 'ICE' ? '차갑게' : '따뜻하게'}만 주문할 수 있어요.</p>` : ''}</section>` : '';
+    const groups = p.options.map((g) => `<section class="group" data-group="${g.id}" ${g.onlyTemp ? `data-only="${g.onlyTemp}"` : ''}>
+      <div class="label"><h2>${g.label}</h2><span class="badge opt">${g.required ? '필수' : '선택'}</span></div><p class="cap help">${g.help || ''}</p>
+      <div class="choices" role="radiogroup" aria-label="${g.label}">${g.choices.map((c) => `<button role="radio" data-a="option" data-g="${g.id}" data-v="${c.id}"><span class="opt-name">${g.id === 'shot' ? shotCups(+c.id) : ''}${c.label}</span>${c.price ? `<span>+${won(c.price)}</span>` : ''}</button>`).join('')}</div></section>`).join('');
     return `<section class="scr" aria-label="옵션 선택">${header('menu')}
-      <div class="hero"><div class="row"><h1>${p.name}</h1><span class="price-tag" id="unit"></span></div><img class="mult" id="optImg" alt="${p.name}"></div>
-      <div class="sheet">${temps}${shots}
-        <div class="line"><h2>수량</h2><div class="stepper"><button class="icon-btn" data-a="qty" data-v="-1" aria-label="수량 줄이기">${icon('minus')}</button><output></output><button class="icon-btn" data-a="qty" data-v="1" aria-label="수량 늘리기">${icon('plus')}</button></div></div>
-        <button class="btn btn-primary" data-a="add" id="addBtn"></button>
-      </div></section>`;
+      <div class="detail">
+        <div class="product"><img class="mult" id="optImg" alt="${p.name}">
+          <div><h1>${p.name}</h1><p class="desc">${p.description}</p>
+            <div class="price-row"><strong id="unit"></strong><button class="btn btn-text" data-a="more" aria-expanded="false" aria-controls="more"><span>자세히 보기</span>${icon('chevron-down')}</button></div></div></div>
+        <div id="more" hidden></div>
+        ${temps}${groups}
+        <section class="group line"><h2>수량</h2><div class="stepper"><button class="icon-btn" data-a="qty" data-v="-1" aria-label="수량 줄이기">${icon('minus')}</button><output></output><button class="icon-btn" data-a="qty" data-v="1" aria-label="수량 늘리기">${icon('plus')}</button></div></section>
+      </div>
+      <footer class="opt-bar"><p class="hint" role="status"></p><div class="sum"><span>선택한 금액</span><strong id="sum"></strong></div>
+        <button class="btn btn-primary" data-a="add" id="addBtn">장바구니에 담기</button></footer></section>`;
   },
   review() {
     return `<section class="scr" aria-label="주문 확인">${steps(1)}
@@ -112,17 +134,32 @@ const VIEWS = {
         <p class="cap">누르면 할인·적립·결제로 넘어가요.</p></div></section>`;
   },
   pay() {
-    const groups = [...new Set(methods.map((m) => m.group))];
+    const by = Object.fromEntries(methods.map((m) => [m.id, m]));
+    const tile = (id, cls = '') => {
+      const m = by[id];
+      if (!m) return '';
+      return `<button class="tile ${cls}" data-a="pay" data-v="${id}" ${m.supported ? '' : 'disabled'}>${mark(id)}<span>${PAY_LABEL[id]?.[0] || m.name}</span>${PAY_LABEL[id]?.[1] ? `<small>${PAY_LABEL[id][1]}</small>` : ''}${m.supported ? '' : '<small>사용할 수 없어요</small>'}</button>`;
+    };
+    const off = (id, name, cls = '') => `<button class="tile ${cls}" disabled>${mark(id)}<span>${name}</span></button>`;
     return `<section class="scr" aria-label="할인과 결제">${steps(2)}
       <div class="bar-top"><button class="btn btn-secondary" data-a="review">${icon('chevron-left')}주문서로</button><span class="cap">${S.type}</span></div>
       <div class="pay-list">
-        <section><h2>할인 · 적립</h2><p class="cap">없으면 아래에서 바로 결제해요.</p><div class="tilegrid">
-          <button class="tile" data-a="stampOpen">${icon('stamp')}스탬프 적립${S.stamp ? '<span class="stamp">적용됨</span>' : ''}</button>
-          ${['메가쿠폰', '통신사 멤버십'].map((n) => `<button class="tile" disabled>${n}<small>이 시안에서는 준비 중</small></button>`).join('')}</div></section>
-        ${groups.map((g) => `<section><h2>${g}</h2><div class="tilegrid">${methods.filter((m) => m.group === g).map((m) => `<button class="tile" data-a="pay" data-v="${m.id}" ${m.supported ? '' : 'disabled'}>${m.name}${m.supported ? '' : '<small>이 키오스크에서는 쓸 수 없어요</small>'}</button>`).join('')}</div></section>`).join('')}
+        <div class="step-title"><span class="badge">STEP 1</span><h2>할인·적립을 선택해 주세요</h2></div>
+        <div class="discounts">
+          ${off('kt', 'KT 멤버십', 'wide')}${off('tmem', 'T 멤버십', 'wide')}${off('cjone', 'CJ ONE 포인트', 'wide')}
+          ${off('kia', '기아멤버스', 'wide')}${off('uju', 'SKT 우주패스', 'wide')}${off('megacoupon', '메가쿠폰', 'wide')}
+          <button class="tile wide" data-a="stampOpen">${mark('stamp')}<span>스탬프 적립</span>${S.stamp ? '<span class="stamp">적용됨</span>' : ''}</button>
+        </div>
+        <p class="cap">지금은 스탬프 적립만 쓸 수 있어요. 할인이 없으면 아래에서 바로 결제해요.</p>
+        <div class="step-title"><span class="badge">STEP 2</span><h2>결제 수단을 선택해 주세요</h2></div>
+        <div class="methods">
+          ${tile('card', 'big')}${tile('appcard', 'big')}<span></span>
+          ${['kakao', 'payco', 'naver', 'zero', 'paybook', 'hana', 'kbpay', 'sol', 'daangn', 'alipay', 'mobilegift', 'prepaid', 'cjgift'].map((id) => tile(id)).join('')}
+          ${off('mpoint', '현대 M포인트')}${tile('cash')}
+        </div>
         ${methods.length ? '' : '<p class="empty">결제 수단을 불러오지 못했어요.<br>직원에게 알려 주세요.</p>'}
       </div>
-      <div class="paybar total"><span>결제 금액</span><strong>${won(total())}</strong></div></section>`;
+      <div class="paybar"><div><span>주문금액</span><b>${won(total())}</b></div><div><span>결제할 금액</span><strong>${won(total())}</strong></div></div></section>`;
   },
   proc() {
     return `<section class="scr proc" aria-label="결제 처리" aria-live="polite">
@@ -160,7 +197,7 @@ function syncMenu() {
   const list = (S.cat === 1 ? REC : products.filter((p) => p.categories.includes(S.cat))).filter(sub.f || (() => true));
   $('#grid').innerHTML = list.length ? `<div class="grid">${list.map((p) => {
     const t = dtemp(p);
-    return `<button class="card" data-a="open" data-v="${p.id}">${pic(p, t)}${p.badge ? `<span class="badge">${p.badge}</span>` : ''}<b>${p.name}</b><strong>${won(unit(p.id, t))}</strong></button>`;
+    return `<button class="card" data-a="open" data-v="${p.id}"><span class="shot-bg">${pic(p, t)}</span>${p.badge ? `<span class="badge">${p.badge}</span>` : ''}<b>${p.name}</b><strong>${won(unit(p.id, t))}</strong></button>`;
   }).join('')}</div>` : '<p class="empty">이 분류는 준비 중이에요.<br>다른 메뉴를 골라 주세요.</p>';
   $('#grid').scrollTop = 0;
   syncCart();
@@ -178,15 +215,32 @@ function syncCart() {
 }
 function syncOpt() {
   const o = S.opt, p = P[o.pid];
-  $('#unit').textContent = won(unit(o.pid, o.temp, o.shot));
-  $('#optImg').src = src(p, o.temp);
+  const temp = o.temp || dtemp(p);
+  for (const g of p.options) if (g.onlyTemp && o.temp !== g.onlyTemp) delete o.opts[g.id];
+  $('#unit').textContent = won(unit(o.pid, o.temp));
+  $('#optImg').src = src(p, temp);
   $$('.temp button').forEach((b) => b.setAttribute('aria-checked', b.dataset.v === o.temp));
-  $('.thumb')?.classList.toggle('right', o.temp === 'ICE');
-  $$('.shots button').forEach((b) => b.setAttribute('aria-pressed', o.shot >= +b.dataset.v));
+  const thumb = $('.temp .thumb'); // 처음엔 제자리에 나타나고, 바꿀 때만 미끄러진다
+  if (thumb) {
+    thumb.classList.toggle('right', o.temp === 'ICE');
+    void thumb.offsetWidth;
+    thumb.classList.toggle('on', !!o.temp);
+  }
+  $$('.group[data-only]').forEach((g) => { g.hidden = g.dataset.only !== o.temp; });
+  $$('[data-a=option]').forEach((b) => b.setAttribute('aria-checked', (o.opts[b.dataset.g] || 0) === +b.dataset.v));
   $('.stepper output').textContent = o.qty;
   $('[data-a=qty][data-v="-1"]').disabled = o.qty <= 1;
   $('[data-a=qty][data-v="1"]').disabled = o.qty >= 9;
-  $('#addBtn').textContent = `${won(unit(o.pid, o.temp, o.shot) * o.qty)} · 담기`;
+  const need = p.temps.length && !o.temp;
+  $('.opt-bar .hint').textContent = need ? '온도를 선택하면 장바구니에 담을 수 있어요.' : '';
+  $('#addBtn').disabled = need;
+  $('#sum').textContent = won(unit(o.pid, o.temp, o.opts) * o.qty);
+  // 영양 정보는 확인된 값만 보여준다
+  const info = p.info[temp] || p.info.one || Object.values(p.info)[0];
+  const date = p.info_source.match(/\d{4}-\d{2}-\d{2}/)?.[0];
+  $('#more').innerHTML = `<p>${p.description}</p>${info ? `${info.volume || info.kcal ? `<p>${[info.volume && `용량 ${info.volume}`, info.kcal && `열량 ${info.kcal}`].filter(Boolean).join(' · ')}</p>` : ''}
+    <p><b>알레르기</b> ${info.allergens || '확인되지 않았어요'}</p><ul>${(info.nutrition || []).map((n) => `<li>${n}</li>`).join('')}</ul>` : '<p>영양·알레르기 정보는 확인되지 않았어요.</p>'}
+    <p class="cap">알레르기가 있으면 주문 전에 직원에게 꼭 확인해 주세요.${date ? ` 메가MGC커피 홈페이지 기준(${date})이에요.` : ''}</p>`;
 }
 function syncReview(redraw) {
   if (redraw) $('.rows').innerHTML = rows(false);
@@ -232,11 +286,12 @@ function nav(name) {
 function reset() { dlg.close(); S = fresh(); armIdle(); nav('start'); }
 
 /* ---------- 주문 ---------- */
-function openOpt(pid, extra = {}) { S.opt = { pid, temp: dtemp(P[pid]), qty: 1, shot: 0, ...extra }; show('opt'); }
-function add({ pid, temp, qty, shot = 0 }) {
-  const same = S.items.find((i) => i.pid === pid && i.temp === temp && i.shot === shot);
+// 온도가 둘이면 직접 고르게 비워 둔다
+function openOpt(pid, extra = {}) { S.opt = { pid, temp: P[pid].temps.length === 1 ? P[pid].temps[0] : null, qty: 1, opts: {}, ...extra }; show('opt'); }
+function add({ pid, temp, qty, opts = {} }) {
+  const same = S.items.find((i) => i.pid === pid && i.temp === temp && JSON.stringify(chosen(i.pid, i.opts)) === JSON.stringify(chosen(pid, opts)));
   if (same) same.qty = Math.min(9, same.qty + qty);
-  else S.items.push({ id: ++S.uid, pid, temp, shot, qty, unit: unit(pid, temp, shot) });
+  else S.items.push({ id: ++S.uid, pid, temp, opts: { ...opts }, qty, unit: unit(pid, temp, opts) });
   if (S.screen === 'menu') syncCart(); else show('menu');
   fx.insertAdjacentHTML('beforeend', pic(P[pid], temp, 'fly'));
   const el = fx.lastElementChild;
@@ -340,11 +395,14 @@ function resolve(k) {
     o.temp = 'HOT'; syncOpt(); return reply('따뜻하게 선택했어요.', '담으려면 “이걸로 담아줘”라고 말해 주세요.');
   }
   if (k === 'shot') {
-    if (!p.coffee) return reply('이 메뉴에는 샷 추가가 없어요.', '다른 옵션을 골라 주세요.');
-    o.shot = Math.min(2, o.shot + 1); syncOpt(); return reply('샷을 추가했어요.', '금액을 확인하고 담아 주세요.');
+    if (!p.options.some((g) => g.id === 'shot')) return reply('이 메뉴에는 샷 추가가 없어요.', '다른 옵션을 골라 주세요.');
+    o.opts.shot = Math.min(2, (o.opts.shot || 0) + 1); syncOpt(); return reply('샷을 추가했어요.', '금액을 확인하고 담아 주세요.');
   }
   if (k === 'two') { o.qty = 2; syncOpt(); return reply('2잔으로 바꿨어요.', '담으려면 “이걸로 담아줘”라고 말해 주세요.'); }
-  if (k === 'add') { add(o); return added(); }
+  if (k === 'add') {
+    if (p.temps.length && !o.temp) return reply('온도를 먼저 골라 주세요.', '따뜻하게 또는 차갑게를 눌러 주세요.');
+    add(o); return added();
+  }
 }
 const added = () => V({ status: 'success', pending: null, reply: '장바구니에 담았어요.', next: '더 담거나 “이제 됐어”라고 말해 주세요.' });
 function selCat(c) { S.cat = c; S.sub = 0; if (S.screen === 'menu') syncMenu(); else show('menu'); }
@@ -369,7 +427,14 @@ const A = {
   open: (v) => openOpt(v),
   menu: () => { S.opt = null; show('menu'); },
   temp: (v) => { S.opt.temp = v; syncOpt(); },
-  shot: (v) => { S.opt.shot = S.opt.shot === +v ? v - 1 : +v; syncOpt(); },
+  option: (v, el) => { if (+v) S.opt.opts[el.dataset.g] = +v; else delete S.opt.opts[el.dataset.g]; syncOpt(); },
+  more: (_, el) => {
+    const opened = $('#more').hidden;
+    $('#more').hidden = !opened;
+    el.setAttribute('aria-expanded', opened);
+    el.innerHTML = `<span>${opened ? '접기' : '자세히 보기'}</span>${icon(opened ? 'chevron-up' : 'chevron-down')}`;
+    icons();
+  },
   qty: (v) => { S.opt.qty = Math.max(1, Math.min(9, S.opt.qty + +v)); syncOpt(); },
   add: () => { const talking = !!S.voice; add(S.opt); if (talking) added(); },
   askClear: () => open('<h2 class="cart-modal">담은 메뉴를 모두 삭제할까요?</h2><p>장바구니에 담긴 메뉴가 모두 삭제돼요.</p><div class="pair"><button class="btn btn-destructive" data-a="clear">전체 삭제</button><button class="btn btn-primary" data-a="close" autofocus>계속 주문하기</button></div>'),
