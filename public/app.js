@@ -4,7 +4,7 @@ const won = (n) => n.toLocaleString('ko-KR') + '원';
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const icon = (n, cls = '') => `<i data-lucide="${n}" class="${cls}" aria-hidden="true"></i>`;
 
-const IDLE_MS = 120000, GRACE_MS = 60000, RETURN_MS = 30000, PAGE = 6; // session values are a hypothesis (PRD FR-17)
+const IDLE_MS = 120000, GRACE_MS = 60000, RETURN_MS = 30000; // session values are a hypothesis (PRD FR-17)
 const MODE = { dine: { name: '매장에서 먹기', icon: 'utensils' }, take: { name: '포장하기', icon: 'shopping-bag' } };
 const groupSubs = (...names) => names.map((n) => [n, n, (m) => m.group === n]);
 const CATS = [
@@ -20,7 +20,7 @@ const CATS = [
 const TEMP_SUBS = [['HOT', 'HOT 따뜻하게', (m) => m.temperature.includes('HOT')], ['ICE', 'ICE 차갑게', (m) => m.temperature.includes('ICE')]];
 
 const fresh = () => ({
-  screen: 'start', mode: null, cat: 'rec', sub: 'all', page: 0, cart: [], draft: null, dlg: null,
+  screen: 'start', mode: null, cat: 'rec', sub: 'all', cart: [], draft: null, dlg: null,
   coupon: null, benefit: null, stamp: '', pay: { method: null, status: 'idle', fail: null, attempt: 0, key: '' }, order: null,
   voice: { on: false, st: 'listening', heard: '', say: '', next: '', audio: false },
 });
@@ -93,19 +93,19 @@ const SCREENS = {
     const subs = cat.subs || (['coffee', 'decaf', 'tea'].includes(cat.id) ? TEMP_SUBS : []);
     const sf = subs.find((s) => s[0] === S.sub)?.[2] || (() => true);
     const list = DB.menus.filter((m) => cat.fn(m) && sf(m));
-    const pages = Math.max(1, Math.ceil(list.length / PAGE));
-    const page = Math.min(S.page, pages - 1);
+    const cols = Math.max(3, Math.ceil(list.length / 2)); // two rows, the rest is reached by swiping
+    const pages = Math.ceil(cols / 3);
     const last = S.cart[S.cart.length - 1];
     return `<div class="screen">${header()}${guide()}
     <nav class="cats" role="tablist" aria-label="메뉴 분류">${CATS.map((c) => `<button class="cat" role="tab" aria-selected="${c.id === S.cat}" data-act="cat" data-v="${c.id}">${c.name}</button>`).join('')}</nav>
     ${subs.length ? `<div class="subs" role="tablist">${[['all', '전체'], ...subs].map(([id, l]) => `<button class="subtab" role="tab" aria-selected="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}</div>` : ''}
     <div class="scroll" data-keep>
-      ${list.length ? `<div class="grid">${list.slice(page * PAGE, page * PAGE + PAGE).map((m) => {
+      ${list.length ? `<div class="grid ${pages > 1 ? '' : 'fit'}" style="--cols:${cols}" data-swipe="${S.cat}/${S.sub}">${list.map((m) => {
         const out = m.available === false;
         const badge = out ? '<span class="badge soldout">품절</span>' : '';
         return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="temps">${temps(m)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button>${btn('상세 정보', 'info', { v: 'tertiary', ic: 'info', val: m.id })}</article>`;
       }).join('')}</div>
-      <div class="pager">${iconBtn('chevron-left', '이전 페이지', 'page', { val: page - 1, off: page === 0, line: true })}<span>${page + 1} / ${pages}</span>${iconBtn('chevron-right', '다음 페이지', 'page', { val: page + 1, off: page === pages - 1, line: true })}</div>`
+      ${pages > 1 ? `<div class="pager">${iconBtn('chevron-left', '이전 상품', 'page', { val: -1, off: true, line: true })}<span>옆으로 밀어 더 보기 · <b id="page">1</b> / ${pages}</span>${iconBtn('chevron-right', '다음 상품', 'page', { val: 1, line: true })}</div>` : ''}`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
     </div>
     <div class="cart">
@@ -217,10 +217,13 @@ const DIALOGS = {
 let shown = '';
 function render() {
   const keep = [...document.querySelectorAll('[data-keep]')].map((e) => e.scrollTop);
+  const sw = $('[data-swipe]'), swiped = sw && [sw.dataset.swipe, sw.scrollLeft];
   const dlg = sess.warn ? 'session' : S.dlg;
   const [name, arg] = (dlg || '').split(':');
   $('#stage').innerHTML = SCREENS[S.screen]() + (dlg ? `<div class="scrim"><div class="dialog" role="dialog" aria-modal="true">${DIALOGS[name](arg)}</div></div>` : '');
   window.lucide?.createIcons();
+  const next = $('[data-swipe]');
+  if (next) { if (swiped?.[0] === next.dataset.swipe) next.scrollLeft = swiped[1]; syncPager(next); }
   const view = `${S.screen}/${dlg || ''}`;
   if (view !== shown) { shown = view; $(dlg ? '.dialog h2' : '#stage h1')?.focus({ preventScroll: true }); } // v6 8.2: move focus on screen change
   else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i] || 0; });
@@ -252,7 +255,7 @@ function applyIntent(i) {
   const askTemp = () => setVoice('active', '따뜻하게 드릴까요, 차갑게 드릴까요?', '말하거나 화면에서 눌러 주세요.');
   const ready = () => setVoice('active', '이렇게 담아드릴까요?', '“이걸로 담아줘”라고 말하거나 장바구니에 담기를 눌러 주세요.');
   if (i.intent === 'navigate_category') {
-    S.cat = i.category; S.sub = 'all'; S.page = 0; go('menu');
+    S.cat = i.category; S.sub = 'all'; go('menu');
     setVoice('active', `${CATS.find((c) => c.id === i.category).name}를 보여드릴게요.`, '원하는 메뉴를 말하거나 눌러 주세요.');
   } else if (i.intent === 'select_product') {
     const m = menu(i.menuId);
@@ -305,9 +308,8 @@ const ACT = {
     // stale response guard: a touch that changed the screen or draft wins (DS conflict handling)
     later(() => { if (S.voice === mine && mine.on && seq === at) applyIntent(parseIntent(v, DB.menus)); else if (mine.on) setVoice('listening', '', '원하시는 메뉴를 말씀해 주세요.'); render(); }, 700);
   },
-  cat: (v) => { S.cat = v; S.sub = 'all'; S.page = 0; },
-  sub: (v) => { S.sub = v; S.page = 0; },
-  page: (v) => { S.page = Number(v); document.querySelector('[data-keep]').scrollTop = 0; },
+  cat: (v) => { S.cat = v; S.sub = 'all'; },
+  sub: (v) => { S.sub = v; },
   open: (v) => openItem(v),
   info: (v) => { S.dlg = `info:${v}`; },
   temp: (v) => { S.draft.temp = v; },
@@ -347,6 +349,8 @@ addEventListener('click', (e) => {
   const act = el.dataset.act;
   if (act !== 'say') seq++;
   const { v } = el.dataset;
+  // arrows are the no-gesture alternative to swiping: scroll 3 columns, no re-render
+  if (act === 'page') return $('[data-swipe]').scrollBy({ left: v * 942, behavior: 'smooth' });
   ACT[act](v);
   if (act !== 'reset') render();
   if (e.detail) document.activeElement?.blur?.(); // no focus ring left behind after touch
@@ -354,6 +358,33 @@ addEventListener('click', (e) => {
   else if (document.activeElement === document.body) $(`[data-act="${act}"]${v ? `[data-v="${v}"]` : ''}`)?.focus({ preventScroll: true });
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
+
+// ---------- swipe ----------
+// touch swipes natively; a mouse (demo in a desktop browser) needs drag-to-scroll
+const syncPager = (g) => {
+  const label = $('#page');
+  if (!label) return;
+  const [prev, nxt] = document.querySelectorAll('.pager button');
+  const max = g.scrollWidth - g.clientWidth;
+  prev.disabled = g.scrollLeft <= 1;
+  nxt.disabled = g.scrollLeft >= max - 1;
+  label.textContent = nxt.disabled ? Math.ceil(parseInt(g.style.getPropertyValue('--cols'), 10) / 3) : Math.round(g.scrollLeft / 942) + 1;
+};
+addEventListener('scroll', (e) => { if (e.target.dataset?.swipe) { sess.last = Date.now(); syncPager(e.target); } }, true);
+let drag = null;
+addEventListener('pointerdown', (e) => {
+  const g = e.pointerType === 'mouse' && e.target.closest('[data-swipe]');
+  drag = g ? { g, x: e.clientX, from: g.scrollLeft, moved: false } : null;
+});
+addEventListener('pointermove', (e) => {
+  if (!drag || !e.buttons) return;
+  const dx = (e.clientX - drag.x) / ($('#stage').getBoundingClientRect().width / 1080); // stage is scaled
+  if (Math.abs(dx) > 10) drag.moved = true;
+  if (drag.moved) { drag.g.classList.add('dragging'); drag.g.scrollLeft = drag.from - dx; }
+});
+addEventListener('pointerup', () => drag?.g.classList.remove('dragging'));
+// a drag is not a tap: swallow the click that follows it
+addEventListener('click', (e) => { if (drag?.moved) { e.stopPropagation(); e.preventDefault(); } drag = null; }, true);
 addEventListener('keydown', () => { sess.last = Date.now(); });
 
 // ---------- session ----------

@@ -15,6 +15,7 @@
   --action-voice-bg:var(--mc-black); --action-voice-pressed:var(--mc-ink); --action-voice-text:var(--mc-white);
   --selection-bg:var(--mc-white); --selection-border:var(--mc-black);
   --indicator-bg:var(--mc-white); --indicator-border:var(--mc-black); --indicator-on-bg:var(--mc-black); --indicator-on-mark:var(--mc-yellow-40); --selection-strong-bg:var(--mc-yellow-40); --selection-strong-text:var(--mc-black);
+  --tab-selected-bg:var(--mc-yellow-40); --tab-selected-text:var(--mc-black); /* white was 1.35:1 on yellow */
   --surface-default:var(--mc-white); --surface-subtle:var(--gray-5); --surface-pressed:var(--gray-press); --surface-info:var(--mc-yellow-5);
   --text-primary:var(--mc-black); --text-secondary:var(--gray-70);
   --border-color-subtle:var(--gray-10); --border-color-default:var(--gray-line); --border-color-strong:var(--mc-black);
