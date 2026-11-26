@@ -20,7 +20,7 @@ const CATS = [
 ];
 
 const fresh = () => ({
-  screen: 'start', mode: null, cat: 'rec', sub: 'all', page: 0, cart: [], draft: null, dlg: null,
+  screen: 'start', mode: null, cat: 'rec', sub: 'all', cart: [], draft: null, dlg: null,
   coupon: null, benefit: null, stamp: '', pay: { method: null, status: 'idle', fail: null, attempt: 0, key: '' }, order: null,
   voice: { on: false, st: 'listening', heard: '', say: '', next: '', audio: false },
 });
@@ -116,14 +116,11 @@ const SCREENS = {
     const subs = cat.subs || []; // temperature is chosen on the product screen, not filtered here
     const sf = subs.find((s) => s[0] === S.sub)?.[2] || (() => true);
     const list = DB.menus.filter((m) => cat.fn(m) && sf(m));
-    const size = S.voice.on ? 3 : 6; // 3 x 2; one row while the voice guide takes the space, so nothing is cut off
-    const pages = Math.max(1, Math.ceil(list.length / size));
-    S.page = Math.min(S.page, pages - 1);
     return `<div class="screen">${header()}${guide()}
     <nav class="cats" role="tablist" aria-label="메뉴 분류">${CATS.map((c) => `<button class="cat" role="tab" aria-selected="${c.id === S.cat}" data-act="cat" data-v="${c.id}">${c.name}</button>`).join('')}</nav>
     ${subs.length ? `<div class="subs" role="tablist">${[['all', '전체'], ...subs].map(([id, l]) => `<button class="subtab" role="tab" aria-selected="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}</div>` : ''}
-    <div class="scroll" data-keep="${S.cat}/${S.sub}/${S.page}">
-      ${list.length ? `<div class="grid">${list.slice(S.page * size, S.page * size + size).map((m) => {
+    <div class="scroll" data-list="${S.cat}/${S.sub}">
+      ${list.length ? `<div class="grid">${list.map((m) => {
         const out = m.available === false;
         // NEW follows the homepage's new-menu list. BEST shows only for `best: true` in the menu data (needs real sales data).
         const tags = out ? ['<span class="badge soldout">품절</span>'] : [m.cats.includes('신메뉴') && '<span class="badge new">NEW</span>', m.best && '<span class="badge">BEST</span>'].filter(Boolean);
@@ -132,7 +129,7 @@ const SCREENS = {
       }).join('')}</div>`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
     </div>
-    <nav class="pager" aria-label="메뉴 페이지">${btn('이전 메뉴', 'page', { v: 'secondary', ic: 'chevron-left', val: S.page - 1, off: S.page === 0 })}<output>${S.page + 1} / ${pages}</output>${btn('다음 메뉴', 'page', { v: 'secondary', ic: 'chevron-right', val: S.page + 1, off: S.page === pages - 1 })}</nav>
+    <nav class="updown" aria-label="메뉴 목록 이동" hidden>${btn('위로 보기', 'scroll', { v: 'secondary', ic: 'chevron-up', val: -1 })}${btn('아래로 보기', 'scroll', { v: 'secondary', ic: 'chevron-down', val: 1 })}</nav>
     <div class="cart">
       <div class="row between"><div class="grow"><p class="count">장바구니 ${count()}개</p><p class="summary">${S.cart.length ? `${esc(menu(S.cart[0].menuId).name)}${kinds() > 1 ? ` 외 ${kinds() - 1}종` : ''}` : '담은 메뉴가 없어요.'}</p></div>${S.cart.length ? btn('전체 삭제', 'dlg', { v: 'tertiary', ic: 'trash-2', val: 'clear', cls: 'delete-all' }) : ''}</div>
       <div class="total"><span>주문금액</span><b>${won(total())}</b></div>
@@ -242,22 +239,35 @@ const DIALOGS = {
 };
 
 let shown = '';
+let listPos = {}; // where each product list was left, so coming back from a product keeps the place
 function render() {
   // scroll position survives re-renders, but a new category starts at the top
   const keep = [...document.querySelectorAll('[data-keep]')].map((e) => [e.dataset.keep, e.scrollTop]);
   const dlg = sess.warn ? 'session' : S.dlg;
+  const before = $('[data-list]'), catsAt = $('.cats')?.scrollLeft || 0;
+  if (before) listPos[before.dataset.list] = before.scrollTop;
   const [name, arg] = (dlg || '').split(':');
   $('#stage').innerHTML = SCREENS[S.screen]() + (dlg ? `<div class="scrim"><div class="dialog" role="dialog" aria-modal="true">${DIALOGS[name](arg)}</div></div>` : '');
   window.lucide?.createIcons();
+  // one-row categories keep their position and always show the selected one
+  const cats = $('.cats');
+  if (cats) {
+    const sel = cats.querySelector('[aria-selected=true]');
+    cats.scrollLeft = catsAt;
+    if (sel.offsetLeft - 40 < cats.scrollLeft || sel.offsetLeft + sel.offsetWidth + 40 > cats.scrollLeft + cats.clientWidth) cats.scrollLeft = sel.offsetLeft - (cats.clientWidth - sel.offsetWidth) / 2;
+  }
   const view = `${S.screen}/${dlg || ''}`;
   if (view !== shown) { shown = view; $(dlg ? '.dialog h2' : '#stage h1')?.focus({ preventScroll: true }); } // v6 8.2: move focus on screen change
   else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i]?.[0] === e.dataset.keep ? keep[i][1] : 0; });
+  const list = $('[data-list]');
+  if (list) list.scrollTop = listPos[list.dataset.list] || 0;
+  syncUpDown();
 }
 
 // ---------- navigation, voice, payment ----------
 const voiceOff = () => { S.voice.on = false; speechSynthesis.cancel(); };
 const go = (screen) => { if (['review', 'pay', 'guide', 'done'].includes(screen)) voiceOff(); S.screen = screen; S.dlg = null; S.draft = screen === 'option' ? S.draft : null; };
-const reset = () => { timers.forEach(clearTimeout); timers = []; speechSynthesis.cancel(); S = fresh(); sess.warn = 0; sess.last = Date.now(); render(); };
+const reset = () => { timers.forEach(clearTimeout); timers = []; listPos = {}; speechSynthesis.cancel(); S = fresh(); sess.warn = 0; sess.last = Date.now(); render(); };
 const openItem = (id, extra = {}) => {
   const m = menu(id);
   if (m.available === false) return;
@@ -280,7 +290,7 @@ function applyIntent(i) {
   const askTemp = () => setVoice('active', '따뜻하게 드릴까요, 차갑게 드릴까요?', '말하거나 화면에서 눌러 주세요.');
   const ready = () => setVoice('active', '이렇게 담아드릴까요?', '“이걸로 담아줘”라고 말하거나 장바구니에 담기를 눌러 주세요.');
   if (i.intent === 'navigate_category') {
-    S.cat = i.category; S.sub = 'all'; S.page = 0; go('menu');
+    S.cat = i.category; S.sub = 'all'; listPos = {}; go('menu');
     setVoice('active', `${CATS.find((c) => c.id === i.category).name}를 보여드릴게요.`, '원하는 메뉴를 말하거나 눌러 주세요.');
   } else if (i.intent === 'select_product') {
     const m = menu(i.menuId);
@@ -333,9 +343,8 @@ const ACT = {
     // stale response guard: a touch that changed the screen or draft wins (DS conflict handling)
     later(() => { if (S.voice === mine && mine.on && seq === at) applyIntent(parseIntent(v, DB.menus)); else if (mine.on) setVoice('listening', '', '원하시는 메뉴를 말씀해 주세요.'); render(); }, 700);
   },
-  cat: (v) => { S.cat = v; S.sub = 'all'; S.page = 0; },
-  sub: (v) => { S.sub = v; S.page = 0; },
-  page: (v) => { S.page = Number(v); },
+  cat: (v) => { S.cat = v; S.sub = 'all'; listPos = {}; },
+  sub: (v) => { S.sub = v; listPos = {}; },
   open: (v) => openItem(v),
   temp: (v) => { S.draft.temp = v; },
   more: () => { S.draft.more = !S.draft.more; },
@@ -374,6 +383,8 @@ addEventListener('click', (e) => {
   const act = el.dataset.act;
   if (act !== 'say') seq++;
   const { v } = el.dataset;
+  // up/down buttons: move most of a screen, no re-render
+  if (act === 'scroll') { const sc = $('[data-list]'); return sc.scrollBy({ top: v * sc.clientHeight * 0.8, behavior: 'smooth' }); }
   ACT[act](v);
   if (act !== 'reset') render();
   if (e.detail) document.activeElement?.blur?.(); // no focus ring left behind after touch
@@ -381,6 +392,33 @@ addEventListener('click', (e) => {
   else if (document.activeElement === document.body) $(`[data-act="${act}"]${v ? `[data-v="${v}"]` : ''}`)?.focus({ preventScroll: true });
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
+
+// ---------- product list up/down buttons: shown only when there is something to scroll ----------
+const syncUpDown = () => {
+  const sc = $('[data-list]'), box = $('.updown');
+  if (!sc || !box) return;
+  box.hidden = false;
+  const max = sc.scrollHeight - sc.clientHeight;
+  const [up, down] = box.children;
+  up.disabled = sc.scrollTop <= 1;
+  down.disabled = sc.scrollTop >= max - 1;
+  box.hidden = max <= 1;
+};
+addEventListener('scroll', (e) => { if (e.target.dataset?.list) { sess.last = Date.now(); syncUpDown(); } }, true);
+
+// ---------- category swipe: touch is native; a mouse (desktop demo) needs drag ----------
+let drag = null;
+addEventListener('pointerdown', (e) => {
+  const g = e.pointerType === 'mouse' && e.target.closest('.cats');
+  drag = g ? { g, x: e.clientX, from: g.scrollLeft, moved: false } : null;
+});
+addEventListener('pointermove', (e) => {
+  if (!drag || !e.buttons) return;
+  const dx = (e.clientX - drag.x) / ($('#stage').getBoundingClientRect().width / 1080); // stage is scaled
+  if (Math.abs(dx) > 10) drag.moved = true;
+  if (drag.moved) drag.g.scrollLeft = drag.from - dx;
+});
+addEventListener('click', (e) => { if (drag?.moved) { e.stopPropagation(); e.preventDefault(); } drag = null; }, true); // a drag is not a tap
 
 addEventListener('keydown', () => { sess.last = Date.now(); });
 
