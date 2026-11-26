@@ -4,8 +4,9 @@
 
 | 문서 | 내용 |
 |---|---|
+| [refinement-v2.1.md](refinement-v2.1.md) | UI Refinement v2.1 적용 결과와 검증 |
 | [prd-mega-ver2.md](prd-mega-ver2.md) | **PRD v3.1 (현재 구현 기준)** — 화면 요구사항, v3.0 대비 상태, 팀 확인 항목 |
-| [design-system/uxpresso-design-system-v7.md](design-system/uxpresso-design-system-v7.md) | **디자인 시스템 v7.0 (현재 기준)** — 실제 화면에 적용된 토큰·컴포넌트·상태 |
+| [design-system/uxpresso-design-system-v7.md](design-system/uxpresso-design-system-v7.md) | **디자인 시스템 v7.1 (현재 기준)** — 실제 화면에 적용된 토큰·컴포넌트·상태 |
 | [prd-v3.0.md](prd-v3.0.md) | **PRD v3.0 전문 (팀 제공)** — 음성 주문·세션 정책 포함 원문 (검증 전 제안) |
 | [design-system/uxpresso-design-system-v6.md](design-system/uxpresso-design-system-v6.md) | 디자인 시스템 v6.0 (팀 제공 원본) — v7의 바탕. 제안 / 하드웨어 검증 전 |
 | [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |

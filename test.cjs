@@ -13,4 +13,7 @@ assert.strictEqual(p('카드로 결제해 줘').intent, 'unsupported_payment'); 
 assert.strictEqual(p('쿠폰 써줘').intent, 'unsupported_payment');
 assert.strictEqual(p('이제 됐어').intent, 'finish_selection');
 assert.strictEqual(p('음 그러니까').intent, 'unknown');
+assert.strictEqual(p('차가운 걸로 바꿔줘').temperature, 'ICE');
+assert.strictEqual(p('따뜻한 카페라떼 주세요').temperature, 'HOT');
+assert.strictEqual(p('따뜻한 카페라떼 주세요').menuId, 'latte');
 console.log('ok');

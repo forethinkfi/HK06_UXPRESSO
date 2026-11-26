@@ -13,7 +13,7 @@
     if (/추천/.test(t)) return { intent: 'navigate_category', category: 'rec' };
     if (/신메뉴|새로나온/.test(t)) return { intent: 'navigate_category', category: 'new' };
 
-    const temperature = /아이스(?!티)|차갑|시원/.test(t) ? 'ICE' : /따뜻|뜨겁|핫/.test(t) ? 'HOT' : null;
+    const temperature = /아이스(?!티)|차갑|차가|시원/.test(t) ? 'ICE' : /따뜻|뜨겁|핫/.test(t) ? 'HOT' : null;
     const m = t.match(/(\d+|한|하나|두|둘|세|셋|네|넷)잔/);
     const quantity = m ? Math.min(20, NUM[m[1]] || Number(m[1])) || 1 : null;
     // longest product name wins, so "디카페인 아메리카노" beats "아메리카노"
