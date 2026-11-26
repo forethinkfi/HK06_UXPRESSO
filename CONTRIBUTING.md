@@ -9,12 +9,11 @@
 | 회의록 | `docs/meetings/` | `YYYY-MM-DD-제목.md`. `_template.md`를 복사해서 작성 |
 | 리서치 (AS-IS 분석, 현장 관찰, 인터뷰) | `docs/research/<주제>/` | 폴더마다 `README.md`로 요약 + 원본 자료 |
 | 사용성 테스트 | `docs/research/usability-test/` | 시나리오, 기록, 결과 |
-| 페르소나·기획·요구사항 | `docs/` | `prd.md`, `requirements.md`처럼 문서 1개 = 파일 1개 |
-| 디자인 시스템 | `docs/design-system/` | 기존 번호 문서(01~08)에 이어서 작성 |
-| 시안 원본 | `docs/artboard/` | |
+| 페르소나·기획·요구사항 | `docs/` | `prd-v3.0.md`, `requirements.md`처럼 문서 1개 = 파일 1개 |
+| 디자인 시스템 | `docs/design-system/` | 새 디자인 시스템 문서를 여기에 |
 | 발표 자료 | `docs/presentation/` | 최종본 PDF 또는 링크 |
 | 이미지 | 사용하는 문서와 같은 폴더의 `images/` | 문서에서 상대 경로로 연결 |
-| 프로토타입 코드 | `public/`, `data/`, `server.js` | 변경 시 `CLAUDE.md`의 "변경 시 체크" 확인 |
+| 프로토타입 코드 | `public/`, `data/`, `server.js` | 작업 원칙은 `CLAUDE.md` 확인 |
 
 - Figma·드라이브 등 외부 자료는 파일을 올리지 말고 문서에 **링크**로 적어 주세요.
 - 영상처럼 큰 파일(수십 MB 이상)은 올리지 말고 드라이브 링크로 공유해 주세요.
