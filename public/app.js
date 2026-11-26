@@ -158,7 +158,7 @@ const SCREENS = {
           <button class="tile" data-act="dlg" data-v="staff">${icon('circle-help')}<b>직원 도움</b></button></div></div></section>
       ${due() === 0 ? `<section class="group">${feedback('success', '쿠폰으로 전액 결제돼요.', '결제 수단을 고르지 않아도 돼요.')}</section>` : `
       <section class="group"><h2 class="section">어떻게 결제하시겠어요?</h2><div class="stack">
-        <div class="tiles">${by('카드 결제').map((m) => tile(m, 'wide strong')).join('')}</div>
+        <div class="tiles">${by('카드 결제').map((m) => tile(m, 'wide')).join('')}</div>
         <div class="tiles">${by('휴대폰으로 결제').map((m) => tile(m)).join('')}</div></div></section>
       <section class="group"><h2 class="section">상품권·선불카드</h2><div class="tiles">${by('상품권·선불카드').map((m) => tile(m)).join('')}${by('그 밖의 방법').map((m) => tile(m, 'wide')).join('')}</div></section>`}
     </div>${due() === 0 ? `<div class="footer">${btn('쿠폰으로 주문 완료하기', 'free')}</div>` : ''}</div>`;
@@ -347,9 +347,12 @@ addEventListener('click', (e) => {
   sess.last = Date.now();
   const act = el.dataset.act;
   if (act !== 'say') seq++;
-  ACT[act](el.dataset.v);
+  const { v } = el.dataset;
+  ACT[act](v);
   if (act !== 'reset') render();
   if (e.detail) document.activeElement?.blur?.(); // no focus ring left behind after touch
+  // keyboard / assistive input: the re-render replaced the button, so put focus back on it
+  else if (document.activeElement === document.body) $(`[data-act="${act}"]${v ? `[data-v="${v}"]` : ''}`)?.focus({ preventScroll: true });
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
 addEventListener('keydown', () => { sess.last = Date.now(); });
