@@ -63,6 +63,15 @@ const facts = (m, temp) => {
     ${f.nutrition ? `<ul>${f.nutrition.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}</div>`).join('')}
     <p class="sub">${goods ? '' : '알레르기가 있으면 주문 전에 직원에게 꼭 확인해 주세요. '}메가MGC커피 홈페이지 기준(2026-11-26)이에요.</p>`;
 };
+// two temperatures: a radio pair. One temperature: show only that one, as fixed information (it is already chosen).
+const TEMP_LABEL = { HOT: 'HOT 따뜻하게', ICE: 'ICE 차갑게' };
+const tempSection = (m, temp, radio) => {
+  const only = m.temperature.length === 1 && m.temperature[0];
+  const text = (t) => `<span class="${t.toLowerCase()}">${TEMP_LABEL[t]}</span>`;
+  return `<section class="group"><h2 class="section">온도 <span class="tag">${only ? `${only} 전용` : '필수'}</span></h2>${only
+    ? `<div class="only">${text(only)}<span>${only}만 주문할 수 있어요</span></div>`
+    : `<div class="opts" role="radiogroup" aria-label="온도">${m.temperature.map((t) => radio(temp === t, 'temp', t, text(t), '', false, 'temp')).join('')}</div>`}</section>`;
+};
 const header = ({ back, voice = true } = {}) => `<header class="header">
   ${back ? btn('이전', back, { v: 'tertiary', ic: 'chevron-left' }) : btn('처음으로', 'askReset', { v: 'tertiary', ic: 'house' })}
   <span class="logo">공식 로고</span>
@@ -129,8 +138,7 @@ const SCREENS = {
     <div class="scroll" data-keep>
       <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p class="desc">${esc(m.description)}</p><b class="title">${won(m.price)}</b>${btn(d.more ? '상세 정보 접기' : '상세 정보 펼치기', 'more', { v: 'secondary', ic: d.more ? 'chevron-up' : 'chevron-down' })}</div></div>
       ${d.more ? `<section class="group facts">${facts(m, d.temp)}</section>` : ''}
-      ${m.temperature.length ? `<section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>
-        <div class="opts" role="radiogroup" aria-label="온도">${[['HOT', 'flame', '따뜻하게'], ['ICE', 'snowflake', '차갑게']].map(([t, ic, l]) => radio(d.temp === t, 'temp', t, `<span class="${t.toLowerCase()} row">${icon(ic)}${t} ${l}</span>`, '', !m.temperature.includes(t), 'temp')).join('')}</div></section>` : ''}
+      ${m.temperature.length ? tempSection(m, d.temp, radio) : ''}
       ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2>
         <div class="opts" role="radiogroup" aria-label="${g.label}">${g.choices.map((c) => radio(choice(g, d) === c, 'opt', `${g.id}:${c.id}`, c.label, c.price ? `+${won(c.price)}` : '')).join('')}</div></section>`).join('')}
       <section class="group row between"><h2 class="section" style="margin:0">수량</h2><div class="stepper">${iconBtn('minus', '수량 줄이기', 'qty', { val: -1, off: d.qty <= 1, line: true })}<output>${d.qty}</output>${iconBtn('plus', '수량 늘리기', 'qty', { val: 1, off: d.qty >= 20, line: true })}</div></section>

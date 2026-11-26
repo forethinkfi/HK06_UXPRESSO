@@ -86,8 +86,10 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .opt[aria-checked=true] .radio{border-color:var(--indicator-on-bg);background:radial-gradient(circle,var(--indicator-on-mark) 0 7px,var(--indicator-on-bg) 8px)}
 .opt:disabled .radio{border-color:var(--disabled-text)}
 .opt .hot{color:var(--temp-hot)}.opt .ice{color:var(--temp-ice)}
-/* without a caption, an unavailable temperature must look unavailable */
-.opt:disabled .hot,.opt:disabled .ice{color:inherit}
+/* single-temperature product: not a button, nothing to choose */
+.only{min-height:112px;padding:24px;display:flex;align-items:center;justify-content:space-between;border-radius:var(--radius-sm);background:var(--surface-subtle);font:var(--type-option);font-weight:600}
+.only .hot{color:var(--temp-hot)}.only .ice{color:var(--temp-ice)}
+.only span:last-child{font:var(--type-supporting);color:var(--text-secondary)}
 .tag{padding:4px 12px;border-radius:var(--radius-xs);background:var(--surface-subtle);font:var(--type-badge)}
 .hero{display:flex;gap:32px;padding:32px 40px;align-items:center;border-bottom:1px solid var(--border-color-subtle)}
 .hero .photo{width:320px;flex:none}
