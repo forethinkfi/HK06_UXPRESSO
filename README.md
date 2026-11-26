@@ -24,6 +24,36 @@ npm start     # http://localhost:3000
 
 Node.js 18 이상이면 되고, 설치할 패키지는 없습니다.
 
+## 주문 저장 (Supabase)
+
+결제가 승인되면 서버가 주문을 다시 계산해 Supabase `orders`·`order_items`에 한 번에 저장하고, 저장이 확인된 뒤에 주문번호(`A-001` 형식)를 보여 줍니다. 설계와 규칙은 [docs/orders/schema.md](docs/orders/schema.md).
+
+**설정 (처음 한 번)**
+1. Supabase → SQL Editor에서 `supabase/migrations/20261126_orders_rpc_and_kitchen.sql`을 실행합니다. (테이블 생성 SQL은 이미 실행했으므로 다시 실행하지 않습니다.)
+2. 환경변수를 입력합니다. 로컬은 `.env` 대신 터미널에서 지정하고, Render는 Environment 탭에 입력합니다. 값은 채팅·코드·커밋에 넣지 않습니다.
+
+| 이름 | 값 |
+|---|---|
+| `SUPABASE_URL` | Supabase → Project Settings → API → Project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | 같은 화면의 `service_role` (또는 새 `sb_secret_...`) 키. **서버 전용 비밀 값** |
+| `ORDERS_ENABLED` | 선택. `false`면 저장을 끔 |
+
+```bash
+SUPABASE_URL=https://<project-ref>.supabase.co SUPABASE_SERVICE_ROLE_KEY=<키> npm start
+```
+
+**연결 확인 (실제 Supabase에 테스트 주문 1건을 씁니다)**
+
+```bash
+SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npm run smoke:supabase -- --confirm
+```
+
+테스트 주문 정리: `DELETE FROM public.orders WHERE customer_session_id LIKE 'smoke-test-%';`
+
+**시연 순서**: 앱에서 주문 → 결제 → 주문 완료 화면의 번호 확인 → Supabase SQL Editor에서 `supabase/queries/kitchen_queries.sql`의 A) 실행 → 같은 번호의 주문이 보이는지 확인. 주방 전달 JSON 예시는 [docs/orders/kitchen-output.example.json](docs/orders/kitchen-output.example.json). 환경변수가 없으면 화면에 "저장되지 않았어요" 안내가 뜨는 데모로 동작합니다. 저장 실패를 시연하려면 잘못된 `SUPABASE_URL`로 실행하면 "주문 접수 다시 시도" 화면이 나옵니다.
+
+**테스트**: `npm test`(음성 + 주문 저장, 모의 서버), `node scripts/e2e-orders-browser.cjs`(브라우저, Playwright 필요). 결과는 [docs/orders/test-report.md](docs/orders/test-report.md).
+
 ## 디자인 전략
 
 - **SEE** 한눈에 발견하다 — 주요 메뉴, 카테고리, 취향 필터, 이미지 중심 메뉴 카드

@@ -5,10 +5,14 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "build": "node --check server.js && node --check lib/live-kiosk.js && node --check lib/live-guard.js && node --check public/app.js && node --check public/i18n.js && node --check public/live-client.js",
-    "test": "node scripts/live-test.mjs"
+    "build": "node --check server.js && node --check lib/live-kiosk.js && node --check lib/live-guard.js && node --check lib/orders.js && node --check lib/coupons.js && node --check public/app.js && node --check public/i18n.js && node --check public/live-client.js",
+    "test": "node scripts/live-test.mjs && node scripts/orders-test.mjs",
+    "test:orders": "node scripts/orders-test.mjs",
+    "smoke:supabase": "node scripts/supabase-smoke.mjs"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@google/genai": "^3.6.1",
     "ws": "^8.23.0"

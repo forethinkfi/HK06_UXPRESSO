@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { WebSocketServer } from 'ws';
 import { handleLiveConnection, liveConfigured, liveModel, apiKey } from './lib/live-kiosk.js';
+import { applyCoupon } from './lib/coupons.js';
+import { ordersEnabled, ordersStatus, normalizeOrder, saveOrder, formatOrderNo } from './lib/orders.js';
 import { liveEnabled, originAllowed, clientIp, acquire, limits as liveLimits, activeSessions, rate } from './lib/live-guard.js';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
@@ -18,41 +20,6 @@ const send = (res, code, body) => {
   res.end(JSON.stringify(body));
 };
 const readBody = (req) => new Promise((ok) => { let b = ''; req.on('data', (c) => (b += c)); req.on('end', () => { try { ok(JSON.parse(b || '{}')); } catch { ok({}); } }); });
-const won = (n) => n.toLocaleString('ko-KR') + '원';
-
-// ---- coupons ----
-function applyCoupon(code, items, menus, data) {
-  const c = data.coupons.find((x) => x.code === String(code).trim().toUpperCase());
-  if (!c) return { status: 'unknown' }; // can't verify -> staff
-  const base = { coupon: { code: c.code, name: c.name, type: c.type } };
-  const no = (reason, alternative, hint) => ({ status: 'unusable', ...base, reason, alternative, hint });
-  if (!c.kioskUsable) return no(c.reason, c.alternative);
-  if (c.expires && new Date(c.expires) < new Date()) return no('사용 기간이 지났어요.', '다른 쿠폰을 입력하거나, 쿠폰 없이 결제해 주세요.');
-  if (!items) return { status: 'ok', ...base, discount: null }; // pre-check: availability only
-  const lines = items.map((it) => {
-    const m = menus.find((x) => x.id === it.menuId);
-    const basePrice = m ? (m.tempPrices && it.temp && m.tempPrices[it.temp] != null ? m.tempPrices[it.temp] : m.price) : null;
-    if (!m || basePrice == null) return { m, qty: it.qty, unit: null };
-    const u = basePrice + m.options.reduce((s, g) => s + (g.choices.find((ch) => ch.id === it.opts?.[g.id])?.price || 0), 0);
-    return { m, qty: it.qty, unit: u };
-  });
-  if (lines.some((l) => l.unit == null)) {
-    return no('가격이 확인되지 않은 메뉴가 담겨 있어 쿠폰 금액을 계산할 수 없어요.', '가격 미확인 메뉴를 빼거나 직원에게 문의해 주세요.');
-  }
-  const subtotal = lines.reduce((s, l) => s + l.unit * l.qty, 0);
-  let discount = 0;
-  if (c.type === 'discount') {
-    if (subtotal < c.minOrder) return no(`${won(c.minOrder)} 이상 주문할 때 쓸 수 있어요. 지금은 ${won(subtotal)}이에요.`, `${won(c.minOrder - subtotal)} 더 담으면 쓸 수 있어요. 아니면 쿠폰 없이 결제할 수 있어요.`, 'addMore');
-    discount = c.kind === 'percent' ? Math.min(Math.floor((subtotal * c.value) / 100), c.maxDiscount ?? Infinity) : Math.min(c.value, subtotal);
-  } else if (c.type === 'voucher') {
-    const l = lines.find((x) => x.m.id === c.menuId);
-    const target = menus.find((x) => x.id === c.menuId);
-    if (!l) return no(`장바구니에 ${target.name}가 없어요.`, `${target.name}를 담으면 쓸 수 있어요. 아니면 쿠폰 없이 결제할 수 있어요.`, 'addMore');
-    const targetPrice = target.tempPrices && l && items.find((x) => x.menuId === c.menuId)?.temp ? (target.tempPrices[items.find((x) => x.menuId === c.menuId).temp] ?? target.price) : target.price;
-    discount = targetPrice ?? 0; // 1 cup, base price only (option cost stays)
-  } else if (c.type === 'giftcard') discount = Math.min(c.balance, subtotal);
-  return { status: 'ok', ...base, discount, subtotal };
-}
 
 // ---- mock payment (idempotent by key; only pending/approved are stored) ----
 const tx = new Map(); // key -> { txId, status, at }
@@ -65,9 +32,31 @@ async function pay(req, res) {
   if (!m || !m.supported) return send(res, 200, { status: 'failed', reason: '지원하지 않는 결제 수단이에요.', solution: '다른 결제 수단을 골라 주세요. 담은 메뉴는 그대로예요.' });
   if (!(amount > 0)) return send(res, 200, { status: 'failed', reason: '결제 금액을 확인하지 못했어요.', solution: '주문 내역을 확인한 뒤 다시 시도해 주세요.' });
   if (m.mock === 'fail-once' && attempt <= 1) return send(res, 200, { status: 'failed', reason: `${m.name} 승인이 거절됐어요. 잔액이나 한도가 부족할 수 있어요.`, solution: '다른 결제 수단을 고르거나 같은 수단으로 다시 시도해 주세요. 담은 메뉴는 그대로예요.' });
-  const t = { txId: randomUUID().slice(0, 8), status: m.mock === 'pending' ? 'pending' : 'approved', at: Date.now() };
+  const t = { txId: randomUUID().slice(0, 8), status: m.mock === 'pending' ? 'pending' : 'approved', at: Date.now(), amount, method }; // amount/method let /api/orders check what was approved
   if (key) tx.set(key, t);
   send(res, 200, txView(t));
+}
+
+// ---- order saving (Supabase) ----
+// The browser sends ids + quantities only. Prices/names/options are recalculated here, the mock payment is checked, and
+// the order is stored by ONE database function call (orders + order_items in a single transaction).
+async function postOrder(req, res) {
+  if (!rate(clientIp(req), 'orders', 30)) return send(res, 429, { status: 'rate_limited' });
+  const body = await readBody(req);
+  if (!ordersEnabled()) return send(res, 200, { status: 'disabled' }); // demo mode: nothing is stored, the client must not claim it was
+  const [menus, cdata] = [(await load('menus.json')).menus, await load('coupons.json')];
+  const n = normalizeOrder(body, menus, (code, items) => applyCoupon(code, items, menus, cdata));
+  if (n.error) { console.log(`[orders] rejected: ${n.error}`); return send(res, n.http, { status: 'rejected', code: n.error }); }
+  if (n.order.final > 0) { // money was supposed to move: only an approved mock payment for exactly this amount/method counts
+    const t = tx.get(body.paymentKey);
+    if (!t) return send(res, 402, { status: 'rejected', code: 'payment_not_found' });
+    if (txView(t).status !== 'approved') return send(res, 402, { status: 'rejected', code: 'payment_not_approved' });
+    if (t.amount !== n.order.final || t.method !== n.order.methodId || t.txId !== String(body.txId || '')) return send(res, 409, { status: 'rejected', code: 'payment_mismatch' });
+  }
+  const r = await saveOrder(n.record);
+  if (!r.ok) { console.log(`[orders] save failed: ${r.reason}${r.detail ? ' ' + r.detail : ''}`); return send(res, 503, { status: 'unavailable' }); }
+  console.log(`[orders] ${r.duplicate ? 'duplicate' : 'saved'} ${formatOrderNo(r.orderNumber)} channel=${n.record.order_channel}`);
+  send(res, 200, { status: r.duplicate ? 'duplicate' : 'saved', orderNo: formatOrderNo(r.orderNumber), orderNumber: r.orderNumber });
 }
 
 let modelCheck = null; // cached 60 s: does the configured live model exist for this key and support bidiGenerateContent?
@@ -98,8 +87,10 @@ async function api(req, res, url) {
       modelStatus: await liveModelStatus(),
     });
   }
+  if (p === '/api/orders/health' && req.method === 'GET') return send(res, 200, ordersStatus()); // flags only, never values
   if (req.method === 'POST') {
     if (p === '/api/pay') return pay(req, res);
+    if (p === '/api/orders') return postOrder(req, res);
     if (p === '/api/coupons/apply') {
       const { code = '', items } = await readBody(req);
       const [menus, data] = [(await load('menus.json')).menus, await load('coupons.json')];

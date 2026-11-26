@@ -1,0 +1,39 @@
+{
+  "orderNumber": "A-042",
+  "orderId": "6f1c2a9e-3b7d-4c55-9a10-2f8e4d0b7a11",
+  "receivedAt": "2026-11-26T05:12:08.412Z",
+  "status": "received",
+  "orderType": "takeout",
+  "channel": "mixed",
+  "customerSessionId": "8d3f0c1e-52a7-4b9e-a6d4-7c1b9e2f0a35",
+  "kioskId": "KIOSK-01",
+  "items": [
+    {
+      "menuId": "americano",
+      "name": "아메리카노",
+      "quantity": 2,
+      "temperature": "ICE",
+      "size": null,
+      "options": [
+        {
+          "group": "커피를 더 진하게",
+          "choice": "샷 1개 추가",
+          "extraPrice": 500
+        },
+        {
+          "group": "얼음 양",
+          "choice": "적게",
+          "extraPrice": 0
+        }
+      ]
+    },
+    {
+      "menuId": "latte",
+      "name": "카페라떼",
+      "quantity": 1,
+      "temperature": "HOT",
+      "size": null,
+      "options": []
+    }
+  ]
+}

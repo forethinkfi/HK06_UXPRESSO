@@ -64,9 +64,15 @@ const S = {
   pre: { code: '', res: null, busy: false }, // precheck screen (S-C1)
   voice: { on: false, st: 'idle', heard: '', say: '', next: '', pend: null, ask: null, cands: null, req: 0, live: false, mic: 'init', muted: false, draft: '', err: '' }, // Gemini 3.8 Live voice order (PRD v3 FR-07~13)
   usedVoice: false, vf: null, // vf = list filter set by voice/touch: { label, rec?, max? }
+  sid: '', src: { voice: false, touch: false }, // anonymous customer-session id + how the cart was filled (-> orders.order_channel)
   sess: { last: Date.now(), warn: 0, freeze: false },
   pay: { method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null, benefit: null, cpnOpen: false, stamp: false }, // pay flow
 };
+// ---------- order saving (Supabase via POST /api/orders; spec: docs/orders/schema.md) ----------
+const uuid = () => { const b = crypto.getRandomValues(new Uint8Array(16)); b[6] = (b[6] & 15) | 64; b[8] = (b[8] & 63) | 128; const h = [...b].map((x) => x.toString(16).padStart(2, '0')).join(''); return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`; };
+const newSession = () => { S.sid = uuid(); S.src = { voice: false, touch: false }; }; // random, no personal data; renewed for every order
+const viaVoice = () => { S.src.voice = true; }, viaTouch = () => { S.src.touch = true; };
+const channel = () => (S.src.voice && S.src.touch ? 'mixed' : S.src.voice ? 'voice' : 'touch');
 const dbg = { taps: 0, t0: 0, help: 0, on: new URLSearchParams(location.search).has('debug') }; // usability-test logging (?debug=1)
 
 const mName = (m) => (S.lang !== 'ko' && I18N.MENUS[m.id]?.[S.lang]?.[0]) || m.name;
@@ -127,6 +133,7 @@ function demo(n) {
 }
 
 async function boot() {
+  newSession(); resumePending();
   try {
     const [m, c] = await Promise.all([fetch('/api/menus').then((r) => r.json()), fetch('/api/categories').then((r) => r.json())]);
     S.menus = m; S.cats = c;
@@ -423,6 +430,9 @@ function viewPre() {
 function viewPay() {
   const u = UI(), p = S.pay, unpriced = hasUnpricedCart(), { total, disc, final } = payFinal();
   if (p.phase === 'processing') return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">${u.payProcessingTitle}</h1><p>${u.payProcessingSub}</p></div>`;
+  if (p.phase === 'saving') return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">${u.orderSavingTitle}</h1><p>${u.orderSavingSub}</p></div>`;
+  if (p.phase === 'saveFail') return `<div class="screen">${hdr(logo(), helpBtn())}<div class="scroll"><div class="h2">${u.orderSaveFailTitle}</div><div class="res no" style="margin:0 48px" role="alert"><b>${u.orderSaveFailPaid}</b><p><strong>${u.reasonLabel}</strong> ${u.orderSaveFailReason(p.saveErr)}</p><p><strong>${u.howToFixLabel}</strong> ${u.orderSaveFailFix}</p></div>
+  <div class="vstack" style="padding:0 48px"><button class="btn pri block" data-act="retrySave">${u.orderSaveRetry}</button><button class="btn sec block" data-act="staff">${u.reqStaff}</button></div></div></div>`;
   if (p.phase === 'pending') return `<div class="screen done plain"><div class="spin"></div><h1 style="font-size:52px">${u.payPendingTitle}</h1><p>${u.payPendingSub}</p><div class="vstack"><button class="btn sec block" data-act="checkTx">${u.recheckPending}</button><button class="btn sec block" data-act="staff">${u.reqStaff}</button></div></div>`;
   if (p.phase === 'failed') return `<div class="screen">${hdr(logo(), helpBtn())}<div class="scroll"><div class="h2">${u.payFailedTitle}</div><div class="res no" style="margin:0 48px" role="alert"><b>${u.payNotCharged}</b><p><strong>${u.reasonLabel}</strong> ${esc(p.fail.reason)}</p><p><strong>${u.howToFixLabel}</strong> ${esc(p.fail.solution)}</p></div>
   <div class="note">${u.payKeptNote(cartCount(), p.cpn?.status === 'ok')}</div>
@@ -459,7 +469,7 @@ function viewDone() {
   const u = UI(), o = S.order, mi = modeInfo(o.mode);
   const methodLabel = o.fullCpn ? u.payBtnFullCpn : (o.methodId && S.methods.find((x) => x.id === o.methodId) ? payMethodInfo(S.methods.find((x) => x.id === o.methodId)).name : o.method);
   return `<div class="screen done"><h1>${u.doneTitle}</h1><div class="no" aria-label="${esc(u.doneOrderNoAria(o.no))}">${o.no}</div>
-  <ol class="steps" aria-label="${esc(u.stepsAria)}"><li class="on" aria-current="step"><i>${ico('check')}</i>${u.stepReceived}<small>${u.stepHere}</small></li><li><i>2</i>${u.stepPrepare}<small>${u.stepPrepareSub}</small></li><li><i>3</i>${u.stepReady}<small>${u.stepReadySub}</small></li></ol><p>${u.pickupText}</p><p class="mut">${u.doneMode(mi.name)}</p>
+  <ol class="steps" aria-label="${esc(u.stepsAria)}"><li class="on" aria-current="step"><i>${ico('check')}</i>${u.stepReceived}<small>${u.stepHere}</small></li><li><i>2</i>${u.stepPrepare}<small>${u.stepPrepareSub}</small></li><li><i>3</i>${u.stepReady}<small>${u.stepReadySub}</small></li></ol><p>${u.pickupText}</p><p class="mut">${u.doneMode(mi.name)}</p>${o.demo ? `<p class="mut" role="note">${u.orderDemoNote}</p>` : ''}
   <div class="sum-list">${o.items.map((l) => { const m = l.menuId && menu(l.menuId); const nm = m ? mName(m) : l.name; const op = l.menuId && l.opts ? optText({ menuId: l.menuId, temp: l.temp, opts: l.opts }) : l.opt; return `<div><span>${esc(nm)} × ${l.qty}<small>${op}</small></span><span>${won(l.price)}</span></div>`; }).join('')}${o.discount ? `<div><span>${u.cpnDiscountRow}<small>${esc(o.coupon)}</small></span><span>− ${won(o.discount)}</span></div>` : ''}<div><span>${u.paidAmtRow}<small>${esc(methodLabel)}</small></span><span>${won(o.final)}</span></div></div>
   <button class="btn" data-act="reset" style="background:var(--ink);color:#fff;min-height:120px;font-size:44px;width:100%">${u.toHomeBtn}</button><p class="mut" style="font-size:30px">${u.autoHomeNote}</p></div>`;
 }
@@ -505,7 +515,7 @@ const openDetail = (id, edit) => {
   render();
 };
 const freshPay = () => ({ method: null, code: '', cpn: null, busy: false, phase: 'choose', fail: null, key: '', attempt: 0, tx: null, benefit: null, cpnOpen: false, stamp: false });
-const reset = () => { clearTimeout(reset.t); clearInterval(S.pay.poll); vOff(); Object.assign(S, { lang: 'ko', usedVoice: false, vf: null, sess: { last: Date.now(), warn: 0, freeze: S.sess.freeze }, pay: freshPay(), pre: { code: '', res: null, busy: false }, typeOpen: -1, screen: 'start', cart: [], detail: null, help: false, prim: 'rec', sub: 'all', tasteOpen: false, dlg: null, filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null }); document.documentElement.lang = 'ko'; dbg.t0 = 0; render(); };
+const reset = () => { clearTimeout(reset.t); newSession(); clearInterval(S.pay.poll); vOff(); Object.assign(S, { lang: 'ko', usedVoice: false, vf: null, sess: { last: Date.now(), warn: 0, freeze: S.sess.freeze }, pay: freshPay(), pre: { code: '', res: null, busy: false }, typeOpen: -1, screen: 'start', cart: [], detail: null, help: false, prim: 'rec', sub: 'all', tasteOpen: false, dlg: null, filters: [], mode: null, modeDialog: false, confirmCancel: false, order: null }); document.documentElement.lang = 'ko'; dbg.t0 = 0; render(); };
 const merge = () => { // merge identical lines after an edit
   const out = [];
   for (const it of S.cart) { const k = JSON.stringify([it.menuId, it.temp, it.opts]); const f = out.find((o) => JSON.stringify([o.menuId, o.temp, o.opts]) === k); f ? (f.qty = Math.min(20, f.qty + it.qty)) : out.push(it); }
@@ -526,13 +536,49 @@ async function checkPre(code) {
   try { S.pre.res = await post('/api/coupons/apply', { code }); } catch { S.pre.res = { status: 'error' }; }
   render();
 }
+const BACKUP_KEY = 'uxpresso.pendingOrder';
+const backup = (v) => { try { v ? localStorage.setItem(BACKUP_KEY, JSON.stringify(v)) : localStorage.removeItem(BACKUP_KEY); } catch {} };
+// One try. Never calls /api/pay: payment is already approved, only the saving is repeated (same paymentKey -> same order).
+async function postOrder(payload) {
+  try {
+    const r = await fetch('/api/orders', { method: 'POST', body: JSON.stringify(payload), signal: AbortSignal.timeout(12000) });
+    const j = await r.json().catch(() => ({}));
+    return r.ok || r.status < 500 && r.status !== 429 ? { ...j, http: r.status } : { status: 'unavailable', http: r.status };
+  } catch { return { status: 'unavailable', http: 0 }; }
+}
 function complete(txId) {
   clearInterval(S.pay.poll);
-  const { disc, final } = payFinal(), p = S.pay, sel = S.methods.find((m) => m.id === p.method);
-  S.order = { no: 'A-' + String(100 + Math.floor(Math.random() * 900)), mode: S.mode, discount: disc, final, coupon: p.cpn?.status === 'ok' ? p.cpn.coupon.name : '', methodId: final === 0 ? '' : p.method, fullCpn: final === 0, method: final === 0 ? UI().payBtnFullCpn : payMethodInfo(sel).name, items: S.cart.map((it) => ({ menuId: it.menuId, temp: it.temp, opts: { ...it.opts }, name: mName(menu(it.menuId)), qty: it.qty, opt: optText(it), price: unit(it) * it.qty })) };
-  S.cart = []; S.pay = freshPay(); // previous customer's order cleared after approval
+  const { disc, final } = payFinal(), p = S.pay, sel = S.methods.find((m) => m.id === p.method), mode = S.mode;
+  const items = S.cart.map((it) => ({ menuId: it.menuId, temp: it.temp, opts: { ...it.opts }, name: mName(menu(it.menuId)), qty: it.qty, opt: optText(it), price: unit(it) * it.qty }));
+  p.pending = {
+    payload: { sessionId: S.sid, paymentKey: p.key, txId: txId || null, mode, channel: channel(), couponCode: p.cpn?.status === 'ok' ? p.cpn.coupon.code : '', methodId: final === 0 ? '' : p.method, expectedFinal: final, items: cartItems() },
+    view: { mode, discount: disc, final, coupon: p.cpn?.status === 'ok' ? p.cpn.coupon.name : '', methodId: final === 0 ? '' : p.method, fullCpn: final === 0, method: final === 0 ? UI().payBtnFullCpn : payMethodInfo(sel).name, items },
+  };
+  backup(p.pending.payload); // survives a page reload until the server confirms it
+  saveOrder();
+}
+// Cart and coupon stay untouched until the server confirms the save; no order number is shown before that.
+async function saveOrder() {
+  const p = S.pay, pend = p.pending;
+  if (!pend || p.saving) return;
+  p.saving = true; p.phase = 'saving'; p.saveErr = ''; render();
+  let r;
+  for (let i = 0; i < 3; i++) { r = await postOrder(pend.payload); if (r.status !== 'unavailable') break; await new Promise((ok) => setTimeout(ok, 800 * (i + 1))); }
+  p.saving = false;
+  if (!['saved', 'duplicate', 'disabled'].includes(r.status)) { p.phase = 'saveFail'; p.saveErr = r.status === 'rejected' ? 'rejected' : 'unavailable'; if (r.status === 'rejected') console.warn('[orders] rejected:', r.code); return render(); }
+  backup(null);
+  const demo = r.status === 'disabled';
+  S.order = { ...pend.view, no: demo ? 'A-' + String(100 + Math.floor(Math.random() * 900)) : r.orderNo, demo };
+  S.cart = []; S.pay = freshPay(); // previous customer's order cleared only after the server confirmed it
   go('done');
   reset.t = setTimeout(reset, RETURN_MS);
+}
+// after a reload: a paid order that was never confirmed is sent again (same key -> never stored twice)
+async function resumePending() {
+  let v; try { v = JSON.parse(localStorage.getItem(BACKUP_KEY) || 'null'); } catch {}
+  if (!v?.paymentKey) return;
+  const r = await postOrder(v);
+  if (['saved', 'duplicate', 'disabled'].includes(r.status) || r.status === 'rejected') backup(null);
 }
 async function payNow() {
   if (hasUnpricedCart()) { toast(UI().cannotPayUnconfirmed); return; }
@@ -696,7 +742,7 @@ function applyLiveAction(name, a) {
     if (r.error) return liveErr(r.error, r.supported ? { supportedTemperatures: r.supported } : {});
     const same = S.cart.find((it) => sameLine(it, r.line));
     if ((same ? same.qty : 0) + r.line.qty > 20) return liveErr('quantity_limit', { max: 20, inCart: same ? same.qty : 0 });
-    leaveStart();
+    leaveStart(); viaVoice();
     S.cart.push(r.line); merge(); S.detail = null;
     const m = menu(r.line.menuId), up = unit(r.line);
     toast(UI().toastAdded(mName(m)));
@@ -708,6 +754,7 @@ function applyLiveAction(name, a) {
     if (t.error) return t.error;
     const qty = Math.round(Number(a.qty));
     if (!Number.isInteger(qty) || qty < 0 || qty > 20) return liveErr('invalid_quantity');
+    viaVoice();
     const m = menu(t.hit.it.menuId);
     if (qty === 0) { S.cart.splice(t.hit.i, 1); toast(UI().toastRemoved(m ? mName(m) : '')); } else { t.hit.it.qty = qty; render(); }
     syncLiveContext();
@@ -716,6 +763,7 @@ function applyLiveAction(name, a) {
   if (name === 'remove_from_cart') {
     const t = liveTarget(a);
     if (t.error) return t.error;
+    viaVoice();
     const m = menu(t.hit.it.menuId);
     S.cart.splice(t.hit.i, 1);
     toast(UI().toastRemoved(m ? mName(m) : ''));
@@ -790,7 +838,7 @@ const vStartPend = (m, temp, qty) => {
 };
 
 // ---------- session (PRD v3 FR-17) ----------
-const sessOn = () => ['menu', 'cart', 'confirm', 'pay', 'pre'].includes(S.screen) && !['processing', 'pending'].includes(S.pay.phase) && !(S.voice.on && ['connecting', 'listening', 'processing', 'speaking'].includes(S.voice.st));
+const sessOn = () => ['menu', 'cart', 'confirm', 'pay', 'pre'].includes(S.screen) && !['processing', 'pending', 'saving', 'saveFail'].includes(S.pay.phase) && !(S.voice.on && ['connecting', 'listening', 'processing', 'speaking'].includes(S.voice.st));
 const sessLeft = () => Math.max(0, Math.ceil((SESS_GRACE_MS - (Date.now() - S.sess.warn)) / 1000));
 const dialogSess = () => { const u = UI(); return `<div class="dim center" style="z-index:40"><div class="dialog sess" role="alertdialog" aria-label="${esc(u.sessTitle)}"><span class="sc">${ico('clock')}</span><h2>${u.sessTitle}</h2><p class="sd">${u.sessBody}</p><p class="sessleft" aria-live="polite">${u.sessLeft(sessLeft())}</p><button class="btn pri block" data-act="sessKeep">${u.sessKeepBtn}</button><button class="btn sec block" data-act="sessEnd">${u.sessEndBtn}</button></div></div>`; };
 const dialogInfo = () => {
@@ -820,7 +868,7 @@ const A = {
   vUtter: (e) => liveSendText(e.v),
   vTemp: (e) => { vStartPend(menu(S.voice.ask), e.v, S.voice.qty); S.voice.heard = ''; render(); },
   vPick: (e) => { const q = S.voice.qty; vStartPend(menu(e.v), '', q); render(); },
-  vAdd: () => { const v = S.voice; if (v.st !== 'confirming' || !v.pend) return; S.cart.push({ menuId: v.pend.menuId, temp: v.pend.temp, opts: {}, qty: v.pend.qty }); merge(); vSet('idle', UI().toastAdded(mName(menu(v.pend.menuId))), UI().vReadyNext); v.heard = ''; render(); },
+  vAdd: () => { const v = S.voice; if (v.st !== 'confirming' || !v.pend) return; viaVoice(); S.cart.push({ menuId: v.pend.menuId, temp: v.pend.temp, opts: {}, qty: v.pend.qty }); merge(); vSet('idle', UI().toastAdded(mName(menu(v.pend.menuId))), UI().vReadyNext); v.heard = ''; render(); },
   vEdit: () => { const p = S.voice.pend; vSet('idle', '', ''); openDetail(p.menuId); S.dtl.temp = p.temp; S.dtl.qty = p.qty; render(); },
   setLang: (e) => { S.dlg = null; if (!setLang(e.v, { toastNotify: true, sync: true })) render(); },
   sessKeep: () => { S.sess.warn = 0; S.sess.last = Date.now(); render(); },
@@ -856,14 +904,15 @@ const A = {
     if (hasTemps && !d.temp) { d.tried = true; render(); return $('.err')?.scrollIntoView({ block: 'center' }); }
     const line = { menuId: m.id, temp: hasTemps ? d.temp : null, opts: { ...d.opts }, qty: d.qty };
     const edit = d.editIdx != null;
+    viaTouch();
     if (edit) S.cart[d.editIdx] = line; else S.cart.push(line);
     merge(); S.detail = null;
     toast(edit ? UI().toastEdited : UI().toastAdded(mName(m)));
     syncLiveContext();
   },
   goCart: () => go('cart'), toMenu: () => go('menu'),
-  cq: (e) => { const it = S.cart[+e.i]; it.qty = Math.max(1, Math.min(20, it.qty + +e.v)); render(); syncLiveContext(); },
-  del: (e) => { S.cart.splice(+e.i, 1); render(); syncLiveContext(); },
+  cq: (e) => { viaTouch(); const it = S.cart[+e.i]; it.qty = Math.max(1, Math.min(20, it.qty + +e.v)); render(); syncLiveContext(); },
+  del: (e) => { viaTouch(); S.cart.splice(+e.i, 1); render(); syncLiveContext(); },
   edit: (e) => { const it = S.cart[+e.i]; openDetail(it.menuId, { ...it, idx: +e.i }); },
   askCancel: () => { S.confirmCancel = true; render(); }, keep: () => { S.confirmCancel = false; render(); },
   reset,
@@ -873,7 +922,7 @@ const A = {
   toPay: async () => {
     if (hasUnpricedCart()) { toast(UI().cannotPayUnconfirmed); return; }
     const p = S.pay;
-    if (p.phase !== 'pending') { Object.assign(p, { key: crypto.randomUUID?.() || Date.now() + '-' + Math.random(), attempt: 0, phase: 'choose', fail: null }); }
+    if (p.phase !== 'pending') { Object.assign(p, { key: uuid(), attempt: 0, phase: 'choose', fail: null }); }
     go('pay');
     if (p.cpn?.status === 'ok') await applyCpn(p.cpn.coupon.code); // cart may have changed -> re-check coupon
   },
@@ -882,6 +931,7 @@ const A = {
   selMethod: (e) => { S.pay.method = e.v; render(); },
   payNow, checkTx,
   retryPay: () => payNow(),
+  retrySave: () => saveOrder(),
   otherMethod: () => { Object.assign(S.pay, { phase: 'choose', method: null, fail: null }); render(); },
 };
 
