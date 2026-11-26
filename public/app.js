@@ -109,8 +109,7 @@ const SCREENS = {
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
     </div>
     <div class="cart">
-      <div class="session-line"><span>2분 동안 조작이 없으면 종료 안내가 표시돼요.</span>${btn('시간 연장', 'extend', { v: 'tertiary', ic: 'clock' })}</div>
-      <div class="row between"><span>${last ? `${esc(menu(last.menuId).name)} × ${last.qty}${S.cart.length > 1 ? ` 외 ${S.cart.length - 1}건` : ''}` : '담은 메뉴가 없어요.'}</span>${S.cart.length ? btn('전체 삭제', 'dlg', { v: 'destructive', ic: 'trash-2', val: 'clear' }) : ''}</div>
+      <div class="row between summary"><div class="grow"><p>${last ? `${esc(menu(last.menuId).name)} × ${last.qty}${S.cart.length > 1 ? ` 외 ${S.cart.length - 1}건` : ''}` : '담은 메뉴가 없어요.'}</p><p>2분 동안 조작이 없으면 종료 안내가 표시돼요.</p></div>${btn('시간 연장', 'extend', { v: 'tertiary', ic: 'clock' })}${S.cart.length ? btn('전체 삭제', 'dlg', { v: 'destructive', ic: 'trash-2', val: 'clear' }) : ''}</div>
       <div class="total"><span>총 결제금액 · ${count()}개</span><b>${won(total())}</b></div>
       ${btn('주문 확인', 'review', { off: !S.cart.length })}
     </div></div>`;
@@ -191,24 +190,24 @@ const HELP = {
 const close = btn('닫기', 'close', { v: 'secondary' });
 const confirm = (title, body, label, act, val = '') => `<h2 tabindex="-1">${title}</h2><p>${body}</p><div class="row">${close}${btn(label, act, { v: 'destructive', val })}</div>`;
 const DIALOGS = {
-  help: () => `<h2 tabindex="-1">도움말</h2><div class="help">${(HELP[S.screen] || HELP.menu).map(([q, a]) => `<details><summary>${q}${icon('chevron-down')}</summary><p>${a}</p></details>`).join('')}</div><div class="row">${btn('직원 도움 요청', 'dlg', { v: 'secondary', val: 'staff' })}${btn('닫기', 'close')}</div>`,
-  staff: () => `<h2 tabindex="-1">직원 도움</h2>${feedback('warning', '카운터의 직원에게 말씀해 주세요.', '연습용이라 호출 신호는 보내지 않아요. 담은 메뉴는 그대로예요.')}${btn('닫기', 'close')}`,
+  help: () => `<h2 tabindex="-1">도움말</h2><div class="help">${(HELP[S.screen] || HELP.menu).map(([q, a]) => `<details><summary>${q}${icon('chevron-down')}</summary><p>${a}</p></details>`).join('')}</div><div class="row">${btn('직원 도움 요청', 'dlg', { v: 'secondary', val: 'staff' })}${btn('닫기', 'close', { v: 'secondary' })}</div>`,
+  staff: () => `<h2 tabindex="-1">직원 도움</h2>${feedback('warning', '카운터의 직원에게 말씀해 주세요.', '연습용이라 호출 신호는 보내지 않아요. 담은 메뉴는 그대로예요.')}${btn('닫기', 'close', { v: 'secondary' })}`,
   access: () => {
     const hc = document.documentElement.dataset.mode === 'high-contrast';
     return `<h2 tabindex="-1">접근성 · 언어</h2><button class="btn secondary" aria-pressed="${hc}" data-act="contrast">${icon('contrast')}고대비 ${hc ? 'ON' : 'OFF'}</button>
     <button class="btn secondary" disabled>${icon('zoom-in')}화면 확대 (준비 중)</button>
-    <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close')}`;
+    <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close', { v: 'secondary' })}`;
   },
   info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${esc(m.description)}</p><p>${[won(m.price), ...m.temperature].join(' · ')}</p><p class="sub">영양·알레르기 정보는 확인되지 않았어요. 직원에게 문의해 주세요.</p><div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
   clear: () => confirm('담은 메뉴를 모두 삭제할까요?', '삭제하면 되돌릴 수 없어요.', '전체 삭제', 'clear'),
   del: (i) => confirm(`${esc(menu(S.cart[i].menuId).name)}을(를) 삭제할까요?`, '다른 메뉴는 그대로 있어요.', '삭제', 'del', i),
   reset: () => confirm('처음 화면으로 갈까요?', '담은 메뉴가 모두 지워져요.', '주문 종료', 'reset'),
-  benefit: (id) => `<h2 tabindex="-1">${esc(DB.benefits.find((b) => b.id === id).name)}</h2>${feedback('warning', '연습용 시안이라 할인이 적용되지 않아요.', '멤버십 정보를 받지 않아요. 결제는 그대로 진행할 수 있어요.')}${btn('닫기', 'close')}`,
+  benefit: (id) => `<h2 tabindex="-1">${esc(DB.benefits.find((b) => b.id === id).name)}</h2>${feedback('warning', '연습용 시안이라 할인이 적용되지 않아요.', '멤버십 정보를 받지 않아요. 결제는 그대로 진행할 수 있어요.')}${btn('닫기', 'close', { v: 'secondary' })}`,
   coupon: () => `<h2 tabindex="-1">메가 쿠폰</h2><p class="sub">연습용 쿠폰 번호를 눌러 주세요.</p>
     <div class="opts">${['WELCOME10', 'DRINK1000', 'FREEAMERICANO', 'APP-ONLY'].map((c) => btn(c, 'coupon', { v: 'secondary', val: c })).join('')}</div>
     ${S.coupon?.status === 'unusable' ? feedback('error', esc(S.coupon.reason), esc(S.coupon.alternative)) : ''}
     ${S.coupon?.status === 'ok' ? feedback('success', `${esc(S.coupon.coupon.name)} 적용됨`, `${won(S.coupon.discount)} 할인`) : ''}
-    ${S.coupon?.status === 'unknown' ? feedback('warning', '쿠폰을 확인하지 못했어요.', '직원에게 문의하거나 쿠폰 없이 결제해 주세요.') : ''}${btn('닫기', 'close')}`,
+    ${S.coupon?.status === 'unknown' ? feedback('warning', '쿠폰을 확인하지 못했어요.', '직원에게 문의하거나 쿠폰 없이 결제해 주세요.') : ''}${btn('닫기', 'close', { v: 'secondary' })}`,
   stamp: () => `<h2 tabindex="-1">스탬프 적립</h2><p class="sub">연습용이에요. 실제 번호를 넣지 마세요. 번호는 저장하지 않아요.</p>
     <div class="input" aria-live="polite">${S.stamp || '<span class="sub">휴대폰 번호</span>'}</div>
     <div class="keys">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `<button data-act="key" data-v="${n}">${n}</button>`).join('')}<button data-act="key" data-v="clear">전체 지우기</button><button data-act="key" data-v="0">0</button><button data-act="key" data-v="back">한 글자 지우기</button></div>${btn('확인', 'close')}`,

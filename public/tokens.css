@@ -42,6 +42,6 @@
   --indicator-bg:#000; --indicator-border:var(--mc-white); --indicator-on-bg:var(--mc-yellow-40); --indicator-on-mark:#171717; --action-primary-pressed:var(--mc-yellow-30);
   --border-color-subtle:var(--gray-70); --border-color-default:var(--mc-white); --border-color-strong:var(--mc-white);
   --disabled-bg:var(--gray-90); --disabled-text:var(--gray-40); --disabled-border:var(--gray-90);
-  --focus-ring-color:var(--mc-yellow-40);
+  --focus-ring-color:var(--mc-white); /* not the selected-border yellow, so the two never read as one double line */
   --status-error:#FF8A80; --status-success:#7BD89B; --status-warning:#FFD166; --temp-hot:#FF8A80; --temp-ice:#8AB4FF;
 }
