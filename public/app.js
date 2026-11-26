@@ -125,7 +125,7 @@ const SCREENS = {
         // NEW follows the homepage's new-menu list. BEST shows only for `best: true` in the menu data (needs real sales data).
         const tags = out ? ['<span class="badge soldout">품절</span>'] : [m.cats.includes('신메뉴') && '<span class="badge new">NEW</span>', m.best && '<span class="badge">BEST</span>'].filter(Boolean);
         const badge = tags.length ? `<span class="badges">${tags.join('')}</span>` : '';
-        return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button></article>`;
+        return `<button class="card" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="info"><span class="name-wrap"><span class="name">${esc(m.name)}</span></span><span class="price">${out ? '품절' : won(m.price)}</span></span></button>`;
       }).join('')}</div>`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
     </div>
@@ -261,6 +261,7 @@ function render() {
   else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i]?.[0] === e.dataset.keep ? keep[i][1] : 0; });
   const list = $('[data-list]');
   if (list) list.scrollTop = listPos[list.dataset.list] || 0;
+  levelNames();
   syncUpDown();
 }
 
@@ -392,6 +393,17 @@ addEventListener('click', (e) => {
   else if (document.activeElement === document.body) $(`[data-act="${act}"]${v ? `[data-v="${v}"]` : ''}`)?.focus({ preventScroll: true });
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
+
+// ---------- product cards without subgrid support: give each row of three the same name height ----------
+const levelNames = () => {
+  if (CSS.supports('grid-template-rows', 'subgrid')) return;
+  const wraps = [...document.querySelectorAll('.grid .name-wrap')];
+  for (let i = 0; i < wraps.length; i += 3) {
+    const row = wraps.slice(i, i + 3);
+    const h = Math.max(...row.map((w) => w.firstElementChild.offsetHeight), 80);
+    row.forEach((w) => { w.style.height = `${h}px`; });
+  }
+};
 
 // ---------- product list up/down buttons: shown only when there is something to scroll ----------
 const syncUpDown = () => {
