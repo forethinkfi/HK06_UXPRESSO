@@ -1,7 +1,7 @@
 # AI 음성 주문 통합 — 최종 디자인 v6 (integration/final-ai)
 
 > **비공식 프로토타입.** 메가MGC커피 공식 프로젝트·API가 아니며, 메뉴·가격은 시연·테스트용 값이다.
-> 디자인 기준은 `main`(`945033f`)의 v6 키오스크(`/` → `/v6/index.html`)다. AI는 `integration/v2-ai-test-r2`(`fe78a12`)의 서버·브라우저 엔진·v6 연결부를 그대로 가져왔다(재구현 없음). 팀 파일은 수정하지 않았고 `main`에는 합치지 않았다.
+> 디자인 기준은 `main`(`945033f`)의 v6 키오스크(`/` → `/v6/index.html`)다. AI는 `integration/v2-ai-test-r2`(`fe78a12`)의 서버·브라우저 엔진·v6 연결부를 그대로 가져왔다(재구현 없음). 팀 파일은 수정하지 않았다. 2026-11-26 `main`에 반영했고, 배포 주소는 https://hk06-uxpresso.onrender.com/ 이다.
 
 ## 구조 (AI 코드와 UI 코드 분리)
 
@@ -38,7 +38,7 @@
 
 | 항목 | 값 |
 |---|---|
-| 배포 브랜치 | `integration/final-ai` (배포 전 테스트용) |
+| 배포 브랜치 | `main` (통합 작업 브랜치: `integration/final-ai`) |
 | Build Command | `npm install` |
 | Start Command | `npm start` (`node server.js`) |
 | Node | 20 이상 |
