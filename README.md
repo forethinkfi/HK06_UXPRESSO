@@ -16,7 +16,8 @@ npm start     # http://localhost:3000
 
 | 주소 | 내용 |
 |---|---|
-| `/` | 키오스크 프로토타입 |
+| `/` | 키오스크 v6 시안 (`/v6/index.html`로 이동) |
+| `/index.html` | 이전 키오스크 프로토타입 |
 | `/?debug=1` | 터치 수·경과 시간·도움 호출 횟수 표시 (사용성 테스트 기록용) |
 | `/screens.html` | 개선 시안 보드 — 핵심 화면 14장을 한눈에 보기 (누르면 해당 상태의 프로토타입이 열림) |
 | `/?demo=이름` | 특정 화면 상태로 바로 열기: `start` `pre` `menu` `filter` `mode` `detail` `cart` `confirm` `pay-coupon` `pay-unusable` `pay-fail` `pay-pending` `done` `help` |
