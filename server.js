@@ -7,7 +7,7 @@ import { randomUUID } from 'node:crypto';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 const PORT = process.env.PORT || 3000;
-const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml' };
+const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp' };
 const PENDING_MS = 3000; // mock "approval pending" duration
 const load = async (f) => JSON.parse(await readFile(join(ROOT, 'data', f), 'utf8'));
 const send = (res, code, body) => {

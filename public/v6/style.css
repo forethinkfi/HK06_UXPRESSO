@@ -189,13 +189,14 @@ h2{font-size:32px;line-height:44px;font-weight:600}
 .discounts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:8px}
 .methods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .tile{min-height:160px;padding:16px 8px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--gray-30);flex-direction:column;gap:4px;font-size:24px;line-height:32px;font-weight:500;position:relative;word-break:keep-all}
-.tile.wide{min-height:112px;flex-direction:row;gap:12px;padding:16px}
+.tile.wide{min-height:128px}
 .tile.big{grid-column:span 2;min-height:200px;flex-direction:row;gap:16px;flex-wrap:wrap;align-content:center;font-size:32px;line-height:44px;font-weight:600}
-.mark{width:100%;height:56px;display:flex;align-items:center;justify-content:center}
-.mark img{width:100%;max-width:120px;height:100%}
+.mark{width:100%;height:72px;display:flex;align-items:center;justify-content:center}
+.mark img{width:100%;max-width:140px;height:100%}
+.mark.has-logo{background:var(--white);border-radius:var(--r-xs);padding:4px}
+.mark.dark{background:var(--black);max-width:156px}
 .mark svg.lucide{width:48px;height:48px}
-.tile.wide .mark{width:104px;flex:none}
-.tile.big .mark{width:72px}
+.tile.big .mark{width:72px;flex:none}
 .tile small{font-size:20px;line-height:28px;color:var(--gray-70)}
 .tile:disabled{background:var(--gray-10);color:var(--gray-60);box-shadow:none}
 .tile:disabled small{color:var(--gray-60)}

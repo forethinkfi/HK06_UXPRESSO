@@ -57,10 +57,11 @@ const wavePath = (fill, cls) => `<path class="${cls}" d="M-120 0q30-14 60 0t60 0
 
 // 공식 로고 파일이 있는 항목만 이미지로 보여준다. 결제사 로고는 그리지 않고 기능 아이콘으로 대신한다.
 // 로고를 받으면 LOGOS에 'id: 경로'를 추가하면 된다.
-const LOGOS = { megacoupon: 'logo.svg', prepaid: 'logo.svg' };
+const LOGOS = { cjgift: 'pay/cjgift.png', cjone: 'pay/cjone.png', daangn: 'pay/daangn.webp', hana: 'pay/hana.png', kakao: 'pay/kakao.png', kbpay: 'pay/kbpay.png', kia: 'pay/kia.png', kt: 'pay/kt.png', mpoint: 'pay/mpoint.png', naver: 'pay/naver.png', paybook: 'pay/paybook.png', payco: 'pay/payco.png', sol: 'pay/sol.png', tmem: 'pay/tmem.png', uju: 'pay/uju.png', zero: 'pay/zero.png', megacoupon: 'pay/mega.png', prepaid: 'pay/mega.png' };
+const WHITE_LOGOS = ['cjone', 'uju']; // 흰색 로고는 색을 바꾸지 않고 검은 바탕에 올린다
 const PAY_ICONS = { card: 'credit-card', appcard: 'qr-code', mobilegift: 'gift', cjgift: 'gift', cash: 'banknote', mpoint: 'coins', stamp: 'stamp', kt: 'ticket-percent', tmem: 'ticket-percent', cjone: 'coins', kia: 'ticket-percent', uju: 'ticket-percent' };
 const PAY_LABEL = { card: ['카드 결제', '삼성페이'], appcard: ['앱카드', 'QR·바코드'], mobilegift: ['모바일 상품권', '교환권·금액권'] };
-const mark = (id) => `<span class="mark">${LOGOS[id] ? `<img src="${LOGOS[id]}" alt="">` : icon(PAY_ICONS[id] || 'smartphone')}</span>`;
+const mark = (id) => `<span class="mark${LOGOS[id] ? ' has-logo' : ''}${WHITE_LOGOS.includes(id) ? ' dark' : ''}">${LOGOS[id] ? `<img src="${LOGOS[id]}" alt="">` : icon(PAY_ICONS[id] || 'smartphone')}</span>`;
 
 // 고른 만큼 컵이 차오른다
 const SHOT_CUP = 'M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z';
