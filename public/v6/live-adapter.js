@@ -12,9 +12,9 @@ const ERR = {
 };
 const NO_RETRY = ['BILLING']; // out of credit: trying again cannot help, so only 화면에서 선택하기 is offered (other connection failures keep 다시 말하기)
 const errCopy = (code) => (code === 'BILLING' ? ERR.BILLING : ['MISSING_API_KEY', 'AUTH', 'MODEL'].includes(code) ? ERR.AUTH : ['QUOTA', 'MODEL_BUSY'].includes(code) ? ERR.QUOTA : code === 'SOCKET' ? ERR.SOCKET : ERR.OTHER);
-const NO_MIC = { reply: '마이크를 쓸 수 없어요.', next: '아래에 입력하거나 화면에서 선택해 주세요.' };
-// shown under the AI's reply: without a microphone the customer must be told typing is the way
-const nextHint = () => (S0()?.voice?.mic === 'denied' ? '마이크를 쓸 수 없어요. 아래에 입력하거나 화면에서 선택해 주세요.' : null);
+const NO_MIC = { reply: '마이크를 쓸 수 없어요.', next: '화면에서 눌러 선택해 주세요.' };
+// shown under the AI's reply: without a microphone the customer must be told to use the touch screen
+const nextHint = () => (S0()?.voice?.mic === 'denied' ? '마이크를 쓸 수 없어요. 화면에서 눌러 선택해 주세요.' : null);
 const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, '');
 
 let S0 = () => null;

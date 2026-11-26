@@ -18,8 +18,9 @@ async function open(b, port, { deny = false } = {}) {
   await p.goto('/'); await p.waitForSelector('.scr.start');
   return { ctx, p };
 }
-async function startVoice(p, wait = '#vtext') { await p.click('[data-a=startVoice]'); await p.waitForSelector(wait, { timeout: 8000 }).catch(() => {}); }
-async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.press('#vtext', 'Enter'); await sleep(ms); }
+// There is no text box any more: customer speech is injected through the engine (same server path as the microphone).
+async function startVoice(p, wait) { await p.click('[data-a=startVoice]'); if (wait) await p.waitForSelector(wait, { timeout: 8000 }).catch(() => {}); else await p.waitForFunction(() => window.UXLive && UXLive.isReady(), null, { timeout: 8000 }).catch(() => {}); }
+async function type(p, text, ms = 1000) { await p.evaluate((t) => UXLive.sendText(t), text); await sleep(ms); }
 (async () => {
   const srvOpts = ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'];
   const s1 = server(4030, {}); const s2 = server(4031, { FAKE_LIVE_NO_MIC_TURN: '1' }); await sleep(1800);
@@ -36,7 +37,8 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
     const noMock = async () => (await p.locator('[data-a=say], #voice .chips').count()) === 0 && !/시연용|모의|인식 실패/.test(await panel(p));
     ok('no mock voice chips or demo buttons while connected', await noMock(), await panel(p));
     ok('AI greets before any customer input (greeting shown in the panel)', /어서 오세요/.test(await reply(p)) && !(await panel(p)).includes('말씀하신 내용'), await panel(p));
-    ok('voice panel connects (ready: input row visible)', await p.isVisible('#vtext'));
+    ok('voice panel connects (session ready)', await p.evaluate(() => UXLive.isReady()));
+    ok('no text input / search box / send button in the voice panel', await p.locator('#voice input, #voice form, #voice textarea, #voice button[type=submit], #vtext').count() === 0, await panel(p));
     await sleep(2500); // the fake microphone makes the fake AI hear "아아 하나 주세요"
     ok('mic audio → AI → cart (아이스 아메리카노 1잔)', await cartCount(p) === 1 && await cartTotal(p) === 2000, `${await cartCount(p)} / ${await cartTotal(p)}`);
     ok('AI statement equals the screen (count and total)', /장바구니 1개, 합계 2000원/.test(await reply(p)), await reply(p));
@@ -97,9 +99,10 @@ async function type(p, text, ms = 1000) { await p.fill('#vtext', text); await p.
     ({ ctx, p } = await open(b, 4031, { deny: true }));
     await p.evaluate(() => { navigator.mediaDevices.getUserMedia = () => Promise.reject(new DOMException('no', 'NotAllowedError')); });
     await startVoice(p); await sleep(400);
-    ok('mic denied: hint shown, typing still works', /마이크를 쓸 수 없어요/.test(await panel(p)) && await p.isVisible('#vtext'));
-    await type(p, '아아 하나');
-    ok('mic denied: typed order reaches the cart', await cartCount(p) === 1);
+    ok('mic denied: hint tells the customer to use the touch screen (no typing box)', /마이크를 쓸 수 없어요/.test(await panel(p)) && /화면에서 눌러 선택/.test(await panel(p)) && await p.locator('#voice input').count() === 0, await panel(p));
+    await p.click('#voice [data-a=endVoice]'); await sleep(300);
+    await p.click('[data-a=open][data-v=d100]'); await p.waitForSelector('#addBtn'); await p.click('[data-a=temp][data-v=ICE]'); await p.click('#addBtn'); await p.waitForSelector('.cart .count'); await sleep(500);
+    ok('mic denied: touch ordering continues', await cartCount(p) === 1);
     await p.screenshot({ path: OUT + '/v6-mic-denied.png' });
     await ctx.close();
 
