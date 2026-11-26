@@ -50,12 +50,13 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 | 상태 | 배경 | 테두리 | 글자 |
 |---|---|---|---|
 | Default | 흰색 | #AAAAAA | 600 |
-| Selected | #FFDC00 | #FFDC00 | #171717 · 700 |
+| Selected (카테고리·하위 분류·언어) | #FFDC00 | #FFDC00 | #171717 · 700 |
+| Selected (상품 화면의 온도·옵션) | 흰색 | **2px #171717** | #171717 · 700 |
 | Pressed | #F5F5F5(터치 순간) | — | — |
 | Disabled | #E5E5E5 | #E5E5E5 | #757575 |
 | Focus Visible | — | 2px #171717, offset 3 | 키보드·보조기기만 |
 
-- Selected 적용: 카테고리, 하위 분류, 온도, 단일 선택 옵션. 라디오·체크 아이콘과 굵은 테두리는 없고, `role="radio"`/`tab`과 `aria-checked`/`aria-selected`는 유지한다.
+- 노랑 채움은 카테고리·하위 분류·언어에, 2px 검정 아웃라인은 상품 화면의 온도·옵션에 쓴다. 라디오·체크 아이콘과 굵은 테두리는 없고, `role="radio"`/`tab`과 `aria-checked`/`aria-selected`는 유지한다.
 - 상품 카드·결제 수단·제휴 수단·상세 진입은 Action이며 선택 상태가 남지 않는다.
 - 시작 화면의 주문 방식 두 버튼은 누르면 바로 이동하므로 노란 주요 행동으로 둔다.
 
@@ -90,7 +91,7 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 | 항목 | v6.0 | 현재 |
 |---|---|---|
 | 노랑 / 검정 | #F8DA29 / #231F20 | #FFDC00 / #171717 |
-| 선택 | 연노랑 + 2px, 라디오·체크 | 노랑 채움 1px, 아이콘 없음 |
+| 선택 | 연노랑 + 2px, 라디오·체크 | 탭은 노랑 채움, 상품 옵션은 흰색 + 2px 검정. 아이콘 없음 |
 | 포커스 링 | 3px | 2px |
 | 글자 | 20~56 | 22~56, 주요 정보 28 이상 |
 | 카테고리 | 4×2 | 한 줄 스와이프 |
