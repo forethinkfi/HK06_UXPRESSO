@@ -52,7 +52,6 @@ const btn = (label, act, { v = 'primary', ic, val = '', off, cls = '' } = {}) =>
 const iconBtn = (ic, label, act, { val = '', off, line } = {}) => `<button class="icon-btn ${line ? 'line' : ''}" aria-label="${label}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}>${icon(ic)}</button>`;
 const feedback = (tone, msg, detail = '') => `<div class="feedback ${tone}" role="${tone === 'error' ? 'alert' : 'status'}">${icon(tone === 'success' ? 'circle-check' : tone === 'pending' ? 'clock' : tone === 'warning' ? 'triangle-alert' : 'circle-alert')}<div><b>${msg}</b>${detail ? `<p>${detail}</p>` : ''}</div></div>`;
 const photo = (m, badge = '') => `<span class="photo">${badge}사진 준비 중${m.image_url ? `<img src="${m.image_url}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>`;
-const temps = (m) => m.temperature.map((t) => `<b class="${t.toLowerCase()}">${t}</b>`).join(' · ');
 // description, allergens and nutrition as published on the brand's homepage; nothing is filled in when it is missing
 const facts = (m, temp) => {
   const infos = Object.entries(m.info || {}).filter(([t]) => !temp || !t || t === temp);
@@ -114,7 +113,7 @@ const SCREENS = {
       ${list.length ? `<div class="grid ${pages > 1 ? '' : 'fit'}" style="--cols:${cols}" data-swipe="${S.cat}/${S.sub}">${list.map((m) => {
         const out = m.available === false;
         const badge = out ? '<span class="badge soldout">품절</span>' : '';
-        return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="temps">${temps(m)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button>${btn('상세 정보', 'info', { v: 'tertiary', ic: 'info', val: m.id })}</article>`;
+        return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button></article>`;
       }).join('')}</div>
       ${pages > 1 ? `<div class="pager">${iconBtn('chevron-left', '이전 상품', 'page', { val: -1, off: true, line: true })}<span>옆으로 밀어 더 보기 · <b id="page">1</b> / ${pages}</span>${iconBtn('chevron-right', '다음 상품', 'page', { val: 1, line: true })}</div>` : ''}`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
@@ -209,7 +208,6 @@ const DIALOGS = {
     <button class="btn secondary" disabled>${icon('zoom-in')}화면 확대 (준비 중)</button>
     <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close', { v: 'secondary' })}`;
   },
-  info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${[won(m.price), ...m.temperature].join(' · ')}</p>${facts(m)}<div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
   clear: () => confirm('담은 메뉴를 모두 삭제할까요?', '삭제하면 되돌릴 수 없어요.', '전체 삭제', 'clear'),
   del: (i) => confirm(`${esc(menu(S.cart[i].menuId).name)}을(를) 삭제할까요?`, '다른 메뉴는 그대로 있어요.', '삭제', 'del', i),
   reset: () => confirm('처음 화면으로 갈까요?', '담은 메뉴가 모두 지워져요.', '주문 종료', 'reset'),
@@ -329,7 +327,6 @@ const ACT = {
   cat: (v) => { S.cat = v; S.sub = 'all'; },
   sub: (v) => { S.sub = v; },
   open: (v) => openItem(v),
-  info: (v) => { S.dlg = `info:${v}`; },
   temp: (v) => { S.draft.temp = v; },
   more: () => { S.draft.more = !S.draft.more; },
   opt: (v) => { const [g, c] = v.split(':'); S.draft.opts[g] = c; },
