@@ -1,0 +1,1478 @@
+{
+  "schema_version": "1.0",
+  "brand": "MEGA MGC COFFEE",
+  "checked_at": "2026-11-26",
+  "currency": "KRW",
+  "scope": "프로토타입용 부분 검증 메뉴 목록. 전국 전체 메뉴 또는 실시간 판매 여부를 보장하지 않음.",
+  "price_basis": "패스오더 개봉사거리점 표시 가격. 지점 및 주문 채널별로 다를 수 있음.",
+  "sources": [
+    "https://www.mega-mgccoffee.com/menu/",
+    "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+  ],
+  "integration_notes": [
+    "기존 메뉴 ID와 이름을 매핑하고 중복 등록하지 않는다.",
+    "null은 미확인 정보이며 가격 0원, 무카페인, 옵션 없음으로 해석하지 않는다.",
+    "기존 앱에서 검증된 온도 및 옵션을 유지한다.",
+    "가격이 null이면 결제를 확정하지 않는다.",
+    "알레르기 안전 여부는 이 데이터만으로 판단하지 않는다.",
+    "별칭은 음성 인식용으로 추가한 비공식 표현이다.",
+    "시즌 및 판매 여부는 미검증이다."
+  ],
+  "menu_count": 123,
+  "menus": [
+    {
+      "id": "mega_001",
+      "name": "메가리카노",
+      "category": "커피",
+      "price": 3300,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_002",
+      "name": "핫 아메리카노",
+      "category": "커피",
+      "price": 1700,
+      "temperature": [
+        "HOT"
+      ],
+      "description": "에스프레소와 물",
+      "aliases": [
+        "뜨아",
+        "따뜻한 아메리카노",
+        "hot americano"
+      ],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_003",
+      "name": "아이스 아메리카노",
+      "category": "커피",
+      "price": 2000,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "에스프레소와 물",
+      "aliases": [
+        "아아",
+        "아이스 아메",
+        "iced americano"
+      ],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_004",
+      "name": "헤이즐넛아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_005",
+      "name": "바닐라아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_006",
+      "name": "꿀아메리카노",
+      "category": "커피",
+      "price": 2700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_007",
+      "name": "할메가미숫커피",
+      "category": "커피",
+      "price": 3100,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_008",
+      "name": "카페라떼",
+      "category": "커피",
+      "price": 2900,
+      "temperature": null,
+      "description": "에스프레소와 우유",
+      "aliases": [
+        "카페 라테",
+        "cafe latte"
+      ],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_009",
+      "name": "카푸치노",
+      "category": "커피",
+      "price": 2900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_010",
+      "name": "왕메가카페라떼",
+      "category": "커피",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_011",
+      "name": "라이트 바닐라 아몬드라떼",
+      "category": "커피",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_012",
+      "name": "왕메가 헛개리카노",
+      "category": "커피",
+      "price": 3400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_013",
+      "name": "헛개리카노",
+      "category": "커피",
+      "price": 2400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_014",
+      "name": "헤이즐넛라떼",
+      "category": "커피",
+      "price": 3400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_015",
+      "name": "바닐라라떼",
+      "category": "커피",
+      "price": 3400,
+      "temperature": null,
+      "description": "바닐라 풍미의 라떼",
+      "aliases": [
+        "바라",
+        "vanilla latte"
+      ],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_016",
+      "name": "카라멜마끼아또",
+      "category": "커피",
+      "price": 3700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_017",
+      "name": "카페모카",
+      "category": "커피",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_018",
+      "name": "티라미수라떼",
+      "category": "커피",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_019",
+      "name": "큐브라떼",
+      "category": "커피",
+      "price": 4200,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "커피 얼음, 연유, 우유",
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_020",
+      "name": "연유라떼",
+      "category": "커피",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_021",
+      "name": "초코젤라또 말차라떼",
+      "category": "커피",
+      "price": 4400,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "초코 젤라또와 말차 및 커피",
+      "aliases": [
+        "초코 말차 라떼"
+      ],
+      "caffeine_mg": 213.5,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_022",
+      "name": "하우스밀크 라떼",
+      "category": "커피",
+      "price": 3500,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "하우스밀크와 에스프레소",
+      "aliases": [
+        "하우스 밀크",
+        "house milk latte"
+      ],
+      "caffeine_mg": 118,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_023",
+      "name": "할메가커피",
+      "category": "커피",
+      "price": 2300,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_024",
+      "name": "왕할메가커피",
+      "category": "커피",
+      "price": 3400,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_025",
+      "name": "콜드브루 오리지널",
+      "category": "커피",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_026",
+      "name": "초코 허니 퐁크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_027",
+      "name": "슈크림 허니 퐁크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_028",
+      "name": "쿠키프라페",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "쿠키와 우유 기반 프라페",
+      "aliases": [
+        "쿠프",
+        "cookie frappe"
+      ],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_029",
+      "name": "스트로베리치즈홀릭",
+      "category": "스무디&프라페",
+      "price": 4500,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_030",
+      "name": "민트프라페",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_031",
+      "name": "코코넛커피 스무디",
+      "category": "스무디&프라페",
+      "price": 4800,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_032",
+      "name": "블루베리요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_033",
+      "name": "커피프라페",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_034",
+      "name": "플레인요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_035",
+      "name": "망고요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_036",
+      "name": "딸기요거트스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_037",
+      "name": "골드망고스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_038",
+      "name": "그린키위 콕콕 딸키스무디",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_039",
+      "name": "밀크쉐이크",
+      "category": "스무디&프라페",
+      "price": 2900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "우유 기반 쉐이크",
+      "aliases": [
+        "밀크셰이크",
+        "milkshake"
+      ],
+      "caffeine_mg": 0,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_040",
+      "name": "멋쟁이 토마토 스무디",
+      "category": "스무디&프라페",
+      "price": 3700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_041",
+      "name": "복숭아 퐁당 요거트 스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_042",
+      "name": "초당옥수수 프라페",
+      "category": "스무디&프라페",
+      "price": 3700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_043",
+      "name": "포도녹차 젤리 크러쉬",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_044",
+      "name": "파인망고코코 스무디",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_045",
+      "name": "수박소르베 밀키 스무디",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_046",
+      "name": "수박 리치코코 슬러시",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_047",
+      "name": "자몽 톡톡 스무디",
+      "category": "스무디&프라페",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_048",
+      "name": "애플머스캣 요거트 스무디",
+      "category": "스무디&프라페",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_049",
+      "name": "딥 초코 체리 프라페",
+      "category": "스무디&프라페",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_050",
+      "name": "메가에이드",
+      "category": "에이드&주스",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "레몬, 라임, 자몽",
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_051",
+      "name": "자몽에이드",
+      "category": "에이드&주스",
+      "price": 3500,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_052",
+      "name": "청포도에이드",
+      "category": "에이드&주스",
+      "price": 3500,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_053",
+      "name": "유니콘매직에이드(핑크)",
+      "category": "에이드&주스",
+      "price": 3800,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_054",
+      "name": "유니콘매직에이드(블루)",
+      "category": "에이드&주스",
+      "price": 3800,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_055",
+      "name": "라임모히또",
+      "category": "에이드&주스",
+      "price": 3800,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_056",
+      "name": "제로 부스트 에이드",
+      "category": "에이드&주스",
+      "price": 3000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_057",
+      "name": "제로 체리콜라",
+      "category": "에이드&주스",
+      "price": 3300,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_058",
+      "name": "블루베리플럼주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_059",
+      "name": "골드키위주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_060",
+      "name": "꿀수박주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_061",
+      "name": "M망고 G구아바 C캐럿 주스",
+      "category": "에이드&주스",
+      "price": 4000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_062",
+      "name": "허니자몽블랙티",
+      "category": "티",
+      "price": 3700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_063",
+      "name": "자몽차",
+      "category": "티",
+      "price": 3300,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_064",
+      "name": "유자차",
+      "category": "티",
+      "price": 3300,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_065",
+      "name": "레몬차",
+      "category": "티",
+      "price": 3300,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_066",
+      "name": "녹차",
+      "category": "티",
+      "price": 2500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_067",
+      "name": "캐모마일",
+      "category": "티",
+      "price": 2500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_068",
+      "name": "페퍼민트",
+      "category": "티",
+      "price": 2500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_069",
+      "name": "얼그레이",
+      "category": "티",
+      "price": 2500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_070",
+      "name": "왕메가사과유자차",
+      "category": "티",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_071",
+      "name": "제로 복숭아 아이스티",
+      "category": "티",
+      "price": 3000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_072",
+      "name": "왕메가아이스티",
+      "category": "티",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_073",
+      "name": "제로 레몬말차 아이스티",
+      "category": "티",
+      "price": 2400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_074",
+      "name": "망고폼 자스민 티플레저",
+      "category": "티",
+      "price": 3700,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_075",
+      "name": "저당 골든애플 블랙티",
+      "category": "티",
+      "price": 3500,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_076",
+      "name": "매실 모과차",
+      "category": "티",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_077",
+      "name": "쫀득 모찌 밀크티",
+      "category": "티",
+      "price": 3800,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_078",
+      "name": "무카페인 오르조라떼",
+      "category": "음료",
+      "price": 3300,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "오르조와 우유",
+      "aliases": [
+        "오르조",
+        "오르조 라테",
+        "orzo latte"
+      ],
+      "caffeine_mg": 0,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_079",
+      "name": "딸기라떼",
+      "category": "음료",
+      "price": 3700,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_080",
+      "name": "오레오초코라떼",
+      "category": "음료",
+      "price": 3900,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_081",
+      "name": "곡물라떼",
+      "category": "음료",
+      "price": 3300,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_082",
+      "name": "고구마라떼",
+      "category": "음료",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_083",
+      "name": "흑당버블라떼",
+      "category": "음료",
+      "price": 3700,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_084",
+      "name": "핫초코",
+      "category": "음료",
+      "price": 3500,
+      "temperature": [
+        "HOT"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_085",
+      "name": "왕메가초코",
+      "category": "음료",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_086",
+      "name": "저당 꿀배 XO야쿠르트",
+      "category": "음료",
+      "price": 3700,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_087",
+      "name": "슈크림라떼",
+      "category": "음료",
+      "price": 3700,
+      "temperature": [
+        "ICE"
+      ],
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_088",
+      "name": "커피초코칩 젤라또 슈크림라떼",
+      "category": "음료",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_089",
+      "name": "와앙 핫 치즈스틱 & 딥",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_090",
+      "name": "엠지씨네 통쏘시지 김볶밥",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_091",
+      "name": "치즈케이크 딸기요거트 크레페",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_092",
+      "name": "말차 젤라또 팥빙 파르페",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_093",
+      "name": "내 맘대로 더블 젤라또",
+      "category": "푸드",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_094",
+      "name": "버터가 쫀득해떡",
+      "category": "푸드",
+      "price": 1400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_095",
+      "name": "에그머니 머핀인줄 브런치빵",
+      "category": "푸드",
+      "price": 3800,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_096",
+      "name": "엠지씨네 양념 컵치킨",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_097",
+      "name": "중식마녀 마라크림 새우토스트",
+      "category": "푸드",
+      "price": 4600,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_098",
+      "name": "밤고구마호박팥크림치즈빵",
+      "category": "푸드",
+      "price": 4200,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_099",
+      "name": "바삭허니 엠지씨네 컵치킨",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_100",
+      "name": "엠지씨네 마라 떡볶이",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_101",
+      "name": "메가베리 아사이볼",
+      "category": "푸드",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_102",
+      "name": "대파 송송 치즈 감자빵",
+      "category": "푸드",
+      "price": 3200,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_103",
+      "name": "버터버터 마늘 크로크무슈",
+      "category": "푸드",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_104",
+      "name": "멕시칸 미트칠리 핫도그",
+      "category": "푸드",
+      "price": 3800,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_105",
+      "name": "요거젤라또 씨리얼 초코베리믹스",
+      "category": "푸드",
+      "price": 3900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_106",
+      "name": "감자빵",
+      "category": "푸드",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_107",
+      "name": "초코스모어쿠키",
+      "category": "푸드",
+      "price": 2900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_108",
+      "name": "말차스모어쿠키",
+      "category": "푸드",
+      "price": 2900,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_109",
+      "name": "플레인크로플",
+      "category": "푸드",
+      "price": 2500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_110",
+      "name": "아이스크림크로플",
+      "category": "푸드",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_111",
+      "name": "쿠키프라페마카롱",
+      "category": "푸드",
+      "price": 2100,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_112",
+      "name": "딸기 크림치즈 쫀득빵",
+      "category": "푸드",
+      "price": 3200,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_113",
+      "name": "메가쿠키(초코칩)",
+      "category": "푸드",
+      "price": 2000,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_114",
+      "name": "치즈케익",
+      "category": "푸드",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_115",
+      "name": "초코무스케익",
+      "category": "푸드",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_116",
+      "name": "티라미수케익",
+      "category": "푸드",
+      "price": 3500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_117",
+      "name": "허니브레드",
+      "category": "푸드",
+      "price": 4500,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_118",
+      "name": "크로크무슈",
+      "category": "푸드",
+      "price": 3800,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_119",
+      "name": "핫 불고기&바비큐 반반 브리또",
+      "category": "푸드",
+      "price": 3600,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_120",
+      "name": "팥빙 젤라또 파르페",
+      "category": "푸드",
+      "price": 4400,
+      "temperature": null,
+      "description": null,
+      "aliases": [],
+      "caffeine_mg": null,
+      "source": "https://app.passorder.co.kr/normal/6bfb91ef-61a5-42ab-ba11-5987c81b40a4/menus"
+    },
+    {
+      "id": "mega_121",
+      "name": "나 혼자만 드랍 UP! 은랑 큐브 레몬에이드",
+      "category": "에이드&주스",
+      "price": null,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "블루베리 레몬에이드와 나타드코코",
+      "aliases": [],
+      "caffeine_mg": 0,
+      "source": "https://www.mega-mgccoffee.com/menu/"
+    },
+    {
+      "id": "mega_122",
+      "name": "음, 괜찮은 휴식이군 블레이드 초코크림커피",
+      "category": "커피",
+      "price": null,
+      "temperature": [
+        "ICE"
+      ],
+      "description": "아메리카노와 초코 크림",
+      "aliases": [],
+      "caffeine_mg": 242.7,
+      "source": "https://www.mega-mgccoffee.com/menu/"
+    },
+    {
+      "id": "mega_123",
+      "name": "유자생강차",
+      "category": "티",
+      "price": null,
+      "temperature": [
+        "HOT"
+      ],
+      "description": "유자와 생강",
+      "aliases": [],
+      "caffeine_mg": 0,
+      "source": "https://www.mega-mgccoffee.com/menu/"
+    }
+  ]
+}

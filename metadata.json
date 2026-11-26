@@ -1,0 +1,10 @@
+{
+  "name": "UXPRESSO Kiosk",
+  "description": "UXPRESSO coffee kiosk prototype with Gemini 3.8 Live real-time voice ordering",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

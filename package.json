@@ -2,5 +2,14 @@
   "name": "uxpresso-kiosk",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node server.js" }
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node --check server.js && node --check live-kiosk.js",
+    "lint": "node --check server.js && node --check live-kiosk.js && node --check public/i18n.js && node --check public/app.js"
+  },
+  "dependencies": {
+    "@google/genai": "^3.6.1",
+    "ws": "^8.23.0"
+  }
 }

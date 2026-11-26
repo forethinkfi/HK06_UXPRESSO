@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { WebSocketServer } from 'ws';
+import { handleLiveConnection } from './live-kiosk.js';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -26,7 +28,16 @@ function applyCoupon(code, items, menus, data) {
   if (!c.kioskUsable) return no(c.reason, c.alternative);
   if (c.expires && new Date(c.expires) < new Date()) return no('사용 기간이 지났어요.', '다른 쿠폰을 입력하거나, 쿠폰 없이 결제해 주세요.');
   if (!items) return { status: 'ok', ...base, discount: null }; // pre-check: availability only
-  const lines = items.map((it) => { const m = menus.find((x) => x.id === it.menuId); const u = m.price + m.options.reduce((s, g) => s + (g.choices.find((ch) => ch.id === it.opts?.[g.id])?.price || 0), 0); return { m, qty: it.qty, unit: u }; });
+  const lines = items.map((it) => {
+    const m = menus.find((x) => x.id === it.menuId);
+    const basePrice = m ? (m.tempPrices && it.temp && m.tempPrices[it.temp] != null ? m.tempPrices[it.temp] : m.price) : null;
+    if (!m || basePrice == null) return { m, qty: it.qty, unit: null };
+    const u = basePrice + m.options.reduce((s, g) => s + (g.choices.find((ch) => ch.id === it.opts?.[g.id])?.price || 0), 0);
+    return { m, qty: it.qty, unit: u };
+  });
+  if (lines.some((l) => l.unit == null)) {
+    return no('가격이 확인되지 않은 메뉴가 담겨 있어 쿠폰 금액을 계산할 수 없어요.', '가격 미확인 메뉴를 빼거나 직원에게 문의해 주세요.');
+  }
   const subtotal = lines.reduce((s, l) => s + l.unit * l.qty, 0);
   let discount = 0;
   if (c.type === 'discount') {
@@ -36,7 +47,8 @@ function applyCoupon(code, items, menus, data) {
     const l = lines.find((x) => x.m.id === c.menuId);
     const target = menus.find((x) => x.id === c.menuId);
     if (!l) return no(`장바구니에 ${target.name}가 없어요.`, `${target.name}를 담으면 쓸 수 있어요. 아니면 쿠폰 없이 결제할 수 있어요.`, 'addMore');
-    discount = target.price; // 1 cup, base price only (option cost stays)
+    const targetPrice = target.tempPrices && l && items.find((x) => x.menuId === c.menuId)?.temp ? (target.tempPrices[items.find((x) => x.menuId === c.menuId).temp] ?? target.price) : target.price;
+    discount = targetPrice ?? 0; // 1 cup, base price only (option cost stays)
   } else if (c.type === 'giftcard') discount = Math.min(c.balance, subtotal);
   return { status: 'ok', ...base, discount, subtotal };
 }
@@ -45,7 +57,8 @@ function applyCoupon(code, items, menus, data) {
 const tx = new Map(); // key -> { txId, status, at }
 const txView = (t) => ({ status: t.status === 'pending' && Date.now() - t.at >= PENDING_MS ? (t.status = 'approved') : t.status, txId: t.txId });
 async function pay(req, res) {
-  const { method, amount, key, attempt = 1 } = await readBody(req);
+  const { method, amount, key, attempt = 1, hasUnpriced = false } = await readBody(req);
+  if (hasUnpriced) return send(res, 200, { status: 'failed', reason: '가격이 확인되지 않은 메뉴가 포함되어 있어 결제를 확정할 수 없어요.', solution: '가격 미확인 메뉴를 장바구니에서 뺀 뒤 결제하거나 직원에게 확인해 주세요.' });
   if (key && tx.has(key)) return send(res, 200, txView(tx.get(key))); // duplicate guard
   const m = (await load('payments.json')).methods.find((x) => x.id === method);
   if (!m || !m.supported) return send(res, 200, { status: 'failed', reason: '지원하지 않는 결제 수단이에요.', solution: '다른 결제 수단을 골라 주세요. 담은 메뉴는 그대로예요.' });
@@ -76,7 +89,13 @@ async function api(req, res, url) {
   if (p === '/api/categories') return send(res, 200, data.categories);
   if (p === '/api/menus') {
     const tags = (url.searchParams.get('tags') || '').split(',').filter(Boolean); // all tags must match
-    return send(res, 200, data.menus.filter((m) => tags.every((t) => m.tags.includes(t))));
+    const q = (url.searchParams.get('q') || '').trim().toLowerCase();
+    const cat = (url.searchParams.get('category') || '').trim();
+    return send(res, 200, data.menus.filter((m) =>
+      tags.every((t) => m.tags.includes(t))
+      && (!cat || m.category === cat)
+      && (!q || [m.name, m.category, m.description || '', ...(m.aliases || []), ...(m.tags || [])].some((s) => String(s).toLowerCase().includes(q)))
+    ));
   }
   const one = p.match(/^\/api\/menus\/([\w-]+)$/);
   if (one) {
@@ -86,7 +105,7 @@ async function api(req, res, url) {
   send(res, 404, { error: 'not_found' });
 }
 
-createServer(async (req, res) => {
+const server = createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
@@ -96,4 +115,16 @@ createServer(async (req, res) => {
     res.writeHead(200, { 'content-type': (MIME[extname(f)] || 'application/octet-stream') + '; charset=utf-8' });
     res.end(buf);
   } catch { send(res, 404, { error: 'not_found' }); }
-}).listen(PORT, () => console.log(`UXPRESSO kiosk → http://localhost:${PORT}`));
+});
+
+const wss = new WebSocketServer({ server, path: '/api/live' });
+wss.on('connection', (clientWs) => {
+  handleLiveConnection(clientWs, load).catch((err) => {
+    try {
+      clientWs.send(JSON.stringify({ type: 'error', message: err?.message || 'Live connection failed' }));
+      clientWs.close();
+    } catch {}
+  });
+});
+
+server.listen(Number(PORT) || 3000, '0.0.0.0', () => console.log(`UXPRESSO kiosk → http://0.0.0.0:${PORT}`));
