@@ -6,18 +6,18 @@ const icon = (n, cls = '') => `<i data-lucide="${n}" class="${cls}" aria-hidden=
 
 const IDLE_MS = 120000, GRACE_MS = 60000, RETURN_MS = 30000; // session values are a hypothesis (PRD FR-17)
 const MODE = { dine: { name: '매장에서 먹기', icon: 'utensils' }, take: { name: '포장하기', icon: 'shopping-bag' } };
+const inCat = (...names) => (m) => m.cats.some((c) => names.includes(c));
 const groupSubs = (...names) => names.map((n) => [n, n, (m) => m.group === n]);
 const CATS = [
-  { id: 'new', name: '신메뉴', fn: (m) => m.category === '신메뉴' },
+  { id: 'new', name: '신메뉴', fn: inCat('신메뉴') },
   { id: 'rec', name: '추천메뉴', fn: (m) => m.featured },
-  { id: 'coffee', name: '커피', fn: (m) => m.category === '커피' },
-  { id: 'decaf', name: '디카페인', fn: (m) => m.tags.includes('디카페인') },
-  { id: 'drink', name: '음료', fn: (m) => m.category === '라떼' || m.category === '에이드·스무디', subs: [['latte', '라떼·밀크', (m) => m.category === '라떼'], ['ade', '에이드·스무디', (m) => m.category === '에이드·스무디']] },
-  { id: 'tea', name: '티', fn: (m) => m.category === '티' },
+  { id: 'coffee', name: '커피', fn: inCat('커피') },
+  { id: 'decaf', name: '디카페인', fn: inCat('디카페인') },
+  { id: 'drink', name: '음료', fn: inCat('음료', '에이드·주스', '스무디·프라페'), subs: [['latte', '라떼·음료', inCat('음료')], ['ade', '에이드·주스', inCat('에이드·주스')], ['frappe', '스무디·프라페', inCat('스무디·프라페')]] },
+  { id: 'tea', name: '티', fn: inCat('티') },
   { id: 'food', name: '푸드', fn: (m) => m.category === '푸드', subs: groupSubs('베이커리', '디저트', '샌드위치·간식') },
   { id: 'goods', name: '상품', fn: (m) => m.category === '상품', subs: groupSubs('굿즈', '콜라보 상품') },
 ];
-const TEMP_SUBS = [['HOT', 'HOT 따뜻하게', (m) => m.temperature.includes('HOT')], ['ICE', 'ICE 차갑게', (m) => m.temperature.includes('ICE')]];
 
 const fresh = () => ({
   screen: 'start', mode: null, cat: 'rec', sub: 'all', cart: [], draft: null, dlg: null,
@@ -51,8 +51,19 @@ const optText = (it) => [it.temp, ...groups(it).filter((g) => (it.opts[g.id] || 
 const btn = (label, act, { v = 'primary', ic, val = '', off, cls = '' } = {}) => `<button class="btn ${v} ${cls}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}>${ic ? icon(ic) : ''}${label}</button>`;
 const iconBtn = (ic, label, act, { val = '', off, line } = {}) => `<button class="icon-btn ${line ? 'line' : ''}" aria-label="${label}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}>${icon(ic)}</button>`;
 const feedback = (tone, msg, detail = '') => `<div class="feedback ${tone}" role="${tone === 'error' ? 'alert' : 'status'}">${icon(tone === 'success' ? 'circle-check' : tone === 'pending' ? 'clock' : tone === 'warning' ? 'triangle-alert' : 'circle-alert')}<div><b>${msg}</b>${detail ? `<p>${detail}</p>` : ''}</div></div>`;
-const photo = (m, badge = '') => `<span class="photo">${badge}사진 준비 중${m.image_url ? `<img src="${m.image_url}" alt="" onerror="this.remove()">` : ''}</span>`;
+const photo = (m, badge = '') => `<span class="photo">${badge}사진 준비 중${m.image_url ? `<img src="${m.image_url}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>`;
 const temps = (m) => m.temperature.map((t) => `<b class="${t.toLowerCase()}">${t}</b>`).join(' · ');
+// description, allergens and nutrition as published on the brand's homepage; nothing is filled in when it is missing
+const facts = (m, temp) => {
+  const infos = Object.entries(m.info || {}).filter(([t]) => !temp || !t || t === temp);
+  const goods = m.category === '상품';
+  return `<p>${esc(m.description)}</p>${infos.map(([t, f]) => `<div class="fact">
+    ${infos.length > 1 ? `<h3>${t}</h3>` : ''}
+    ${f.volume || f.kcal ? `<p>${[f.volume && `용량 ${esc(f.volume)}`, f.kcal && `열량 ${esc(f.kcal)}`].filter(Boolean).join(' · ')}</p>` : ''}
+    ${goods ? '' : `<p><b>알레르기</b> ${f.allergens ? esc(f.allergens) : '홈페이지에 표시된 성분이 없어요. 직원에게 확인해 주세요.'}</p>`}
+    ${f.nutrition ? `<ul>${f.nutrition.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}</div>`).join('')}
+    <p class="sub">${goods ? '' : '알레르기가 있으면 주문 전에 직원에게 꼭 확인해 주세요. '}메가MGC커피 홈페이지 기준(2026-11-26)이에요.</p>`;
+};
 const header = ({ back, voice = true } = {}) => `<header class="header">
   ${back ? btn('이전', back, { v: 'tertiary', ic: 'chevron-left' }) : btn('처음으로', 'askReset', { v: 'tertiary', ic: 'house' })}
   <span class="logo">공식 로고</span>
@@ -90,7 +101,7 @@ const SCREENS = {
 
   menu: () => {
     const cat = CATS.find((c) => c.id === S.cat);
-    const subs = cat.subs || (['coffee', 'decaf', 'tea'].includes(cat.id) ? TEMP_SUBS : []);
+    const subs = cat.subs || []; // temperature is chosen on the product screen, not filtered here
     const sf = subs.find((s) => s[0] === S.sub)?.[2] || (() => true);
     const list = DB.menus.filter((m) => cat.fn(m) && sf(m));
     const cols = Math.max(3, Math.ceil(list.length / 2)); // two rows, the rest is reached by swiping
@@ -120,7 +131,8 @@ const SCREENS = {
     const radio = (checked, act, val, label, extra = '', off = false, cls = '') => `<button class="opt ${cls}" role="radio" aria-checked="${checked}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}><span class="radio"></span>${label}${extra ? `<span class="extra">${extra}</span>` : ''}</button>`;
     return `<div class="screen">${header({ back: 'toMenu' })}${guide()}
     <div class="scroll" data-keep>
-      <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p>${esc(m.description)}</p><b class="title">${won(m.price)}</b></div></div>
+      <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p class="desc">${esc(m.description)}</p><b class="title">${won(m.price)}</b>${btn(d.more ? '상세 정보 접기' : '상세 정보 펼치기', 'more', { v: 'secondary', ic: d.more ? 'chevron-up' : 'chevron-down' })}</div></div>
+      ${d.more ? `<section class="group facts">${facts(m, d.temp)}</section>` : ''}
       ${m.temperature.length ? `<section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>
         <div class="opts" role="radiogroup" aria-label="온도">${[['HOT', 'flame', '따뜻하게'], ['ICE', 'snowflake', '차갑게']].map(([t, ic, l]) => radio(d.temp === t, 'temp', t, `<span class="${t.toLowerCase()} row">${icon(ic)}${t} ${l}</span>`, '', !m.temperature.includes(t), 'temp')).join('')}</div></section>` : ''}
       ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2>
@@ -197,7 +209,7 @@ const DIALOGS = {
     <button class="btn secondary" disabled>${icon('zoom-in')}화면 확대 (준비 중)</button>
     <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close', { v: 'secondary' })}`;
   },
-  info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${esc(m.description)}</p><p>${[won(m.price), ...m.temperature].join(' · ')}</p><p class="sub">영양·알레르기 정보는 확인되지 않았어요. 직원에게 문의해 주세요.</p><div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
+  info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${[won(m.price), ...m.temperature].join(' · ')}</p>${facts(m)}<div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
   clear: () => confirm('담은 메뉴를 모두 삭제할까요?', '삭제하면 되돌릴 수 없어요.', '전체 삭제', 'clear'),
   del: (i) => confirm(`${esc(menu(S.cart[i].menuId).name)}을(를) 삭제할까요?`, '다른 메뉴는 그대로 있어요.', '삭제', 'del', i),
   reset: () => confirm('처음 화면으로 갈까요?', '담은 메뉴가 모두 지워져요.', '주문 종료', 'reset'),
@@ -246,7 +258,7 @@ const openItem = (id, extra = {}) => {
   go('option');
 };
 const addDraft = () => {
-  const { edit, ...it } = S.draft;
+  const { edit, more, ...it } = S.draft;
   if (needsTemp(it)) return false;
   if (edit != null) { S.cart[edit] = it; go('review'); } else { S.cart.push(it); go('menu'); }
   S.coupon = null; // cart changed -> discount must be recalculated
@@ -319,6 +331,7 @@ const ACT = {
   open: (v) => openItem(v),
   info: (v) => { S.dlg = `info:${v}`; },
   temp: (v) => { S.draft.temp = v; },
+  more: () => { S.draft.more = !S.draft.more; },
   opt: (v) => { const [g, c] = v.split(':'); S.draft.opts[g] = c; },
   qty: (v) => { S.draft.qty += Number(v); },
   add: () => addDraft(),

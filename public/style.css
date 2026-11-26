@@ -101,6 +101,12 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .tag{padding:4px 12px;border-radius:var(--radius-xs);background:var(--surface-subtle);font:var(--type-badge)}
 .hero{display:flex;gap:32px;padding:32px 40px;align-items:center;border-bottom:1px solid var(--border-color-subtle)}
 .hero .photo{width:320px;flex:none}
+.hero .stack{min-width:0;flex:1;align-items:flex-start}
+.desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.facts,.dialog .fact{display:flex;flex-direction:column;gap:16px}
+.facts{background:var(--surface-subtle)}
+.fact ul{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 24px;list-style:none}
+.fact h3{font:var(--type-subsection)}
 
 /* 9.12 stepper */
 .stepper{display:flex;align-items:center}

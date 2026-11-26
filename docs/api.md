@@ -10,8 +10,8 @@
 | GET | `/api/menus/:id` | 메뉴 상세(온도, 옵션, 옵션별 추가 금액) |
 | GET | `/api/categories` | 카테고리 |
 
-메뉴 필드: `id, name, category, price, image_url, description, summary, tags, temperature, options, nutrition, allergens, available, source`. 영양·알레르기는 확인된 정보가 없어 `null`이며 화면에 "확인되지 않았어요"로 표시합니다.
-푸드·상품은 `temperature`·`options`가 빈 배열이고, 화면 하위 분류용 `group`이 있습니다. 신메뉴 4종 지정, 하위 분류, 새 항목의 가격은 모두 시연용 가정입니다.
+메뉴 필드: `id, name, category, cats, price, image_url, description, info, tags, temperature, options, available, source`(일부 `summary`, `group`). `info`는 온도별(`HOT`, `ICE`, 없으면 빈 키) `volume, kcal, allergens, nutrition`이며, 값이 없으면 `null`이고 화면에서 지어내지 않습니다.
+메뉴명·설명·영양·알레르기·분류(신메뉴 포함)는 메가MGC커피 홈페이지(2026-11-26 확인) 기준 192종입니다. 가격과 옵션, 푸드·상품의 하위 분류(`group`)는 시연용 가정입니다. 푸드·상품은 `temperature`·`options`가 빈 배열입니다.
 프런트는 API 실패 시 `/data/menus.json`으로 폴백합니다.
 
 ## 쿠폰
