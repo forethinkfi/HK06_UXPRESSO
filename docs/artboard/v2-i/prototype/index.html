@@ -678,7 +678,7 @@ class Component extends DCLogic {
 
     return {
       isPromo:scr==='promo', isStart:scr==='start', isMenu:scr==='menu', isOpt:scr==='opt', isReview:scr==='review', isPay:scr==='pay', isProc:scr==='proc', isDone:scr==='done',
-      ads, adDots, touch:()=>this.touch(), capColor:A.fg,
+      ads, adDots, touch:()=>this.touch(), capColor:(s.ad===0?'transparent':A.fg),
       ringA:'position:absolute;left:0;top:0;width:150px;height:150px;border-radius:999px;box-shadow:0 0 0 5px '+A.fg+';animation:ringOut 1.8s ease-out infinite',
       ringB:'position:absolute;left:0;top:0;width:150px;height:150px;border-radius:999px;box-shadow:0 0 0 5px '+A.fg+';animation:ringOut 1.8s .9s ease-out infinite',
       fingerStyle:'position:relative;width:110px;height:110px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:'+A.fg+';color:'+A.pbg+';transition:all 700ms',
