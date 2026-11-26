@@ -3,16 +3,20 @@
 메가MGC커피 키오스크 UX/UI 개선 **비공식** 프로토타입 (팀 UXPRESSO). 공식 프로젝트·공식 디자인 시스템·공식 API가 아니다.
 
 ## 현재 상태 (`mega-ver.2`)
-새 디자인 시스템으로 화면을 다시 만드는 브랜치다. 이전 화면(`public/`)과 이전 디자인 시스템 문서는 삭제했고 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v6.md`](docs/design-system/uxpresso-design-system-v6.md)이며, 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
+디자인 시스템 v6으로 화면(`public/`)을 새로 만든 브랜치다. 이전 화면과 이전 디자인 시스템 문서는 `main`에 남아 있다. 화면의 기준은 [`docs/design-system/uxpresso-design-system-v6.md`](docs/design-system/uxpresso-design-system-v6.md)이며, 이전 버전의 값을 가져다 쓰지 않는다. PRD와 다르면 팀에 확인한다.
 
 ## 명령어
-- 실행: `npm start` → http://localhost:3000 (`public/`이 없으면 API만 동작)
-- 빌드·테스트·의존성 없음 (Node 내장 모듈만 사용)
+- 실행: `npm start` → http://localhost:3000 (`?demo=menu|option|review|pay|guide|done|voice|session` 으로 화면 바로 열기)
+- 테스트: `node test.cjs` (음성 의도 분류)
+- 빌드·의존성 없음 (Node 내장 모듈만 사용, Lucide·Pretendard는 CDN)
 
 ## 구조
 | 경로 | 역할 |
 |---|---|
 | `server.js` | 정적 호스팅(`public/`) + 메뉴/쿠폰/모의결제 API |
+| `public/app.js` | 화면·상태·인터랙션 |
+| `public/intent.js` | 모의 음성 발화 → 허용된 의도 |
+| `public/tokens.css` · `style.css` | v6 토큰 · 컴포넌트 ([제안] 표시는 문서에 값이 없는 것) |
 | `data/*.json` | 테스트 데이터 (menus, coupons, payments) |
 | `docs/` | PRD v3.0·요구사항·API 문서 (`docs/index.md` 참고) |
 

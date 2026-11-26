@@ -11,7 +11,7 @@
    "name": "아메리카노",
    "category": "커피",
    "price": 2500,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_126.webp",
    "description": "에스프레소에 물을 더한 깔끔한 커피예요. 쌉쌀하고 진한 맛이에요.",
    "tags": [
     "진한",
@@ -102,7 +102,7 @@
    "name": "디카페인 아메리카노",
    "category": "커피",
    "price": 3000,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_063.webp",
    "description": "카페인을 줄인 원두로 내린 아메리카노예요. 맛은 아메리카노와 비슷하게 깔끔해요.",
    "tags": [
     "진한",
@@ -194,7 +194,7 @@
    "name": "콜드브루",
    "category": "커피",
    "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1710811891354-163b00ebcc74?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": null,
    "description": "찬물에 오래 우려내 부드럽고 쓴맛이 적은 차가운 커피예요.",
    "tags": [
     "진한",
@@ -284,7 +284,7 @@
    "name": "카페라떼",
    "category": "라떼",
    "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_118.webp",
    "description": "에스프레소에 우유를 듬뿍 넣은 부드럽고 고소한 커피예요.",
    "tags": [
     "부드러운",
@@ -394,7 +394,7 @@
    "name": "바닐라라떼",
    "category": "라떼",
    "price": 3800,
-   "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_115.webp",
    "description": "라떼에 바닐라 시럽을 더한 달콤한 커피예요.",
    "tags": [
     "달콤한",
@@ -504,7 +504,7 @@
    "name": "카라멜마키아토",
    "category": "라떼",
    "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1559001724-fbad036dbc9e?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": null,
    "description": "우유 위에 에스프레소와 카라멜 소스를 올린 달콤한 커피예요.",
    "tags": [
     "달콤한",
@@ -613,7 +613,7 @@
    "name": "연유라떼",
    "category": "라떼",
    "price": 4200,
-   "image_url": "https://images.unsplash.com/photo-1734770762633-05d2aed2e180?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_044.webp",
    "description": "연유로 진하게 달콤한 맛을 낸 고소한 라떼예요.",
    "tags": [
     "달콤한",
@@ -704,7 +704,7 @@
    "name": "초콜릿라떼",
    "category": "라떼",
    "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1590080876209-c70d0f0bf6a3?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": null,
    "description": "커피 없이 초콜릿과 우유로 만든 달콤한 음료예요.",
    "tags": [
     "달콤한",
@@ -771,7 +771,7 @@
    "name": "녹차라떼",
    "category": "라떼",
    "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1686794154608-e45c831ef567?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_098.webp",
    "description": "커피 없이 녹차 가루와 우유로 만든 고소하고 은은한 음료예요.",
    "tags": [
     "고소",
@@ -857,7 +857,7 @@
    "name": "레몬에이드",
    "category": "에이드·스무디",
    "price": 3800,
-   "image_url": "https://images.unsplash.com/photo-1643836791063-18c8a3a3731e?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_139.webp",
    "description": "레몬의 상큼함과 탄산이 시원한 음료예요. 커피가 들어가지 않아요.",
    "tags": [
     "상큼한",
@@ -885,7 +885,7 @@
    "name": "자몽에이드",
    "category": "에이드·스무디",
    "price": 4000,
-   "image_url": "https://images.unsplash.com/photo-1640283943282-e2e230154ade?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_141.webp",
    "description": "새콤달콤한 자몽과 탄산을 섞은 시원한 음료예요.",
    "tags": [
     "상큼한",
@@ -914,7 +914,7 @@
    "name": "딸기스무디",
    "category": "에이드·스무디",
    "price": 4300,
-   "image_url": "https://images.unsplash.com/photo-1638176311291-36b0eacc6b08?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": null,
    "description": "딸기를 갈아 만든 달콤하고 시원한 음료예요.",
    "tags": [
     "달콤한",
@@ -960,7 +960,7 @@
    "name": "쿠키프라페",
    "category": "에이드·스무디",
    "price": 4500,
-   "image_url": "https://images.unsplash.com/photo-1638176066390-d1a2b56cc99c?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_082.webp",
    "description": "쿠키와 우유를 갈아 만든 달콤하고 고소한 음료예요.",
    "tags": [
     "달콤한",
@@ -1007,7 +1007,7 @@
    "name": "복숭아아이스티",
    "category": "티",
    "price": 3300,
-   "image_url": "https://images.unsplash.com/photo-1470752354724-60a1d2b1907f?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_155.webp",
    "description": "복숭아 향이 나는 달콤하고 시원한 차예요.",
    "tags": [
     "달콤한",
@@ -1054,7 +1054,7 @@
    "name": "유자차",
    "category": "티",
    "price": 3500,
-   "image_url": "https://images.unsplash.com/photo-1615484477112-677decb29c57?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_156.webp",
    "description": "유자 건더기가 들어간 새콤달콤한 따뜻한 차예요.",
    "tags": [
     "달콤한",
@@ -1080,7 +1080,7 @@
    "name": "캐모마일",
    "category": "티",
    "price": 3000,
-   "image_url": "https://images.unsplash.com/photo-1630543378528-10043e324452?auto=format&fit=crop&w=480&h=480&q=75",
+   "image_url": "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_148.webp",
    "description": "꽃향기가 나는 편안한 따뜻한 차예요. 단맛은 거의 없어요.",
    "tags": [
     "부드러운",
