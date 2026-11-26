@@ -6,15 +6,16 @@ const icon = (n, cls = '') => `<i data-lucide="${n}" class="${cls}" aria-hidden=
 
 const IDLE_MS = 120000, GRACE_MS = 60000, RETURN_MS = 30000, PAGE = 6; // session values are a hypothesis (PRD FR-17)
 const MODE = { dine: { name: '매장에서 먹기', icon: 'utensils' }, take: { name: '포장하기', icon: 'shopping-bag' } };
+const groupSubs = (...names) => names.map((n) => [n, n, (m) => m.group === n]);
 const CATS = [
-  { id: 'new', name: '신메뉴', fn: () => false, empty: '신메뉴로 표시된 메뉴가 아직 없어요.' },
+  { id: 'new', name: '신메뉴', fn: (m) => m.category === '신메뉴' },
   { id: 'rec', name: '추천메뉴', fn: (m) => m.featured },
   { id: 'coffee', name: '커피', fn: (m) => m.category === '커피' },
   { id: 'decaf', name: '디카페인', fn: (m) => m.tags.includes('디카페인') },
   { id: 'drink', name: '음료', fn: (m) => m.category === '라떼' || m.category === '에이드·스무디', subs: [['latte', '라떼·밀크', (m) => m.category === '라떼'], ['ade', '에이드·스무디', (m) => m.category === '에이드·스무디']] },
   { id: 'tea', name: '티', fn: (m) => m.category === '티' },
-  { id: 'food', name: '푸드', fn: () => false, empty: '이 시안 데이터에는 푸드 메뉴가 없어요.' },
-  { id: 'goods', name: '상품', fn: () => false, empty: '이 시안 데이터에는 상품이 없어요.' },
+  { id: 'food', name: '푸드', fn: (m) => m.category === '푸드', subs: groupSubs('베이커리', '디저트', '샌드위치·간식') },
+  { id: 'goods', name: '상품', fn: (m) => m.category === '상품', subs: groupSubs('굿즈', '콜라보 상품') },
 ];
 const TEMP_SUBS = [['HOT', 'HOT 따뜻하게', (m) => m.temperature.includes('HOT')], ['ICE', 'ICE 차갑게', (m) => m.temperature.includes('ICE')]];
 
@@ -43,7 +44,8 @@ const unit = (it) => menu(it.menuId).price + groups(it).reduce((s, g) => s + cho
 const total = () => S.cart.reduce((s, it) => s + unit(it) * it.qty, 0);
 const count = () => S.cart.reduce((s, it) => s + it.qty, 0);
 const due = () => total() - (S.coupon?.status === 'ok' ? S.coupon.discount : 0);
-const optText = (it) => [it.temp, ...groups(it).filter((g) => (it.opts[g.id] || g.choices[0].id) !== g.choices[0].id).map((g) => choice(g, it).label)].join(' · ');
+const needsTemp = (it) => !it.temp && menu(it.menuId).temperature.length > 0;
+const optText = (it) => [it.temp, ...groups(it).filter((g) => (it.opts[g.id] || g.choices[0].id) !== g.choices[0].id).map((g) => choice(g, it).label)].filter(Boolean).join(' · ');
 
 // ---------- shared parts ----------
 const btn = (label, act, { v = 'primary', ic, val = '', off, cls = '' } = {}) => `<button class="btn ${v} ${cls}" data-act="${act}" data-v="${val}" ${off ? 'disabled' : ''}>${ic ? icon(ic) : ''}${label}</button>`;
@@ -121,15 +123,15 @@ const SCREENS = {
     return `<div class="screen">${header({ back: 'toMenu' })}${guide()}
     <div class="scroll" data-keep>
       <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p>${esc(m.description)}</p><b class="title">${won(m.price)}</b></div></div>
-      <section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>${one ? `<p class="sub" style="margin-bottom:16px">이 메뉴는 ${m.temperature[0]}만 만들 수 있어요. 자동으로 골랐어요.</p>` : ''}
-        <div class="opts" role="radiogroup" aria-label="온도">${[['HOT', 'flame', '따뜻하게'], ['ICE', 'snowflake', '차갑게']].map(([t, ic, l]) => radio(d.temp === t, 'temp', t, `<span class="${t.toLowerCase()} row">${icon(ic)}${t} ${l}</span>`, '', !m.temperature.includes(t), 'temp')).join('')}</div></section>
+      ${m.temperature.length ? `<section class="group"><h2 class="section">온도 <span class="tag">필수</span></h2>${one ? `<p class="sub" style="margin-bottom:16px">이 메뉴는 ${m.temperature[0]}만 만들 수 있어요. 자동으로 골랐어요.</p>` : ''}
+        <div class="opts" role="radiogroup" aria-label="온도">${[['HOT', 'flame', '따뜻하게'], ['ICE', 'snowflake', '차갑게']].map(([t, ic, l]) => radio(d.temp === t, 'temp', t, `<span class="${t.toLowerCase()} row">${icon(ic)}${t} ${l}</span>`, '', !m.temperature.includes(t), 'temp')).join('')}</div></section>` : ''}
       ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2><p class="sub" style="margin-bottom:16px">${g.help || ''}</p>
         <div class="opts" role="radiogroup" aria-label="${g.label}">${g.choices.map((c) => radio(choice(g, d) === c, 'opt', `${g.id}:${c.id}`, c.label, c.price ? `+${won(c.price)}` : '')).join('')}</div></section>`).join('')}
       <section class="group row between"><h2 class="section" style="margin:0">수량</h2><div class="stepper">${iconBtn('minus', '수량 줄이기', 'qty', { val: -1, off: d.qty <= 1, line: true })}<output>${d.qty}</output>${iconBtn('plus', '수량 늘리기', 'qty', { val: 1, off: d.qty >= 20, line: true })}</div></section>
     </div>
-    <div class="cart">${d.temp ? '' : '<p class="sub">온도를 고르면 담을 수 있어요.</p>'}
+    <div class="cart">${!needsTemp(d) ? '' : '<p class="sub">온도를 고르면 담을 수 있어요.</p>'}
       <div class="total"><span>선택한 금액</span><b>${won(unit(d) * d.qty)}</b></div>
-      ${btn(d.edit != null ? '변경 내용 저장' : '장바구니에 담기', 'add', { off: !d.temp })}</div></div>`;
+      ${btn(d.edit != null ? '변경 내용 저장' : '장바구니에 담기', 'add', { off: needsTemp(d) })}</div></div>`;
   },
 
   review: () => `<div class="screen">${header({ back: 'toMenu', voice: false })}${steps(1)}
@@ -197,7 +199,7 @@ const DIALOGS = {
     <button class="btn secondary" disabled>${icon('zoom-in')}화면 확대 (준비 중)</button>
     <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close')}`;
   },
-  info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${esc(m.description)}</p><p>${won(m.price)} · ${m.temperature.join(' · ')}</p><p class="sub">영양·알레르기 정보는 확인되지 않았어요. 직원에게 문의해 주세요.</p><div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
+  info: (id) => { const m = menu(id); return `<h2 tabindex="-1">${esc(m.name)}</h2>${photo(m).replace('class="photo"', 'class="photo" style="width:400px;margin:0 auto"')}<p>${esc(m.description)}</p><p>${[won(m.price), ...m.temperature].join(' · ')}</p><p class="sub">영양·알레르기 정보는 확인되지 않았어요. 직원에게 문의해 주세요.</p><div class="row">${close}${btn('이 메뉴 주문하기', 'open', { val: id, off: m.available === false })}</div>`; },
   clear: () => confirm('담은 메뉴를 모두 삭제할까요?', '삭제하면 되돌릴 수 없어요.', '전체 삭제', 'clear'),
   del: (i) => confirm(`${esc(menu(S.cart[i].menuId).name)}을(를) 삭제할까요?`, '다른 메뉴는 그대로 있어요.', '삭제', 'del', i),
   reset: () => confirm('처음 화면으로 갈까요?', '담은 메뉴가 모두 지워져요.', '주문 종료', 'reset'),
@@ -237,7 +239,7 @@ const openItem = (id, extra = {}) => {
 };
 const addDraft = () => {
   const { edit, ...it } = S.draft;
-  if (!it.temp) return false;
+  if (needsTemp(it)) return false;
   if (edit != null) { S.cart[edit] = it; go('review'); } else { S.cart.push(it); go('menu'); }
   S.coupon = null; // cart changed -> discount must be recalculated
   return true;
@@ -259,9 +261,9 @@ function applyIntent(i) {
     const extra = { qty: i.quantity || 1 };
     if (m.temperature.includes(i.temperature)) extra.temp = i.temperature;
     openItem(i.menuId, extra);
-    S.draft.temp ? ready() : askTemp();
+    needsTemp(S.draft) ? askTemp() : ready();
   } else if (i.intent === 'set_temperature' && d && menu(d.menuId).temperature.includes(i.temperature)) { d.temp = i.temperature; ready(); }
-  else if (i.intent === 'set_quantity' && d) { d.qty = i.quantity; d.temp ? ready() : askTemp(); }
+  else if (i.intent === 'set_quantity' && d) { d.qty = i.quantity; needsTemp(d) ? askTemp() : ready(); }
   else if (i.intent === 'confirm_item' && d) { if (addDraft()) setVoice('active', '장바구니에 담았어요.', '더 주문하거나 “이제 됐어”라고 말해 주세요.'); else askTemp(); }
   else if (i.intent === 'finish_selection') { if (S.cart.length) go('review'); else setVoice('active', '아직 담은 메뉴가 없어요.', '메뉴를 먼저 골라 주세요.'); }
   else if (i.intent === 'unsupported_payment') setVoice('active', '할인·적립·결제는 화면에서 직접 해 주세요.', '메뉴를 다 담았으면 주문 확인을 눌러 주세요.');

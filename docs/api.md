@@ -11,6 +11,7 @@
 | GET | `/api/categories` | 카테고리 |
 
 메뉴 필드: `id, name, category, price, image_url, description, summary, tags, temperature, options, nutrition, allergens, available, source`. 영양·알레르기는 확인된 정보가 없어 `null`이며 화면에 "확인되지 않았어요"로 표시합니다.
+푸드·상품은 `temperature`·`options`가 빈 배열이고, 화면 하위 분류용 `group`이 있습니다. 신메뉴 4종 지정, 하위 분류, 새 항목의 가격은 모두 시연용 가정입니다.
 프런트는 API 실패 시 `/data/menus.json`으로 폴백합니다.
 
 ## 쿠폰
