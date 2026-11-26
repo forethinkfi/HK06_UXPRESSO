@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# This project uses only Node.js built-ins and has no dependencies to install.
+exit 0

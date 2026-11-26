@@ -90,6 +90,8 @@ createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
+    // 첫 주소는 v6 화면. v2-I 프로토타입은 /index.html 에 그대로 있고, 쿼리가 붙은 /?... 는 이전처럼 동작한다.
+    if (url.pathname === '/' && !url.search) { res.writeHead(302, { location: '/v6/index.html' }); return res.end(); }
     const f = normalize(url.pathname === '/' ? '/index.html' : url.pathname).replace(/^(\.\.[/\\])+/, '');
     const base = f.startsWith('/data/') ? ROOT : join(ROOT, 'public');
     const buf = await readFile(join(base, f));
