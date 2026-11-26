@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>UXPRESSO 발표 자료</title>
+<style>
+@page{size:1920px 1080px;margin:0}
+:root{--y:#F8DA29;--k:#231F20;--g1:#F5F5F5;--g2:#E6E6E6;--g7:#575757;--y1:#FDFBC4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;color:var(--k);word-break:keep-all;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+section{width:1920px;height:1080px;position:relative;overflow:hidden;padding:80px 100px 90px;display:flex;flex-direction:column;background:#fff;break-after:page}
+section:last-child{break-after:auto}
+.tag{align-self:flex-start;background:var(--y);border-radius:8px;padding:6px 18px;font-size:24px;font-weight:700}
+h1{font-size:132px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+h2{font-size:58px;line-height:1.25;font-weight:800;margin-top:20px;letter-spacing:-.01em}
+.lead{font-size:28px;line-height:1.5;color:var(--g7);margin-top:12px}
+h3{font-size:30px;line-height:1.35;font-weight:700}
+p,li{font-size:24px;line-height:1.55}
+ul{padding-left:26px}
+.body{flex:1;min-height:0;display:flex;gap:40px;margin-top:40px}
+.card{background:var(--g1);border-radius:12px;padding:32px}
+.col{display:flex;flex-direction:column;gap:20px;flex:1;min-width:0}
+.foot{position:absolute;left:100px;right:100px;bottom:34px;display:flex;justify-content:space-between;font-size:18px;color:var(--g7)}
+.note{font-size:20px;line-height:1.5;color:var(--g7)}
+figure{display:flex;flex-direction:column;gap:12px;align-items:center;min-height:0}
+figcaption{font-size:21px;line-height:1.4;text-align:center;font-weight:600}
+.shot{display:block;border-radius:12px;border:1px solid var(--g2)}
+.row{display:flex;gap:28px;align-items:flex-start;justify-content:center}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;vertical-align:top;padding:18px 22px;font-size:23px;line-height:1.45;border-bottom:1px solid var(--g2)}
+th{font-size:21px;color:var(--g7);font-weight:600;border-bottom:2px solid var(--k)}
+td b{font-weight:700}
+.num{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--k);color:var(--y);font-size:24px;font-weight:800;flex:none}
+.dark{background:var(--k);color:#fff}
+.dark .lead,.dark .note,.dark .foot{color:#D9D9D9}
+.yellow{background:var(--y)}
+.yellow .lead,.yellow .foot{color:var(--k)}
+.arrow{align-self:center;font-size:44px;color:var(--g7)}
+</style>
+</head>
+<body>
+
+<!-- 1 표지 -->
+<section class="yellow" style="flex-direction:row;align-items:center;gap:60px">
+  <div style="flex:1">
+    <span class="tag" style="background:var(--k);color:var(--y)">메가MGC커피 키오스크 UX/UI 개선 · 비공식 프로젝트</span>
+    <h1 style="margin-top:40px">말하면<br>열리는 키오스크</h1>
+    <p style="font-size:34px;margin-top:36px;font-weight:600">UXPRESSO — 누구나 쉽게, 혼자서도 자신 있게</p>
+    <p style="font-size:26px;margin-top:12px">터치와 음성을 하나의 주문 흐름에서</p>
+    <p style="font-size:24px;margin-top:90px">팀 UXPRESSO · 2026.11</p>
+  </div>
+  <img class="shot" src="img/start.png" style="height:920px;border:0" alt="개선안 시작 화면">
+</section>
+
+<!-- 2 문제 인지 ① -->
+<section>
+  <span class="tag">01 문제 인지</span>
+  <h2>주문하려면 키오스크의 구조부터 익혀야 합니다</h2>
+  <p class="lead">매장 촬영 영상을 바탕으로 재구성한 기존(AS-IS) 화면에서 관찰한 내용</p>
+  <div class="body">
+    <figure><img class="shot" src="../../research/as-is-normal-mode/screens/01-main-menu.png" style="height:640px" alt="기존 메뉴 화면"><figcaption>메뉴 선택</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-normal-mode/screens/04-option.png" style="height:640px" alt="기존 옵션 화면"><figcaption>옵션 선택</figcaption></figure>
+    <div class="col">
+      <div class="card"><h3>작고 빽빽한 메뉴</h3><p>4열 격자에 이름·가격이 작게 놓이고, 원하는 메뉴를 찾으려면 카테고리 분류를 먼저 알아야 합니다.</p></div>
+      <div class="card"><h3>계속 보이는 남은 시간</h3><p>하단의 “120” 시간 표시는 전체 주문 제한 시간처럼 읽힐 수 있습니다.</p></div>
+      <div class="card"><h3>같은 위계로 나열된 선택지</h3><p>사이즈·샷·시럽·휘핑이 비슷한 모양으로 이어져 무엇을 꼭 골라야 하는지 구분하기 어렵습니다.</p></div>
+      <p class="note">기능이 많은 것 자체를 문제로 보지 않았습니다. 정보를 이해하고 고르는 방식에 주목했습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>자료: docs/research/as-is-normal-mode (영상 기반 재구성, 색·크기는 근사값)</span><span>2 / 10</span></div>
+</section>
+
+<!-- 3 문제 인지 ② -->
+<section>
+  <span class="tag">01 문제 인지</span>
+  <h2>라떼 한 잔에 옵션 화면 6단계를 지나갑니다</h2>
+  <p class="lead">쉬운모드 단말에서 확인한 (ICE)카페라떼 옵션 선택 흐름</p>
+  <div class="row" style="margin-top:40px;gap:20px">
+    <figure><img class="shot" src="../../research/as-is-flow/screens/13-option-1-latte.png" style="width:268px" alt=""><figcaption>1 텀블러</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-flow/screens/14-option-2-shot.png" style="width:268px" alt=""><figcaption>2 샷</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-flow/screens/15-option-3-health.png" style="width:268px" alt=""><figcaption>3 건강 옵션</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-flow/screens/16-option-4-sweet.png" style="width:268px" alt=""><figcaption>4 당도</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-flow/screens/17-option-5-topping.png" style="width:268px" alt=""><figcaption>5 토핑</figcaption></figure>
+    <figure><img class="shot" src="../../research/as-is-flow/screens/18-option-6-last.png" style="width:268px" alt=""><figcaption>6 선택 완료</figcaption></figure>
+  </div>
+  <div class="row" style="margin-top:56px;gap:28px">
+    <div class="card" style="flex:1"><h3>HOT·ICE가 다른 메뉴</h3><p>같은 음료가 두 번 나열되어 목록이 길어집니다.</p></div>
+    <div class="card" style="flex:1"><h3>결제 수단 2쪽</h3><p>할인·결제 수단이 여러 화면과 접힌 영역에 나뉘어 있습니다.</p></div>
+    <div class="card" style="flex:1"><h3>잦은 팝업과 단계 이동</h3><p>묻고 고르는 화면이 이어져 지금 어디쯤인지 알기 어렵습니다.</p></div>
+  </div>
+  <div class="foot"><span>자료: docs/research/as-is-flow (약 3분 50초 영상 기반 재구성, 상품 이미지는 일러스트)</span><span>3 / 10</span></div>
+</section>
+
+<!-- 4 문제 정의 -->
+<section>
+  <span class="tag">02 문제 정의</span>
+  <h2>원하는 메뉴를 주문하기 전에,<br>사용법과 정보 구조를 먼저 배워야 합니다</h2>
+  <div class="body">
+    <div style="flex:1.45">
+      <table>
+        <tr><th style="width:90px">구분</th><th style="width:270px">문제 가설</th><th>고객이 겪는 상황</th></tr>
+        <tr><td><b>P01</b></td><td><b>메뉴 탐색</b></td><td>분류 기준을 알아야 원하는 메뉴를 찾을 수 있다</td></tr>
+        <tr><td><b>P02</b></td><td><b>선택의 복잡성</b></td><td>상품·옵션·혜택이 같은 위계라 다음 행동이 헷갈린다</td></tr>
+        <tr><td><b>P03</b></td><td><b>조작 부담</b></td><td>터치만으로 여러 화면을 이동하기 어렵다</td></tr>
+        <tr><td><b>P04</b></td><td><b>시간 압박</b></td><td>남은 시간 표시 때문에 충분히 읽고 고민하지 못한다</td></tr>
+        <tr><td><b>P05</b></td><td><b>오류 복구</b></td><td>실수·결제 실패 때 주문을 유지한 채 되돌리기 어렵다</td></tr>
+      </table>
+    </div>
+    <div class="col" style="flex:.75">
+      <div class="card" style="background:var(--k);color:#fff">
+        <p style="color:var(--y);font-weight:700">How Might We</p>
+        <h3 style="margin-top:12px;font-size:34px;line-height:1.45">디지털 환경에 익숙하지 않은 고객도 도움 없이 이해하고, 자신 있게 주문을 마치게 할 수 있을까?</h3>
+      </div>
+      <div class="card"><h3>핵심 사용자</h3><p>디지털 기기가 어려운 고객 (고령층을 주요 고려 대상으로 하되, 나이만으로 판단하지 않음)</p></div>
+      <div class="card"><h3>함께 고려</h3><p>빠르게 주문하려는 고객, 작은 글자·터치가 어려운 고객</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>자료: UXPRESSO PRD v3.0 §2, §4 — 문제는 사용자 테스트 전의 가설입니다</span><span>4 / 10</span></div>
+</section>
+
+<!-- 5 가설 -->
+<section>
+  <span class="tag">03 가설</span>
+  <h2>“말해도 되고, 눌러도 되면” 혼자 주문할 수 있을 것이다</h2>
+  <p class="lead">아직 검증하지 않은 가설입니다. 각 가설은 사용성 테스트에서 확인할 지표와 함께 정했습니다.</p>
+  <div style="margin-top:40px">
+    <table>
+      <tr><th style="width:90px"></th><th>만약 …하면</th><th>…할 것이다</th><th style="width:420px">확인 지표</th></tr>
+      <tr><td><span class="num">H1</span></td><td><b>원하는 것을 말하면 해당 화면이 바로 열리게 하면</b></td><td>분류 체계를 몰라도 메뉴를 찾을 수 있다</td><td>음성 의도 인식 성공률, 올바른 화면 연결 비율</td></tr>
+      <tr><td><span class="num">H2</span></td><td><b>인식 결과를 화면에 보여 주고 직접 확인하게 하면</b></td><td>음성 주문의 실수 걱정이 줄고 스스로 고칠 수 있다</td><td>인식 실패 복구율, 음성↔터치 전환 성공률</td></tr>
+      <tr><td><span class="num">H3</span></td><td><b>온도·옵션·총액을 한 화면에서 고르게 하면</b></td><td>옵션 선택 오류가 줄어든다</td><td>상품·옵션 선택 오류 횟수, 주문 정확도</td></tr>
+      <tr><td><span class="num">H4</span></td><td><b>카운트다운 대신 안내와 시간 연장을 제공하면</b></td><td>시간 압박이 줄고 충분히 읽고 고를 수 있다</td><td>시간 연장 성공률, 의도치 않은 초기화 횟수</td></tr>
+    </table>
+    <div class="card" style="margin-top:36px;background:var(--y1);display:flex;gap:40px;align-items:center">
+      <h3 style="flex:none">북극성 지표</h3>
+      <p><b>독립 주문 완료율</b> = 도움 없이 정확히 주문한 참여자 ÷ 전체 시도 참여자. 음성 기능과 화면 도움말 이용은 “혼자 주문”에 포함합니다. 소요 시간은 보조 지표입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>자료: UXPRESSO PRD v3.0 §2, §23</span><span>5 / 10</span></div>
+</section>
+
+<!-- 6 솔루션 -->
+<section class="dark">
+  <span class="tag" style="color:var(--k)">04 솔루션</span>
+  <h2>One Flow, Multiple Ways<br>음성과 터치가 하나의 주문을 함께 씁니다</h2>
+  <div class="row" style="margin-top:56px;align-items:stretch;gap:20px">
+    <div class="card" style="flex:1;background:#fff;color:var(--k)"><span class="num">1</span><h3 style="margin-top:20px">Speak · 말하기</h3><p>“아이스 아메리카노 두 잔 주세요”처럼 원하는 것을 말합니다.</p></div>
+    <span class="arrow" style="color:var(--y)">→</span>
+    <div class="card" style="flex:1;background:#fff;color:var(--k)"><span class="num">2</span><h3 style="margin-top:20px">See · 확인하기</h3><p>들은 말, 해석한 메뉴, 다음 행동을 글자로 보여 줍니다.</p></div>
+    <span class="arrow" style="color:var(--y)">→</span>
+    <div class="card" style="flex:1;background:#fff;color:var(--k)"><span class="num">3</span><h3 style="margin-top:20px">Touch · 결정하기</h3><p>담기·주문 확인·할인·결제는 고객이 직접 누릅니다.</p></div>
+  </div>
+  <div class="row" style="margin-top:44px;align-items:stretch;gap:28px">
+    <div class="card" style="flex:1;background:#38332F"><h3 style="color:var(--y)">AI는 대신 결정하지 않습니다</h3><p>챗봇 화면을 만들지 않고, 미리 정한 의도만 기존 화면으로 연결합니다.</p></div>
+    <div class="card" style="flex:1;background:#38332F"><h3 style="color:var(--y)">음성은 선택입니다</h3><p>터치만으로 처음부터 끝까지 주문할 수 있고, 언제든 바꿔 쓸 수 있습니다.</p></div>
+    <div class="card" style="flex:1;background:#38332F"><h3 style="color:var(--y)">브랜드는 그대로</h3><p>노란색, 로고, 8개 카테고리, 상품 이미지, 제휴·결제 브랜드를 유지합니다.</p></div>
+    <div class="card" style="flex:1;background:#38332F"><h3 style="color:var(--y)">재촉하지 않습니다</h3><p>카운트다운·대기 인원 표시 대신 안내와 시간 연장을 제공합니다.</p></div>
+  </div>
+  <div class="foot"><span>자료: UXPRESSO PRD v3.0 §1, §3, §6</span><span>6 / 10</span></div>
+</section>
+
+<!-- 7 UI 제안 ① 음성 -->
+<section>
+  <span class="tag">05 UI 제안 ① 음성 주문</span>
+  <h2>말한 내용을 화면에서 보고, 눌러서 확정합니다</h2>
+  <div class="body" style="margin-top:30px;gap:24px">
+    <figure><img class="shot" src="img/voice-listening.png" style="height:640px" alt=""><figcaption>① 듣고 있어요</figcaption></figure>
+    <figure><img class="shot" src="img/voice-confirm.png" style="height:640px" alt=""><figcaption>② 이 메뉴가 맞나요?</figcaption></figure>
+    <figure><img class="shot" src="img/voice-added.png" style="height:640px" alt=""><figcaption>③ 담았어요</figcaption></figure>
+    <div class="col">
+      <table>
+        <tr><th>말하면</th><th>화면 반응</th></tr>
+        <tr><td>“메뉴 추천해 줘”</td><td>추천메뉴 열기</td></tr>
+        <tr><td>“디카페인 보여줘”</td><td>디카페인 열기</td></tr>
+        <tr><td>“아이스 아메리카노 두 잔”</td><td>메뉴·온도·수량 확인 후 담기</td></tr>
+        <tr><td>“카페라떼 주세요”</td><td>따뜻/차갑게 되묻기</td></tr>
+        <tr><td>“결제해 줘”</td><td>직접 선택하도록 안내</td></tr>
+        <tr><td>인식 실패</td><td>다시 말하기 / 화면에서 선택</td></tr>
+      </table>
+      <p class="note">주문 확인 단계부터 마이크를 끕니다.<br><b style="color:var(--k)">현재 프로토타입의 음성은 모의 입력(버튼)이며 실제 음성 인식은 연결하지 않았습니다.</b></p>
+    </div>
+  </div>
+  <div class="foot"><span>화면: main 브랜치 /v6 프로토타입 · 가격은 시연용</span><span>7 / 10</span></div>
+</section>
+
+<!-- 8 UI 제안 ② 탐색과 옵션 -->
+<section>
+  <span class="tag">05 UI 제안 ② 탐색과 선택</span>
+  <h2>한눈에 찾고, 한 화면에서 고릅니다</h2>
+  <div class="body" style="margin-top:30px;gap:28px">
+    <figure><img class="shot" src="img/start.png" style="height:640px" alt=""><figcaption>시작: 음성 버튼을 크게</figcaption></figure>
+    <figure><img class="shot" src="img/menu.png" style="height:640px" alt=""><figcaption>메뉴: 8개 분류 + 큰 카드</figcaption></figure>
+    <figure><img class="shot" src="img/option.png" style="height:640px" alt=""><figcaption>상세: 온도·옵션·총액 한 화면</figcaption></figure>
+    <div class="col">
+      <div class="card"><h3>시작 화면</h3><p>카테고리를 원형으로 보여 주고, “음성으로 주문하기”를 가장 큰 행동으로 둡니다.</p></div>
+      <div class="card"><h3>메뉴 목록</h3><p>3열 카드, HOT·ICE를 한 상품으로 합침, 하위 분류 제공</p></div>
+      <div class="card"><h3>상품 상세</h3><p>온도는 필수로 직접 선택. 샷은 컵이 차오르는 모션으로 확인. 담기 버튼에 총액 표시</p></div>
+      <div class="card"><h3>정보 확인</h3><p>“자세히 보기”에서 용량·열량·알레르기 확인</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>화면: main 브랜치 /v6 프로토타입 · 가격은 시연용</span><span>8 / 10</span></div>
+</section>
+
+<!-- 9 UI 제안 ③ 장바구니·결제·복구 -->
+<section>
+  <span class="tag">05 UI 제안 ③ 확인 · 결제 · 복구</span>
+  <h2>지금 상태와 다음 행동을 항상 알려 줍니다</h2>
+  <div class="body" style="margin-top:30px;gap:24px">
+    <figure><img class="shot" src="img/cart.png" style="height:560px" alt=""><figcaption>장바구니·시간 연장</figcaption></figure>
+    <figure><img class="shot" src="img/review.png" style="height:560px" alt=""><figcaption>주문서·단계 표시</figcaption></figure>
+    <figure><img class="shot" src="img/pay.png" style="height:560px" alt=""><figcaption>할인·결제 한 화면</figcaption></figure>
+    <figure><img class="shot" src="img/done.png" style="height:560px" alt=""><figcaption>주문번호·영수증</figcaption></figure>
+    <div class="col">
+      <div class="card" style="padding:24px"><h3>시간</h3><p>2분 미사용 시에만 안내, 60초 유예, 직접 연장</p></div>
+      <div class="card" style="padding:24px"><h3>삭제</h3><p>전체 삭제는 확인 후 실행</p></div>
+      <div class="card" style="padding:24px"><h3>결제</h3><p>결제 수단을 누르면 바로 안내. 실패해도 장바구니 유지, 같은 주문 중복 결제 방지</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>화면: main 브랜치 /v6 프로토타입 · 결제는 모의</span><span>9 / 10</span></div>
+</section>
+
+<!-- 10 기대효과 -->
+<section>
+  <span class="tag">06 기대효과</span>
+  <h2>혼자서도 자신 있게 주문하는 경험을 기대합니다</h2>
+  <div class="body" style="margin-top:32px">
+    <div style="flex:1.5">
+      <table>
+        <tr><th>비교 항목</th><th>기존 화면에서 관찰</th><th>개선안</th><th>기대 효과 (가설)</th></tr>
+        <tr><td><b>주문 입력</b></td><td>터치 중심</td><td>터치 + 음성(모의)</td><td>조작·탐색 부담 감소</td></tr>
+        <tr><td><b>옵션 선택</b></td><td>6단계 (쉬운모드)</td><td>상세 한 화면</td><td>선택 오류 감소</td></tr>
+        <tr><td><b>HOT·ICE</b></td><td>별도 메뉴</td><td>한 상품에서 온도 선택</td><td>탐색 시간 감소</td></tr>
+        <tr><td><b>결제 수단</b></td><td>2쪽으로 나뉨</td><td>한 화면 5열</td><td>수단 발견 향상</td></tr>
+        <tr><td><b>시간 표시</b></td><td>남은 시간 상시 표시</td><td>안내 + 시간 연장</td><td>심리적 압박 완화</td></tr>
+      </table>
+      <p class="note" style="margin-top:18px">화면 구성의 비교이며, 효과는 아직 측정하지 않았습니다.</p>
+    </div>
+    <div class="col" style="flex:.75">
+      <div class="card"><h3>고객</h3><p>도움 요청 감소, 오류 복구 향상, 주문 자신감 향상</p></div>
+      <div class="card"><h3>매장·브랜드</h3><p>직원의 주문 보조 부담 완화 가능성. 신메뉴·콜라보·제휴 노출 유지</p></div>
+      <div class="card" style="background:var(--y)"><h3>다음 단계</h3><ul><li>숙련 3명·비숙련 3명 비교 테스트</li><li>실제 음성 인식 연결과 매장 소음 시험</li><li>1080×1920 실기기 검증</li></ul></div>
+    </div>
+  </div>
+  <div class="foot"><span>자료: UXPRESSO PRD v3.0 §23, §25 · 메가MGC커피의 공식 프로젝트가 아닙니다</span><span>10 / 10</span></div>
+</section>
+</body>
+</html>
