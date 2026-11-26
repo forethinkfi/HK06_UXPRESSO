@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="126 153 88 112" width="88" height="112" font-family="NanumSquare, sans-serif">
+<ellipse cx="170" cy="252" rx="39" ry="7" fill="#ac873a" opacity=".2"/>
+<path d="M135 161 L145 250 Q170 259 195 250 L205 161Z" fill="#fff5dd" stroke="#f5eed9" stroke-width="2"/>
+<path d="M138 173 L148 246 Q170 253 192 246 L202 173 Z" fill="#8b5536"/>
+<path d="M138 173 L141 194 Q172 202 199 194 L202 173Z" fill="#b57b50"/>
+<rect x="148" y="180" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(17,154,187)"/>
+<rect x="170" y="176" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(-12,176,183)"/>
+<rect x="185" y="190" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(17,191,197)"/>
+<rect x="158" y="197" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(-18,164,204)"/>
+<rect x="130" y="157" width="80" height="10" rx="5" fill="#e9dbb9"/>
+<rect x="153" y="215" width="34" height="20" rx="3" fill="#ffdb2c"/>
+<text x="170" y="224" font-size="6" font-weight="bold" text-anchor="middle" fill="#171717">MEGA</text>
+<text x="170" y="230" font-size="5" text-anchor="middle" fill="#171717">COFFEE</text>
+</svg>

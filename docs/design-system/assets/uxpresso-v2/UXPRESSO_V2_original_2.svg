@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 440" width="340" height="440" font-family="NanumSquare, sans-serif">
+<rect x="31" y="3" width="278" height="434" rx="22" fill="#222222"/>
+<rect x="40" y="13" width="260" height="414" rx="15" fill="#ffdf37"/>
+<text x="54" y="34" font-size="11" font-weight="bold" fill="#202020">UXPRESSO.</text>
+<text x="286" y="34" text-anchor="end" font-size="8" fill="#202020">MEGA COFFEE</text>
+<text x="170" y="62" text-anchor="middle" font-size="19" font-weight="bold" fill="#222">오늘의 한 잔.</text>
+<text x="170" y="78" text-anchor="middle" font-size="9" fill="#554b21">당신의 취향대로 선택하세요</text>
+<circle cx="170" cy="205" r="102" fill="#ffe977"/>
+<circle cx="170" cy="205" r="79" stroke="#d8b82d" stroke-dasharray="2 5" fill="none"/>
+<circle cx="170" cy="112" r="23" fill="#fff5d6"/><path d="M162 100 h16 l-2.6 18 h-10.8 Z" fill="#865636"/><path d="M161 99 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="170" y="128" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">커피</text>
+<circle cx="252" cy="160" r="27" fill="#fff5e2"/><path d="M244 148 h16 l-2.6 18 h-10.8 Z" fill="#c5a176"/><path d="M243 147 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="252" y="176" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">라떼</text>
+<circle cx="245" cy="250" r="28" fill="#ffefac"/><path d="M237 238 h16 l-2.6 18 h-10.8 Z" fill="#f7b738"/><path d="M236 237 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="245" y="266" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">에이드</text>
+<circle cx="170" cy="300" r="23" fill="#e7efcc"/><path d="M162 288 h16 l-2.6 18 h-10.8 Z" fill="#869a52"/><path d="M161 287 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="170" y="316" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">티</text>
+<circle cx="90" cy="250" r="27" fill="#f7dce1"/><path d="M82 238 h16 l-2.6 18 h-10.8 Z" fill="#db8399"/><path d="M81 237 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="90" y="266" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">스무디</text>
+<circle cx="89" cy="160" r="23" fill="#e8d5bf"/><path d="M81 148 h16 l-2.6 18 h-10.8 Z" fill="#92705e"/><path d="M80 147 h18" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="89" y="176" font-size="8" font-weight="bold" text-anchor="middle" fill="#242424">디카페인</text>
+<ellipse cx="170" cy="252" rx="39" ry="7" fill="#ac873a" opacity=".2"/>
+<path d="M135 161 L145 250 Q170 259 195 250 L205 161Z" fill="#fff5dd" stroke="#f5eed9" stroke-width="2"/>
+<path d="M138 173 L148 246 Q170 253 192 246 L202 173 Z" fill="#8b5536"/>
+<path d="M138 173 L141 194 Q172 202 199 194 L202 173Z" fill="#b57b50"/>
+<rect x="148" y="180" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(17,154,187)"/>
+<rect x="170" y="176" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(-12,176,183)"/>
+<rect x="185" y="190" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(17,191,197)"/>
+<rect x="158" y="197" width="13" height="15" rx="3" fill="#ffefd4" opacity=".7" transform="rotate(-18,164,204)"/>
+<rect x="130" y="157" width="80" height="10" rx="5" fill="#e9dbb9"/>
+<rect x="153" y="215" width="34" height="20" rx="3" fill="#ffdb2c"/>
+<text x="170" y="224" font-size="6" font-weight="bold" text-anchor="middle" fill="#171717">MEGA</text>
+<text x="170" y="230" font-size="5" text-anchor="middle" fill="#171717">COFFEE</text>
+<rect x="55" y="334" width="230" height="38" rx="19" fill="#202020"/>
+<circle cx="76" cy="353" r="11" fill="#ffdf37"/>
+<rect x="73" y="345" width="6" height="10" rx="3" fill="#222"/>
+<path d="M70 352 Q70 360 76 360 Q82 360 82 352 M76 360 V363" stroke="#222" stroke-width="1.2" fill="none"/>
+<text x="176" y="357" text-anchor="middle" font-size="11" fill="#fff">말로 주문하기</text>
+<rect x="55" y="381" width="111" height="30" rx="8" fill="#fff1a5"/>
+<rect x="174" y="381" width="111" height="30" rx="8" fill="#fff1a5"/>
+<text x="110" y="399" text-anchor="middle" font-size="10" fill="#333">전체 메뉴</text>
+<text x="230" y="399" text-anchor="middle" font-size="10" fill="#333">쿠폰 · 빠른 주문</text>
+</svg>

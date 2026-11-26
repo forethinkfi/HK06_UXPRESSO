@@ -1,0 +1,113 @@
+# MEGA MGC COFFEE Kiosk Design System — UXPRESSO v7.1
+
+> **보관 문서(현행 아님).** `mega-ver.2` 브랜치(`cf9209c`, designoh)에서 그대로 복사했습니다. 이 문서는 mega-ver.2 재구성안 기준이며, 문서 안 링크는 그 커밋의 파일을 가리킵니다. 현행 디자인 시스템: [DS v6.0](../../../design-system/README.md) · 아카이브 안내: [../README.md](../README.md)
+
+> `mega-ver.2` 화면에 실제로 적용된 **현재 기준**. [v6.0](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/docs/design-system/uxpresso-design-system-v6.md)(팀 원본)에 이후 팀 요청과 **Kiosk UI Refinement v2.1**을 합쳤다.
+> 비공식 제안이며 실제 키오스크 검증 전이다. 값은 [`public/tokens.css`](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/tokens.css)와 [`public/style.css`](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/style.css)가 기준이다.
+
+- 기준일: 2026-11-26 · 캔버스 1080 × 1920 · 좌우 여백 40
+
+## 1. 원칙
+Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Visual Clarity First · Consistent Selection States · One Flow, Multiple Ways · Speak to Select, Touch to Confirm.
+확인되지 않은 정보(인기·영양·알레르기)는 지어내지 않는다.
+
+## 2. 컬러
+| 토큰 | 값 | 용도 |
+|---|---|---|
+| `--brand-primary` | #FFDC00 | 주요 CTA, 선택 상태 |
+| `--brand-black` | #171717 | 주요 글자, 음성 버튼 |
+| `--brand-white` | #FFFFFF | 기본 배경, 비선택 버튼 |
+| `--neutral-surface` | #F5F5F5 | 상품 타일, 안내 면, 눌림 |
+| `--neutral-border` | #AAAAAA | 기본 테두리 |
+| `--neutral-divider` | #E5E5E5 | 구분선 |
+| `--text-secondary` | #595959 | 보조 글자 |
+| `--disabled-bg` / `-text` | #E5E5E5 / #757575 | 비활성 |
+| `--status-error` / `-success` / `-warning` | #C62828 / #237A45 / #946200 | 상태 |
+
+- HOT·ICE에 색을 쓰지 않는다. 연노랑 배경을 쓰지 않는다. 노랑 위에는 검정 글자.
+- 주의: #AAAAAA는 흰 배경 대비 2.32:1, 노랑 선택면은 흰 배경 대비 1.36:1이다(아래 10장).
+
+## 3. 타이포그래피 (Pretendard, Noto Sans KR · tabular nums)
+| 토큰 | 크기/행간 | 굵기 |
+|---|---|---:|
+| display | 56/72 | 700 |
+| total | 48/60 | 700 |
+| heading1 / heading2 | 44/56 · 36/48 | 700 |
+| action-primary · temp-en | 36/48 · 36/44 | 700 |
+| order-title(상품명·가격) | 34/44 | 700 |
+| price · section | 32/42 · 32/44 | 700 |
+| product-name · navigation · action-secondary | 30/40 | 600 |
+| temp-ko · body-large | 28/36 · 28/40 | 500 |
+| strong(헤더·단계·옵션) | 28/40 | 600 |
+| body / supporting / caption | 26/36 · 24/34 · 22/30 | 400 |
+
+22px 미만을 쓰지 않는다. 긴 이름은 말줄임하지 않고 줄을 늘린다.
+
+## 4. 간격·모양
+- 간격 4·8·12·16·24·32·40·48·64·80. 이미지↔글자 16, 이름↔가격 8, 아이콘↔글자 12, 버튼 16, 상품 행 64.
+- Radius 8(기본), 12(대화상자·안내), 4(배지·라벨). 테두리 1px, 그림자는 대화상자만.
+- 터치: 최소 64, 권장 80 이상, 주요 CTA 112.
+
+## 5. 상태
+| 상태 | 배경 | 테두리 | 글자 |
+|---|---|---|---|
+| Default | 흰색 | #AAAAAA | 600 |
+| Selected (카테고리·하위 분류·언어) | #FFDC00 | #FFDC00 | #171717 · 700 |
+| Selected (상품 화면의 온도·옵션) | 흰색 | **2px #171717** | #171717 · 700 |
+| Pressed | #F5F5F5(터치 순간) | — | — |
+| Disabled | #E5E5E5 | #E5E5E5 | #757575 |
+| Focus Visible | — | 2px #171717, offset 3 | 키보드·보조기기만 |
+
+- 노랑 채움은 카테고리·하위 분류·언어에, 2px 검정 아웃라인은 상품 화면의 온도·옵션에 쓴다. 라디오·체크 아이콘과 굵은 테두리는 없고, `role="radio"`/`tab`과 `aria-checked`/`aria-selected`는 유지한다.
+- 상품 카드·결제 수단·제휴 수단·상세 진입은 Action이며 선택 상태가 남지 않는다.
+- 시작 화면의 주문 방식 두 버튼은 누르면 바로 이동하므로 노란 주요 행동으로 둔다.
+
+## 6. 컴포넌트
+- **Button / Primary** 112, 36/700, 노랑. **Secondary** 88, 흰색+#AAAAAA, 30/600. **Destructive** Secondary + 빨간 글자. **Voice** 88, 검정, 30/700. **Icon** 88×88.
+- **Global Header** 112, 좌우 40, 간격 24: 처음으로/이전 · 로고 자리 · 주문 유형 · 도움말(아이콘+글자 26/600) · 음성. 주문 확인부터 음성 버튼 없음.
+- **Navigation / Category** 한 줄 가로 스와이프, 224×88, 간격 12, 30/600. 다섯 번째가 잘려 더 있음을 알리고, 선택한 탭은 화면 안에 맞춘다. (v2.1의 4×2는 팀 요청으로 적용하지 않음)
+- **Navigation / Subcategory** 높이 80, 28/600 (음료·푸드·상품).
+- **Product / Card** 3열 세로 롱 스크롤, 열 24 · **행 64**(상품 묶음이 구분되도록 팀 요청으로 32에서 넓힘). 카드 전체가 버튼(터치 영역). 구조: ProductImage → ProductInformation(ProductNameWrapper → ProductName, ProductPrice).
+  - 이미지 5:4, #F5F5F5, Radius 8, contain. 배지 유무와 관계없이 모든 사진을 같은 영역(위 44, 나머지 8)에 그린다.
+  - 이미지 → 16 → 이름(30/40/600, 왼쪽·**위 정렬**, 최소 두 줄 80) → 8 → 가격(32/42/700, 왼쪽, tabular).
+  - subgrid로 같은 줄의 이름 시작점과 가격 위치를 맞춘다. 세 줄 이상 이름이 있으면 그 줄 전체의 이름 영역이 늘어난다. 말줄임·글자 축소 없음. subgrid 미지원 시 스크립트로 줄마다 높이를 맞춘다.
+  - 분류를 바꾸면 맨 위, 상품에서 돌아오면 보던 위치.
+- **Badge**(좌측 상단) NEW 검정+노랑 글자, BEST 노랑+검정 글자, 품절 검정+흰 글자.
+- **목록 위·아래 버튼** 상품 영역 아래 별도 줄: `위로 보기` · `아래로 보기`(88). 화면의 80% 이동, 끝에서 비활성, 스크롤할 것이 없으면 숨김. 상품 위에 겹치지 않는다. (v2.1의 페이지 이동은 팀 요청으로 적용하지 않음)
+- **Cart / StickySummary** `장바구니 N개`(32/700) · `○○ 외 N종`(28/500) · 전체 삭제(24, 확인 대화상자) · `주문금액`(48/700) · 주문 확인(112).
+- **Session / Control** 장바구니 아래 별도 #F5F5F5 줄: 안내 24, 시간 연장 26/600 · 80.
+- **Option / Temperature** 2열 112, 간격 16: `HOT`(36/700) 아래 `따뜻하게`(28/500), ICE도 동일. 아이콘·색 없음. 제목 "어떤 온도로 드시겠어요?" + 필수. 미선택이면 안내 문구 + CTA 비활성.
+- **Product / Detail 펼치기** 가격과 같은 줄 오른쪽 끝. 테두리 없는 글자 버튼 `자세히 보기 ⌄` / `접기 ⌃`(28/600 #595959, 터치 80, `aria-expanded`). 참고: 유아이볼 더벤티.
+- **Product / TemperatureLabel** `ICE · 차갑게` 28/40/500 #595959. 단일 온도 상품은 선택 영역 없이 상품 정보에 이 라벨만 둔다.
+- **Option / SingleSelect** 88 이상, 간격 16, 이름과 가격 28/600. 제목 32/700, 설명 26. 기본값은 "추가 안 함".
+- **Cart / ReviewItem** 이미지 144×160, 이름·가격 34/700, 온도 라벨, 추가 옵션 26, 수량(88 버튼, 36/700), 옵션 변경·삭제 88.
+- **Cart / BottomActions** 메뉴 더 담기 : 할인·결제하기 = 1 : 2, 112.
+- **Navigation / StepIndicator** 높이 120, 원 48, 28.
+- **결제** 금액 요약(`주문금액`, 할인 후 `최종 결제금액`) → 할인·적립 → 카드 → 휴대폰 → 상품권. 타일 4열, 이름 28/600, 로고 자리(공식 파일만, [방법](https://github.com/forethinkfi/HK06_UXPRESSO/blob/cf9209c074c8b23e5ce4f4707d53f2bef3c89a13/public/logos/README.md)).
+- **Voice** 안내 영역에 상태, 말한 내용, 확인 줄(상품·온도·수량·옵션·금액), 다음 행동, 음성 안내 ON/OFF, 종료. 터치와 같은 상태·같은 컴포넌트를 쓰고, 확인 없이 담지 않는다.
+- **대화상자** 겹치지 않는다. 닫기는 Secondary.
+
+## 7. 콘텐츠
+쉬운 해요체, 행동과 결과가 보이는 문구, 재촉·대기 인원 표시 금지, "비공식" 고지 유지.
+
+## 8. 접근성
+접근성 메뉴·고대비·화면 확대는 팀 요청으로 제공하지 않는다. 기본 화면의 글자 크기, 터치 크기, 대비, 키보드 포커스, 화면 낭독용 시맨틱은 유지한다.
+
+## 9. v6.0에서 달라진 점
+| 항목 | v6.0 | 현재 |
+|---|---|---|
+| 노랑 / 검정 | #F8DA29 / #231F20 | #FFDC00 / #171717 |
+| 선택 | 연노랑 + 2px, 라디오·체크 | 탭은 노랑 채움, 상품 옵션은 흰색 + 2px 검정. 아이콘 없음 |
+| 포커스 링 | 3px | 2px |
+| 글자 | 20~56 | 22~56, 주요 정보 28 이상 |
+| 카테고리 | 4×2 | 한 줄 스와이프 |
+| 필터 | HOT·ICE | 없음 |
+| 상품 목록 | 페이지 이동 | 세로 롱 스크롤 + 위로·아래로 보기 |
+| 상품 카드 | 1:1, 투명, 상세 버튼 | 5:4 회색 타일, 버튼 없음 |
+| 배지 | 모두 노랑 | NEW 검정 / BEST 노랑 |
+| 온도 | 아이콘 + 빨강·파랑 | 두 줄 글자, 색 없음, 단일은 라벨만 |
+| 고대비 | 제공 | 제외 |
+
+## 10. 남은 확인
+- [ ] #AAAAAA 테두리(2.32:1)와 노랑 선택면(1.36:1)은 3:1 목표에 못 미친다. 선택은 굵기와 시맨틱으로도 알리지만, 실제 조명에서 확인이 필요하다.
+- [ ] 실제 키오스크 크기·시청 거리·터치 도달 범위

@@ -46,7 +46,7 @@
 
 ## 관찰에서 나온 개선 후보 (정리 필요)
 
-팀 논의 후 이 표를 채워 주세요. TO-BE 반영 여부는 [as-is-analysis.md](../../as-is-analysis.md)와 함께 봅니다.
+팀 논의 후 이 표를 채워 주세요. TO-BE 반영 여부는 [as-is-analysis.md](../as-is-analysis.md)와 함께 봅니다.
 
 | 화면 | 관찰 | 개선 방향 | TO-BE 반영 |
 |---|---|---|---|
