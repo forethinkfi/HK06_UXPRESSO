@@ -50,23 +50,13 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .subtab{height:80px;padding:0 32px;font:var(--type-utility)}
 
 /* selection states [r1 §3-8]: one rule set for tabs, filters, options, toggles. Borders are inset 1px, so nothing moves. */
-.cat,.subtab,.opt,[aria-pressed]{position:relative;border-radius:var(--radius-sm);background:var(--selection-bg);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-color-default)}
-.cat[aria-selected=true],.subtab[aria-selected=true],.opt[aria-checked=true],.btn[aria-pressed=true]{box-shadow:inset 0 0 0 1px var(--selection-border);font-weight:600}
-/* an unselected toggle looks like any unselected option, not like a strong-bordered button */
-.btn[aria-pressed=false]{box-shadow:inset 0 0 0 1px var(--border-color-default)}
+.cat,.subtab,.opt{position:relative;border-radius:var(--radius-sm);background:var(--selection-bg);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-color-default)}
+.cat[aria-selected=true],.subtab[aria-selected=true],.opt[aria-checked=true]{box-shadow:inset 0 0 0 1px var(--selection-border);font-weight:600}
 /* selected tab / filter: filled with the primary color */
 :is(.cat,.subtab)[aria-selected=true]{background:var(--tab-selected-bg);color:var(--tab-selected-text);box-shadow:none;font-weight:700}
-/* check indicator for toggles (box + tick), readable without color */
-[aria-pressed=true]::before{content:"";position:absolute;left:16px;top:50%;width:28px;height:28px;margin-top:-14px;border-radius:var(--radius-xs);background:var(--indicator-on-bg)}
-[aria-pressed=true]::after{content:"";position:absolute;left:25px;top:50%;width:10px;height:17px;margin-top:-11px;border:solid var(--indicator-on-mark);border-width:0 3px 3px 0;transform:rotate(45deg)}
 
 /* 9.7 - 9.9 grid, card, badge, pagination */
-/* swipe sideways: 3 columns plus a cut-off 4th that says there is more */
-.grid{display:grid;grid-template-columns:repeat(var(--cols),290px);column-gap:24px;row-gap:48px;padding:24px 40px 16px;align-items:start;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding-left:40px;overscroll-behavior-x:contain}
-.grid.fit{justify-content:space-between}
-.grid.dragging{scroll-snap-type:none}
-.grid img{-webkit-user-drag:none}
-.card{scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:24px;row-gap:48px;padding:24px 40px 48px;align-items:start}
 .card{display:flex;flex-direction:column;min-width:0}
 /* thumbnail tile, then name and price close together (ref: 더벤티 product list on uibowl) */
 .card-main{display:flex;flex-direction:column;align-items:stretch;text-align:left;border-radius:var(--radius-md)}
@@ -82,7 +72,6 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .badge{display:inline-block;padding:8px 12px;border-radius:var(--radius-xs);background:var(--mc-yellow-40);color:var(--mc-black);font:var(--type-badge)}
 .badge.soldout{background:var(--mc-black);color:var(--mc-white)}
 .photo .badge{position:absolute;left:0;top:0;z-index:1}
-.pager{display:flex;justify-content:center;align-items:center;gap:24px;padding:0 40px;font:var(--type-utility)}
 .empty{padding:96px 40px;text-align:center;font:var(--type-subsection)}
 
 /* 9.10 / 9.11 option selector */
@@ -90,7 +79,7 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .opt{min-height:96px;padding:24px;display:flex;align-items:center;gap:12px;text-align:left;font:var(--type-option)}
 .opt.temp{min-height:112px}
-:is(.cat,.subtab,.opt,[aria-pressed]):active{background:var(--surface-pressed);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-color-strong)}
+:is(.cat,.subtab,.opt):active{background:var(--surface-pressed);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-color-strong)}
 :is(.cat,.subtab,.opt):disabled{background:var(--disabled-bg);color:var(--disabled-text);box-shadow:inset 0 0 0 1px var(--disabled-border)}
 .opt .extra{margin-left:auto}
 .radio{width:32px;height:32px;border-radius:var(--radius-full);border:1px solid var(--indicator-border);background:var(--indicator-bg);flex:none}
@@ -171,7 +160,7 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .mode{min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border-radius:var(--radius-sm);background:var(--action-primary-bg);color:var(--action-primary-text);font:var(--type-page-title)}
 .mode:active{background:var(--action-primary-pressed)}
 .mode svg.lucide{width:80px;height:80px}
-.utils{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.utils{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .notice{font:var(--type-caption);color:var(--text-secondary);text-align:center}
 .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:32px;padding:40px}
 .center > svg.lucide{width:96px;height:96px}

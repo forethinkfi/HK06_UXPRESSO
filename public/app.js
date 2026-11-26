@@ -67,7 +67,7 @@ const header = ({ back, voice = true } = {}) => `<header class="header">
   ${back ? btn('이전', back, { v: 'tertiary', ic: 'chevron-left' }) : btn('처음으로', 'askReset', { v: 'tertiary', ic: 'house' })}
   <span class="logo">공식 로고</span>
   <span class="mode-label">${S.mode ? MODE[S.mode].name : ''}</span>
-  ${iconBtn('accessibility', '접근성 설정', 'dlg', { val: 'access' })}${iconBtn('circle-help', '도움말', 'dlg', { val: 'help' })}
+  ${iconBtn('circle-help', '도움말', 'dlg', { val: 'help' })}
   ${voice && !S.voice.on ? btn('음성으로 주문하기', 'voiceOn', { v: 'voice', ic: 'mic' }) : ''}</header>`;
 const steps = (cur) => `<ol class="steps">${['메뉴 선택', '주문 확인', '할인·결제', '주문 완료'].map((t, i) => `<li class="${i < cur ? 'done' : ''}" ${i === cur ? 'aria-current="step"' : ''}><i>${i < cur ? icon('check') : i + 1}</i>${t}</li>`).join('')}</ol>`;
 
@@ -94,7 +94,7 @@ const SCREENS = {
       <h1 class="title" tabindex="-1">주문 방법을 선택해 주세요</h1>
       <div class="modes">${Object.entries(MODE).map(([k, m]) => `<button class="mode" data-act="start" data-v="${k}">${icon(m.icon)}${m.name}</button>`).join('')}</div>
       ${btn('음성으로 주문하기', 'voiceOn', { v: 'voice', ic: 'mic', cls: 'lg' })}
-      <div class="utils">${btn('언어', 'dlg', { v: 'secondary', ic: 'globe', val: 'access' })}${btn('접근성', 'dlg', { v: 'secondary', ic: 'accessibility', val: 'access' })}${btn('도움말', 'dlg', { v: 'secondary', ic: 'circle-help', val: 'help' })}</div>
+      <div class="utils">${btn('언어', 'dlg', { v: 'secondary', ic: 'globe', val: 'lang' })}${btn('도움말', 'dlg', { v: 'secondary', ic: 'circle-help', val: 'help' })}</div>
       <p class="notice">메가MGC커피의 공식 서비스가 아닌 UX/UI 개선 시안이에요. 가격과 옵션은 시연용이에요.</p>
     </div></div>`,
 
@@ -103,19 +103,16 @@ const SCREENS = {
     const subs = cat.subs || []; // temperature is chosen on the product screen, not filtered here
     const sf = subs.find((s) => s[0] === S.sub)?.[2] || (() => true);
     const list = DB.menus.filter((m) => cat.fn(m) && sf(m));
-    const cols = Math.max(3, Math.ceil(list.length / 2)); // two rows, the rest is reached by swiping
-    const pages = Math.ceil(cols / 3);
     const last = S.cart[S.cart.length - 1];
     return `<div class="screen">${header()}${guide()}
     <nav class="cats" role="tablist" aria-label="메뉴 분류">${CATS.map((c) => `<button class="cat" role="tab" aria-selected="${c.id === S.cat}" data-act="cat" data-v="${c.id}">${c.name}</button>`).join('')}</nav>
     ${subs.length ? `<div class="subs" role="tablist">${[['all', '전체'], ...subs].map(([id, l]) => `<button class="subtab" role="tab" aria-selected="${S.sub === id}" data-act="sub" data-v="${id}">${l}</button>`).join('')}</div>` : ''}
-    <div class="scroll" data-keep>
-      ${list.length ? `<div class="grid ${pages > 1 ? '' : 'fit'}" style="--cols:${cols}" data-swipe="${S.cat}/${S.sub}">${list.map((m) => {
+    <div class="scroll" data-keep="${S.cat}/${S.sub}">
+      ${list.length ? `<div class="grid">${list.map((m) => {
         const out = m.available === false;
         const badge = out ? '<span class="badge soldout">품절</span>' : '';
         return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button></article>`;
-      }).join('')}</div>
-      ${pages > 1 ? `<div class="pager">${iconBtn('chevron-left', '이전 상품', 'page', { val: -1, off: true, line: true })}<span>옆으로 밀어 더 보기 · <b id="page">1</b> / ${pages}</span>${iconBtn('chevron-right', '다음 상품', 'page', { val: 1, line: true })}</div>` : ''}`
+      }).join('')}</div>`
       : `<div class="empty">${cat.empty || '이 조건의 메뉴가 없어요.'}<p class="sub">다른 분류를 눌러 주세요.</p></div>`}
     </div>
     <div class="cart">
@@ -202,10 +199,8 @@ const confirm = (title, body, label, act, val = '') => `<h2 tabindex="-1">${titl
 const DIALOGS = {
   help: () => `<h2 tabindex="-1">도움말</h2><div class="help">${(HELP[S.screen] || HELP.menu).map(([q, a]) => `<details><summary>${q}${icon('chevron-down')}</summary><p>${a}</p></details>`).join('')}</div><div class="row">${btn('직원 도움 요청', 'dlg', { v: 'secondary', val: 'staff' })}${btn('닫기', 'close', { v: 'secondary' })}</div>`,
   staff: () => `<h2 tabindex="-1">직원 도움</h2>${feedback('warning', '카운터의 직원에게 말씀해 주세요.', '연습용이라 호출 신호는 보내지 않아요. 담은 메뉴는 그대로예요.')}${btn('닫기', 'close', { v: 'secondary' })}`,
-  access: () => {
-    const hc = document.documentElement.dataset.mode === 'high-contrast';
-    return `<h2 tabindex="-1">접근성 · 언어</h2><button class="btn secondary" aria-pressed="${hc}" data-act="contrast">${icon('contrast')}고대비 ${hc ? 'ON' : 'OFF'}</button>
-    <button class="btn secondary" disabled>${icon('zoom-in')}화면 확대 (준비 중)</button>
+  lang: () => {
+    return `<h2 tabindex="-1">언어</h2>
     <div class="opts" role="radiogroup" aria-label="언어">${['한국어', 'English', '日本語', '中文'].map((l, i) => `<button class="opt" role="radio" aria-checked="${!i}" ${i ? 'disabled' : ''}><span class="radio"></span>${l}${i ? ' (준비 중)' : ''}</button>`).join('')}</div>${btn('닫기', 'close', { v: 'secondary' })}`;
   },
   clear: () => confirm('담은 메뉴를 모두 삭제할까요?', '삭제하면 되돌릴 수 없어요.', '전체 삭제', 'clear'),
@@ -225,9 +220,9 @@ const DIALOGS = {
 
 let shown = '';
 function render() {
-  const keep = [...document.querySelectorAll('[data-keep]')].map((e) => e.scrollTop);
+  // scroll position survives re-renders, but a new category starts at the top
+  const keep = [...document.querySelectorAll('[data-keep]')].map((e) => [e.dataset.keep, e.scrollTop]);
   const catsAt = $('.cats')?.scrollLeft || 0;
-  const sw = $('[data-swipe]'), swiped = sw && [sw.dataset.swipe, sw.scrollLeft];
   const dlg = sess.warn ? 'session' : S.dlg;
   const [name, arg] = (dlg || '').split(':');
   $('#stage').innerHTML = SCREENS[S.screen]() + (dlg ? `<div class="scrim"><div class="dialog" role="dialog" aria-modal="true">${DIALOGS[name](arg)}</div></div>` : '');
@@ -238,17 +233,15 @@ function render() {
     cats.scrollLeft = catsAt;
     if (sel.offsetLeft - 40 < cats.scrollLeft || sel.offsetLeft + sel.offsetWidth + 40 > cats.scrollLeft + cats.clientWidth) cats.scrollLeft = sel.offsetLeft - (cats.clientWidth - sel.offsetWidth) / 2;
   }
-  const next = $('[data-swipe]');
-  if (next) { if (swiped?.[0] === next.dataset.swipe) next.scrollLeft = swiped[1]; syncPager(next); }
   const view = `${S.screen}/${dlg || ''}`;
   if (view !== shown) { shown = view; $(dlg ? '.dialog h2' : '#stage h1')?.focus({ preventScroll: true }); } // v6 8.2: move focus on screen change
-  else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i] || 0; });
+  else document.querySelectorAll('[data-keep]').forEach((e, i) => { e.scrollTop = keep[i]?.[0] === e.dataset.keep ? keep[i][1] : 0; });
 }
 
 // ---------- navigation, voice, payment ----------
 const voiceOff = () => { S.voice.on = false; speechSynthesis.cancel(); };
 const go = (screen) => { if (['review', 'pay', 'guide', 'done'].includes(screen)) voiceOff(); S.screen = screen; S.dlg = null; S.draft = screen === 'option' ? S.draft : null; };
-const reset = () => { timers.forEach(clearTimeout); timers = []; speechSynthesis.cancel(); S = fresh(); delete document.documentElement.dataset.mode; sess.warn = 0; sess.last = Date.now(); render(); };
+const reset = () => { timers.forEach(clearTimeout); timers = []; speechSynthesis.cancel(); S = fresh(); sess.warn = 0; sess.last = Date.now(); render(); };
 const openItem = (id, extra = {}) => {
   const m = menu(id);
   if (m.available === false) return;
@@ -350,7 +343,6 @@ const ACT = {
   key: (v) => { S.stamp = v === 'clear' ? '' : v === 'back' ? S.stamp.slice(0, -1) : (S.stamp + v).slice(0, 11); },
   dlg: (v) => { S.dlg = v; },
   close: () => { S.dlg = null; },
-  contrast: () => { const d = document.documentElement.dataset; if (d.mode) delete d.mode; else d.mode = 'high-contrast'; },
   askReset: () => { if (S.cart.length) S.dlg = 'reset'; else reset(); },
   reset: () => reset(),
   extend: () => { sess.warn = 0; sess.last = Date.now(); },
@@ -365,8 +357,6 @@ addEventListener('click', (e) => {
   const act = el.dataset.act;
   if (act !== 'say') seq++;
   const { v } = el.dataset;
-  // arrows are the no-gesture alternative to swiping: scroll 3 columns, no re-render
-  if (act === 'page') return $('[data-swipe]').scrollBy({ left: v * 942, behavior: 'smooth' });
   ACT[act](v);
   if (act !== 'reset') render();
   if (e.detail) document.activeElement?.blur?.(); // no focus ring left behind after touch
@@ -375,30 +365,19 @@ addEventListener('click', (e) => {
 });
 addEventListener('pointerdown', () => { sess.last = Date.now(); });
 
-// ---------- swipe ----------
+// ---------- category swipe ----------
 // touch swipes natively; a mouse (demo in a desktop browser) needs drag-to-scroll
-const syncPager = (g) => {
-  const label = $('#page');
-  if (!label) return;
-  const [prev, nxt] = document.querySelectorAll('.pager button');
-  const max = g.scrollWidth - g.clientWidth;
-  prev.disabled = g.scrollLeft <= 1;
-  nxt.disabled = g.scrollLeft >= max - 1;
-  label.textContent = nxt.disabled ? Math.ceil(parseInt(g.style.getPropertyValue('--cols'), 10) / 3) : Math.round(g.scrollLeft / 942) + 1;
-};
-addEventListener('scroll', (e) => { if (e.target.dataset?.swipe) { sess.last = Date.now(); syncPager(e.target); } }, true);
 let drag = null;
 addEventListener('pointerdown', (e) => {
-  const g = e.pointerType === 'mouse' && e.target.closest('[data-swipe],.cats');
+  const g = e.pointerType === 'mouse' && e.target.closest('.cats');
   drag = g ? { g, x: e.clientX, from: g.scrollLeft, moved: false } : null;
 });
 addEventListener('pointermove', (e) => {
   if (!drag || !e.buttons) return;
   const dx = (e.clientX - drag.x) / ($('#stage').getBoundingClientRect().width / 1080); // stage is scaled
   if (Math.abs(dx) > 10) drag.moved = true;
-  if (drag.moved) { drag.g.classList.add('dragging'); drag.g.scrollLeft = drag.from - dx; }
+  if (drag.moved) drag.g.scrollLeft = drag.from - dx;
 });
-addEventListener('pointerup', () => drag?.g.classList.remove('dragging'));
 // a drag is not a tap: swallow the click that follows it
 addEventListener('click', (e) => { if (drag?.moved) { e.stopPropagation(); e.preventDefault(); } drag = null; }, true);
 addEventListener('keydown', () => { sess.last = Date.now(); });
