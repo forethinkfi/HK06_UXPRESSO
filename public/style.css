@@ -58,7 +58,7 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 
 /* Product / Card and grid; only this area scrolls if it ever has to */
 /* Product / Card: image, name (top-aligned, at least two lines), price. Subgrid shares the three rows across a line of cards. */
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-24);row-gap:var(--space-32);align-items:stretch;padding:var(--space-08) var(--space-40) var(--space-32)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-24);row-gap:var(--space-64);align-items:stretch;padding:var(--space-08) var(--space-40) var(--space-32)}
 .card,.card .info{display:grid;grid-template-rows:subgrid;row-gap:0;min-width:0}
 .card{grid-row:span 3;text-align:left;border-radius:var(--radius)}
 .card .info{grid-row:span 2}

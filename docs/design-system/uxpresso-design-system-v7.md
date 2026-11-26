@@ -42,7 +42,7 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 22px 미만을 쓰지 않는다. 긴 이름은 말줄임하지 않고 줄을 늘린다.
 
 ## 4. 간격·모양
-- 간격 4·8·12·16·24·32·40·48·64·80. 이미지↔글자 16, 이름↔가격 8, 아이콘↔글자 12, 버튼 16, 상품 행 32.
+- 간격 4·8·12·16·24·32·40·48·64·80. 이미지↔글자 16, 이름↔가격 8, 아이콘↔글자 12, 버튼 16, 상품 행 64.
 - Radius 8(기본), 12(대화상자·안내), 4(배지·라벨). 테두리 1px, 그림자는 대화상자만.
 - 터치: 최소 64, 권장 80 이상, 주요 CTA 112.
 
@@ -65,7 +65,7 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 - **Global Header** 112, 좌우 40, 간격 24: 처음으로/이전 · 로고 자리 · 주문 유형 · 도움말(아이콘+글자 26/600) · 음성. 주문 확인부터 음성 버튼 없음.
 - **Navigation / Category** 한 줄 가로 스와이프, 224×88, 간격 12, 30/600. 다섯 번째가 잘려 더 있음을 알리고, 선택한 탭은 화면 안에 맞춘다. (v2.1의 4×2는 팀 요청으로 적용하지 않음)
 - **Navigation / Subcategory** 높이 80, 28/600 (음료·푸드·상품).
-- **Product / Card** 3열 세로 롱 스크롤, 열 24 · 행 32. 카드 전체가 버튼(터치 영역). 구조: ProductImage → ProductInformation(ProductNameWrapper → ProductName, ProductPrice).
+- **Product / Card** 3열 세로 롱 스크롤, 열 24 · **행 64**(상품 묶음이 구분되도록 팀 요청으로 32에서 넓힘). 카드 전체가 버튼(터치 영역). 구조: ProductImage → ProductInformation(ProductNameWrapper → ProductName, ProductPrice).
   - 이미지 5:4, #F5F5F5, Radius 8, contain. 배지 유무와 관계없이 모든 사진을 같은 영역(위 44, 나머지 8)에 그린다.
   - 이미지 → 16 → 이름(30/40/600, 왼쪽·**위 정렬**, 최소 두 줄 80) → 8 → 가격(32/42/700, 왼쪽, tabular).
   - subgrid로 같은 줄의 이름 시작점과 가격 위치를 맞춘다. 세 줄 이상 이름이 있으면 그 줄 전체의 이름 영역이 늘어난다. 말줄임·글자 축소 없음. subgrid 미지원 시 스크립트로 줄마다 높이를 맞춘다.
