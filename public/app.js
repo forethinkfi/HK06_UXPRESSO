@@ -143,7 +143,7 @@ const SCREENS = {
     const radio = (checked, act, val, label, extra = '') => `<button class="opt" role="radio" aria-checked="${checked}" data-act="${act}" data-v="${val}"><span>${label}</span>${extra ? `<span class="extra">${extra}</span>` : ''}</button>`;
     return `<div class="screen">${header({ back: 'toMenu' })}${guide()}
     <div class="scroll" data-keep>
-      <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p class="desc">${esc(m.description)}</p><b class="title">${won(m.price)}</b>${m.temperature.length === 1 ? tempLabel(m.temperature[0]) : ''}${btn(d.more ? '상세 정보 접기' : '상세 정보 펼치기', 'more', { v: 'secondary', ic: d.more ? 'chevron-up' : 'chevron-down' })}</div></div>
+      <div class="hero">${photo(m)}<div class="stack"><h1 class="title" tabindex="-1">${esc(m.name)}</h1><p class="desc">${esc(m.description)}</p><div class="price-row"><b class="title">${won(m.price)}</b><button class="more" data-act="more" aria-expanded="${!!d.more}">${d.more ? '접기' : '자세히 보기'}${icon(d.more ? 'chevron-up' : 'chevron-down')}</button></div>${m.temperature.length === 1 ? tempLabel(m.temperature[0]) : ''}</div></div>
       ${d.more ? `<section class="group facts">${facts(m, d.temp)}</section>` : ''}
       ${m.temperature.length > 1 ? tempSection(m, d.temp) : ''}
       ${(d.temp ? groups(d) : m.options.filter((g) => !g.onlyTemp)).map((g) => `<section class="group"><h2 class="section">${g.label} <span class="tag">선택</span></h2>${OPTION_HELP[g.id] || g.help ? `<p class="sub">${OPTION_HELP[g.id] || g.help}</p>` : ''}

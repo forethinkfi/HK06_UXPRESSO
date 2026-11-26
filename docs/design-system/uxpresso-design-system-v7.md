@@ -70,6 +70,7 @@ Familiar Brand, Accessible Experience · Reduce Complexity, Not Visibility · Vi
 - **Cart / StickySummary** `장바구니 N개`(32/700) · `○○ 외 N종`(28/500) · 전체 삭제(24, 확인 대화상자) · `주문금액`(48/700) · 주문 확인(112).
 - **Session / Control** 장바구니 아래 별도 #F5F5F5 줄: 안내 24, 시간 연장 26/600 · 80.
 - **Option / Temperature** 2열 112, 간격 16: `HOT`(36/700) 아래 `따뜻하게`(28/500), ICE도 동일. 아이콘·색 없음. 제목 "어떤 온도로 드시겠어요?" + 필수. 미선택이면 안내 문구 + CTA 비활성.
+- **Product / Detail 펼치기** 가격과 같은 줄 오른쪽 끝. 테두리 없는 글자 버튼 `자세히 보기 ⌄` / `접기 ⌃`(28/600 #595959, 터치 80, `aria-expanded`). 참고: 유아이볼 더벤티.
 - **Product / TemperatureLabel** `ICE · 차갑게` 28/40/500 #595959. 단일 온도 상품은 선택 영역 없이 상품 정보에 이 라벨만 둔다.
 - **Option / SingleSelect** 88 이상, 간격 16, 이름과 가격 28/600. 제목 32/700, 설명 26. 기본값은 "추가 안 함".
 - **Cart / ReviewItem** 이미지 144×160, 이름·가격 34/700, 온도 라벨, 추가 옵션 26, 수량(88 버튼, 36/700), 옵션 변경·삭제 88.

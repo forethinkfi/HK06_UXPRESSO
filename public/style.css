@@ -94,6 +94,10 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .hero{display:flex;gap:var(--space-32);padding:var(--space-32) var(--space-40);align-items:center;border-bottom:1px solid var(--neutral-divider)}
 .hero .photo{width:320px}
 .hero .stack{min-width:0;flex:1;align-items:flex-start;gap:var(--space-12)}
+/* price on the left, a quiet disclosure on the right (ref: 더벤티 '열기' on uibowl) */
+.price-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--space-16)}
+.more{min-height:80px;display:inline-flex;align-items:center;gap:var(--space-08);padding:0 var(--space-08) 0 var(--space-16);border-radius:var(--radius);font:var(--type-strong);color:var(--text-secondary);white-space:nowrap}
+.more:active{background:var(--surface-pressed)}
 .desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .temp-label{display:block;font:500 28px/40px var(--font);color:var(--text-secondary)}
 .facts,.dialog .fact{display:flex;flex-direction:column;gap:var(--space-16)}
