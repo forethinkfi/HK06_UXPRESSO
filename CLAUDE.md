@@ -16,7 +16,7 @@
 | `public/style.css` | 디자인 토큰·컴포넌트 |
 | `public/kit.html` | 버튼 UI Kit |
 | `public/screens.html` | 시안 보드 (`?demo=` 프리셋 화면 모음, 프리셋은 `app.js`의 `demo()`) |
-| `docs/` | 요구사항·디자인 시스템·API 문서 (`docs/index.md` 참고) |
+| `docs/` | 단계별 문서 (`docs/index.md` 목차, `docs/process.md` 제작 과정) |
 
 ## 작업 원칙
 - 디자인 시스템 2차 정의는 `docs/design-system/`(토큰: `tokens.json`/`tokens.css`). 값 출처는 [확인]/[추정]/[제안]/[확인 필요]로 구분하고, 공식 값처럼 쓰지 않는다. 프로토타입(`public/`)은 2차 토큰(색상·선택 상태·모서리·HOT/ICE 라벨)과 타이포 스케일(22/24/28/32/40/56px)·Progress·세션 확인 문구를 적용했다. 상품 사진은 언스플래시 임시 이미지, 아이콘은 Lucide(CDN)다.

@@ -1,30 +1,57 @@
 # UXPRESSO 문서 목차
 
-메가MGC커피 키오스크 UX/UI 개선 비공식 프로젝트의 문서 모음입니다. 실행 방법은 루트 [README](../README.md)를 보세요.
+메가MGC커피 키오스크 UX/UI 개선 **비공식** 프로젝트의 문서 모음입니다. 실행 방법은 루트 [README](../README.md), 만든 순서는 [process.md](process.md)를 보세요. 공식 프로젝트·디자인 시스템·API가 아니며 메뉴·가격·쿠폰·결제는 테스트 데이터입니다.
+
+문서를 새로 올리면 해당 단계 표에 한 줄을 추가해 주세요. 작업 규칙은 [../CONTRIBUTING.md](../CONTRIBUTING.md), Claude Code 가이드는 [../CLAUDE.md](../CLAUDE.md)입니다.
+
+| 단계 | 문서 | 내용 |
+|---|---|---|
+| 전체 | [process.md](process.md) | **제작 과정** — 리서치부터 v6까지 단계별 결과물 |
+
+## 1. 리서치
 
 | 문서 | 내용 |
 |---|---|
-| [prd.md](prd.md) | **PRD 원문 (Ver. 2.0)** — 기획 단계 원본. 일부 항목(자연어 검색·AI Q&A 등)은 이후 요구사항으로 대체됨 |
-| [prd-v3-summary.md](prd-v3-summary.md) | **PRD v3.0 요약·구현 매핑** — 음성 주문(Voice-Driven UI)·세션 정책, 구현/미구현 표 (전문은 [prd-v3.0.md](prd-v3.0.md)) |
-| [prd-v3.0.md](prd-v3.0.md) | **PRD v3.0 전문 (팀 제공)** — 음성 주문·세션 정책 포함 원문 (검증 전 제안) |
-| [requirements.md](requirements.md) | 요구사항 요약 — 기획 PRD, UX/UI 개선(대기열·UX Writing), 쿠폰·결제 경험 |
-| [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안) — 메가커피 실제 화면 수집 자료 기반, TO-BE 유지/개선 표 |
-| [design-system/](design-system/README.md) | **UXPRESSO Kiosk Design System (2차, 모바일 앱 레퍼런스 기반)** — Reference Audit, Foundations, Tokens, Components, Patterns, UX Writing, Accessibility, 의사결정·QA |
-| [design-system/uxpresso-kiosk-design-system-v1.md](design-system/uxpresso-kiosk-design-system-v1.md) | **Kiosk Design System v1.0 원문 (팀 제공)** — 음성 주문(Voice-Driven UI)·세션·결제 구조 포함. 글자 크기·터치 높이는 토큰에 반영, 음성 CTA·세션 안내는 프로토타입에 구현(모의). 나머지 항목은 [prd-v3-summary.md](prd-v3-summary.md) 참고 |
-| [design-system/uxpresso-kiosk-design-system-v2.md](design-system/uxpresso-kiosk-design-system-v2.md) | **Kiosk Design System v2.0 원문 (팀 제공)** — 브랜드·음성 중심, 검증 전 제안 |
-| [design-system/voice-cta-states.md](design-system/voice-cta-states.md) | 음성 주문 CTA 상태 5종(Default·Listening·Processing·Confirm·Error) + Hidden 정의 — 시안 이미지 기준 |
-| [design-system.md](design-system.md) | 디자인 시스템 1차 버전 (키오스크 화면 기준) — 2차로 대체됨 |
-| [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | UXPRESSO 팀 Figma 파일 — 카페 키오스크 개선 시안 (Figma 계정 필요) |
-| [research/](research/README.md) | 리서치 — AS-IS 주문 플로우 재구성, 사용성 테스트, [UIBowl 레퍼런스](research/uibowl-references.md) |
+| [as-is-analysis.md](as-is-analysis.md) | AS-IS 키오스크 분석(UI Audit 초안), TO-BE 유지/개선 표 |
+| [research/](research/README.md) | AS-IS 주문 플로우 재구성(28화면·8화면), [UIBowl 레퍼런스](research/uibowl-references.md), 사용성 테스트(미작성) |
+
+## 2. 기획
+
+| 문서 | 내용 |
+|---|---|
+| [prd.md](prd.md) | PRD 원문 Ver. 2.0 — 일부 항목(자연어 검색·AI Q&A)은 이후 대체됨 |
+| [prd-v3.0.md](prd-v3.0.md) | PRD v3.0 전문 (팀 제공) — 음성 주문·세션 정책 (검증 전 제안) |
+| [prd-v3-summary.md](prd-v3-summary.md) | PRD v3.0 요약과 구현/미구현 매핑 |
+| [requirements.md](requirements.md) | 요구사항 요약 |
+
+## 3. 디자인 시스템
+
+| 문서 | 내용 |
+|---|---|
+| [design-system/](design-system/README.md) | **2차 디자인 시스템** — Reference Audit, Foundations, Tokens, Components, Patterns, UX Writing, Accessibility, 의사결정·QA |
+| [design-system/voice-cta-states.md](design-system/voice-cta-states.md) | 음성 주문 CTA 상태 5종 + Hidden |
+| [design-system/uxpresso-kiosk-design-system-v1.md](design-system/uxpresso-kiosk-design-system-v1.md) | Design System v1.0 원문 (팀 제공) |
+| [design-system/uxpresso-kiosk-design-system-v2.md](design-system/uxpresso-kiosk-design-system-v2.md) | Design System v2.0 원문 (팀 제공, 검증 전 제안) |
+| [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장) |
+| [archive/design-system-v0-kit.md](archive/design-system-v0-kit.md) | 1차 UI Kit — 2차로 대체됨 (이전 기록) |
+| [Figma 시안](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1) | 팀 Figma 파일 (Figma 계정 필요) |
+
+## 4. 프로토타입
+
+| 문서·주소 | 내용 |
+|---|---|
+| [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
+| [menu-image-links/](menu-image-links/README.md) | 메뉴 이미지 링크 목록 |
+| [artboard/v2-i/](artboard/v2-i/README.md) | 시안 v2-I — 메인·서브카테고리·영수증, 메뉴 192개 데이터와 생성 도구 |
+| `/` (`/v6/index.html`) | 키오스크 v6 시안 — 서버 실행 후 http://localhost:3000 |
+| `/index.html` · `/screens.html` · `/kit.html` | 이전 프로토타입 · 시안 보드 · UI Kit |
+
+## 5. 협업
+
+| 문서 | 내용 |
+|---|---|
 | [meetings/](meetings/README.md) | 회의록 (템플릿 포함) |
 | [presentation/](presentation/README.md) | 발표 자료 |
-| [../CONTRIBUTING.md](../CONTRIBUTING.md) | **작업 방법** — 파일 올리는 위치, 브랜치 규칙, 커밋 메시지 |
-| [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
-| 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
-| 키오스크 v6 시안 (`/v6/index.html`) | 디자인 시스템 v6 + v2-I 레이아웃·모션 비공식 프로토타입. 서버 실행 후 http://localhost:3000/v6/index.html |
-| [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장, Design System v2) |
-| [artboard/v2-i/](artboard/v2-i/README.md) | **프로토타입 시안 v2-I** — 프로모션·오비트 메인·메뉴 서브카테고리·영수증 발행, 메뉴 192개 데이터와 생성 도구 (이미지는 미포함) |
-| [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
 
 ## 화면 흐름
 
