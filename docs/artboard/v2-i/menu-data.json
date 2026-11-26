@@ -1,0 +1,4990 @@
+{
+ "notice": "비공식 시안용 데이터입니다. 분류는 메뉴 이름으로 나눈 것이고 가격은 시연용 예시입니다. 이미지는 docs/menu-image-links 목록의 파일명을 따릅니다.",
+ "categories": [
+  "신메뉴",
+  "추천메뉴",
+  "커피",
+  "디카페인",
+  "음료",
+  "티",
+  "푸드",
+  "상품"
+ ],
+ "recommended": [
+  "아메리카노",
+  "카페라떼",
+  "바닐라라떼",
+  "콜드브루오리지널",
+  "레몬에이드",
+  "자몽에이드",
+  "복숭아아이스티",
+  "쿠키프라페",
+  "딸기퐁크러쉬",
+  "햄치즈에그 샌드위치",
+  "마카다미아 쿠키",
+  "딸기요거트 마카롱"
+ ],
+ "products": [
+  {
+   "id": "d001",
+   "kind": "d",
+   "name": "딥 초코 체리 프라페",
+   "english_name": "Deep Chocolate Cherry Frappe",
+   "numbers": [
+    1
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_001.webp"
+   },
+   "categories": [
+    4,
+    0
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "NEW",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d002",
+   "kind": "d",
+   "name": "쫀득 모찌 밀크티",
+   "english_name": "Chewy Mochi Milk Tea",
+   "numbers": [
+    2
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_002.webp"
+   },
+   "categories": [
+    4,
+    0
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "NEW",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d003",
+   "kind": "d",
+   "name": "매실 모과차",
+   "english_name": "Green Plum Quince Tea",
+   "numbers": [
+    3,
+    4
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_003.webp",
+    "ICE": "drink_004.webp"
+   },
+   "categories": [
+    5,
+    0
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "NEW",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d005",
+   "kind": "d",
+   "name": "나 혼자만 드랍 UP! 은랑 큐브 레몬에이드",
+   "english_name": "Solo Drop Maxxing! Silver Wolf LemonAde",
+   "numbers": [
+    5
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_005.webp"
+   },
+   "categories": [
+    4,
+    0
+   ],
+   "tags": [
+    "c4:주스·에이드",
+    "c0:콜라보"
+   ],
+   "badge": "콜라보",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d006",
+   "kind": "d",
+   "name": "음, 괜찮은 휴식이군 블레이드 초코크림커피",
+   "english_name": "Hmm, Fine Break Blade Choco Cream Coffee",
+   "numbers": [
+    6
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_006.webp"
+   },
+   "categories": [
+    2,
+    0
+   ],
+   "tags": [
+    "c0:콜라보"
+   ],
+   "badge": "콜라보",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d007",
+   "kind": "d",
+   "name": "하우스밀크 라떼",
+   "english_name": "House Milk Latte",
+   "numbers": [
+    7
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_007.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d008",
+   "kind": "d",
+   "name": "무카페인 오르조라떼",
+   "english_name": "Caffeine-Free Orzo Latte",
+   "numbers": [
+    8,
+    9
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_008.webp",
+    "ICE": "drink_009.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d010",
+   "kind": "d",
+   "name": "저당 골든애플 블랙티",
+   "english_name": "Low-Sugar Golden Apple Black Tea",
+   "numbers": [
+    10
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_010.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d011",
+   "kind": "d",
+   "name": "ARIH 듀얼바이오틱 소다 레드 루비 갈로어",
+   "english_name": "ARIH DUAL BIOTIC SODA RED RUBY",
+   "numbers": [
+    11
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_011.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d012",
+   "kind": "d",
+   "name": "ARIH 듀얼바이오틱 소다 포지티브 오렌지",
+   "english_name": "ARIH DUAL BIOTIC SODA ORANGE",
+   "numbers": [
+    12
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_012.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d013",
+   "kind": "d",
+   "name": "ARIH 듀얼바이오틱 소다 클리어레몬",
+   "english_name": "ARIH DUAL BIOTIC SODA CLEAR LEMON",
+   "numbers": [
+    13
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_013.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d014",
+   "kind": "d",
+   "name": "ARIH 듀얼바이오틱 소다 피치망고 호라이즌",
+   "english_name": "ARIH DUAL BIOTIC SODA PEACH & MANGO",
+   "numbers": [
+    14
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_014.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d015",
+   "kind": "d",
+   "name": "ARIH 포스트바이오틱 에너지 드링크 레몬크레스트",
+   "english_name": "ARIH POSTBIOTIC ENERGY DRINK LEMON CREST",
+   "numbers": [
+    15
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_015.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d016",
+   "kind": "d",
+   "name": "ARIH 포스트바이오틱 에너지 드링크 오렌지아워",
+   "english_name": "ARIH POSTBIOTIC ENERGY DRINK ORANGE HOUR",
+   "numbers": [
+    16
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_016.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d017",
+   "kind": "d",
+   "name": "ARIH 포스트바이오틱 에너지 드링크 트로피칼웨이브",
+   "english_name": "ARIH POSTBIOTIC ENERGY DRINK TROPICAL WAVE",
+   "numbers": [
+    17
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_017.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "d018",
+   "kind": "d",
+   "name": "저당 꿀배 XO야쿠르트",
+   "english_name": "XO",
+   "numbers": [
+    18
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_018.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d019",
+   "kind": "d",
+   "name": "딸기라떼",
+   "english_name": "Strawberry Latte",
+   "numbers": [
+    19
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_019.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d020",
+   "kind": "d",
+   "name": "밀크쉐이크",
+   "english_name": "Milkshake",
+   "numbers": [
+    20
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_020.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d021",
+   "kind": "d",
+   "name": "유자생강차",
+   "english_name": "Citron Ginger Tea",
+   "numbers": [
+    21
+   ],
+   "temps": [
+    "HOT"
+   ],
+   "images": {
+    "HOT": "drink_021.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000
+   }
+  },
+  {
+   "id": "d022",
+   "kind": "d",
+   "name": "초코젤라또 말차라떼",
+   "english_name": "Choco-gelato Matcha Tea Latte",
+   "numbers": [
+    22
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_022.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d023",
+   "kind": "d",
+   "name": "헛개리카노",
+   "english_name": "Oriental Raisin-Tea Americano",
+   "numbers": [
+    23,
+    24
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_023.webp",
+    "ICE": "drink_024.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2500,
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d025",
+   "kind": "d",
+   "name": "제로 부스트 에이드",
+   "english_name": "ZERO SUGAR Energy-Drink Ade",
+   "numbers": [
+    25
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_025.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d026",
+   "kind": "d",
+   "name": "블루베리요거트스무디",
+   "english_name": "Blueberry Yogurt Smoothie",
+   "numbers": [
+    26
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_026.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d027",
+   "kind": "d",
+   "name": "골드키위주스",
+   "english_name": "Gold Kiwi Juice",
+   "numbers": [
+    27
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_027.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d028",
+   "kind": "d",
+   "name": "귤 톡톡 젤리스무디",
+   "english_name": "Tangerine Jelly Smoothie",
+   "numbers": [
+    28
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_028.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d029",
+   "kind": "d",
+   "name": "왕메가카페라떼",
+   "english_name": "BIG MEGA Caffe Latte",
+   "numbers": [
+    29
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_029.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d030",
+   "kind": "d",
+   "name": "디카페인 왕메가카페라떼",
+   "english_name": "Decaf BIG MEGA Caffe Latte",
+   "numbers": [
+    30
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_030.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d031",
+   "kind": "d",
+   "name": "디카페인 라이트 바닐라 아몬드라떼",
+   "english_name": "Decaf Light vanilla almond latte",
+   "numbers": [
+    31
+   ],
+   "temps": [],
+   "images": {
+    "one": "drink_031.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "d032",
+   "kind": "d",
+   "name": "왕메가사과유자",
+   "english_name": "BIG MEGA Apple Citron Tea",
+   "numbers": [
+    32
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_032.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d033",
+   "kind": "d",
+   "name": "왕메가헛개리카노",
+   "english_name": "BIG MEGA Oriental Raisin-Tea Americano",
+   "numbers": [
+    33
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_033.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d034",
+   "kind": "d",
+   "name": "디카페인 헛개리카노",
+   "english_name": "Decaf Oriental Raisin-Tea Americano",
+   "numbers": [
+    34,
+    35
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_034.webp",
+    "ICE": "drink_035.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d036",
+   "kind": "d",
+   "name": "디카페인 왕메가헛개리카노",
+   "english_name": "Decaf BIG MEGA Oriental Raisin-Tea Americano",
+   "numbers": [
+    36
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_036.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d037",
+   "kind": "d",
+   "name": "상큼 리치티",
+   "english_name": "(HOT) Zesty Lychee Tea",
+   "numbers": [
+    37,
+    38
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_037.webp",
+    "ICE": "drink_038.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d039",
+   "kind": "d",
+   "name": "할메가미숫커피",
+   "english_name": "MEGA MGC Mix Coffee Blend with Grain Powder",
+   "numbers": [
+    39
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_039.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d040",
+   "kind": "d",
+   "name": "라이트 바닐라 아몬드라떼",
+   "english_name": "Light vanilla almond latte",
+   "numbers": [
+    40
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_040.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d041",
+   "kind": "d",
+   "name": "왕메가초코",
+   "english_name": "32oz MEGA Chocolate",
+   "numbers": [
+    41
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_041.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d042",
+   "kind": "d",
+   "name": "왕메가아이스티",
+   "english_name": "32oz MEGA Peach Iced Tea",
+   "numbers": [
+    42
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_042.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:아이스티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d043",
+   "kind": "d",
+   "name": "제로 복숭아 아이스티",
+   "english_name": "ZERO Sugar Peach Iced Tea",
+   "numbers": [
+    43
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_043.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:아이스티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d044",
+   "kind": "d",
+   "name": "연유라떼",
+   "english_name": "Condensed Milk Latte",
+   "numbers": [
+    44,
+    105
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_044.webp",
+    "HOT": "drink_105.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d045",
+   "kind": "d",
+   "name": "골드망고스무디",
+   "english_name": "Gold Mango Smoothie",
+   "numbers": [
+    45
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_045.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d046",
+   "kind": "d",
+   "name": "할메가커피",
+   "english_name": "MEGA Mix Coffee",
+   "numbers": [
+    46
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_046.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d047",
+   "kind": "d",
+   "name": "왕할메가커피",
+   "english_name": "BIG MEGA Mix Coffee",
+   "numbers": [
+    47
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_047.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d048",
+   "kind": "d",
+   "name": "코코넛 커피 스무디",
+   "english_name": "Coconut Coffee Smoothie",
+   "numbers": [
+    48
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_048.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d049",
+   "kind": "d",
+   "name": "딸기주스",
+   "english_name": "Strawberry Juice",
+   "numbers": [
+    49
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_049.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d050",
+   "kind": "d",
+   "name": "딸기바나나주스",
+   "english_name": "Strawberry-Banana Juice",
+   "numbers": [
+    50
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_050.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d051",
+   "kind": "d",
+   "name": "디카페인 에스프레소",
+   "english_name": "Decaf Espresso",
+   "numbers": [
+    51
+   ],
+   "temps": [
+    "HOT"
+   ],
+   "images": {
+    "HOT": "drink_051.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2000
+   }
+  },
+  {
+   "id": "d052",
+   "kind": "d",
+   "name": "디카페인 아메리카노",
+   "english_name": "Decaf Americano",
+   "numbers": [
+    52,
+    63
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_052.webp",
+    "ICE": "drink_063.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2000,
+    "ICE": 2500
+   }
+  },
+  {
+   "id": "d053",
+   "kind": "d",
+   "name": "디카페인 꿀아메리카노",
+   "english_name": "Decaf Honey Americano",
+   "numbers": [
+    53,
+    65
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_053.webp",
+    "ICE": "drink_065.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d054",
+   "kind": "d",
+   "name": "디카페인 헤이즐넛 아메리카노",
+   "english_name": "Decaf Hazelnut Americano",
+   "numbers": [
+    54,
+    66
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_054.webp",
+    "ICE": "drink_066.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2000,
+    "ICE": 2500
+   }
+  },
+  {
+   "id": "d055",
+   "kind": "d",
+   "name": "디카페인 바닐라 아메리카노",
+   "english_name": "Decaf Vanilla Americano",
+   "numbers": [
+    55,
+    67
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_055.webp",
+    "ICE": "drink_067.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2000,
+    "ICE": 2500
+   }
+  },
+  {
+   "id": "d056",
+   "kind": "d",
+   "name": "디카페인 카페라떼",
+   "english_name": "Decaf Cafe Latte",
+   "numbers": [
+    56,
+    68
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_056.webp",
+    "ICE": "drink_068.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d057",
+   "kind": "d",
+   "name": "디카페인 카푸치노",
+   "english_name": "Decaf Cappuccino",
+   "numbers": [
+    57,
+    69
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_057.webp",
+    "ICE": "drink_069.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d058",
+   "kind": "d",
+   "name": "디카페인 바닐라라떼",
+   "english_name": "Decaf Vanilla Latte",
+   "numbers": [
+    58,
+    70
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_058.webp",
+    "ICE": "drink_070.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d059",
+   "kind": "d",
+   "name": "디카페인 헤이즐넛 라떼",
+   "english_name": "Decaf Hazelnut Latte",
+   "numbers": [
+    59,
+    71
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_059.webp",
+    "ICE": "drink_071.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d060",
+   "kind": "d",
+   "name": "디카페인 카라멜마끼아또",
+   "english_name": "Decaf Caramel Macchiato",
+   "numbers": [
+    60,
+    72
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_060.webp",
+    "ICE": "drink_072.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d061",
+   "kind": "d",
+   "name": "디카페인 연유라떼",
+   "english_name": "Decaf Condensed Milk Latte",
+   "numbers": [
+    61,
+    73
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_061.webp",
+    "ICE": "drink_073.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d062",
+   "kind": "d",
+   "name": "디카페인 카페모카",
+   "english_name": "Decaf Cafe Mocha",
+   "numbers": [
+    62,
+    74
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_062.webp",
+    "ICE": "drink_074.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d064",
+   "kind": "d",
+   "name": "디카페인 메가리카노",
+   "english_name": "Decaf Megaricano",
+   "numbers": [
+    64
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_064.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d075",
+   "kind": "d",
+   "name": "딸기쿠키프라페",
+   "english_name": "Strawberry Cookie Frappe",
+   "numbers": [
+    75
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_075.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d076",
+   "kind": "d",
+   "name": "콜드브루디카페인",
+   "english_name": "Decaf Coldbrew",
+   "numbers": [
+    76,
+    77
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_076.webp",
+    "HOT": "drink_077.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d078",
+   "kind": "d",
+   "name": "콜드브루디카페인라떼",
+   "english_name": "Decaf Coldbrew Latte",
+   "numbers": [
+    78,
+    79
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_078.webp",
+    "HOT": "drink_079.webp"
+   },
+   "categories": [
+    3
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 4000,
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d080",
+   "kind": "d",
+   "name": "에스프레소",
+   "english_name": "Espresso",
+   "numbers": [
+    80
+   ],
+   "temps": [
+    "HOT"
+   ],
+   "images": {
+    "HOT": "drink_080.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:에스프레소"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 1500
+   }
+  },
+  {
+   "id": "d081",
+   "kind": "d",
+   "name": "에스프레소 도피오",
+   "english_name": "Espresso doppio",
+   "numbers": [
+    81
+   ],
+   "temps": [
+    "HOT"
+   ],
+   "images": {
+    "HOT": "drink_081.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:에스프레소"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2000
+   }
+  },
+  {
+   "id": "d082",
+   "kind": "d",
+   "name": "쿠키프라페",
+   "english_name": "Cookie Frappe",
+   "numbers": [
+    82
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_082.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d083",
+   "kind": "d",
+   "name": "고구마라떼",
+   "english_name": "Sweet Potato Latte",
+   "numbers": [
+    83,
+    86
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_083.webp",
+    "ICE": "drink_086.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d084",
+   "kind": "d",
+   "name": "곡물라떼",
+   "english_name": "Grain Latte",
+   "numbers": [
+    84,
+    87
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_084.webp",
+    "ICE": "drink_087.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d085",
+   "kind": "d",
+   "name": "토피넛라떼",
+   "english_name": "Toffeenut Latte",
+   "numbers": [
+    85,
+    89
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_085.webp",
+    "ICE": "drink_089.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d088",
+   "kind": "d",
+   "name": "오레오초코라떼",
+   "english_name": "Oreo Chocolate Latte",
+   "numbers": [
+    88
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_088.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d090",
+   "kind": "d",
+   "name": "흑당버블밀크티라떼",
+   "english_name": "Brown Sugar Bubble Milktea Latte",
+   "numbers": [
+    90
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_090.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d091",
+   "kind": "d",
+   "name": "핫초코",
+   "english_name": "Hot Chocolate",
+   "numbers": [
+    91
+   ],
+   "temps": [
+    "HOT"
+   ],
+   "images": {
+    "HOT": "drink_091.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500
+   }
+  },
+  {
+   "id": "d092",
+   "kind": "d",
+   "name": "녹차라떼",
+   "english_name": "Green Tea Latte",
+   "numbers": [
+    92,
+    98
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_092.webp",
+    "ICE": "drink_098.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d093",
+   "kind": "d",
+   "name": "로얄밀크티라떼",
+   "english_name": "Royal Milk Tea Latte",
+   "numbers": [
+    93,
+    99
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_093.webp",
+    "ICE": "drink_099.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d094",
+   "kind": "d",
+   "name": "흑당라떼",
+   "english_name": "Brown Sugar Latte (No Pearls)",
+   "numbers": [
+    94
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_094.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d095",
+   "kind": "d",
+   "name": "흑당밀크티라떼",
+   "english_name": "Brown Sugar Milk tea Latte (No pearls)",
+   "numbers": [
+    95
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_095.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d096",
+   "kind": "d",
+   "name": "흑당버블라떼",
+   "english_name": "Brown Sugar Bubble Latte",
+   "numbers": [
+    96
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_096.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d097",
+   "kind": "d",
+   "name": "아이스초코",
+   "english_name": "Ice Choco",
+   "numbers": [
+    97
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_097.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:라떼·밀크"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d100",
+   "kind": "d",
+   "name": "아메리카노",
+   "english_name": "Americano",
+   "numbers": [
+    100,
+    126
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_100.webp",
+    "ICE": "drink_126.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 1500,
+    "ICE": 2000
+   }
+  },
+  {
+   "id": "d101",
+   "kind": "d",
+   "name": "메가리카노",
+   "english_name": "32oz Americano",
+   "numbers": [
+    101
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_101.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 2500
+   }
+  },
+  {
+   "id": "d102",
+   "kind": "d",
+   "name": "꿀아메리카노",
+   "english_name": "Honey Americano",
+   "numbers": [
+    102,
+    114
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_102.webp",
+    "ICE": "drink_114.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2500,
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d103",
+   "kind": "d",
+   "name": "바닐라라떼",
+   "english_name": "Vanilla Latte",
+   "numbers": [
+    103,
+    115
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_103.webp",
+    "ICE": "drink_115.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d104",
+   "kind": "d",
+   "name": "바닐라아메리카노",
+   "english_name": "Vanilla Americano",
+   "numbers": [
+    104,
+    116
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_104.webp",
+    "ICE": "drink_116.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2500,
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d106",
+   "kind": "d",
+   "name": "카라멜마끼아또",
+   "english_name": "Caramel Macchiato",
+   "numbers": [
+    106,
+    117
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_106.webp",
+    "ICE": "drink_117.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d107",
+   "kind": "d",
+   "name": "카페라떼",
+   "english_name": "Caffe Latte",
+   "numbers": [
+    107,
+    118
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_107.webp",
+    "ICE": "drink_118.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d108",
+   "kind": "d",
+   "name": "카페모카",
+   "english_name": "Caffe Mocha",
+   "numbers": [
+    108,
+    119
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_108.webp",
+    "ICE": "drink_119.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d109",
+   "kind": "d",
+   "name": "카푸치노",
+   "english_name": "Cappuccino",
+   "numbers": [
+    109,
+    120
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_109.webp",
+    "ICE": "drink_120.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d110",
+   "kind": "d",
+   "name": "콜드브루라떼",
+   "english_name": "Coldbrew Latte",
+   "numbers": [
+    110,
+    121
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_110.webp",
+    "ICE": "drink_121.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼",
+    "c2:콜드브루"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d111",
+   "kind": "d",
+   "name": "콜드브루오리지널",
+   "english_name": "Coldbrew",
+   "numbers": [
+    111,
+    122
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_111.webp",
+    "ICE": "drink_122.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:콜드브루"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d112",
+   "kind": "d",
+   "name": "헤이즐넛라떼",
+   "english_name": "Hazelnut Latte",
+   "numbers": [
+    112,
+    123
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_112.webp",
+    "ICE": "drink_123.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 3500,
+    "ICE": 4000
+   }
+  },
+  {
+   "id": "d113",
+   "kind": "d",
+   "name": "헤이즐넛아메리카노",
+   "english_name": "Hazelnut Americano",
+   "numbers": [
+    113,
+    124
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_113.webp",
+    "ICE": "drink_124.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "HOT": 2500,
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d125",
+   "kind": "d",
+   "name": "큐브라떼",
+   "english_name": "Cube Latte",
+   "numbers": [
+    125
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_125.webp"
+   },
+   "categories": [
+    2
+   ],
+   "tags": [
+    "c2:라떼"
+   ],
+   "badge": "",
+   "coffee": 1,
+   "sample_price": {
+    "ICE": 3500
+   }
+  },
+  {
+   "id": "d127",
+   "kind": "d",
+   "name": "녹차프라페",
+   "english_name": "Green Tea Frappe",
+   "numbers": [
+    127
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_127.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d128",
+   "kind": "d",
+   "name": "딸기요거트스무디",
+   "english_name": "Strawberry Yogurt Smoothie",
+   "numbers": [
+    128
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_128.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d129",
+   "kind": "d",
+   "name": "딸기퐁크러쉬",
+   "english_name": "Strawberry Pongcrush",
+   "numbers": [
+    129
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_129.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d130",
+   "kind": "d",
+   "name": "리얼초코프라페",
+   "english_name": "Real Chocolate Frappe",
+   "numbers": [
+    130
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_130.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d131",
+   "kind": "d",
+   "name": "망고요거트스무디",
+   "english_name": "Mango Yogurt Smoothie",
+   "numbers": [
+    131
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_131.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d132",
+   "kind": "d",
+   "name": "민트프라페",
+   "english_name": "Mint Frappe",
+   "numbers": [
+    132
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_132.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d133",
+   "kind": "d",
+   "name": "바나나퐁크러쉬",
+   "english_name": "Banana Pongcrush",
+   "numbers": [
+    133
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_133.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d134",
+   "kind": "d",
+   "name": "초코허니퐁크러쉬",
+   "english_name": "Chocolate Honey Pong Crush",
+   "numbers": [
+    134
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_134.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d135",
+   "kind": "d",
+   "name": "커피프라페",
+   "english_name": "Coffee Frappe",
+   "numbers": [
+    135
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_135.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4500
+   }
+  },
+  {
+   "id": "d136",
+   "kind": "d",
+   "name": "플레인요거트스무디",
+   "english_name": "Plain Yogurt Smoothie",
+   "numbers": [
+    136
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_136.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d137",
+   "kind": "d",
+   "name": "플레인퐁크러쉬",
+   "english_name": "Plain Pongcrush",
+   "numbers": [
+    137
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_137.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "d138",
+   "kind": "d",
+   "name": "라임모히또",
+   "english_name": "Lime Mojito",
+   "numbers": [
+    138
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_138.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d139",
+   "kind": "d",
+   "name": "레몬에이드",
+   "english_name": "Lemonade",
+   "numbers": [
+    139
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_139.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d140",
+   "kind": "d",
+   "name": "블루레몬에이드",
+   "english_name": "Blue Lemon Ade",
+   "numbers": [
+    140
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_140.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d141",
+   "kind": "d",
+   "name": "자몽에이드",
+   "english_name": "Grapefruit Ade",
+   "numbers": [
+    141
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_141.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d142",
+   "kind": "d",
+   "name": "청포도에이드",
+   "english_name": "Green Grape Ade",
+   "numbers": [
+    142
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_142.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d143",
+   "kind": "d",
+   "name": "체리콜라",
+   "english_name": "Cherry Cola",
+   "numbers": [
+    143
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_143.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:기타 음료"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d144",
+   "kind": "d",
+   "name": "메가에이드",
+   "english_name": "MEGA Ade",
+   "numbers": [
+    144
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_144.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:주스·에이드"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3800
+   }
+  },
+  {
+   "id": "d145",
+   "kind": "d",
+   "name": "녹차",
+   "english_name": "Green Tea",
+   "numbers": [
+    145,
+    150
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_145.webp",
+    "ICE": "drink_150.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d146",
+   "kind": "d",
+   "name": "사과유자차",
+   "english_name": "Applecitron Tea",
+   "numbers": [
+    146,
+    151
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_146.webp",
+    "ICE": "drink_151.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d147",
+   "kind": "d",
+   "name": "얼그레이",
+   "english_name": "Earl Grey",
+   "numbers": [
+    147,
+    152
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_147.webp",
+    "ICE": "drink_152.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d148",
+   "kind": "d",
+   "name": "캐모마일",
+   "english_name": "Chamomile",
+   "numbers": [
+    148,
+    153
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_148.webp",
+    "ICE": "drink_153.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d149",
+   "kind": "d",
+   "name": "페퍼민트",
+   "english_name": "Peppermint Tea",
+   "numbers": [
+    149,
+    154
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_149.webp",
+    "ICE": "drink_154.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d155",
+   "kind": "d",
+   "name": "복숭아아이스티",
+   "english_name": "Peach Iced Tea",
+   "numbers": [
+    155
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_155.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:아이스티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 3000
+   }
+  },
+  {
+   "id": "d156",
+   "kind": "d",
+   "name": "유자차",
+   "english_name": "Citron Tea",
+   "numbers": [
+    156,
+    160
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_156.webp",
+    "ICE": "drink_160.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d157",
+   "kind": "d",
+   "name": "레몬차",
+   "english_name": "Lemon Tea",
+   "numbers": [
+    157,
+    161
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_157.webp",
+    "ICE": "drink_161.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d158",
+   "kind": "d",
+   "name": "자몽차",
+   "english_name": "Grapefruit Tea",
+   "numbers": [
+    158,
+    162
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_158.webp",
+    "ICE": "drink_162.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:과일차"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d159",
+   "kind": "d",
+   "name": "허니자몽블랙티",
+   "english_name": "Honey Grapefruit Black Tea",
+   "numbers": [
+    159,
+    163
+   ],
+   "temps": [
+    "HOT",
+    "ICE"
+   ],
+   "images": {
+    "HOT": "drink_159.webp",
+    "ICE": "drink_163.webp"
+   },
+   "categories": [
+    5
+   ],
+   "tags": [
+    "c5:허브·블렌딩 티"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "HOT": 3000,
+    "ICE": 3300
+   }
+  },
+  {
+   "id": "d164",
+   "kind": "d",
+   "name": "자몽 톡톡 스무디",
+   "english_name": "Grapefruit Smoothie",
+   "numbers": [
+    164
+   ],
+   "temps": [
+    "ICE"
+   ],
+   "images": {
+    "ICE": "drink_164.webp"
+   },
+   "categories": [
+    4
+   ],
+   "tags": [
+    "c4:스무디·프라페"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "ICE": 4300
+   }
+  },
+  {
+   "id": "f001",
+   "kind": "f",
+   "name": "바삭허니 엠지씨네 컵치킨",
+   "english_name": "MGC's Crispy Honey Cup Chicken",
+   "numbers": [
+    1
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_001.webp"
+   },
+   "categories": [
+    6,
+    0
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "NEW",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5900
+   }
+  },
+  {
+   "id": "f002",
+   "kind": "f",
+   "name": "엠지씨네 마라 떡볶이",
+   "english_name": "MGC's Mala Tteokbokki",
+   "numbers": [
+    2
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_002.webp"
+   },
+   "categories": [
+    6,
+    0
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "NEW",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5900
+   }
+  },
+  {
+   "id": "f003",
+   "kind": "f",
+   "name": "햄치즈에그 샌드위치",
+   "english_name": "Ham Cheese&Egg Sandwich",
+   "numbers": [
+    3
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_003.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f004",
+   "kind": "f",
+   "name": "에그마요 샌드위치",
+   "english_name": "Egg Mayo Sandwich",
+   "numbers": [
+    4
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_004.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f005",
+   "kind": "f",
+   "name": "크래미마요 샌드위치",
+   "english_name": "Crab Stick Mayo Sandwich",
+   "numbers": [
+    5
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_005.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f006",
+   "kind": "f",
+   "name": "모짜렐라 바질치킨 샌드위치",
+   "english_name": "Mozzarella Basil Chicken Sandwich",
+   "numbers": [
+    6
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_006.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f007",
+   "kind": "f",
+   "name": "불고기 에그 샌드위치",
+   "english_name": "Bulgogi Egg Sandwich",
+   "numbers": [
+    7
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_007.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f008",
+   "kind": "f",
+   "name": "스파이시 치킨텐더 샌드위치",
+   "english_name": "Spicy Chicken Tender Sandwich",
+   "numbers": [
+    8
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_008.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f009",
+   "kind": "f",
+   "name": "중식마녀 마라크림 새우토스트",
+   "english_name": "Witch Chef's Mala Cream Shrimp Toast",
+   "numbers": [
+    9
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_009.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f010",
+   "kind": "f",
+   "name": "메가MGC커피 자일리톨 커피 캔디",
+   "english_name": "MEGA MGC COFFEE Xylitol Coffee Candy",
+   "numbers": [
+    10
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_010.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 2000
+   }
+  },
+  {
+   "id": "f011",
+   "kind": "f",
+   "name": "버터가 쫀득해떡",
+   "english_name": "Butter Tteok",
+   "numbers": [
+    11
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_011.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f012",
+   "kind": "f",
+   "name": "메가베리 아사이볼",
+   "english_name": "Mega Berry Acai Bowl",
+   "numbers": [
+    12
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_012.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f013",
+   "kind": "f",
+   "name": "딥치즈 불고기 베이크",
+   "english_name": "Double Cheese Bulgogi Bake",
+   "numbers": [
+    13
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_013.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f014",
+   "kind": "f",
+   "name": "요거젤라또 초코베리믹스",
+   "english_name": "Yogurt Gelato Choco Berry Mix",
+   "numbers": [
+    14
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_014.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f015",
+   "kind": "f",
+   "name": "요거젤라또 씨리얼 초코베리믹스",
+   "english_name": "Yogurt Gelato Cereal Choco Berry Mix",
+   "numbers": [
+    15
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_015.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f016",
+   "kind": "f",
+   "name": "멕시칸 미트칠리 핫도그",
+   "english_name": "Mexican Meat Chili Hot Dog",
+   "numbers": [
+    16
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_016.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4000
+   }
+  },
+  {
+   "id": "f017",
+   "kind": "f",
+   "name": "치즈 품은 감자빵",
+   "english_name": "Cheese-stuffed potato bread",
+   "numbers": [
+    17
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_017.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f018",
+   "kind": "f",
+   "name": "엠지씨네 메가칩",
+   "english_name": "MGC Buckwheat chips",
+   "numbers": [
+    18
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_018.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 2000
+   }
+  },
+  {
+   "id": "f019",
+   "kind": "f",
+   "name": "초코스모어쿠키",
+   "english_name": "Chocolate S'mores Cookie",
+   "numbers": [
+    19
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_019.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 2800
+   }
+  },
+  {
+   "id": "f020",
+   "kind": "f",
+   "name": "와앙메리칸 뽀득 핫도그",
+   "english_name": "Big American Hot Dog",
+   "numbers": [
+    20
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_020.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4000
+   }
+  },
+  {
+   "id": "f021",
+   "kind": "f",
+   "name": "햄앤치즈샌드위치",
+   "english_name": "Ham & Cheese Sandwich",
+   "numbers": [
+    21
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_021.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f022",
+   "kind": "f",
+   "name": "바질 치폴레치킨 치아바타",
+   "english_name": "Basil Chipotle Chicken Ciabatta",
+   "numbers": [
+    22
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_022.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f023",
+   "kind": "f",
+   "name": "핫 치킨&딥치즈 치아바타",
+   "english_name": "Hot chicken & deep cheese ciabatta",
+   "numbers": [
+    23
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_023.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f024",
+   "kind": "f",
+   "name": "버터버터 뜯어먹는 식빵",
+   "english_name": "Butter Butter Danish Bread",
+   "numbers": [
+    24
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_024.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f025",
+   "kind": "f",
+   "name": "버터버터소금빵",
+   "english_name": "Salty Butter Roll",
+   "numbers": [
+    25
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_025.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f026",
+   "kind": "f",
+   "name": "초코젤라또크로플",
+   "english_name": "Croffle with chocolate gelato",
+   "numbers": [
+    26
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_026.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f027",
+   "kind": "f",
+   "name": "마카다미아 쿠키",
+   "english_name": "Macadamia Cookie",
+   "numbers": [
+    27
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_027.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 2800
+   }
+  },
+  {
+   "id": "f028",
+   "kind": "f",
+   "name": "초콜릿칩 쿠키",
+   "english_name": "Chocolate Chip Cookie",
+   "numbers": [
+    28
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_028.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 2800
+   }
+  },
+  {
+   "id": "f029",
+   "kind": "f",
+   "name": "플레인크로플",
+   "english_name": "Plain Croffle",
+   "numbers": [
+    29
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_029.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f030",
+   "kind": "f",
+   "name": "크로크무슈",
+   "english_name": "Croque Monsieur",
+   "numbers": [
+    30
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_030.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:샌드위치·간식"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "f031",
+   "kind": "f",
+   "name": "치즈 케익",
+   "english_name": "Cheese Cake",
+   "numbers": [
+    31
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_031.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f032",
+   "kind": "f",
+   "name": "초코무스 케익",
+   "english_name": "Chocolate Mousse Cake",
+   "numbers": [
+    32
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_032.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f033",
+   "kind": "f",
+   "name": "티라미수 케익",
+   "english_name": "Tiramisu Cake",
+   "numbers": [
+    33
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_033.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5500
+   }
+  },
+  {
+   "id": "f034",
+   "kind": "f",
+   "name": "허니브레드",
+   "english_name": "Honey Bread",
+   "numbers": [
+    34
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_034.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f035",
+   "kind": "f",
+   "name": "감자빵",
+   "english_name": "Potato Bread",
+   "numbers": [
+    35
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_035.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:베이커리"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "f036",
+   "kind": "f",
+   "name": "딸기요거트 마카롱",
+   "english_name": "Strawberry Yogurt Macaron",
+   "numbers": [
+    36
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_036.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "f037",
+   "kind": "f",
+   "name": "메가초코 마카롱",
+   "english_name": "Chocolate Macaron",
+   "numbers": [
+    37
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_037.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "f038",
+   "kind": "f",
+   "name": "유니콘프라페 마카롱",
+   "english_name": "Unicorn Frappe Macaron",
+   "numbers": [
+    38
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_038.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 3000
+   }
+  },
+  {
+   "id": "f039",
+   "kind": "f",
+   "name": "호빵맨 초코 케이크&스퀴시 키링 세트",
+   "english_name": "ANPANMAN Choco cake & Squish keyring set",
+   "numbers": [
+    39
+   ],
+   "temps": [],
+   "images": {
+    "one": "food_039.webp"
+   },
+   "categories": [
+    6
+   ],
+   "tags": [
+    "c6:디저트"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 4500
+   }
+  },
+  {
+   "id": "g001",
+   "kind": "g",
+   "name": "붕괴: 스타레일 아크릴 스탠드",
+   "english_name": "Honkai: Star Rail Acrylic Stand",
+   "numbers": [
+    1
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_001.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g002",
+   "kind": "g",
+   "name": "붕괴: 스타레일 장패드",
+   "english_name": "Honkai: Star Rail Desk Mat",
+   "numbers": [
+    2
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_002.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g003",
+   "kind": "g",
+   "name": "붕괴: 스타레일 아크릴 코스터 (랜덤)",
+   "english_name": "Honkai: Star Rail Acrylic Coaster (RD)",
+   "numbers": [
+    3
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_003.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g004",
+   "kind": "g",
+   "name": "붕괴: 스타레일 캔배지 세트",
+   "english_name": "Honkai: Star Rail Can Badge Set",
+   "numbers": [
+    4
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_004.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g005",
+   "kind": "g",
+   "name": "붕괴: 스타레일 변온 텀블러 (은랑)",
+   "english_name": "Honkai: Star Rail Tumbler (Silver Wolf)",
+   "numbers": [
+    5
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_005.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g006",
+   "kind": "g",
+   "name": "붕괴: 스타레일 변온 텀블러 (블레이드)",
+   "english_name": "Honkai: Star Rail Tumbler (Blade)",
+   "numbers": [
+    6
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_006.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g007",
+   "kind": "g",
+   "name": "[공식] 하츄핑 고래보석의 전설 랜덤인형키링",
+   "english_name": "Heartsping2 Random Keyring",
+   "numbers": [
+    7
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_007.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g008",
+   "kind": "g",
+   "name": "MY WISH 미니로그 키링",
+   "english_name": "MY WISH Mini Log Keyring",
+   "numbers": [
+    8
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_008.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g009",
+   "kind": "g",
+   "name": "MY WISH 스트로우픽 키링 & 틴케이스 세트",
+   "english_name": "MY WISH Straw Pick Keyring & Tin Case Set",
+   "numbers": [
+    9
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_009.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g010",
+   "kind": "g",
+   "name": "메가MGC커피 빼꼼 장우산",
+   "english_name": "MEGA MGC COFFEE Peek-a-boo window umbrella",
+   "numbers": [
+    10
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_010.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g011",
+   "kind": "g",
+   "name": "호빵맨 말랑 스퀴시 키링",
+   "english_name": "ANPANMAN Squish keyring",
+   "numbers": [
+    11
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_011.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g012",
+   "kind": "g",
+   "name": "RIIZE 라브돔 텀블러세트",
+   "english_name": "RIIZE RAVDOME Tumbler Set",
+   "numbers": [
+    12
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_012.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g013",
+   "kind": "g",
+   "name": "RIIZE 메모리즈 빔카메라 키링",
+   "english_name": "RIIZE Memories Beam Camera Keyring",
+   "numbers": [
+    13
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_013.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g014",
+   "kind": "g",
+   "name": "RIIZE ODYSSEY MEGA SMini Ver.",
+   "english_name": "RIIZE ODYSSEY MEGA SMini Ver.",
+   "numbers": [
+    14
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_014.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g015",
+   "kind": "g",
+   "name": "빙글빙글 마루 인형 키링(2종 랜덤)",
+   "english_name": "Maru Doll Keyring (Random 2 Types)",
+   "numbers": [
+    15
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_015.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g016",
+   "kind": "g",
+   "name": "언니랑 마루랑! 피크닉 매트 파우치 세트",
+   "english_name": "Maru Picnic Mat & Pouch Set",
+   "numbers": [
+    16
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_016.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g017",
+   "kind": "g",
+   "name": "마루 쓱싹 마루 깔끔 멀티 파우치",
+   "english_name": "Maru Multi Pouch",
+   "numbers": [
+    17
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_017.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g018",
+   "kind": "g",
+   "name": "마루 덥석 마루 꼴깍 빨대 텀블러",
+   "english_name": "Maru Straw Tumbler",
+   "numbers": [
+    18
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_018.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g019",
+   "kind": "g",
+   "name": "작지만 강력한 마루 자석 세트(2종 랜덤)",
+   "english_name": "Maru Magnet Set(Random 2 Types)",
+   "numbers": [
+    19
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_019.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g020",
+   "kind": "g",
+   "name": "나랑 같이 날아 츄! 우주선 빨대 텀블러",
+   "english_name": "Spacecraft Straw Tumbler",
+   "numbers": [
+    20
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_020.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g021",
+   "kind": "g",
+   "name": "나랑 같이 가자 츄! 하츄핑 실리콘 가방",
+   "english_name": "HEARTSPING Silicone Bag",
+   "numbers": [
+    21
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_021.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g022",
+   "kind": "g",
+   "name": "나랑 같이 마셔 츄! 콜드컵 키링 텀블러",
+   "english_name": "Cold Cup Keyring Tumbler",
+   "numbers": [
+    22
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_022.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g023",
+   "kind": "g",
+   "name": "나랑 같이 냠냠 츄! 로켓 멀티통",
+   "english_name": "Rocket Multi-Case",
+   "numbers": [
+    23
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_023.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g024",
+   "kind": "g",
+   "name": "나랑 같이 놀자 츄! 카메라 빔 키링",
+   "english_name": "Camera Beam keyring",
+   "numbers": [
+    24
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_024.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 8000
+   }
+  },
+  {
+   "id": "g025",
+   "kind": "g",
+   "name": "나랑 같이 달아 츄! 랜덤 티니핑 파츠 3종",
+   "english_name": "3 Types of Random Teenieping Parts",
+   "numbers": [
+    25
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_025.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g026",
+   "kind": "g",
+   "name": "캐치!티니핑 하츄핑 랜덤 피규어",
+   "english_name": "Heartsping Movie Colletion Random Figure",
+   "numbers": [
+    26
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_026.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:콜라보 상품"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 10000
+   }
+  },
+  {
+   "id": "g027",
+   "kind": "g",
+   "name": "메가MGC커피 투명 장우산",
+   "english_name": "Mega MGC Coffee Transparent Long Umbrella",
+   "numbers": [
+    27
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_027.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g028",
+   "kind": "g",
+   "name": "엠지씨 머그(옐로우)",
+   "english_name": "MGC MUG (Yellow)",
+   "numbers": [
+    28
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_028.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 9000
+   }
+  },
+  {
+   "id": "g029",
+   "kind": "g",
+   "name": "MGC 텀블러(웜그레이)",
+   "english_name": "MGC Tumbler (Warm Grey)",
+   "numbers": [
+    29
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_029.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g030",
+   "kind": "g",
+   "name": "MGC 텀블러(옐로우)",
+   "english_name": "MGC Tumbler (Yellow)",
+   "numbers": [
+    30
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_030.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g031",
+   "kind": "g",
+   "name": "MGC 텀블러(스카이)",
+   "english_name": "MGC Tumbler (Sky)",
+   "numbers": [
+    31
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_031.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 15000
+   }
+  },
+  {
+   "id": "g032",
+   "kind": "g",
+   "name": "스테비아 케이스",
+   "english_name": "Stevia case",
+   "numbers": [
+    32
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_032.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 5000
+   }
+  },
+  {
+   "id": "g033",
+   "kind": "g",
+   "name": "콜드브루 원액",
+   "english_name": "MEGA COLD BREW COFFEE",
+   "numbers": [
+    33
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_033.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 12000
+   }
+  },
+  {
+   "id": "g034",
+   "kind": "g",
+   "name": "콜드브루 원액(디카페인)",
+   "english_name": "MEGA COLD BREW COFFEE(DECAFFEINE)",
+   "numbers": [
+    34
+   ],
+   "temps": [],
+   "images": {
+    "one": "goods_034.webp"
+   },
+   "categories": [
+    7
+   ],
+   "tags": [
+    "c7:굿즈"
+   ],
+   "badge": "",
+   "coffee": 0,
+   "sample_price": {
+    "one": 12000
+   }
+  }
+ ]
+}

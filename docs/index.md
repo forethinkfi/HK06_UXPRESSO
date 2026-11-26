@@ -22,6 +22,7 @@
 | [api.md](api.md) | 자체 테스트 API(메뉴·쿠폰·모의 결제)와 테스트 시나리오 |
 | 시안 보드 (`/screens.html`) | 개선된 핵심 화면 모음. 서버 실행 후 http://localhost:3000/screens.html |
 | [artboard/](artboard/README.md) | Claude Design 아트보드 소스 백업 (화면 12장, Design System v2) |
+| [artboard/v2-i/](artboard/v2-i/README.md) | **프로토타입 시안 v2-I** — 프로모션·오비트 메인·메뉴 서브카테고리·영수증 발행, 메뉴 192개 데이터와 생성 도구 (이미지는 미포함) |
 | [../CLAUDE.md](../CLAUDE.md) | Claude Code 작업 가이드 |
 
 ## 화면 흐름
