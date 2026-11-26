@@ -5,7 +5,7 @@
 ## 명령어
 - 실행: `npm start` → http://localhost:3000 (`?debug=1` 로 터치수·시간·도움 횟수 표시)
 - UI Kit: `/kit.html`
-- 빌드·테스트·의존성 없음 (Node 내장 모듈만 사용)
+- 빌드 없음. 의존성은 음성 주문(Gemini Live)용 `ws`, `@google/genai`뿐 → `npm install` 필요. 서버 테스트 `npm test`(가짜 Gemini, 키 불필요). 음성 구조·환경변수는 `docs/ai-integration.md`
 
 ## 구조
 | 경로 | 역할 |

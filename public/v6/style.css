@@ -282,3 +282,8 @@ dialog .pair .btn{flex:1;height:112px}
 @keyframes draw{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
   .shrink{display:none}}
+
+/* Gemini Live: 말 대신 입력하는 줄 (음성 패널 안) */
+#voice .vtext{display:flex;gap:16px}
+#voice .vtext input{flex:1;height:88px;padding:0 24px;border-radius:var(--r-xs);border:0;background:var(--white);color:var(--black);font-size:28px;min-width:0}
+#voice .vtext .btn{height:88px;padding:0 32px}
