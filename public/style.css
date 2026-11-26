@@ -68,8 +68,9 @@ svg.lucide{width:32px;height:32px;stroke-width:2;flex:none}
 .card .photo img{inset:8px;width:calc(100% - 16px);height:calc(100% - 16px);mix-blend-mode:var(--photo-blend)}
 .photo:has(img){color:transparent}
 .card-main:active .photo{box-shadow:inset 0 0 0 1px var(--brand-black)}
-.card .name{margin-top:var(--space-16);padding:0 var(--space-08);font:var(--type-product-name)}
-.card .price{margin-top:var(--space-04);padding:0 var(--space-08);font:var(--type-price)}
+/* every name gets the same two-line slot, one-line names sit in its middle: same card height, level prices, no lopsided gap */
+.card .name{min-height:80px;display:flex;align-items:center;margin-top:var(--space-12);font:var(--type-product-name)}
+.card .price{margin-top:var(--space-04);font:var(--type-price)}
 .badge{display:inline-block;padding:var(--space-04) var(--space-12);border-radius:var(--radius-xs);background:var(--brand-primary);color:var(--brand-black);font:700 22px/30px var(--font)}
 .badge.new{background:var(--brand-black);color:var(--brand-primary)}
 .badge.soldout{background:var(--brand-black);color:var(--brand-white)}
