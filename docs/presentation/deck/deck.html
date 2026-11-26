@@ -54,41 +54,48 @@ td b{font-weight:700}
 
 <!-- 2 문제 인지 ① -->
 <section>
-  <span class="tag">01 문제 인지</span>
-  <h2>주문하려면 키오스크의 구조부터 익혀야 합니다</h2>
-  <p class="lead">매장 촬영 영상을 바탕으로 재구성한 기존(AS-IS) 화면에서 관찰한 내용</p>
-  <div class="body">
-    <figure><img class="shot" src="../../research/as-is-normal-mode/screens/01-main-menu.png" style="height:640px" alt="기존 메뉴 화면"><figcaption>메뉴 선택</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-normal-mode/screens/04-option.png" style="height:640px" alt="기존 옵션 화면"><figcaption>옵션 선택</figcaption></figure>
-    <div class="col">
-      <div class="card"><h3>작고 빽빽한 메뉴</h3><p>4열 격자에 이름·가격이 작게 놓이고, 원하는 메뉴를 찾으려면 카테고리 분류를 먼저 알아야 합니다.</p></div>
-      <div class="card"><h3>계속 보이는 남은 시간</h3><p>하단의 “120” 시간 표시는 전체 주문 제한 시간처럼 읽힐 수 있습니다.</p></div>
-      <div class="card"><h3>같은 위계로 나열된 선택지</h3><p>사이즈·샷·시럽·휘핑이 비슷한 모양으로 이어져 무엇을 꼭 골라야 하는지 구분하기 어렵습니다.</p></div>
-      <p class="note">기능이 많은 것 자체를 문제로 보지 않았습니다. 정보를 이해하고 고르는 방식에 주목했습니다.</p>
+  <span class="tag">01 문제 인지 ① 메뉴 찾기</span>
+  <h2>원하는 메뉴를 찾기까지 읽어야 할 것이 많습니다</h2>
+  <div class="row" style="margin-top:32px;gap:40px">
+    <div style="width:410px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-01.webp" style="width:410px" alt="기존 메인 메뉴">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">한 화면에 16개</h3><p style="font-size:22px">4열 격자에 이름과 가격이 작게 놓입니다. 헤더의 7개 분류를 먼저 이해해야 합니다.</p></div>
+    </div>
+    <div style="width:410px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-02.webp" style="width:410px" alt="기존 카테고리 탐색">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">비슷한 카드의 반복</h3><p style="font-size:22px">컵 모양과 크기가 같아, 이름을 하나씩 읽어야 구분됩니다. 하단에는 시간 “120”이 계속 보입니다.</p></div>
+    </div>
+    <div style="width:410px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-03.webp" style="width:410px" alt="기존 음료 선택">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">온도가 메뉴 이름에</h3><p style="font-size:22px">“ICED”가 붙은 메뉴를 따로 나열해 목록이 길어지고, 이름 앞부분이 반복됩니다.</p></div>
     </div>
   </div>
-  <div class="foot"><span>자료: docs/research/as-is-normal-mode (영상 기반 재구성, 색·크기는 근사값)</span><span>2 / 10</span></div>
+  <div class="foot"><span>자료: 매장 키오스크(일반모드) 촬영 영상을 바탕으로 재구성한 화면 — 실제 화면과 다를 수 있음</span><span>2 / 10</span></div>
 </section>
 
 <!-- 3 문제 인지 ② -->
 <section>
-  <span class="tag">01 문제 인지</span>
-  <h2>라떼 한 잔에 옵션 화면 6단계를 지나갑니다</h2>
-  <p class="lead">쉬운모드 단말에서 확인한 (ICE)카페라떼 옵션 선택 흐름</p>
-  <div class="row" style="margin-top:40px;gap:20px">
-    <figure><img class="shot" src="../../research/as-is-flow/screens/13-option-1-latte.png" style="width:268px" alt=""><figcaption>1 텀블러</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-flow/screens/14-option-2-shot.png" style="width:268px" alt=""><figcaption>2 샷</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-flow/screens/15-option-3-health.png" style="width:268px" alt=""><figcaption>3 건강 옵션</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-flow/screens/16-option-4-sweet.png" style="width:268px" alt=""><figcaption>4 당도</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-flow/screens/17-option-5-topping.png" style="width:268px" alt=""><figcaption>5 토핑</figcaption></figure>
-    <figure><img class="shot" src="../../research/as-is-flow/screens/18-option-6-last.png" style="width:268px" alt=""><figcaption>6 선택 완료</figcaption></figure>
+  <span class="tag">01 문제 인지 ② 고르고 확인하기</span>
+  <h2>고르고 확인하는 과정이 헷갈리고, 팝업에 가려집니다</h2>
+  <div class="row" style="margin-top:32px;gap:32px">
+    <div style="width:396px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-04.png" style="width:396px" alt="기존 옵션 선택">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">같은 모양의 옵션 4줄</h3><p style="font-size:22px">사이즈·샷·시럽·휘핑이 같은 위계입니다. 선택된 값과 완료 버튼이 같은 노란색입니다.</p></div>
+    </div>
+    <div style="width:396px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-05.png" style="width:396px" alt="기존 확인 팝업">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">무엇을 하라는지 모호</h3><p style="font-size:22px">“선택(주문) 해주세요” 문구와 네 가지 금액이 함께 나오고, 되돌아가는 버튼이 보이지 않습니다.</p></div>
+    </div>
+    <div style="width:396px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-06.png" style="width:396px" alt="기존 수량 수정">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">수량 변경에 숫자 키패드</h3><p style="font-size:22px">“00·000·Clear” 키까지 있는 별도 팝업에서 수량을 입력해야 합니다.</p></div>
+    </div>
+    <div style="width:396px;display:flex;flex-direction:column;gap:20px">
+      <img class="shot" src="img/asis-07.png" style="width:396px" alt="기존 적립번호 입력">
+      <div class="card" style="padding:22px 24px"><h3 style="font-size:27px">화면을 덮는 팝업</h3><p style="font-size:22px">주문 내용이 가려진 채 번호를 입력해, 지금 어느 단계인지 알기 어렵습니다.</p></div>
+    </div>
   </div>
-  <div class="row" style="margin-top:56px;gap:28px">
-    <div class="card" style="flex:1"><h3>HOT·ICE가 다른 메뉴</h3><p>같은 음료가 두 번 나열되어 목록이 길어집니다.</p></div>
-    <div class="card" style="flex:1"><h3>결제 수단 2쪽</h3><p>할인·결제 수단이 여러 화면과 접힌 영역에 나뉘어 있습니다.</p></div>
-    <div class="card" style="flex:1"><h3>잦은 팝업과 단계 이동</h3><p>묻고 고르는 화면이 이어져 지금 어디쯤인지 알기 어렵습니다.</p></div>
-  </div>
-  <div class="foot"><span>자료: docs/research/as-is-flow (약 3분 50초 영상 기반 재구성, 상품 이미지는 일러스트)</span><span>3 / 10</span></div>
+  <div class="foot"><span>자료: 매장 키오스크(일반모드) 촬영 영상을 바탕으로 재구성한 화면 — 실제 화면과 다를 수 있음</span><span>3 / 10</span></div>
 </section>
 
 <!-- 4 문제 정의 -->
@@ -100,8 +107,8 @@ td b{font-weight:700}
       <table>
         <tr><th style="width:90px">구분</th><th style="width:270px">문제 가설</th><th>고객이 겪는 상황</th></tr>
         <tr><td><b>P01</b></td><td><b>메뉴 탐색</b></td><td>분류 기준을 알아야 원하는 메뉴를 찾을 수 있다</td></tr>
-        <tr><td><b>P02</b></td><td><b>선택의 복잡성</b></td><td>상품·옵션·혜택이 같은 위계라 다음 행동이 헷갈린다</td></tr>
-        <tr><td><b>P03</b></td><td><b>조작 부담</b></td><td>터치만으로 여러 화면을 이동하기 어렵다</td></tr>
+        <tr><td><b>P02</b></td><td><b>선택의 복잡성</b></td><td>옵션과 버튼이 비슷하게 보여 무엇을 해야 할지 헷갈린다</td></tr>
+        <tr><td><b>P03</b></td><td><b>조작 부담</b></td><td>작은 항목을 고르고 팝업과 키패드를 오가기 어렵다</td></tr>
         <tr><td><b>P04</b></td><td><b>시간 압박</b></td><td>남은 시간 표시 때문에 충분히 읽고 고민하지 못한다</td></tr>
         <tr><td><b>P05</b></td><td><b>오류 복구</b></td><td>실수·결제 실패 때 주문을 유지한 채 되돌리기 어렵다</td></tr>
       </table>
@@ -228,10 +235,11 @@ td b{font-weight:700}
       <table>
         <tr><th>비교 항목</th><th>기존 화면에서 관찰</th><th>개선안</th><th>기대 효과 (가설)</th></tr>
         <tr><td><b>주문 입력</b></td><td>터치 중심</td><td>터치 + 음성(모의)</td><td>조작·탐색 부담 감소</td></tr>
-        <tr><td><b>옵션 선택</b></td><td>6단계 (쉬운모드)</td><td>상세 한 화면</td><td>선택 오류 감소</td></tr>
-        <tr><td><b>HOT·ICE</b></td><td>별도 메뉴</td><td>한 상품에서 온도 선택</td><td>탐색 시간 감소</td></tr>
-        <tr><td><b>결제 수단</b></td><td>2쪽으로 나뉨</td><td>한 화면 5열</td><td>수단 발견 향상</td></tr>
-        <tr><td><b>시간 표시</b></td><td>남은 시간 상시 표시</td><td>안내 + 시간 연장</td><td>심리적 압박 완화</td></tr>
+        <tr><td><b>메뉴 배열</b></td><td>4열, 한 화면 16개</td><td>3열 큰 카드</td><td>탐색 성공률 향상</td></tr>
+        <tr><td><b>온도 선택</b></td><td>ICED 메뉴를 따로 나열</td><td>한 상품에서 온도 선택</td><td>탐색 시간 감소</td></tr>
+        <tr><td><b>옵션·금액</b></td><td>옵션 뒤 확인 팝업</td><td>상세 화면에서 총액 확인</td><td>선택 오류 감소</td></tr>
+        <tr><td><b>수량 수정</b></td><td>팝업의 숫자 키패드</td><td>주문서에서 − / +</td><td>수정 부담 감소</td></tr>
+        <tr><td><b>시간 표시</b></td><td>“120” 상시 표시</td><td>안내 + 시간 연장</td><td>심리적 압박 완화</td></tr>
       </table>
       <p class="note" style="margin-top:18px">화면 구성의 비교이며, 효과는 아직 측정하지 않았습니다.</p>
     </div>
