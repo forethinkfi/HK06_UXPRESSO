@@ -10,7 +10,7 @@ const inCat = (...names) => (m) => m.cats.some((c) => names.includes(c));
 const groupSubs = (...names) => names.map((n) => [n, n, (m) => m.group === n]);
 const CATS = [
   { id: 'new', name: '신메뉴', fn: inCat('신메뉴') },
-  { id: 'rec', name: '추천메뉴', fn: (m) => m.featured },
+  { id: 'rec', name: '추천메뉴', fn: (m) => m.featured || m.cats.includes('신메뉴') }, // BEST picks first (data order), then new menus
   { id: 'coffee', name: '커피', fn: inCat('커피') },
   { id: 'decaf', name: '디카페인', fn: inCat('디카페인') },
   { id: 'drink', name: '음료', fn: inCat('음료', '에이드·주스', '스무디·프라페'), subs: [['latte', '라떼·음료', inCat('음료')], ['ade', '에이드·주스', inCat('에이드·주스')], ['frappe', '스무디·프라페', inCat('스무디·프라페')]] },
@@ -121,7 +121,7 @@ const SCREENS = {
       ${list.length ? `<div class="grid">${list.map((m) => {
         const out = m.available === false;
         // NEW follows the homepage's new-menu list. BEST shows only for `best: true` in the menu data (needs real sales data).
-        const tags = out ? ['<span class="badge soldout">품절</span>'] : [m.cats.includes('신메뉴') && '<span class="badge">NEW</span>', m.best && '<span class="badge">BEST</span>'].filter(Boolean);
+        const tags = out ? ['<span class="badge soldout">품절</span>'] : [m.cats.includes('신메뉴') && '<span class="badge new">NEW</span>', m.best && '<span class="badge">BEST</span>'].filter(Boolean);
         const badge = tags.length ? `<span class="badges">${tags.join('')}</span>` : '';
         return `<article class="card"><button class="card-main" data-act="open" data-v="${m.id}" ${out ? 'disabled' : ''}>${photo(m, badge)}<span class="name">${esc(m.name)}</span><span class="price">${out ? '품절' : won(m.price)}</span></button></article>`;
       }).join('')}</div>`
@@ -163,7 +163,9 @@ const SCREENS = {
     <div class="footer">${btn('메뉴 더 담기', 'toMenu', { v: 'secondary' })}${btn('결제하기', 'toPay')}</div></div>`,
 
   pay: () => {
-    const tile = (m) => `<button class="tile" data-act="method" data-v="${m.id}" ${m.supported ? '' : 'disabled'}><b>${esc(m.name)}</b>${m.sub && m.sub !== m.name ? `<small>${esc(m.sub)}</small>` : ''}</button>`;
+    // official logo files only (`logo` in data/payments.json); never drawn or imitated. Until then, a marked slot.
+    const logo = (x) => `<span class="brand-logo">${x.logo ? `<img src="${esc(x.logo)}" alt="">` : '로고'}</span>`;
+    const tile = (m) => `<button class="tile" data-act="method" data-v="${m.id}" ${m.supported ? '' : 'disabled'}>${logo(m)}<b>${esc(m.name)}</b>${m.sub && m.sub !== m.name ? `<small>${esc(m.sub)}</small>` : ''}</button>`;
     const by = (g) => DB.methods.filter((m) => m.group === g);
     const title = (ic, text, extra = '') => `<h2 class="section">${icon(ic)}${text}${extra}</h2>`;
     const c = S.coupon, off = DB.methods.filter((m) => !m.supported).map((m) => m.name);
@@ -171,7 +173,7 @@ const SCREENS = {
     <div class="scroll pay" data-keep>
       <div class="paysum"><div><h1 class="section" tabindex="-1">결제할 금액</h1><p class="sub">${MODE[S.mode].name} · ${count()}개${c?.status === 'ok' ? ` · 주문 ${won(total())} - 쿠폰 ${won(c.discount)}` : ''}</p></div><b>${won(due())}</b></div>
       <section>${title('ticket', '할인·적립', ' <span class="tag">선택</span>')}
-        <div class="tiles">${DB.benefits.map((b) => `<button class="tile" data-act="dlg" data-v="benefit:${b.id}"><b>${esc(b.name)}</b></button>`).join('')}
+        <div class="tiles">${DB.benefits.map((b) => `<button class="tile" data-act="dlg" data-v="benefit:${b.id}">${logo(b)}<b>${esc(b.name)}</b></button>`).join('')}
           <button class="tile" data-act="dlg" data-v="coupon">${icon(c?.status === 'ok' ? 'circle-check' : 'ticket')}<b>${c?.status === 'ok' ? '쿠폰 적용됨' : '메가 쿠폰'}</b></button>
           <button class="tile" data-act="dlg" data-v="stamp">${icon(S.stamp ? 'circle-check' : 'stamp')}<b>${S.stamp ? '적립 번호 입력됨' : '스탬프 적립'}</b></button></div></section>
       ${due() === 0 ? feedback('success', '쿠폰으로 전액 결제돼요.', '결제 수단을 고르지 않아도 돼요.') : `
