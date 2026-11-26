@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko"><head><title>UXPRESSO v2-I · 25-pay-coupon-applied</title><meta charset="utf-8"><meta name="viewport" content="width=1080">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+<style>@font-face{font-family:'Pretendard';src:local('Pretendard Variable'),local('Pretendard'),url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2');font-weight:45 920}
+.sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);border:1px solid color-mix(in srgb,currentColor 50%,transparent);border-radius:2px;box-sizing:border-box;overflow:hidden}@keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}html.sc-dc-streaming .sc-placeholder,html.sc-dc-streaming .sc-interp.sc-missing{position:relative;background:color-mix(in srgb,currentColor 5%,transparent);border-color:transparent}html.sc-dc-streaming .sc-placeholder::before,html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);background-size:400% 100%;animation:sc-shine 1.4s ease infinite}html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;background:color-mix(in srgb,currentColor 8%,transparent)}.sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}.sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);border-radius:2px;box-sizing:border-box;color:transparent;user-select:none}.sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;color:color-mix(in srgb,currentColor 50%,transparent);background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;padding:0 3px}.sc-host.sc-has-error{position:relative}.sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;border-radius:4px;white-space:pre-wrap;pointer-events:none}@media print{@page{margin: 0.5cm;}figure,table{break-inside: avoid;}#dc-root,#dc-root > .sc-host{height: auto;}*,*::before,*::after{print-color-adjust: exact;-webkit-print-color-adjust: exact;backdrop-filter: none !important;-webkit-backdrop-filter: none !important;animation-delay: -99s !important;animation-duration: .001s !important;animation-iteration-count: 1 !important;animation-fill-mode: both !important;animation-play-state: running !important;transition-duration: 0s !important;}}
+x-dc{display:none!important}
+
+
+body{margin:0}
+.stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#fff;color:#231F20;font-family:Pretendard,'Noto Sans KR',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.stage *{box-sizing:border-box}
+
+.dsp{font-family:Pretendard,'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:-.01em}
+.ttl{font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-weight:400}
+.scr{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:#fff;animation:fadeIn 520ms ease both}
+.b{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0;margin:0;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;transition:transform 160ms ease}
+.b:active{transform:scale(.96)}
+.b:focus-visible{outline:3px solid #231F20;outline-offset:3px}
+.pill-y{background:#F8DA29;color:#231F20;border-radius:999px;height:112px;font-size:32px;font-weight:700;padding:0 40px}
+.pill-k{background:#231F20;color:#F8DA29;border-radius:999px;height:112px;font-size:32px;font-weight:700;padding:0 40px}
+.pill-y[disabled],.pill-k[disabled]{background:#E5E5E5;color:#757575;cursor:default}
+.pill-o{background:rgba(35,31,32,.07);color:inherit;border-radius:999px;height:88px;font-size:28px;font-weight:600;padding:0 32px}
+.ic{width:80px;height:80px;border-radius:999px;background:rgba(35,31,32,.08);color:#231F20}
+.ic[disabled]{opacity:.35;cursor:default}
+.cap{font-size:22px;line-height:32px;color:#5C5859}
+.hdr{height:112px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;flex:none;position:relative;z-index:5}
+.mult{mix-blend-mode:multiply}
+.lbl{font-size:20px;font-weight:700;background:#231F20;color:#F8DA29;border-radius:999px;padding:2px 14px}
+.lbl-o{font-size:20px;font-weight:700;border-radius:999px;padding:2px 14px;background:rgba(35,31,32,.08);color:#5C5859}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ringOut{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes popIn{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:none}}
+@keyframes fade{0%{opacity:0}30%{opacity:1}70%{opacity:1}100%{opacity:0}}
+@keyframes wave{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.25) rotate(-6deg)}100%{transform:scale(1)}}
+@keyframes flyIn{0%{transform:translate(0,0) scale(1);opacity:1}70%{opacity:1}100%{transform:translate(-390px,1350px) scale(.15);opacity:0}}
+@keyframes lineIn{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes liqrise{from{transform:translateY(150px)}to{transform:translateY(22px)}}
+@keyframes wavemove{to{transform:translateX(-120px)}}
+@keyframes flow{to{stroke-dashoffset:-36}}
+@keyframes numPop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes checkPop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes stamp{0%{opacity:0;transform:scale(2) rotate(-20deg)}100%{opacity:1;transform:scale(1) rotate(-10deg)}}
+@keyframes shrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes sheetUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes print{0%{transform:translateY(-105%)}100%{transform:translateY(0)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes jelly{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+.disc{position:absolute;border-radius:999px}
+.orb{position:absolute;left:540px;top:920px;width:0;height:0;animation:spin 80s linear infinite;z-index:5}
+.sat{position:absolute;left:-110px;top:-110px;width:220px;height:220px}
+.satin{width:220px;height:220px;animation:spin 80s linear infinite reverse}
+.nd{width:220px;height:220px;border-radius:999px;background:#fff;flex-direction:column;gap:0;padding-top:6px;box-shadow:0 8px 20px rgba(35,31,32,.14)}
+.nd:active{background:#FDFBC4}
+.orb:hover,.orb:hover .satin{animation-play-state:paused}
+.liq{transform-box:fill-box;transform-origin:bottom;transition:transform 600ms cubic-bezier(.34,1.56,.64,1)}
+.bar{display:block;width:8px;border-radius:4px;background:#F8DA29;transform-origin:center}
+.bar-on{animation:wave 1000ms ease-in-out infinite}
+.bar-off{transform:scaleY(.25)}
+.pulse{position:relative}
+.pulse::after{content:'';position:absolute;left:0;top:0;right:0;bottom:0;border-radius:999px;box-shadow:0 0 0 5px #F8DA29;animation:ringOut 1.4s ease-out infinite}
+.fly{position:absolute;left:390px;top:230px;width:300px;height:300px;z-index:80;pointer-events:none;object-fit:contain;animation:flyIn 900ms cubic-bezier(.5,0,.75,.4) both}
+.wipe{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:90;background:#F8DA29;display:flex;align-items:center;justify-content:center;animation:fade 860ms ease both;pointer-events:all}
+.sheet{position:absolute;left:24px;right:24px;z-index:60;background:#231F20;color:#fff;border-radius:40px;padding:32px 36px;display:flex;flex-direction:column;gap:20px;animation:rise 380ms ease both}
+.chip{height:76px;border-radius:999px;box-shadow:inset 0 0 0 2px #F8DA29;color:#F8DA29;font-size:24px;font-weight:600;padding:0 26px}
+.chip:active{background:#F8DA29;color:#231F20}
+.rail{transition:background 160ms ease;width:200px;height:180px;margin-bottom:8px;border-radius:44px;flex-direction:column;gap:4px;position:relative;z-index:1}
+.sub{height:72px;flex:none;border-radius:999px;font-size:28px;font-weight:600;padding:0 30px;background:#F1EFE4;color:#231F20;transition:background 200ms,color 200ms}
+.sub.on{background:#231F20;color:#F8DA29;font-weight:700}
+.card2{position:relative;border-radius:28px;background:#fff;box-shadow:inset 0 0 0 1px #E6E3D6;animation:fadeIn 320ms ease both}
+.card2:active{background:#F7F5EC}
+.seg{flex:1;height:10px;border-radius:5px;background:rgba(35,31,32,.18)}
+.seg.on{background:#231F20}
+.stk{position:relative;height:150px;border-radius:32px;flex-direction:column;gap:8px;background:#fff;box-shadow:inset 0 0 0 1px #E2E0D8;padding:0 8px;transition:background 200ms}
+.stk:active{background:#F7F5EC}
+.zig{height:22px;background:radial-gradient(circle at 12px 22px,transparent 12px,#fff 12.5px) 0 0/24px 22px repeat-x}
+.perf{border-top:4px dashed #231F20;opacity:.2;margin:20px 0}
+.liqrise{animation:liqrise 3s cubic-bezier(.4,0,.2,1) both}
+.wavep{animation:wavemove 1.2s linear infinite}
+@media (prefers-reduced-motion:reduce){.stage *{animation-duration:1ms!important;animation-iteration-count:1!important}}
+*{animation:none!important;transition:none!important}
+body{margin:0;background:#e9e9e9}
+.frame{margin:0 0 80px}
+.frame h2{font:700 28px Pretendard,'Noto Sans KR',sans-serif;margin:0 0 12px;color:#333}
+</style></head><body><div data-dc-tpl="4" class="stage"><section data-dc-tpl="259" class="scr" aria-label="할인과 결제" style="background: rgb(255, 253, 240); display: flex; flex-direction: column; opacity: 1;">
+  <div data-dc-tpl="260" style="background: rgb(35, 31, 32); color: rgb(255, 255, 255); border-radius: 0px 0px 56px 56px; padding: 36px 40px 40px; flex: 0 0 auto;">
+    <div data-dc-tpl="261" style="display: flex; gap: 8px;"><span data-dc-tpl="263" class="seg" style="background: rgb(248, 218, 41);"></span><span data-dc-tpl="263" class="seg" style="background: rgb(248, 218, 41);"></span><span data-dc-tpl="263" class="seg" style="background: rgb(248, 218, 41);"></span><span data-dc-tpl="263" class="seg" style="background: rgba(255, 255, 255, 0.25);"></span><span data-dc-tpl="263" class="seg" style="background: rgba(255, 255, 255, 0.25);"></span></div>
+    <div data-dc-tpl="264" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+      <button data-dc-tpl="265" class="b" style="height: 72px; font-size: 26px; font-weight: 600; padding: 0px 24px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); color: rgb(248, 218, 41);"><svg data-dc-tpl="266" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path data-dc-tpl="267" d="m15 18-6-6 6-6"></path></svg>주문서로</button>
+      <div data-dc-tpl="268" style="font-size: 26px; font-weight: 600; color: rgb(248, 218, 41);">3 / 5 · 할인 · 적립 · 결제 · <span class="sc-interp">포장하기</span></div>
+    </div>
+  </div>
+  <div data-dc-tpl="269" style="flex: 1 1 0%; min-height: 0px; overflow-y: auto; padding: 36px 40px 40px;">
+    
+      <div data-dc-tpl="271" style="margin-bottom: 44px;">
+        <div data-dc-tpl="272" style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;"><span data-dc-tpl="273" class="dsp" style="font-size: 44px; line-height: 52px; background: rgb(248, 218, 41); padding: 2px 26px; border-radius: 999px;"><span class="sc-interp">할인 · 적립</span></span><span data-dc-tpl="274" class="cap"><span class="sc-interp">받을 수 있는 혜택이 있나요? 없으면 아래에서 바로 결제해요.</span></span></div>
+        <div data-dc-tpl="275" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 16px; margin-top: 16px;">
+          
+            <button data-dc-tpl="277" class="b stk" style="background: rgb(253, 251, 196);">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">메</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">메가쿠폰</span></span>
+              <span data-dc-tpl="281" class="dsp" style="position: absolute; right: -6px; top: -14px; font-size: 28px; color: rgb(179, 38, 30); background: rgb(255, 255, 255); border-radius: 12px; padding: 0px 12px; box-shadow: rgb(179, 38, 30) 0px 0px 0px 3px inset; animation: 360ms ease 0s 1 normal both running stamp; opacity: 1; transform: matrix(0.984808, -0.173648, 0.173648, 0.984808, 0, 0);">적용됨</span>
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">K</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">KT 멤버십</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">T</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">T멤버십</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">C</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">CJ ONE</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">기</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">기아멤버스</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">S</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">SKT 우주패스</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="background: rgb(253, 251, 196);">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">스</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">스탬프 적립</span></span>
+              <span data-dc-tpl="281" class="dsp" style="position: absolute; right: -6px; top: -14px; font-size: 28px; color: rgb(179, 38, 30); background: rgb(255, 255, 255); border-radius: 12px; padding: 0px 12px; box-shadow: rgb(179, 38, 30) 0px 0px 0px 3px inset; animation: 360ms ease 0s 1 normal both running stamp; opacity: 1; transform: matrix(0.984808, -0.173648, 0.173648, 0.984808, 0, 0);">적용됨</span>
+            </button>
+          
+        </div>
+      </div>
+    
+      <div data-dc-tpl="271" style="margin-bottom: 44px;">
+        <div data-dc-tpl="272" style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;"><span data-dc-tpl="273" class="dsp" style="font-size: 44px; line-height: 52px; background: rgb(248, 218, 41); padding: 2px 26px; border-radius: 999px;"><span class="sc-interp">카드 결제</span></span><span data-dc-tpl="274" class="cap"><span class="sc-interp"></span></span></div>
+        <div data-dc-tpl="275" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 16px; margin-top: 16px;">
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">신</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">신용·체크카드</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">삼</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">삼성페이</span></span>
+              
+            </button>
+          
+        </div>
+      </div>
+    
+      <div data-dc-tpl="271" style="margin-bottom: 44px;">
+        <div data-dc-tpl="272" style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;"><span data-dc-tpl="273" class="dsp" style="font-size: 44px; line-height: 52px; background: rgb(248, 218, 41); padding: 2px 26px; border-radius: 999px;"><span class="sc-interp">간편결제</span></span><span data-dc-tpl="274" class="cap"><span class="sc-interp"></span></span></div>
+        <div data-dc-tpl="275" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 16px; margin-top: 16px;">
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">앱</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">앱카드 QR</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">카</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">카카오페이</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">P</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">PAYCO</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">네</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">네이버페이</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">제</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">제로페이</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">B</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">BC 페이북</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">하</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">하나Pay</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">K</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">KB Pay</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">신</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">신한 SOL Pay</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">당</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">당근페이</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">A</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">Alipay · WeChat</span></span>
+              
+            </button>
+          
+        </div>
+      </div>
+    
+      <div data-dc-tpl="271" style="margin-bottom: 44px;">
+        <div data-dc-tpl="272" style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;"><span data-dc-tpl="273" class="dsp" style="font-size: 44px; line-height: 52px; background: rgb(248, 218, 41); padding: 2px 26px; border-radius: 999px;"><span class="sc-interp">상품권 · 선불</span></span><span data-dc-tpl="274" class="cap"><span class="sc-interp"></span></span></div>
+        <div data-dc-tpl="275" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 16px; margin-top: 16px;">
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">모</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">모바일 상품권</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">메</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">메가커피 선불카드</span></span>
+              
+            </button>
+          
+            <button data-dc-tpl="277" class="b stk" style="">
+              <span data-dc-tpl="278" class="dsp" style="width: 56px; height: 56px; border-radius: 999px; background: rgb(248, 218, 41); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: 0 0 auto;"><span class="sc-interp">C</span></span>
+              <span data-dc-tpl="279" style="font-size: 24px; line-height: 30px; font-weight: 600; white-space: normal;"><span class="sc-interp">CJ 기프트카드</span></span>
+              
+            </button>
+          
+        </div>
+      </div>
+    
+    <div data-dc-tpl="282" class="cap" style="text-align: center;">결제 수단을 누르면 바로 결제 안내로 넘어가요.</div>
+  </div>
+  <div data-dc-tpl="283" style="flex: 0 0 auto; background: rgb(35, 31, 32); color: rgb(255, 255, 255); border-radius: 44px 44px 0px 0px; padding: 30px 52px 44px; display: flex; justify-content: space-between; align-items: center;"><span data-dc-tpl="284" style="font-size: 32px; line-height: 44px; font-weight: 600; color: rgb(217, 217, 217);"><span class="sc-interp">쿠폰 할인 -500원 적용</span></span><span data-dc-tpl="285" class="dsp" style="font-size: 64px; line-height: 72px; color: rgb(248, 218, 41);"><span class="sc-interp">9,000원</span></span></div></section></div><script>
+/* 메뉴 이미지의 흰 배경을 브라우저에서 지웁니다(실패하면 원본 그대로). */
+document.querySelectorAll('img[src^="https://ik.imagekit.io"]').forEach(function(im){
+  var o=new Image(); o.crossOrigin='anonymous'; o.onload=function(){ try{
+    var S=280,c=document.createElement('canvas'); c.width=S; c.height=S; var g=c.getContext('2d'); g.drawImage(o,0,0,S,S);
+    var d=g.getImageData(0,0,S,S),px=d.data; if(px[3]<200) return; var bg=new Uint8Array(S*S),st=[];
+    function near(i){return (765-px[i*4]-px[i*4+1]-px[i*4+2])<40} function push(i){ if(!bg[i]&&near(i)){bg[i]=1;st.push(i);} }
+    for(var x=0;x<S;x++){push(x);push((S-1)*S+x);} for(var y=0;y<S;y++){push(y*S);push(y*S+S-1);}
+    while(st.length){var i=st.pop(),x2=i%S,y2=(i/S)|0; if(x2>0)push(i-1); if(x2<S-1)push(i+1); if(y2>0)push(i-S); if(y2<S-1)push(i+S);}
+    if(/drink_(078|121)\./.test(im.src)){ for(var y3=0;y3<S;y3++){var a=-1,b=-1; for(var x3=0;x3<S;x3++) if(!bg[y3*S+x3]){ if(a<0)a=x3; b=x3; } if(a>=0) for(var x4=a;x4<=b;x4++) bg[y3*S+x4]=0; } }
+    for(var k=0;k<S*S;k++) if(bg[k]) px[k*4+3]=0; g.putImageData(d,0,0); im.src=c.toDataURL('image/png'); }catch(e){} }; o.src=im.src; });
+</script></body></html>

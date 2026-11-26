@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>UXPRESSO 키오스크 프로토타입 v2-I</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#fff;color:#231F20;font-family:Pretendard,'Noto Sans KR',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.stage *{box-sizing:border-box}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2');font-weight:45 920;font-style:normal;font-display:swap}
+.dsp{font-family:Pretendard,'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:-.01em}
+.ttl{font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-weight:400}
+.scr{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:#fff;animation:fadeIn 520ms ease both}
+.b{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0;margin:0;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;transition:transform 160ms ease}
+.b:active{transform:scale(.96)}
+.b:focus-visible{outline:3px solid #231F20;outline-offset:3px}
+.pill-y{background:#F8DA29;color:#231F20;border-radius:999px;height:112px;font-size:32px;font-weight:700;padding:0 40px}
+.pill-k{background:#231F20;color:#F8DA29;border-radius:999px;height:112px;font-size:32px;font-weight:700;padding:0 40px}
+.pill-y[disabled],.pill-k[disabled]{background:#E5E5E5;color:#757575;cursor:default}
+.pill-o{background:rgba(35,31,32,.07);color:inherit;border-radius:999px;height:88px;font-size:28px;font-weight:600;padding:0 32px}
+.ic{width:80px;height:80px;border-radius:999px;background:rgba(35,31,32,.08);color:#231F20}
+.ic[disabled]{opacity:.35;cursor:default}
+.cap{font-size:22px;line-height:32px;color:#5C5859}
+.hdr{height:112px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;flex:none;position:relative;z-index:5}
+.mult{mix-blend-mode:multiply}
+.lbl{font-size:20px;font-weight:700;background:#231F20;color:#F8DA29;border-radius:999px;padding:2px 14px}
+.lbl-o{font-size:20px;font-weight:700;border-radius:999px;padding:2px 14px;background:rgba(35,31,32,.08);color:#5C5859}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ringOut{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes popIn{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:none}}
+@keyframes fade{0%{opacity:0}30%{opacity:1}70%{opacity:1}100%{opacity:0}}
+@keyframes wave{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.25) rotate(-6deg)}100%{transform:scale(1)}}
+@keyframes flyIn{0%{transform:translate(0,0) scale(1);opacity:1}70%{opacity:1}100%{transform:translate(-390px,1350px) scale(.15);opacity:0}}
+@keyframes lineIn{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes liqrise{from{transform:translateY(150px)}to{transform:translateY(22px)}}
+@keyframes wavemove{to{transform:translateX(-120px)}}
+@keyframes flow{to{stroke-dashoffset:-36}}
+@keyframes numPop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes checkPop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes stamp{0%{opacity:0;transform:scale(2) rotate(-20deg)}100%{opacity:1;transform:scale(1) rotate(-10deg)}}
+@keyframes shrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes sheetUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes print{0%{transform:translateY(-105%)}100%{transform:translateY(0)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes jelly{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+.disc{position:absolute;border-radius:999px}
+.orb{position:absolute;left:540px;top:920px;width:0;height:0;animation:spin 80s linear infinite;z-index:5}
+.sat{position:absolute;left:-110px;top:-110px;width:220px;height:220px}
+.satin{width:220px;height:220px;animation:spin 80s linear infinite reverse}
+.nd{width:220px;height:220px;border-radius:999px;background:#fff;flex-direction:column;gap:0;padding-top:6px;box-shadow:0 8px 20px rgba(35,31,32,.14)}
+.nd:active{background:#FDFBC4}
+.orb:hover,.orb:hover .satin{animation-play-state:paused}
+.liq{transform-box:fill-box;transform-origin:bottom;transition:transform 600ms cubic-bezier(.34,1.56,.64,1)}
+.bar{display:block;width:8px;border-radius:4px;background:#F8DA29;transform-origin:center}
+.bar-on{animation:wave 1000ms ease-in-out infinite}
+.bar-off{transform:scaleY(.25)}
+.pulse{position:relative}
+.pulse::after{content:'';position:absolute;left:0;top:0;right:0;bottom:0;border-radius:999px;box-shadow:0 0 0 5px #F8DA29;animation:ringOut 1.4s ease-out infinite}
+.fly{position:absolute;left:390px;top:230px;width:300px;height:300px;z-index:80;pointer-events:none;object-fit:contain;animation:flyIn 900ms cubic-bezier(.5,0,.75,.4) both}
+.wipe{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:90;background:#F8DA29;display:flex;align-items:center;justify-content:center;animation:fade 860ms ease both;pointer-events:all}
+.sheet{position:absolute;left:24px;right:24px;z-index:60;background:#231F20;color:#fff;border-radius:40px;padding:32px 36px;display:flex;flex-direction:column;gap:20px;animation:rise 380ms ease both}
+.chip{height:76px;border-radius:999px;box-shadow:inset 0 0 0 2px #F8DA29;color:#F8DA29;font-size:24px;font-weight:600;padding:0 26px}
+.chip:active{background:#F8DA29;color:#231F20}
+.rail{transition:background 160ms ease;width:200px;height:180px;margin-bottom:8px;border-radius:44px;flex-direction:column;gap:4px;position:relative;z-index:1}
+.sub{height:72px;flex:none;border-radius:999px;font-size:28px;font-weight:600;padding:0 30px;background:#F1EFE4;color:#231F20;transition:background 200ms,color 200ms}
+.sub.on{background:#231F20;color:#F8DA29;font-weight:700}
+.card2{position:relative;border-radius:28px;background:#fff;box-shadow:inset 0 0 0 1px #E6E3D6;animation:fadeIn 320ms ease both}
+.card2:active{background:#F7F5EC}
+.seg{flex:1;height:10px;border-radius:5px;background:rgba(35,31,32,.18)}
+.seg.on{background:#231F20}
+.stk{position:relative;height:150px;border-radius:32px;flex-direction:column;gap:8px;background:#fff;box-shadow:inset 0 0 0 1px #E2E0D8;padding:0 8px;transition:background 200ms}
+.stk:active{background:#F7F5EC}
+.zig{height:22px;background:radial-gradient(circle at 12px 22px,transparent 12px,#fff 12.5px) 0 0/24px 22px repeat-x}
+.perf{border-top:4px dashed #231F20;opacity:.2;margin:20px 0}
+.liqrise{animation:liqrise 3s cubic-bezier(.4,0,.2,1) both}
+.wavep{animation:wavemove 1.2s linear infinite}
+@media (prefers-reduced-motion:reduce){.stage *{animation-duration:1ms!important;animation-iteration-count:1!important}}
+</style>
+</helmet>
+
+<div class="stage">
+
+<!-- ================= 0. PROMO ================= -->
+<sc-if value="{{isPromo}}" hint-placeholder-val="{{ true }}">
+<button class="b scr" onClick="{{touch}}" aria-label="화면을 터치해서 주문 시작" style="display:block;text-align:left;border-radius:0">
+  <sc-for list="{{ads}}" as="ad" hint-placeholder-count="4">
+    <div style="{{ad.style}}">
+      <sc-if value="{{ad.isPoster}}" hint-placeholder-val="{{ false }}">
+        <div role="img" aria-label="프로모션 포스터" style="{{ad.posterStyle}}"></div>
+      </sc-if>
+      <sc-if value="{{ad.notPoster}}" hint-placeholder-val="{{ true }}">
+        <div style="{{ad.rays}}"></div>
+        <div class="dsp ttl" style="{{ad.logoStyle}}">UXPRESSO.</div>
+        <div style="position:absolute;left:56px;top:150px;display:flex;flex-direction:column;gap:22px;align-items:flex-start">
+          <span style="{{ad.badgeStyle}}">{{ad.badge}}</span>
+          <div class="dsp ttl" style="font-size:100px;line-height:110px;white-space:pre-line">{{ad.title}}</div>
+          <div style="font-size:34px;line-height:48px;font-weight:700">{{ad.sub}}</div>
+        </div>
+        <div style="{{ad.glowStyle}}"></div>
+        <div style="{{ad.imgWrap}}"><img src="{{ad.img}}" alt="" style="width:880px;height:880px;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.3))"></div>
+      </sc-if>
+    </div>
+  </sc-for>
+  <div style="position:absolute;left:0;right:0;top:1500px;display:flex;flex-direction:column;align-items:center;gap:30px;z-index:5">
+    <div style="position:relative;width:150px;height:150px;display:flex;align-items:center;justify-content:center">
+      <span style="{{ringA}}"></span><span style="{{ringB}}"></span>
+      <span style="{{fingerStyle}}"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.58-3.58a2 2 0 0 1 2.83-2.82L7 15"/></svg></span>
+    </div>
+    <div class="dsp" style="{{promptStyle}}">화면을 터치해 주세요</div>
+    <div style="display:flex;gap:12px"><sc-for list="{{adDots}}" as="d" hint-placeholder-count="4"><span style="{{d.style}}"></span></sc-for></div>
+  </div>
+  <div class="cap" style="position:absolute;left:0;top:1872px;width:1080px;text-align:center;font-size:20px;color:{{capColor}}">UXPRESSO · 메가MGC커피 공식 프로젝트가 아닌 비공식 UX 개선 프로토타입</div>
+</button>
+</sc-if>
+
+<!-- ================= 1. MAIN ORBIT ================= -->
+<sc-if value="{{isStart}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="메인 메뉴" style="background:#F8DA29">
+  <div class="hdr">
+    <div class="dsp ttl" style="font-size:48px">UXPRESSO<span style="color:#fff">.</span></div>
+    <span style="height:68px;padding:0 28px;border-radius:999px;background:rgba(255,255,255,.6);display:flex;align-items:center;font-size:26px;font-weight:700">Language ▾</span>
+  </div>
+  <div class="dsp ttl" style="position:absolute;left:0;top:136px;width:1080px;text-align:center;font-size:56px;line-height:70px">오늘의 한 잔,<br><span style="background:#231F20;color:#F8DA29;padding:0 22px;border-radius:14px;display:inline-block;line-height:66px">골라 볼까요?</span></div>
+
+  <div class="disc" style="left:20px;top:400px;width:1040px;height:1040px;background:rgba(255,255,255,.45)"></div>
+  <svg width="800" height="800" viewBox="0 0 800 800" style="position:absolute;left:140px;top:520px;animation:spin 80s linear infinite" aria-hidden="true"><circle cx="400" cy="400" r="385" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/></svg>
+
+  <div class="disc" style="left:280px;top:660px;width:520px;height:520px;background:#FFFDF0"></div>
+  <button class="b" onClick="{{openCenter}}" aria-label="{{centerName}} 주문하기" style="position:absolute;left:360px;top:680px;width:360px;height:360px;z-index:3">
+    <sc-for list="{{centers}}" as="c" hint-placeholder-count="8"><img class="mult" src="{{c.img}}" alt="" style="{{c.style}}"></sc-for>
+  </button>
+  <div style="position:absolute;left:340px;top:1036px;width:400px;text-align:center;z-index:4;pointer-events:none"><div class="dsp" style="{{centerNameStyle}}">{{centerName}}</div><div class="dsp" style="font-size:34px;line-height:40px">{{centerPrice}}</div></div>
+
+  <div class="orb">
+    <sc-for list="{{nodes}}" as="n" hint-placeholder-count="8">
+      <div class="sat" style="{{n.pos}}"><div class="satin">
+        <button class="b nd" onClick="{{n.tap}}" aria-label="{{n.name}} 보기"><img class="mult" src="{{n.img}}" alt="" style="width:128px;height:128px;object-fit:contain"><span class="dsp" style="font-size:36px;line-height:44px">{{n.name}}</span></button>
+      </div></div>
+    </sc-for>
+  </div>
+
+  <button class="b" onClick="{{startVoice}}" style="position:absolute;left:40px;top:1560px;width:1000px;height:200px;border-radius:999px;background:#231F20;color:#F8DA29;gap:32px;justify-content:flex-start;padding:0 44px 0 40px">
+    <span class="pulse" style="width:120px;height:120px;border-radius:999px;background:#F8DA29;color:#231F20;display:flex;align-items:center;justify-content:center;flex:none"><svg width="62" height="62" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;flex:1"><span class="dsp" style="font-size:64px;line-height:76px">음성으로 주문하기</span><span style="font-size:28px;line-height:40px;color:#fff;opacity:.85">“아이스 아메리카노 두 잔 주세요”</span></span>
+    <span style="display:flex;gap:8px;align-items:center;height:90px" aria-hidden="true"><sc-for list="{{startBars}}" as="bar" hint-placeholder-count="7"><span class="bar bar-on" style="{{bar.style}}"></span></sc-for></span>
+  </button>
+  <div class="cap" style="position:absolute;left:0;top:1872px;width:1080px;text-align:center;font-size:20px;color:#231F20">UXPRESSO · 메가MGC커피 공식 프로젝트가 아닌 비공식 UX 개선 프로토타입</div>
+</section>
+</sc-if>
+
+<!-- ================= 2. MENU ================= -->
+<sc-if value="{{isMenu}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="메뉴 선택" style="display:flex;flex-direction:column;background:#FFFDF0">
+  <header class="hdr">
+    <button class="b pill-o" onClick="{{goHome}}" style="height:80px;font-size:26px;padding:0 28px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>처음으로</button>
+    <button class="b" onClick="{{toggleVoice}}" style="{{voiceBtnStyle}}"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>{{voiceBtnLabel}}</button>
+  </header>
+
+  <div style="flex:1;min-height:0;display:flex">
+    <nav style="position:relative;width:200px;flex:none;margin:8px 0 0 20px" aria-label="카테고리">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="8">
+        <button class="b rail" onClick="{{c.tap}}" style="{{c.style}}" aria-pressed="{{c.on}}"><span style="{{c.nameStyle}}">{{c.name}}</span></button>
+      </sc-for>
+    </nav>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;padding:8px 32px 0 24px">
+      <div style="flex:none;display:flex;gap:12px;overflow-x:auto;padding-bottom:16px;scrollbar-width:none" role="tablist" aria-label="서브 메뉴">
+        <sc-for list="{{subs}}" as="s" hint-placeholder-count="4"><button class="b sub {{s.cls}}" role="tab" aria-selected="{{s.on}}" onClick="{{s.tap}}">{{s.name}}</button></sc-for>
+      </div>
+      
+      <div style="flex:1;min-height:0;overflow-y:auto;padding-bottom:24px">
+        <sc-if value="{{gridOn}}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{hasProducts}}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+              <sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+                <div class="card2" style="{{p.style}}">
+                  <button class="b" onClick="{{p.tap}}" aria-label="{{p.name}} {{p.priceText}}" style="width:100%;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:14px 12px 18px;border-radius:28px;text-align:left">
+                    <div style="position:relative;width:100%;aspect-ratio:1/.88;display:flex;justify-content:center"><div style="height:100%;aspect-ratio:1/1"><div style="{{p.img}}"></div></div><sc-if value="{{p.hasBadge}}" hint-placeholder-val="{{ false }}"><span class="lbl" style="position:absolute;left:0;top:0;font-size:20px;padding:2px 12px">{{p.badge}}</span></sc-if></div>
+                    <div style="font-size:26px;line-height:32px;font-weight:700;min-height:64px;white-space:normal;margin-top:8px;padding:0 0 0 10px;text-align:left;display:flex;align-items:flex-end;width:100%">{{p.name}}</div>
+                    <div class="dsp" style="font-size:34px;line-height:40px;text-align:left;margin-top:8px;padding-left:10px">{{p.priceText}}</div>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{noProducts}}" hint-placeholder-val="{{ false }}"><div style="padding:200px 0;text-align:center;font-size:30px;color:#5C5859">이 분류는 준비 중이에요.<br>다른 메뉴를 골라 주세요.</div></sc-if>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:none;height:236px;background:#231F20;border-radius:52px 52px 0 0;padding:28px 40px 32px;display:flex;align-items:center;gap:20px;color:#fff">
+    <div class="{{cupCls}}" style="width:84px;height:100px;flex:none;display:flex;align-items:center;justify-content:center">
+      <svg viewBox="0 0 120 140" width="80" height="94" aria-hidden="true"><defs><clipPath id="dCupA"><path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z"/></clipPath></defs><g clip-path="url(#dCupA)"><rect x="0" y="14" width="120" height="126" fill="#3A2A20"/><rect x="0" y="14" width="120" height="126" fill="#F8DA29" style="{{liqStyle}}"/></g><path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><rect x="8" y="4" width="104" height="14" rx="4" fill="#fff"/></svg>
+    </div>
+    <div style="display:flex;padding-left:20px;flex:none">
+      <sc-for list="{{thumbs}}" as="t" hint-placeholder-count="3"><span style="{{t.style}}"><div style="width:68px;height:68px"><div style="{{t.img}}"></div></div></span></sc-for>
+    </div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:26px;line-height:36px;font-weight:600;color:#F8DA29">{{cartHeadline}}</div>
+      <div class="dsp" style="font-size:60px;line-height:68px">{{subtotalText}}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+      <button class="b pill-y" onClick="{{toReview}}" disabled="{{noItems}}" style="width:330px">주문 확인</button>
+      <sc-if value="{{hasItems}}" hint-placeholder-val="{{ false }}"><button class="b" onClick="{{clearCart}}" style="font-size:22px;color:#F8DA29;height:44px;text-decoration:underline">전체 삭제</button></sc-if>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ================= 3. OPTION ================= -->
+<sc-if value="{{isOpt}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="옵션 선택" style="{{optRootStyle}}">
+  <header class="hdr">
+    <button class="b pill-o" onClick="{{backToMenu}}" style="height:80px;font-size:26px;padding:0 28px;background:rgba(255,255,255,.7)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>메뉴로</button>
+    <button class="b" onClick="{{toggleVoice}}" style="{{voiceBtnStyle}}"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>{{voiceBtnLabel}}</button>
+  </header>
+  <div style="position:absolute;left:48px;right:48px;top:136px;display:flex;justify-content:space-between;align-items:flex-start;z-index:3">
+    <div class="dsp ttl" style="{{optNameStyle}}">{{optName}}</div>
+    <div class="dsp" style="font-size:60px;line-height:76px;background:#231F20;color:#F8DA29;padding:0 28px;border-radius:999px;margin-top:8px;white-space:nowrap;flex:none">{{optUnitText}}</div>
+  </div>
+  <div role="img" aria-label="{{optName}}" style="position:absolute;left:230px;top:330px;width:620px;height:620px;z-index:2"><div style="{{optImg}}"></div></div>
+
+  <div style="position:absolute;left:0;top:980px;width:1080px;height:940px;background:#fff;border-radius:64px 64px 0 0;z-index:4;padding:44px 48px 0;display:flex;flex-direction:column;gap:34px;animation:sheetUp 480ms ease both">
+    <sc-if value="{{optHasTemp}}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><span class="dsp" style="font-size:44px;line-height:56px">온도</span><span class="lbl">필수</span></div>
+        <div style="position:relative;height:120px;border-radius:999px;background:#F2F2F0;display:flex;padding:4px">
+          <span style="{{tempThumb}}"></span>
+          <sc-for list="{{optTemps}}" as="t" hint-placeholder-count="2"><button class="b" onClick="{{t.tap}}" style="{{t.style}}" aria-pressed="{{t.on}}"><span class="dsp" style="font-size:44px">{{t.name}}</span><span style="font-size:28px;font-weight:600">{{t.ko}}</span></button></sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{optCoffee}}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><div style="display:flex;gap:12px;align-items:center"><span class="dsp" style="font-size:44px;line-height:56px">샷 추가</span><span class="lbl-o">선택</span></div><div class="cap">컵을 눌러 에스프레소 샷을 채워요. 1샷 +500원</div></div>
+        <div style="display:flex;gap:20px">
+          <sc-for list="{{shots}}" as="g" hint-placeholder-count="2">
+            <button class="b" onClick="{{g.tap}}" aria-label="샷 {{g.n}}개" aria-pressed="{{g.on}}" style="width:120px;height:140px;flex-direction:column;gap:2px">
+              <svg viewBox="0 0 60 80" width="84" height="108" aria-hidden="true"><defs><clipPath id="{{g.clip}}"><path d="M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z"/></clipPath></defs><g clip-path="url(#{{g.clip}})"><rect class="liq" x="0" y="8" width="60" height="70" fill="#6B4226" style="{{g.liqStyle}}"/></g><path d="M8 8h44l-5 56q-.5 6-6 6H19q-5.5 0-6-6z" fill="none" stroke="#5C5859" stroke-width="3" stroke-linejoin="round"/></svg>
+              <span style="font-size:22px;font-weight:700">{{g.label}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span class="dsp" style="font-size:44px;line-height:56px">수량</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="b ic" onClick="{{optDec}}" aria-label="수량 줄이기" disabled="{{optMin}}" style="width:96px;height:96px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <div class="dsp" style="width:140px;text-align:center;font-size:80px;line-height:96px">{{optQty}}</div>
+        <button class="b ic" onClick="{{optInc}}" aria-label="수량 늘리기" style="width:96px;height:96px;background:#231F20;color:#F8DA29"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+      </div>
+    </div>
+    <button class="b pill-y" onClick="{{addFromOpt}}" style="position:absolute;left:48px;right:48px;bottom:56px;height:140px;font-size:44px;gap:16px"><span class="dsp">{{optTotalText}}</span><span class="dsp">·</span><span class="dsp">담기</span></button>
+  </div>
+</section>
+</sc-if>
+
+<!-- ================= 4. REVIEW ================= -->
+<sc-if value="{{isReview}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="주문 확인" style="background:#F8DA29">
+  <div style="position:absolute;left:40px;right:40px;top:36px;display:flex;gap:8px"><sc-for list="{{segs}}" as="sg" hint-placeholder-count="5"><span class="{{sg.cls}}"></span></sc-for></div>
+  <div class="hdr" style="margin-top:36px">
+    <button class="b pill-o" onClick="{{backToMenu}}" style="height:80px;font-size:26px;padding:0 28px;background:rgba(255,255,255,.6)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>메뉴 더 담기</button>
+    <div style="font-size:28px;font-weight:700">2 / 5 · 주문 확인</div>
+  </div>
+  <div class="dsp ttl" style="position:absolute;left:48px;top:176px;font-size:112px;line-height:120px">주문서<span style="font-size:34px;margin-left:16px;font-family:'Noto Sans KR';font-weight:600">직접 확인해 주세요</span></div>
+
+  <div style="position:absolute;left:70px;right:70px;top:330px;height:1120px;overflow:hidden">
+    <div style="animation:print 1000ms cubic-bezier(.2,.9,.2,1) both">
+      <div style="background:#fff;padding:44px 44px 12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="dsp ttl" style="font-size:44px">UXPRESSO ORDER</span></div>
+        <div class="perf"></div>
+        <div style="max-height:640px;overflow-y:auto">
+          <sc-if value="{{noItems}}" hint-placeholder-val="{{ false }}"><div style="padding:120px 0;text-align:center;font-size:30px;color:#5C5859">담은 메뉴가 없어요.<br>메뉴를 더 담아 주세요.</div></sc-if>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="2">
+            <div style="{{r.style}}">
+              <div style="width:120px;height:120px;flex:none"><div style="{{r.img}}"></div></div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:30px;line-height:42px;font-weight:700;white-space:normal">{{r.name}}</div>
+                <div class="dsp" style="font-size:38px;line-height:48px;margin-top:4px">{{r.priceText}}</div>
+              </div>
+              <div style="display:flex;align-items:center">
+                <button class="b ic" onClick="{{r.dec}}" aria-label="수량 줄이기" disabled="{{r.min}}" style="width:72px;height:72px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                <div class="dsp" style="width:64px;text-align:center;font-size:44px">{{r.qty}}</div>
+                <button class="b ic" onClick="{{r.inc}}" aria-label="수량 늘리기" style="width:72px;height:72px;background:#231F20;color:#F8DA29"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+              </div>
+              <button class="b" onClick="{{r.del}}" aria-label="{{r.name}} 삭제" style="width:72px;height:72px;border-radius:999px;color:#B3261E;background:rgba(179,38,30,.1)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+            </div>
+          </sc-for>
+        </div>
+        <div class="perf"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:24px">
+          <span style="font-size:28px;font-weight:700">총 {{count}}개</span>
+          <span class="dsp" style="font-size:88px;line-height:96px">{{subtotalText}}</span>
+        </div>
+      </div>
+      <div class="zig"></div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:0;bottom:0;width:1080px;height:480px;padding:36px 48px 64px;display:flex;flex-direction:column;gap:28px">
+    <div class="dsp ttl" style="font-size:44px;line-height:56px;text-align:center">어디서 드시나요?</div>
+    <div style="display:flex;gap:20px">
+      <button class="b pill-k" onClick="{{pickStore}}" disabled="{{noItems}}" style="flex:1;height:184px;flex-direction:column;gap:14px;padding:24px 0"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg><span class="dsp" style="font-size:44px;line-height:52px">매장에서 먹기</span></button>
+      <button class="b pill-k" onClick="{{pickTake}}" disabled="{{noItems}}" style="flex:1;height:184px;flex-direction:column;gap:14px;padding:24px 0"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="dsp" style="font-size:44px;line-height:52px">포장하기</span></button>
+    </div>
+    <div style="text-align:center;font-size:26px;font-weight:600">누르면 할인·적립·결제로 넘어가요.</div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ================= 5. PAY ================= -->
+<sc-if value="{{isPay}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="할인과 결제" style="background:#FFFDF0;display:flex;flex-direction:column">
+  <div style="background:#231F20;color:#fff;border-radius:0 0 56px 56px;padding:36px 40px 40px;flex:none">
+    <div style="display:flex;gap:8px"><sc-for list="{{segsPay}}" as="sg" hint-placeholder-count="5"><span class="{{sg.cls}}" style="{{sg.style}}"></span></sc-for></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+      <button class="b" onClick="{{toReviewDirect}}" style="height:72px;font-size:26px;font-weight:600;padding:0 24px;border-radius:999px;background:rgba(255,255,255,.14);color:#F8DA29"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>주문서로</button>
+      <div style="font-size:26px;font-weight:600;color:#F8DA29">3 / 5 · 할인 · 적립 · 결제 · {{typeLabel}}</div>
+    </div>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:36px 40px 40px">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+      <div style="margin-bottom:44px">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px"><span class="dsp" style="font-size:44px;line-height:52px;background:#F8DA29;padding:2px 26px;border-radius:999px">{{g.title}}</span><span class="cap">{{g.help}}</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px">
+          <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="3">
+            <button class="b stk" onClick="{{t.tap}}" style="{{t.style}}">
+              <span class="dsp" style="width:56px;height:56px;border-radius:999px;background:#F8DA29;display:flex;align-items:center;justify-content:center;font-size:30px;flex:none">{{t.ini}}</span>
+              <span style="font-size:24px;line-height:30px;font-weight:600;white-space:normal">{{t.name}}</span>
+              <sc-if value="{{t.applied}}" hint-placeholder-val="{{ false }}"><span class="dsp" style="position:absolute;right:-6px;top:-14px;font-size:28px;color:#B3261E;background:#fff;border-radius:12px;padding:0 12px;box-shadow:inset 0 0 0 3px #B3261E;animation:stamp 360ms ease both">적용됨</span></sc-if>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <div class="cap" style="text-align:center">결제 수단을 누르면 바로 결제 안내로 넘어가요.</div>
+  </div>
+  <div style="flex:none;background:#231F20;color:#fff;border-radius:44px 44px 0 0;padding:30px 52px 44px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:32px;line-height:44px;font-weight:600;color:#D9D9D9">{{discountLine}}</span><span class="dsp" style="font-size:64px;line-height:72px;color:#F8DA29">{{finalText}}</span></div>
+</section>
+</sc-if>
+
+<!-- ================= 6. PROCESSING ================= -->
+<sc-if value="{{isProc}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="결제 처리" style="background:#231F20;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:56px">
+  <svg viewBox="0 -70 120 215" width="300" height="538" aria-hidden="true">
+    <defs><clipPath id="dCupB"><path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z"/></clipPath></defs>
+    <rect x="48" y="-70" width="24" height="24" rx="6" fill="#fff"/>
+    <line x1="60" y1="-46" x2="60" y2="118" stroke="#6B4226" stroke-width="7" stroke-linecap="round" stroke-dasharray="14 10" style="animation:flow .5s linear infinite"/>
+    <g clip-path="url(#dCupB)"><g class="liqrise"><path class="wavep" d="M-120 0q30-14 60 0t60 0t60 0t60 0t60 0t60 0V240H-120z" fill="#F8DA29"/></g></g>
+    <path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="8" y="4" width="104" height="14" rx="4" fill="#fff"/>
+  </svg>
+  <div style="text-align:center">
+    <div class="dsp ttl" style="font-size:72px;line-height:84px">결제 확인 중</div>
+    <div style="font-size:34px;line-height:48px;margin-top:12px"><span style="color:#F8DA29;font-weight:700">{{payMethodName}}</span>로 {{finalText}}을 결제해요.</div>
+    <div style="font-size:28px;line-height:40px;opacity:.8;margin-top:10px">화면의 안내에 따라 결제해 주세요.<br>끝날 때까지 다시 누르지 않아도 돼요.</div>
+  </div>
+  <div class="cap" style="position:absolute;bottom:48px;color:#D9D9D9">모의 결제예요. 실제로 결제되지 않아요.</div>
+</section>
+</sc-if>
+
+<!-- ================= 7. DONE ================= -->
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<section class="scr" aria-label="주문 완료" style="display:flex;flex-direction:column;align-items:center;background:#F8DA29">
+  <div style="width:150px;height:150px;border-radius:999px;background:#231F20;color:#F8DA29;display:flex;align-items:center;justify-content:center;margin-top:180px;animation:checkPop 500ms ease both"><svg width="86" height="86" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-dasharray="30" stroke-dashoffset="30" style="animation:draw 500ms 400ms ease-out forwards"/></svg></div>
+  <div class="dsp ttl" style="font-size:64px;line-height:76px;margin-top:44px">주문이 접수됐어요</div>
+  <div style="font-size:32px;line-height:44px;margin-top:20px">주문번호</div>
+  <div class="dsp ttl" style="font-size:240px;line-height:250px;animation:numPop 600ms 200ms ease both">A-127</div>
+  <div style="margin-top:48px;background:#fff;border-radius:44px;padding:36px 44px;width:900px;animation:rise 600ms 500ms ease both">
+    <sc-for list="{{doneRows}}" as="r" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;font-size:30px;line-height:48px"><span>{{r.name}}</span><span style="font-weight:700">{{r.qtyText}}</span></div></sc-for>
+    <div class="perf" style="margin:16px 0"></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:28px"><span>{{typeLabel}} · {{payMethodName}}</span><span class="dsp" style="font-size:56px">{{finalText}}</span></div>
+  </div>
+  <div style="font-size:30px;line-height:42px;margin-top:28px;font-weight:600">주문번호가 화면에 나오면 받아 가 주세요.</div>
+  <div style="margin-top:auto;width:900px">
+    <div style="font-size:32px;line-height:44px;font-weight:700;text-align:center;margin-bottom:16px">영수증이 필요하세요?</div>
+    <div style="display:flex;gap:16px">
+      <button class="b pill-k" onClick="{{printReceipt}}" aria-pressed="{{hasReceiptMsg}}" style="flex:1;height:120px;font-size:34px;gap:14px;{{printStyle}}"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>영수증 발행</button>
+      <button class="b" onClick="{{skipReceipt}}" style="flex:1;height:120px;border-radius:999px;background:#fff;color:#231F20;font-size:34px;font-weight:700;{{skipStyle}}">영수증 미발행</button>
+    </div>
+    <sc-if value="{{hasReceiptMsg}}" hint-placeholder-val="{{ false }}"><div style="text-align:center;font-size:28px;line-height:40px;font-weight:600;margin-top:14px;animation:fadeIn 300ms both">{{receiptMsg}}</div></sc-if>
+  </div>
+  <button class="b pill-k" onClick="{{reset}}" style="margin-top:44px;margin-bottom:96px;width:700px;height:136px;font-size:48px"><span class="dsp">처음으로</span></button>
+  <div style="position:absolute;left:0;bottom:0;width:1080px;height:14px;background:#231F20;transform-origin:left;animation:shrink 20s linear both"></div>
+</section>
+</sc-if>
+
+<!-- ================= VOICE SHEET ================= -->
+<sc-if value="{{vOn}}" hint-placeholder-val="{{ false }}">
+<div class="sheet" style="{{panelStyle}}" role="region" aria-label="음성 주문 안내">
+  <div style="display:flex;align-items:center;gap:20px">
+    <span class="{{micCls}}" style="width:80px;height:80px;border-radius:999px;background:#F8DA29;color:#231F20;display:flex;align-items:center;justify-content:center;flex:none"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
+    <div class="dsp" style="flex:1;font-size:40px;line-height:48px;color:#F8DA29">{{vStatus}}</div>
+    <div style="display:flex;gap:6px;align-items:center;height:64px" aria-hidden="true"><sc-for list="{{bars}}" as="bar" hint-placeholder-count="9"><span class="{{bar.cls}}" style="{{bar.style}}"></span></sc-for></div>
+    <button class="b pill-o" onClick="{{endVoice}}" style="height:72px;font-size:24px;padding:0 24px;color:#fff;background:rgba(255,255,255,.16)">종료</button>
+  </div>
+  <sc-if value="{{hasSaid}}" hint-placeholder-val="{{ false }}"><div><div class="cap" style="color:#D9D9D9">말씀하신 내용</div><div style="font-size:34px;line-height:46px;font-weight:600">“{{vSaid}}”</div></div></sc-if>
+  <sc-if value="{{hasReply}}" hint-placeholder-val="{{ false }}"><div><div style="font-size:30px;line-height:42px;font-weight:700;color:#F8DA29">{{vReply}}</div><div style="font-size:24px;line-height:36px;color:#D9D9D9">{{vNext}}</div></div></sc-if>
+  <sc-if value="{{vConfirm}}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;align-items:center;gap:20px;background:#fff;color:#231F20;border-radius:32px;padding:16px 20px">
+      <div style="width:120px;height:120px"><div style="{{pendImg}}"></div></div>
+      <div style="flex:1"><div style="font-size:30px;line-height:40px;font-weight:700">{{pendName}}</div><div style="font-size:22px;color:#5C5859">{{pendOpt}}</div><div class="dsp" style="font-size:36px">{{pendPrice}}</div></div>
+      <button class="b pill-o" onClick="{{editPending}}" style="height:80px;font-size:24px;padding:0 24px">수정</button>
+      <button class="b pill-y" onClick="{{confirmPending}}" style="height:88px;font-size:28px;padding:0 28px">담기</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{vAsk}}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:16px">
+      <button class="b pill-y" onClick="{{askHot}}" style="flex:1;font-size:36px"><span class="dsp">HOT</span> 따뜻하게</button>
+      <button class="b" onClick="{{askIce}}" style="flex:1;height:112px;border-radius:999px;background:#fff;color:#231F20;font-size:36px;font-weight:700"><span class="dsp">ICE</span> 차갑게</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{vError}}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:16px"><button class="b pill-y" onClick="{{retry}}" style="flex:1;height:96px;font-size:30px">다시 말하기</button><button class="b pill-o" onClick="{{endVoice}}" style="flex:1;height:96px;color:#fff;background:rgba(255,255,255,.16)">화면에서 선택하기</button></div></sc-if>
+  <sc-if value="{{vChips}}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div class="cap" style="margin-bottom:10px;color:#D9D9D9">모의 음성 입력 · 시연용이에요. 말하는 대신 눌러 보세요.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px"><sc-for list="{{chips}}" as="c" hint-placeholder-count="6"><button class="b chip" onClick="{{c.tap}}">{{c.label}}</button></sc-for></div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{hasFly}}" hint-placeholder-val="{{ false }}"><div class="fly"><div style="{{flySrc}}"></div></div></sc-if>
+<sc-if value="{{wipeOn}}" hint-placeholder-val="{{ false }}"><div class="wipe" aria-hidden="true"><svg viewBox="0 0 120 140" width="220" height="256"><defs><clipPath id="dCupW"><path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z"/></clipPath></defs><g clip-path="url(#dCupW)"><g style="animation:liqrise 700ms .2s ease-out both"><path class="wavep" d="M-120 0q30-14 60 0t60 0t60 0t60 0t60 0t60 0V240H-120z" fill="#231F20"/></g></g><path d="M18 14h84l-10 108q-1 10-11 10H39q-10 0-11-10z" fill="none" stroke="#231F20" stroke-width="5" stroke-linejoin="round"/><rect x="8" y="4" width="104" height="14" rx="4" fill="#231F20"/></svg></div></sc-if>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+/* 메뉴 데이터: 팀 저장소 main의 docs/menu-image-links(메가MGC커피 홈페이지 이미지 링크) 기준. 가격·분류는 시연용 예시예요. */
+/* 메뉴 이미지는 흰 배경이라, 브라우저에서 가장자리부터 흰색을 지워 음료만 남깁니다(실패하면 원본을 그대로 씁니다). */
+const CUT_CACHE = {}, CUT_BUSY = {}; let CUT_TIMER = null;
+function whiteToAlpha(im, url){
+  const S = 280, c = document.createElement('canvas'); c.width = S; c.height = S; const g = c.getContext('2d'); g.drawImage(im, 0, 0, S, S);
+  const d = g.getImageData(0, 0, S, S), px = d.data; if (px[3] < 200) return null;          // 이미 투명 배경이면 그대로
+  const bg = new Uint8Array(S * S), st = []; const near = i => (765 - px[i*4] - px[i*4+1] - px[i*4+2]) < 40;
+  const push = i => { if (!bg[i] && near(i)) { bg[i] = 1; st.push(i); } };
+  for (let x = 0; x < S; x++) { push(x); push((S-1)*S + x); } for (let y = 0; y < S; y++) { push(y*S); push(y*S + S-1); }
+  while (st.length) { const i = st.pop(), x = i % S, y = (i / S) | 0; if (x > 0) push(i-1); if (x < S-1) push(i+1); if (y > 0) push(i-S); if (y < S-1) push(i+S); }
+  if (/drink_(078|121)\./.test(url)) { for (let y = 0; y < S; y++) { let a = -1, b = -1; for (let x = 0; x < S; x++) if (!bg[y*S+x]) { if (a < 0) a = x; b = x; } if (a >= 0) for (let x = a; x <= b; x++) bg[y*S+x] = 0; } }
+  for (let i = 0; i < S*S; i++) if (bg[i]) px[i*4+3] = 0;
+  g.putImageData(d, 0, 0); return c.toDataURL('image/png');
+}
+function cutUrl(url, host){
+  if (CUT_CACHE[url] !== undefined) return CUT_CACHE[url] || url;
+  if (!CUT_BUSY[url]) { CUT_BUSY[url] = 1; const im = new Image(); im.crossOrigin = 'anonymous';
+    const done = v => { CUT_CACHE[url] = v; clearTimeout(CUT_TIMER); CUT_TIMER = setTimeout(() => host && host.forceUpdate(), 60); };
+    im.onload = () => { let v = null; try { v = whiteToAlpha(im, url); } catch (e) { v = null; } done(v); };
+    im.onerror = () => done(null); im.src = url; }
+  return url;
+}
+const IMG_URLS = ["https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_001.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_002.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_003.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_004.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_005.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_006.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_007.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_008.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_009.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_010.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_011.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_012.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_013.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_014.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_015.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_016.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_017.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_018.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_019.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_020.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_021.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_022.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_023.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_024.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_025.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_026.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_027.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_028.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_029.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_030.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_031.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_032.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_033.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_034.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_035.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_036.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_037.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_038.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_039.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_040.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_041.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_042.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_043.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_044.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_045.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_046.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_047.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_048.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_049.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_050.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_051.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_052.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_053.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_054.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_055.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_056.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_057.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_058.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_059.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_060.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_061.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_062.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_063.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_064.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_065.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_066.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_067.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_068.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_069.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_070.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_071.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_072.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_073.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_074.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_075.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_076.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_077.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_078.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_079.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_080.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_081.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_082.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_083.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_084.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_085.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_086.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_087.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_088.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_089.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_090.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_091.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_092.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_093.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_094.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_095.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_096.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_097.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_098.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_099.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_100.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_101.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_102.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_103.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_104.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_105.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_106.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_107.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_108.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_109.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_110.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_111.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_112.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_113.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_114.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_115.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_116.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_117.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_118.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_119.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_120.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_121.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_122.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_123.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_124.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_125.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_126.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_127.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_128.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_129.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_130.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_131.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_132.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_133.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_134.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_135.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_136.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_137.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_138.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_139.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_140.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_141.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_142.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_143.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_144.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_145.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_146.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_147.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_148.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_149.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_150.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_151.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_152.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_153.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_154.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_155.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_156.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_157.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_158.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_159.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_160.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_161.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_162.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_163.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_164.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_001.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_002.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_003.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_004.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_005.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_006.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_007.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_008.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_009.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_010.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_011.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_012.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_013.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_014.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_015.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_016.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_017.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_018.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_019.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_020.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_021.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_022.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_023.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_024.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_025.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_026.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_027.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_028.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_029.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_030.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_031.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_032.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_033.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_034.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_035.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_036.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_037.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_038.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_039.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_001.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_002.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_003.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_004.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_005.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_006.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_007.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_008.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_009.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_010.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_011.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_012.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_013.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_014.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_015.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_016.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_017.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_018.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_019.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_020.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_021.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_022.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_023.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_024.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_025.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_026.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_027.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_028.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_029.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_030.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_031.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_032.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_033.webp", "https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/goods/goods_034.webp"];
+const RAW = [["d001","딥 초코 체리 프라페",[4,0],["c4:스무디·프라페"],"I",[0,4500,0],[-1,0,-1],"NEW",0],["d002","쫀득 모찌 밀크티",[4,0],["c4:라떼·밀크"],"I",[0,4000,0],[-1,1,-1],"NEW",0],["d003","매실 모과차",[5,0],["c5:과일차"],"HI",[3000,3300,0],[2,3,-1],"NEW",0],["d005","나 혼자만 드랍 UP! 은랑 큐브 레몬에이드",[4,0],["c4:주스·에이드","c0:콜라보"],"I",[0,3800,0],[-1,4,-1],"콜라보",0],["d006","음, 괜찮은 휴식이군 블레이드 초코크림커피",[2,0],["c0:콜라보"],"I",[0,4000,0],[-1,5,-1],"콜라보",1],["d007","하우스밀크 라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,6,-1],"",0],["d008","무카페인 오르조라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[7,8,-1],"",0],["d010","저당 골든애플 블랙티",[5],["c5:허브·블렌딩 티"],"I",[0,3300,0],[-1,9,-1],"",0],["d011","ARIH 듀얼바이오틱 소다 레드 루비 갈로어",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,10],"",0],["d012","ARIH 듀얼바이오틱 소다 포지티브 오렌지",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,11],"",0],["d013","ARIH 듀얼바이오틱 소다 클리어레몬",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,12],"",0],["d014","ARIH 듀얼바이오틱 소다 피치망고 호라이즌",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,13],"",0],["d015","ARIH 포스트바이오틱 에너지 드링크 레몬크레스트",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,14],"",0],["d016","ARIH 포스트바이오틱 에너지 드링크 오렌지아워",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,15],"",0],["d017","ARIH 포스트바이오틱 에너지 드링크 트로피칼웨이브",[4],["c4:기타 음료"],"",[0,0,3000],[-1,-1,16],"",0],["d018","저당 꿀배 XO야쿠르트",[4],["c4:기타 음료"],"I",[0,4000,0],[-1,17,-1],"",0],["d019","딸기라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,18,-1],"",0],["d020","밀크쉐이크",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,19,-1],"",0],["d021","유자생강차",[5],["c5:과일차"],"H",[3000,0,0],[20,-1,-1],"",0],["d022","초코젤라또 말차라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,21,-1],"",0],["d023","헛개리카노",[2],[],"HI",[2500,3000,0],[22,23,-1],"",1],["d025","제로 부스트 에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,24,-1],"",0],["d026","블루베리요거트스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,25,-1],"",0],["d027","골드키위주스",[4],["c4:주스·에이드"],"I",[0,4300,0],[-1,26,-1],"",0],["d028","귤 톡톡 젤리스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,27,-1],"",0],["d029","왕메가카페라떼",[2],["c2:라떼"],"I",[0,3500,0],[-1,28,-1],"",1],["d030","디카페인 왕메가카페라떼",[3],[],"I",[0,4000,0],[-1,29,-1],"",1],["d031","디카페인 라이트 바닐라 아몬드라떼",[3],[],"",[0,0,4500],[-1,-1,30],"",1],["d032","왕메가사과유자",[5],["c5:과일차"],"I",[0,4300,0],[-1,31,-1],"",0],["d033","왕메가헛개리카노",[2],[],"I",[0,3000,0],[-1,32,-1],"",1],["d034","디카페인 헛개리카노",[3],[],"HI",[3000,3500,0],[33,34,-1],"",1],["d036","디카페인 왕메가헛개리카노",[3],[],"I",[0,3500,0],[-1,35,-1],"",1],["d037","상큼 리치티",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[36,37,-1],"",0],["d039","할메가미숫커피",[2],[],"I",[0,3500,0],[-1,38,-1],"",1],["d040","라이트 바닐라 아몬드라떼",[2],["c2:라떼"],"I",[0,4000,0],[-1,39,-1],"",1],["d041","왕메가초코",[4],["c4:라떼·밀크"],"I",[0,4300,0],[-1,40,-1],"",0],["d042","왕메가아이스티",[5],["c5:아이스티"],"I",[0,4300,0],[-1,41,-1],"",0],["d043","제로 복숭아 아이스티",[5],["c5:아이스티"],"I",[0,3000,0],[-1,42,-1],"",0],["d044","연유라떼",[2],["c2:라떼"],"HI",[3500,4000,0],[104,43,-1],"",1],["d045","골드망고스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,44,-1],"",0],["d046","할메가커피",[2],[],"I",[0,3500,0],[-1,45,-1],"",1],["d047","왕할메가커피",[2],[],"I",[0,4300,0],[-1,46,-1],"",1],["d048","코코넛 커피 스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,47,-1],"",0],["d049","딸기주스",[4],["c4:주스·에이드"],"I",[0,4300,0],[-1,48,-1],"",0],["d050","딸기바나나주스",[4],["c4:주스·에이드"],"I",[0,4300,0],[-1,49,-1],"",0],["d051","디카페인 에스프레소",[3],[],"H",[2000,0,0],[50,-1,-1],"",1],["d052","디카페인 아메리카노",[3],[],"HI",[2000,2500,0],[51,62,-1],"",1],["d053","디카페인 꿀아메리카노",[3],[],"HI",[3000,3500,0],[52,64,-1],"",1],["d054","디카페인 헤이즐넛 아메리카노",[3],[],"HI",[2000,2500,0],[53,65,-1],"",1],["d055","디카페인 바닐라 아메리카노",[3],[],"HI",[2000,2500,0],[54,66,-1],"",1],["d056","디카페인 카페라떼",[3],[],"HI",[3500,4000,0],[55,67,-1],"",1],["d057","디카페인 카푸치노",[3],[],"HI",[3500,4000,0],[56,68,-1],"",1],["d058","디카페인 바닐라라떼",[3],[],"HI",[4000,4500,0],[57,69,-1],"",1],["d059","디카페인 헤이즐넛 라떼",[3],[],"HI",[4000,4500,0],[58,70,-1],"",1],["d060","디카페인 카라멜마끼아또",[3],[],"HI",[4000,4500,0],[59,71,-1],"",1],["d061","디카페인 연유라떼",[3],[],"HI",[4000,4500,0],[60,72,-1],"",1],["d062","디카페인 카페모카",[3],[],"HI",[4000,4500,0],[61,73,-1],"",1],["d064","디카페인 메가리카노",[3],[],"I",[0,3000,0],[-1,63,-1],"",1],["d075","딸기쿠키프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,74,-1],"",0],["d076","콜드브루디카페인",[3],[],"HI",[4000,4500,0],[76,75,-1],"",1],["d078","콜드브루디카페인라떼",[3],[],"HI",[4000,4500,0],[78,77,-1],"",1],["d080","에스프레소",[2],["c2:에스프레소"],"H",[1500,0,0],[79,-1,-1],"",1],["d081","에스프레소 도피오",[2],["c2:에스프레소"],"H",[2000,0,0],[80,-1,-1],"",1],["d082","쿠키프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,81,-1],"",0],["d083","고구마라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[82,85,-1],"",0],["d084","곡물라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[83,86,-1],"",0],["d085","토피넛라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[84,88,-1],"",0],["d088","오레오초코라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,87,-1],"",0],["d090","흑당버블밀크티라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,89,-1],"",0],["d091","핫초코",[4],["c4:라떼·밀크"],"H",[3500,0,0],[90,-1,-1],"",0],["d092","녹차라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[91,97,-1],"",0],["d093","로얄밀크티라떼",[4],["c4:라떼·밀크"],"HI",[3500,4000,0],[92,98,-1],"",0],["d094","흑당라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,93,-1],"",0],["d095","흑당밀크티라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,94,-1],"",0],["d096","흑당버블라떼",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,95,-1],"",0],["d097","아이스초코",[4],["c4:라떼·밀크"],"I",[0,4000,0],[-1,96,-1],"",0],["d100","아메리카노",[2],[],"HI",[1500,2000,0],[99,125,-1],"",1],["d101","메가리카노",[2],[],"I",[0,2500,0],[-1,100,-1],"",1],["d102","꿀아메리카노",[2],[],"HI",[2500,3000,0],[101,113,-1],"",1],["d103","바닐라라떼",[2],["c2:라떼"],"HI",[3500,4000,0],[102,114,-1],"",1],["d104","바닐라아메리카노",[2],[],"HI",[2500,3000,0],[103,115,-1],"",1],["d106","카라멜마끼아또",[2],["c2:라떼"],"HI",[3500,4000,0],[105,116,-1],"",1],["d107","카페라떼",[2],["c2:라떼"],"HI",[3000,3500,0],[106,117,-1],"",1],["d108","카페모카",[2],["c2:라떼"],"HI",[3500,4000,0],[107,118,-1],"",1],["d109","카푸치노",[2],["c2:라떼"],"HI",[3000,3500,0],[108,119,-1],"",1],["d110","콜드브루라떼",[2],["c2:라떼","c2:콜드브루"],"HI",[3500,4000,0],[109,120,-1],"",1],["d111","콜드브루오리지널",[2],["c2:콜드브루"],"HI",[3500,4000,0],[110,121,-1],"",1],["d112","헤이즐넛라떼",[2],["c2:라떼"],"HI",[3500,4000,0],[111,122,-1],"",1],["d113","헤이즐넛아메리카노",[2],[],"HI",[2500,3000,0],[112,123,-1],"",1],["d125","큐브라떼",[2],["c2:라떼"],"I",[0,3500,0],[-1,124,-1],"",1],["d127","녹차프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,126,-1],"",0],["d128","딸기요거트스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,127,-1],"",0],["d129","딸기퐁크러쉬",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,128,-1],"",0],["d130","리얼초코프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,129,-1],"",0],["d131","망고요거트스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,130,-1],"",0],["d132","민트프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,131,-1],"",0],["d133","바나나퐁크러쉬",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,132,-1],"",0],["d134","초코허니퐁크러쉬",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,133,-1],"",0],["d135","커피프라페",[4],["c4:스무디·프라페"],"I",[0,4500,0],[-1,134,-1],"",0],["d136","플레인요거트스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,135,-1],"",0],["d137","플레인퐁크러쉬",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,136,-1],"",0],["d138","라임모히또",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,137,-1],"",0],["d139","레몬에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,138,-1],"",0],["d140","블루레몬에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,139,-1],"",0],["d141","자몽에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,140,-1],"",0],["d142","청포도에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,141,-1],"",0],["d143","체리콜라",[4],["c4:기타 음료"],"I",[0,3800,0],[-1,142,-1],"",0],["d144","메가에이드",[4],["c4:주스·에이드"],"I",[0,3800,0],[-1,143,-1],"",0],["d145","녹차",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[144,149,-1],"",0],["d146","사과유자차",[5],["c5:과일차"],"HI",[3000,3300,0],[145,150,-1],"",0],["d147","얼그레이",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[146,151,-1],"",0],["d148","캐모마일",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[147,152,-1],"",0],["d149","페퍼민트",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[148,153,-1],"",0],["d155","복숭아아이스티",[5],["c5:아이스티"],"I",[0,3000,0],[-1,154,-1],"",0],["d156","유자차",[5],["c5:과일차"],"HI",[3000,3300,0],[155,159,-1],"",0],["d157","레몬차",[5],["c5:과일차"],"HI",[3000,3300,0],[156,160,-1],"",0],["d158","자몽차",[5],["c5:과일차"],"HI",[3000,3300,0],[157,161,-1],"",0],["d159","허니자몽블랙티",[5],["c5:허브·블렌딩 티"],"HI",[3000,3300,0],[158,162,-1],"",0],["d164","자몽 톡톡 스무디",[4],["c4:스무디·프라페"],"I",[0,4300,0],[-1,163,-1],"",0],["f001","바삭허니 엠지씨네 컵치킨",[6,0],["c6:베이커리"],"",[0,0,5900],[-1,-1,164],"NEW",0],["f002","엠지씨네 마라 떡볶이",[6,0],["c6:베이커리"],"",[0,0,5900],[-1,-1,165],"NEW",0],["f003","햄치즈에그 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,166],"",0],["f004","에그마요 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,167],"",0],["f005","크래미마요 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,168],"",0],["f006","모짜렐라 바질치킨 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,169],"",0],["f007","불고기 에그 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,170],"",0],["f008","스파이시 치킨텐더 샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,171],"",0],["f009","중식마녀 마라크림 새우토스트",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,172],"",0],["f010","메가MGC커피 자일리톨 커피 캔디",[6],["c6:샌드위치·간식"],"",[0,0,2000],[-1,-1,173],"",0],["f011","버터가 쫀득해떡",[6],["c6:디저트"],"",[0,0,4500],[-1,-1,174],"",0],["f012","메가베리 아사이볼",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,175],"",0],["f013","딥치즈 불고기 베이크",[6],["c6:샌드위치·간식"],"",[0,0,4500],[-1,-1,176],"",0],["f014","요거젤라또 초코베리믹스",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,177],"",0],["f015","요거젤라또 씨리얼 초코베리믹스",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,178],"",0],["f016","멕시칸 미트칠리 핫도그",[6],["c6:샌드위치·간식"],"",[0,0,4000],[-1,-1,179],"",0],["f017","치즈 품은 감자빵",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,180],"",0],["f018","엠지씨네 메가칩",[6],["c6:샌드위치·간식"],"",[0,0,2000],[-1,-1,181],"",0],["f019","초코스모어쿠키",[6],["c6:베이커리"],"",[0,0,2800],[-1,-1,182],"",0],["f020","와앙메리칸 뽀득 핫도그",[6],["c6:샌드위치·간식"],"",[0,0,4000],[-1,-1,183],"",0],["f021","햄앤치즈샌드위치",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,184],"",0],["f022","바질 치폴레치킨 치아바타",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,185],"",0],["f023","핫 치킨&딥치즈 치아바타",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,186],"",0],["f024","버터버터 뜯어먹는 식빵",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,187],"",0],["f025","버터버터소금빵",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,188],"",0],["f026","초코젤라또크로플",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,189],"",0],["f027","마카다미아 쿠키",[6],["c6:베이커리"],"",[0,0,2800],[-1,-1,190],"",0],["f028","초콜릿칩 쿠키",[6],["c6:베이커리"],"",[0,0,2800],[-1,-1,191],"",0],["f029","플레인크로플",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,192],"",0],["f030","크로크무슈",[6],["c6:샌드위치·간식"],"",[0,0,5000],[-1,-1,193],"",0],["f031","치즈 케익",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,194],"",0],["f032","초코무스 케익",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,195],"",0],["f033","티라미수 케익",[6],["c6:디저트"],"",[0,0,5500],[-1,-1,196],"",0],["f034","허니브레드",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,197],"",0],["f035","감자빵",[6],["c6:베이커리"],"",[0,0,4500],[-1,-1,198],"",0],["f036","딸기요거트 마카롱",[6],["c6:디저트"],"",[0,0,3000],[-1,-1,199],"",0],["f037","메가초코 마카롱",[6],["c6:디저트"],"",[0,0,3000],[-1,-1,200],"",0],["f038","유니콘프라페 마카롱",[6],["c6:디저트"],"",[0,0,3000],[-1,-1,201],"",0],["f039","호빵맨 초코 케이크&스퀴시 키링 세트",[6],["c6:디저트"],"",[0,0,4500],[-1,-1,202],"",0],["g001","붕괴: 스타레일 아크릴 스탠드",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,203],"",0],["g002","붕괴: 스타레일 장패드",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,204],"",0],["g003","붕괴: 스타레일 아크릴 코스터 (랜덤)",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,205],"",0],["g004","붕괴: 스타레일 캔배지 세트",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,206],"",0],["g005","붕괴: 스타레일 변온 텀블러 (은랑)",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,207],"",0],["g006","붕괴: 스타레일 변온 텀블러 (블레이드)",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,208],"",0],["g007","[공식] 하츄핑 고래보석의 전설 랜덤인형키링",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,209],"",0],["g008","MY WISH 미니로그 키링",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,210],"",0],["g009","MY WISH 스트로우픽 키링 & 틴케이스 세트",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,211],"",0],["g010","메가MGC커피 빼꼼 장우산",[7],["c7:굿즈"],"",[0,0,15000],[-1,-1,212],"",0],["g011","호빵맨 말랑 스퀴시 키링",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,213],"",0],["g012","RIIZE 라브돔 텀블러세트",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,214],"",0],["g013","RIIZE 메모리즈 빔카메라 키링",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,215],"",0],["g014","RIIZE ODYSSEY MEGA SMini Ver.",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,216],"",0],["g015","빙글빙글 마루 인형 키링(2종 랜덤)",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,217],"",0],["g016","언니랑 마루랑! 피크닉 매트 파우치 세트",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,218],"",0],["g017","마루 쓱싹 마루 깔끔 멀티 파우치",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,219],"",0],["g018","마루 덥석 마루 꼴깍 빨대 텀블러",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,220],"",0],["g019","작지만 강력한 마루 자석 세트(2종 랜덤)",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,221],"",0],["g020","나랑 같이 날아 츄! 우주선 빨대 텀블러",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,222],"",0],["g021","나랑 같이 가자 츄! 하츄핑 실리콘 가방",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,223],"",0],["g022","나랑 같이 마셔 츄! 콜드컵 키링 텀블러",[7],["c7:콜라보 상품"],"",[0,0,15000],[-1,-1,224],"",0],["g023","나랑 같이 냠냠 츄! 로켓 멀티통",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,225],"",0],["g024","나랑 같이 놀자 츄! 카메라 빔 키링",[7],["c7:콜라보 상품"],"",[0,0,8000],[-1,-1,226],"",0],["g025","나랑 같이 달아 츄! 랜덤 티니핑 파츠 3종",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,227],"",0],["g026","캐치!티니핑 하츄핑 랜덤 피규어",[7],["c7:콜라보 상품"],"",[0,0,10000],[-1,-1,228],"",0],["g027","메가MGC커피 투명 장우산",[7],["c7:굿즈"],"",[0,0,15000],[-1,-1,229],"",0],["g028","엠지씨 머그(옐로우)",[7],["c7:굿즈"],"",[0,0,9000],[-1,-1,230],"",0],["g029","MGC 텀블러(웜그레이)",[7],["c7:굿즈"],"",[0,0,15000],[-1,-1,231],"",0],["g030","MGC 텀블러(옐로우)",[7],["c7:굿즈"],"",[0,0,15000],[-1,-1,232],"",0],["g031","MGC 텀블러(스카이)",[7],["c7:굿즈"],"",[0,0,15000],[-1,-1,233],"",0],["g032","스테비아 케이스",[7],["c7:굿즈"],"",[0,0,5000],[-1,-1,234],"",0],["g033","콜드브루 원액",[7],["c7:굿즈"],"",[0,0,12000],[-1,-1,235],"",0],["g034","콜드브루 원액(디카페인)",[7],["c7:굿즈"],"",[0,0,12000],[-1,-1,236],"",0]];
+const ALIAS = {"amer": "아메리카노", "latte": "카페라떼", "vanilla": "바닐라라떼", "cold": "콜드브루오리지널", "decaf": "디카페인 아메리카노", "decafL": "디카페인 카페라떼", "lemon": "레몬에이드", "grape": "자몽에이드", "straw": "딸기퐁크러쉬", "choco": "리얼초코프라페", "green": "녹차라떼", "peach": "복숭아아이스티", "yuja": "유자차", "wolf": "나 혼자만 드랍 UP! 은랑 큐브 레몬에이드", "blade": "음, 괜찮은 휴식이군 블레이드 초코크림커피", "sand": "햄치즈에그 샌드위치", "cookie": "마카다미아 쿠키", "macaron": "딸기요거트 마카롱", "espresso": "에스프레소", "doppio": "에스프레소 도피오", "honey": "꿀아메리카노", "cappu": "카푸치노", "mocha": "카페모카"};
+const REC = ["아메리카노", "카페라떼", "바닐라라떼", "콜드브루오리지널", "레몬에이드", "자몽에이드", "복숭아아이스티", "쿠키프라페", "딸기퐁크러쉬", "햄치즈에그 샌드위치", "마카다미아 쿠키", "딸기요거트 마카롱"];
+const P = {}; const BYNAME = {};
+RAW.forEach(r=>{ const temps=r[4].split('').map(c=>c==='H'?'HOT':'ICE'); const pr={}, im={};
+  if(r[5][0]) pr.HOT=r[5][0]; if(r[5][1]) pr.ICE=r[5][1]; if(r[5][2]) pr.one=r[5][2];
+  if(r[6][0]>=0) im.HOT=r[6][0]; if(r[6][1]>=0) im.ICE=r[6][1]; if(r[6][2]>=0) im.one=r[6][2];
+  P[r[0]]={id:r[0],name:r[1],cats:r[2],tags:r[3],temps,price:pr,img:im,badge:r[7]||'',coffee:r[8]?1:0}; BYNAME[r[1]]=P[r[0]]; });
+Object.keys(ALIAS).forEach(a=>{ P[a]=BYNAME[ALIAS[a]]; });
+const CAT_NAMES = ['신메뉴','추천메뉴','커피','디카페인','음료','티','푸드','상품'];
+const CATS = CAT_NAMES.map((n,ci)=>({n, ids: ci===1 ? REC.map(x=>BYNAME[x].id) : RAW.filter(r=>r[2].indexOf(ci)>=0).map(r=>r[0])}));
+const CUTP = {
+  amer:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_126.webp', latte:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_118.webp', decaf:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_063.webp',
+  cold:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_122.webp', straw:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_129.webp', yuja:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_160.webp',
+  wolf:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_005.webp', blade:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/drink/drink_006.webp', macaron:'https://ik.imagekit.io/siney0051/%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC_%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC_IMG/mega_kiosk/food/food_036.webp'
+};
+const ORB = [{n:'신메뉴',cat:0,pid:'wolf'},{n:'추천메뉴',cat:1,pid:'latte'},{n:'커피',cat:2,pid:'amer'},{n:'디카페인',cat:3,pid:'decaf'},
+  {n:'음료',cat:4,pid:'straw'},{n:'티',cat:5,pid:'yuja'},{n:'디저트',cat:6,pid:'macaron'},{n:'상품',cat:7,pid:'cold'}];
+const UTT = {
+  recommend:'메뉴 추천해 줘', decaf:'디카페인 보여줘', newm:'새로 나온 메뉴 있어?', ice2:'아이스 아메리카노 두 잔 주세요',
+  latte:'카페라떼 주세요', pay:'결제해 줘', done:'이제 됐어', fail:'(잡음) 인식 실패 시연',
+  hot:'따뜻하게 주세요', shot:'샷 하나 추가해 줘', two:'두 잔 주세요', add:'이걸로 담아줘'
+};
+const CHIPS_MENU = ['recommend','decaf','newm','ice2','latte','pay','done','fail'];
+const CHIPS_OPT = ['hot','shot','two','add','pay','fail'];
+const GROUPS = [
+  {title:'할인 · 적립',help:'받을 수 있는 혜택이 있나요? 없으면 아래에서 바로 결제해요.',kind:'benefit',
+   tiles:['메가쿠폰','KT 멤버십','T멤버십','CJ ONE','기아멤버스','SKT 우주패스','스탬프 적립']},
+  {title:'카드 결제',help:'',kind:'pay',tiles:['신용·체크카드','삼성페이']},
+  {title:'간편결제',help:'',kind:'pay',tiles:['앱카드 QR','카카오페이','PAYCO','네이버페이','제로페이','BC 페이북','하나Pay','KB Pay','신한 SOL Pay','당근페이','Alipay · WeChat']},
+  {title:'상품권 · 선불',help:'',kind:'pay',tiles:['모바일 상품권','메가커피 선불카드','CJ 기프트카드']}
+];
+const fm = n => n.toLocaleString('ko-KR') + '원';
+const K = '#231F20', Y = '#F8DA29';
+const EASE = 'cubic-bezier(.34,1.56,.64,1)';
+
+const POSTER = 'assets/poster.webp';   /* 프로모션 포스터는 저장소에 없습니다. 이 경로에 이미지를 넣으면 나타나요. */
+const ADS = [
+  {poster:true,bg:'#F4C27D',fg:'#231F20',pbg:'#FFFFFF',img:POSTER},
+  {bg:'#F8DA29',fg:'#231F20',pbg:'#F8DA29',ray:'rgba(255,255,255,.3)',badge:'NEW · 콜라보',title:'나 혼자만 드랍 UP!\n은랑 큐브 레몬에이드',sub:'한정 판매 콜라보 음료 (임시 화면)',img:CUTP.wolf},
+  {bg:'#231F20',fg:'#F8DA29',pbg:'#231F20',ray:'rgba(248,218,41,.14)',badge:'NEW · 콜라보',title:'음, 괜찮은 휴식이군\n블레이드 초코크림커피',sub:'한정 판매 콜라보 음료 (임시 화면)',img:CUTP.blade},
+  {bg:'#FFFFFF',fg:'#231F20',pbg:'#FFFFFF',ray:'rgba(248,218,41,.4)',badge:'음성으로 주문',title:'말하면 메뉴가 열려요\n눌러서 바꿔도 돼요',sub:'“아이스 아메리카노 두 잔 주세요” (임시 화면)',img:CUTP.amer}
+];
+const SUBS = [
+  [{n:'전체'},{n:'콜라보 메뉴',tag:'c0:콜라보'}],
+  [{n:'전체'},{n:'커피',ids:['amer','latte','vanilla','cold']},{n:'음료',ids:['lemon','grape','peach','straw']},{n:'푸드',ids:['sand','cookie','macaron']}],
+  [{n:'전체'},{n:'에스프레소',tag:'c2:에스프레소'},{n:'라떼',tag:'c2:라떼'},{n:'콜드브루',tag:'c2:콜드브루'}],
+  [{n:'전체'},{n:'HOT',temp:'HOT'},{n:'ICE',temp:'ICE'}],
+  [{n:'전체'},{n:'라떼·밀크',tag:'c4:라떼·밀크'},{n:'스무디·프라페',tag:'c4:스무디·프라페'},{n:'주스·에이드',tag:'c4:주스·에이드'},{n:'기타 음료',tag:'c4:기타 음료'}],
+  [{n:'전체'},{n:'과일차',tag:'c5:과일차'},{n:'허브·블렌딩 티',tag:'c5:허브·블렌딩 티'},{n:'아이스티',tag:'c5:아이스티'}],
+  [{n:'전체'},{n:'베이커리',tag:'c6:베이커리'},{n:'디저트',tag:'c6:디저트'},{n:'샌드위치·간식',tag:'c6:샌드위치·간식'}],
+  [{n:'전체'},{n:'굿즈',tag:'c7:굿즈'},{n:'콜라보 상품',tag:'c7:콜라보 상품'}]
+];
+
+class Component extends DCLogic {
+  state = {receipt:null, screen:'promo', ad:0, act:2, orderType:null, cat:2, sub:0, gridOn:true, items:[], opt:null, fly:null, bump:false, wipe:false,
+    voice:{on:false,status:'listening',said:'',reply:'',next:'',pending:null}, applied:{}, payMethod:'', uid:1};
+
+  componentDidMount(){
+    this.adT=setInterval(()=>{ if(this.state.screen==='promo') this.setState({ad:(this.state.ad+1)%ADS.length}); },4800);
+    this.actT=setInterval(()=>{ if(this.state.screen==='start') this.setState({act:(this.state.act+1)%8}); },3200);
+  }
+  componentWillUnmount(){ clearInterval(this.adT); clearInterval(this.actT); ['t1','t2','t3','t4','tw','tw2'].forEach(k=>clearTimeout(this[k])); }
+
+  unit(pid,temp,shot){ const p=P[pid]; const base = temp ? p.price[temp] : p.price.one; return base + (shot||0)*500; }
+  spr(pid,temp){ const p=P[pid]; const im=p.img; let k=(temp&&im[temp]!=null)?im[temp]:(im.ICE!=null?im.ICE:(im.HOT!=null?im.HOT:im.one)); if(k==null) k=0;
+    const u=IMG_URLS[k], cu=this.cu(u); return 'width:100%;height:100%;background:url("'+cu+'") center/contain no-repeat'+(cu===u?';mix-blend-mode:multiply':''); }
+  cu(url){ return cutUrl(url,this); }
+  cutOf(pid,temp){ return this.spr(pid,temp); }
+  imgOf(pid,temp){ return this.spr(pid,temp); }
+  optLabel(it){ const a=[]; if(it.temp) a.push(it.temp); if(it.shot) a.push('샷 '+it.shot+'개 추가'); return a.length? '('+a.join(' · ')+')' : ''; }
+  V(o){ this.setState({voice:{...this.state.voice,...o}}); }
+  subtotal(){ return this.state.items.reduce((a,i)=>a+i.unit*i.qty,0); }
+  discount(){ const s=this.subtotal(); return (this.state.applied['메가쿠폰'] && s>=500) ? 500 : 0; }
+
+  addItem(o){
+    const items=this.state.items.slice();
+    const u=this.unit(o.pid,o.temp,o.shot);
+    const f=items.find(i=>i.pid===o.pid&&i.temp===o.temp&&(i.shot||0)===(o.shot||0));
+    if(f) items[items.indexOf(f)]={...f,qty:f.qty+o.qty};
+    else items.push({id:this.state.uid,pid:o.pid,temp:o.temp,shot:o.shot||0,qty:o.qty,unit:u});
+    this.setState({items,uid:this.state.uid+1,fly:{src:this.cutOf(o.pid,o.temp),k:Date.now()},bump:true});
+    clearTimeout(this.t3); this.t3=setTimeout(()=>this.setState({fly:null,bump:false}),920);
+  }
+  nav(patch){ clearTimeout(this.tw); clearTimeout(this.tw2);
+    this.setState({wipe:true});
+    this.tw=setTimeout(()=>this.setState(patch),400);
+    this.tw2=setTimeout(()=>this.setState({wipe:false}),860); }
+
+  reset(to){ ['t1','t2','t4','tw','tw2'].forEach(k=>clearTimeout(this[k]));
+    this.setState({receipt:null,screen:to||'promo',ad:0,items:[],applied:{},opt:null,payMethod:'',orderType:null,cat:2,sub:0,fly:null,wipe:false,voice:{on:false,status:'listening',said:'',reply:'',next:'',pending:null}}); }
+  touch(){ this.nav({screen:'start'}); }
+  startCat(i){ this.nav({screen:'menu',cat:i,sub:0,gridOn:true,voice:{...this.state.voice,on:false}}); }
+  startVoice(){ this.nav({screen:'menu',cat:1,sub:0,voice:{on:true,status:'listening',said:'',reply:'',next:'',pending:null}}); }
+  openCenter(){ const pid=ORB[this.state.act].pid; const p=P[pid]; this.nav({screen:'opt',opt:{pid,temp:p.temps[0]||null,qty:1,shot:0}}); }
+  selCat(i){ this.setState({cat:i,sub:0,gridOn:false,screen:'menu'}); setTimeout(()=>this.setState({gridOn:true}),40); }
+  selSub(j){ this.setState({sub:j,gridOn:false}); setTimeout(()=>this.setState({gridOn:true}),40); }
+  openOpt(pid){ const p=P[pid]; this.setState({screen:'opt',opt:{pid,temp:p.temps[0]||null,qty:1,shot:0}}); }
+  addFromOpt(){ const o=this.state.opt; if(!o) return; this.addItem(o); this.setState({screen:'menu',opt:null});
+    if(this.state.voice.on) this.V({status:'success',pending:null,reply:'장바구니에 담았어요.',next:'더 담거나 “이제 됐어”라고 말해 주세요.'}); }
+  toReview(){ if(!this.state.items.length) return; clearTimeout(this.t1); clearTimeout(this.t2);
+    this.nav({screen:'review',voice:{...this.state.voice,on:false,pending:null}}); }
+  setReceipt(k){ this.setState({receipt:k}); }
+  pickType(t){ if(!this.state.items.length) return; this.nav({screen:'pay',orderType:t}); }
+  pay(name){ clearTimeout(this.t4); this.nav({screen:'proc',payMethod:name});
+    this.t4=setTimeout(()=>{ this.nav({screen:'done',receipt:null}); this.t4=setTimeout(()=>this.reset('promo'),20500); },3800); }
+
+  toggleVoice(){ if(this.state.voice.on) this.endVoice(); else this.V({on:true,status:'listening',said:'',reply:'',next:'',pending:null}); }
+  endVoice(){ clearTimeout(this.t1); clearTimeout(this.t2); this.V({on:false,status:'listening',said:'',reply:'',next:'',pending:null}); }
+  retry(){ this.V({status:'listening',said:'',reply:'',next:''}); }
+  say(k){ clearTimeout(this.t1); clearTimeout(this.t2);
+    this.V({status:'processing',said:UTT[k],reply:'',next:'',pending:null});
+    this.t2=setTimeout(()=>this.resolveVoice(k),1300); }
+  resolveVoice(k){
+    const NEXT='원하는 메뉴를 말하거나 눌러 주세요.'; const s=this.state, o=s.opt;
+    if(k==='recommend'){ this.selCat(1); this.V({status:'responding',reply:'추천 메뉴를 보여드릴게요.',next:NEXT}); }
+    else if(k==='decaf'){ this.selCat(3); this.V({status:'responding',reply:'디카페인 메뉴를 보여드릴게요.',next:NEXT}); }
+    else if(k==='newm'){ this.selCat(0); this.V({status:'responding',reply:'새로 나온 메뉴를 보여드릴게요.',next:NEXT}); }
+    else if(k==='ice2'){ this.V({status:'confirming',pending:{pid:'amer',temp:'ICE',qty:2},reply:'이렇게 담아드릴까요?',next:'맞으면 담기를 눌러 주세요.'}); }
+    else if(k==='latte'){ this.V({status:'asking',pending:{pid:'latte',temp:null,qty:1},reply:'따뜻하게 드릴까요, 차갑게 드릴까요?',next:'말하거나 눌러 주세요.'}); }
+    else if(k==='pay'){ this.V({status:'responding',reply:'결제는 화면에서 직접 선택해 주세요.',next:'주문 확인 뒤에 결제 수단을 직접 골라 주세요.'}); }
+    else if(k==='done'){ if(!s.items.length) this.V({status:'responding',reply:'먼저 메뉴를 담아 주세요.',next:NEXT}); else this.toReview(); }
+    else if(k==='fail'){ this.V({status:'error',said:'',reply:'잘 듣지 못했어요.',next:'다시 말하거나 화면에서 선택해 주세요.'}); }
+    else if(o){
+      if(k==='hot'){ if(P[o.pid].temps.indexOf('HOT')>=0){ this.setState({opt:{...o,temp:'HOT'}}); this.V({status:'responding',reply:'따뜻하게 선택했어요.',next:'담으려면 “이걸로 담아줘”라고 말해 주세요.'}); } else this.V({status:'responding',reply:'이 메뉴는 차갑게만 주문할 수 있어요.',next:'다른 옵션을 골라 주세요.'}); }
+      else if(k==='shot'){ if(P[o.pid].coffee){ this.setState({opt:{...o,shot:Math.min(2,o.shot+1)}}); this.V({status:'responding',reply:'샷을 추가했어요.',next:'금액을 확인하고 담아 주세요.'}); } else this.V({status:'responding',reply:'이 메뉴에는 샷 추가가 없어요.',next:'다른 옵션을 골라 주세요.'}); }
+      else if(k==='two'){ this.setState({opt:{...o,qty:2}}); this.V({status:'responding',reply:'2잔으로 바꿨어요.',next:'담으려면 “이걸로 담아줘”라고 말해 주세요.'}); }
+      else if(k==='add'){ this.addFromOpt(); }
+    } else { this.V({status:'responding',reply:'메뉴를 먼저 골라 주세요.',next:NEXT}); }
+  }
+  confirmPending(){ const p=this.state.voice.pending; if(!p) return; this.addItem({pid:p.pid,temp:p.temp,qty:p.qty,shot:0});
+    this.V({status:'success',pending:null,reply:'장바구니에 담았어요.',next:'더 담거나 “이제 됐어”라고 말해 주세요.'}); }
+  editPending(){ const p=this.state.voice.pending; if(!p) return; this.setState({screen:'opt',opt:{pid:p.pid,temp:p.temp||P[p.pid].temps[0],qty:p.qty,shot:0}});
+    this.V({status:'responding',pending:null,reply:'옵션 화면에서 직접 고쳐 주세요.',next:'말로도, 눌러서도 바꿀 수 있어요.'}); }
+  askTemp(t){ const p=this.state.voice.pending; this.V({status:'confirming',pending:{...p,temp:t},reply:'선택한 메뉴를 확인해 주세요.',next:'맞으면 담기를 눌러 주세요.'}); }
+
+  renderVals(){
+    const s=this.state, v=s.voice, scr=s.screen;
+    const items=s.items; const count=items.reduce((a,i)=>a+i.qty,0); const sub=this.subtotal(); const disc=this.discount(); const fin=sub-disc;
+    const typeLabel = s.orderType==='take' ? '포장하기' : (s.orderType==='store' ? '매장에서 먹기' : '');
+    const o=s.opt; const op = o ? P[o.pid] : null;
+
+    /* promo */
+    const A=ADS[s.ad];
+    const ads = ADS.map((a,i)=>{ const on=i===s.ad; return {...a, img:a.poster?a.img:this.cu(a.img), isPoster:!!a.poster, notPoster:!a.poster, posterStyle:'position:absolute;left:0;top:0;width:1080px;height:1920px;background:#F4C27D url('+a.img+') center/cover no-repeat',
+      style:'position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:'+a.bg+';color:'+a.fg+';transition:opacity 900ms ease;opacity:'+(on?1:0),
+      rays:'position:absolute;left:-660px;top:-210px;width:2400px;height:2400px;border-radius:999px;background:repeating-conic-gradient(from 0deg,'+(a.ray||'transparent')+' 0 9deg,transparent 9deg 18deg);animation:spin 60s linear infinite',
+      logoStyle:'position:absolute;left:56px;top:48px;font-size:44px;color:'+a.fg,
+      badgeStyle:'font-size:28px;font-weight:700;border-radius:999px;padding:6px 24px;background:'+a.fg+';color:'+a.bg+';margin-top:70px',
+      glowStyle:'position:absolute;left:240px;top:1360px;width:600px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.3),transparent 70%)',
+      imgWrap:'position:absolute;left:100px;top:500px;width:880px;height:880px;transition:transform 900ms ease;transform:'+(on?'scale(1)':'scale(.9)')}; });
+    const adDots = ADS.map((a,i)=>({style:'display:block;height:14px;border-radius:7px;background:'+A.fg+';transition:width 400ms;width:'+(i===s.ad?56:14)+'px;opacity:'+(i===s.ad?1:.35)}));
+
+    /* main orbit */
+    const nodes = ORB.map((c,i)=>{ const a=-90+(i-2)*45; return {name:c.n,img:this.cu(CUTP[c.pid]),tap:()=>this.startCat(c.cat),
+      pos:'transform:rotate('+a+'deg) translateX(385px) rotate('+(-a)+'deg)'}; });
+    const centers = ORB.map((c,i)=>({img:this.cu(CUTP[c.pid]),style:'position:absolute;left:0;top:0;width:360px;height:360px;object-fit:contain;transition:opacity 700ms ease;filter:drop-shadow(0 30px 30px rgba(0,0,0,.3));opacity:'+(i===s.act?1:0)}));
+    const cpid=ORB[s.act].pid; const cp=P[cpid];
+    const centerName = cp.name; const centerPrice = fm(cp.temps.indexOf('HOT')>=0?cp.price.HOT:this.unit(cpid,cp.temps[0]||null,0));
+    const centerNameStyle = 'white-space:nowrap;line-height:38px;font-size:'+(cp.name.length>10?'25px':'30px');
+    const startBars = [0,1,2,3,4,5,6].map(i=>({style:'animation-delay:'+(i*110)+'ms;height:'+(30+((i*29)%50))+'px'}));
+
+    /* menu */
+    const cats = CATS.map((c,i)=>({name:c.n,n:String(i+1).padStart(2,'0'),on:i===s.cat,tap:()=>this.selCat(i),
+      style:'background:'+(i===s.cat?'#F8DA29':'#F1EFE4')+';color:#231F20',
+      nameStyle:'font-size:32px;line-height:40px;font-weight:'+(i===s.cat?800:600)}));
+    const blobStyle='position:absolute;left:0;top:'+(s.cat*188)+'px;width:200px;height:180px;border-radius:44px;background:#F8DA29;transition:top 420ms ease';
+    const subDefs=SUBS[s.cat]; const sd=subDefs[s.sub]||subDefs[0];
+    const subs = subDefs.map((d,j)=>({name:d.n,on:j===s.sub,cls:j===s.sub?'on':'',tap:()=>this.selSub(j)}));
+    let ids=CATS[s.cat].ids.slice();
+    if(sd.ids){ const want=sd.ids.map(a=>P[a]&&P[a].id); ids=ids.filter(id=>want.indexOf(id)>=0); }
+    if(sd.tag) ids=ids.filter(id=>P[id].tags.indexOf(sd.tag)>=0);
+    if(sd.temp) ids=ids.filter(id=>P[id].temps.indexOf(sd.temp)>=0);
+    const products = ids.map((id,i)=>{ const p=P[id];
+      const t = sd.temp ? sd.temp : (p.temps.indexOf('HOT')>=0 ? 'HOT' : (p.temps[0]||null));
+      return {name:p.name,img:this.imgOf(id,t),badge:p.badge||'',hasBadge:!!p.badge,priceText:fm(this.unit(id,t,0)),tap:()=>this.openOpt(id),style:''}; });
+    const lvl=Math.min(1,count/6);
+    const thumbs = items.slice(-3).map(it=>({img:this.cutOf(it.pid,it.temp), style:'width:84px;height:84px;margin-left:-22px;border-radius:999px;background:#fff;box-shadow:0 0 0 3px #231F20;display:flex;align-items:center;justify-content:center;animation:popIn 400ms ease both'}));
+
+    /* option */
+    const hot = !!o && o.temp==='HOT', ice = !!o && o.temp==='ICE';
+    const optBg = !o ? '#F8DA29' : (ice ? '#BFE0FF' : (hot ? '#FFD84A' : '#FDFBC4'));
+    const optTemps = op ? ['HOT','ICE'].map(t=>{ const ok=op.temps.indexOf(t)>=0; const on=o.temp===t;
+      return {name:t,ko:t==='HOT'?'따뜻하게':'차갑게',on, tap:()=>{ if(ok) this.setState({opt:{...o,temp:t}}); },
+        style:'flex:1;height:112px;position:relative;z-index:1;gap:14px;color:'+(on?'#fff':(ok?'#231F20':'#A8A8A8'))+';outline:none;transition:color 300ms'}; }) : [];
+    const shots = [1,2].map(n=>{ const on=!!o && o.shot>=n; return {n,label:'+'+(n*500),on,clip:'dShot'+n,
+      tap:()=>this.setState({opt:{...o,shot:(o.shot===n?n-1:n)}}), liqStyle:'transform:scaleY('+(on?1:0)+')'}; });
+    const optUnit = o ? this.unit(o.pid,o.temp,o.shot) : 0;
+
+    /* review / pay */
+    const rows = items.map((it,i)=>({name:P[it.pid].name+' '+this.optLabel(it), img:this.imgOf(it.pid,it.temp), qty:it.qty, min:it.qty<=1, priceText:fm(it.unit*it.qty),
+      style:'display:flex;align-items:center;gap:18px;padding:30px 0;border-bottom:3px dotted rgba(35,31,32,.15);animation:lineIn 420ms ease both;animation-delay:'+(300+i*100)+'ms',
+      inc:()=>this.setState({items:this.state.items.map(x=>x.id===it.id?{...x,qty:Math.min(9,x.qty+1)}:x)}),
+      dec:()=>this.setState({items:this.state.items.map(x=>x.id===it.id?{...x,qty:Math.max(1,x.qty-1)}:x)}),
+      del:()=>this.setState({items:this.state.items.filter(x=>x.id!==it.id)})}));
+    const cur = scr==='menu'||scr==='opt'?0 : scr==='review'?1 : scr==='pay'?2 : scr==='proc'?3 : 4;
+    const segs=[0,1,2,3,4].map(i=>({cls:'seg'+(i<=cur?' on':'')}));
+    const segsPay=[0,1,2,3,4].map(i=>({cls:'seg',style:'background:'+(i<=cur?'#F8DA29':'rgba(255,255,255,.25)')}));
+    const groups = GROUPS.map(g=>({title:g.title,help:g.help,tiles:g.tiles.map(t=>{ const ap=g.kind==='benefit'&&!!s.applied[t];
+      return {name:t,ini:t.charAt(0),applied:ap,
+        tap:()=> g.kind==='benefit' ? this.setState({applied:{...s.applied,[t]:!s.applied[t]}}) : this.pay(t),
+        style:ap?'background:#FDFBC4':''}; })}));
+    const doneRows = items.map(it=>({name:P[it.pid].name+(it.temp?' ('+it.temp+')':''), qtyText:it.qty+'잔'}));
+
+    /* voice */
+    const st=v.status;
+    const vStatus = st==='listening'?'듣고 있어요.' : st==='processing'?'확인하고 있어요.' : st==='confirming'?'이 메뉴가 맞나요?' : st==='asking'?'알려 주세요.' : st==='success'?'담았어요!' : st==='error'?'잘 듣지 못했어요.' : '화면을 확인해 주세요.';
+    const live = st==='listening'||st==='processing';
+    const bars = [0,1,2,3,4,5,6,7,8].map(i=>({cls:'bar '+(live?'bar-on':'bar-off'), style:'animation-delay:'+(i*100)+'ms;height:'+(30+((i*37)%30))+'px'}));
+    const pend=v.pending; const pp = pend && pend.pid ? P[pend.pid] : null;
+    const chips = (scr==='opt'?CHIPS_OPT:CHIPS_MENU).map(k=>({label:UTT[k], tap:()=>this.say(k)}));
+
+    return {
+      isPromo:scr==='promo', isStart:scr==='start', isMenu:scr==='menu', isOpt:scr==='opt', isReview:scr==='review', isPay:scr==='pay', isProc:scr==='proc', isDone:scr==='done',
+      ads, adDots, touch:()=>this.touch(), capColor:A.fg,
+      ringA:'position:absolute;left:0;top:0;width:150px;height:150px;border-radius:999px;box-shadow:0 0 0 5px '+A.fg+';animation:ringOut 1.8s ease-out infinite',
+      ringB:'position:absolute;left:0;top:0;width:150px;height:150px;border-radius:999px;box-shadow:0 0 0 5px '+A.fg+';animation:ringOut 1.8s .9s ease-out infinite',
+      fingerStyle:'position:relative;width:110px;height:110px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:'+A.fg+';color:'+A.pbg+';transition:all 700ms',
+      promptStyle:'font-size:60px;line-height:68px;padding:18px 64px;border-radius:999px;background:'+A.fg+';color:'+A.pbg+';transition:all 700ms',
+      nodes, centers, centerName, centerPrice, centerNameStyle, startBars, openCenter:()=>this.openCenter(), startVoice:()=>this.startVoice(),
+      goHome:()=>this.reset('start'),
+      cats, blobStyle, subs, catName:CATS[s.cat].n, catCount:products.length+'가지', products, gridOn:s.gridOn, hasProducts:products.length>0, noProducts:products.length===0,
+      liqStyle:'transform:scaleY('+lvl+');transform-box:fill-box;transform-origin:bottom;transition:transform 500ms ease', cupCls:s.bump?'bumpy':'', thumbs,
+      cartHeadline: count? count+'개 담았어요' : '메뉴를 담아 보세요',
+      hasItems:items.length>0, noItems:items.length===0, subtotalText:fm(sub), finalText:fm(fin), discountLine: disc? '쿠폰 할인 -'+fm(disc)+' 적용' : '결제 금액',
+      clearCart:()=>this.setState({items:[]}), toReview:()=>this.toReview(), backToMenu:()=>this.setState({screen:'menu',opt:null}),
+      voiceBtnLabel: v.on?'음성 종료':'음성 주문',
+      voiceBtnStyle:'height:80px;padding:0 28px;border-radius:999px;font-size:26px;font-weight:700;gap:10px;'+(v.on?'background:#F8DA29;color:#231F20':'background:#231F20;color:#F8DA29'),
+      toggleVoice:()=>this.toggleVoice(),
+      optRootStyle:'background:'+optBg+';transition:background 600ms ease',
+      optName: op?op.name:'', optNameStyle:(()=>{ const L=op?op.name.length:0; const fs=L<=8?84:(L<=14?64:(L<=24?48:40)); return 'font-size:'+fs+'px;line-height:'+Math.round(fs*1.12)+'px;max-width:680px;white-space:normal'; })(), optImg: o?this.cutOf(o.pid,o.temp):'', optUnitText:fm(optUnit), optHasTemp: !!op && op.temps.length>0, optCoffee: !!op && !!op.coffee,
+      optTemps, tempThumb:'position:absolute;top:4px;left:'+(ice?'50%':'4px')+';width:calc(50% - 4px);height:112px;border-radius:999px;background:#231F20;transition:left 360ms ease,background 300ms',
+      shots, optQty:o?o.qty:1, optMin:!o||o.qty<=1, optTotalText:fm(optUnit*(o?o.qty:1)),
+      optInc:()=>this.setState({opt:{...o,qty:Math.min(9,o.qty+1)}}), optDec:()=>this.setState({opt:{...o,qty:Math.max(1,o.qty-1)}}), addFromOpt:()=>this.addFromOpt(),
+      rows, count, segs, segsPay, typeLabel, pickStore:()=>this.pickType('store'), pickTake:()=>this.pickType('take'),
+      printReceipt:()=>this.setReceipt('print'), skipReceipt:()=>this.setReceipt('skip'),
+      printStyle:s.receipt==='skip'?'opacity:.4':'', skipStyle:s.receipt==='print'?'opacity:.4':'',
+      hasReceiptMsg:!!s.receipt, receiptMsg:s.receipt==='print'?'영수증을 출력하고 있어요.':(s.receipt==='skip'?'영수증 없이 마무리했어요.':''),
+      toReviewDirect:()=>this.setState({screen:'review'}), groups, payMethodName:s.payMethod, doneRows, reset:()=>this.reset('promo'),
+      vOn: v.on && (scr==='menu'||scr==='opt'), panelStyle:'bottom:'+(scr==='opt'?24:252)+'px',
+      micCls: live?'pulse':'', vStatus, bars, vSaid:v.said, hasSaid:!!v.said, vReply:v.reply, vNext:v.next, hasReply:!!v.reply,
+      vConfirm: st==='confirming' && !!pp, vAsk: st==='asking', vError: st==='error', vChips: st!=='processing' && st!=='confirming' && st!=='asking',
+      pendImg: pp?this.imgOf(pend.pid,pend.temp):'', pendName:pp?pp.name:'', pendOpt:pp?(pend.temp==='HOT'?'HOT 따뜻하게':'ICE 차갑게')+' · '+pend.qty+'잔':'', pendPrice:pp?fm(this.unit(pend.pid,pend.temp,0)*pend.qty):'',
+      confirmPending:()=>this.confirmPending(), editPending:()=>this.editPending(), askHot:()=>this.askTemp('HOT'), askIce:()=>this.askTemp('ICE'),
+      endVoice:()=>this.endVoice(), retry:()=>this.retry(), chips,
+      hasFly:!!s.fly, flySrc:s.fly?s.fly.src:'', wipeOn:s.wipe
+    };
+  }
+}
+</script>
+</body>
+</html>
