@@ -54,7 +54,7 @@
 
 ## 이전 문서와의 관계
 
-[`docs/design-system.md`](../design-system.md)는 키오스크 화면(갈색·주황 계열) 기준의 1차 버전이고, 이 폴더는 **모바일 앱 레퍼런스(노랑·검정) 기준으로 새로 정의한 2차 버전**입니다. `public/`의 프로토타입에는 이 문서의 색상·선택 상태·모서리·온도 라벨을 적용했고, 적용 범위와 남은 항목은 [decisions-and-qa.md](08-decisions-and-qa.md)의 "프로토타입 적용 현황"에 정리했습니다.
+[`docs/archive/design-system-v0-kit.md`](../archive/design-system-v0-kit.md)는 키오스크 화면(갈색·주황 계열) 기준의 1차 버전이고, 이 폴더는 **모바일 앱 레퍼런스(노랑·검정) 기준으로 새로 정의한 2차 버전**입니다. `public/`의 프로토타입에는 이 문서의 색상·선택 상태·모서리·온도 라벨을 적용했고, 적용 범위와 남은 항목은 [decisions-and-qa.md](08-decisions-and-qa.md)의 "프로토타입 적용 현황"에 정리했습니다.
 
 ## Figma 구성 (제안)
 

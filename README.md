@@ -8,6 +8,10 @@
 
 팀: **UXPRESSO**
 
+## 제작 과정
+
+리서치 → 기획(PRD) → 디자인 시스템 → 프로토타입 → 시안 v2-I → 키오스크 v6 순서로 만들었습니다. 단계별 결과물과 위치는 [`docs/process.md`](docs/process.md)에 정리했습니다.
+
 ## 실행
 
 ```bash
@@ -79,9 +83,9 @@ API 호출이 실패하면 `data/menus.json` 기본 데이터로 자동 전환�
 
 ## 문서
 
-[`docs/index.md`](docs/index.md)에서 요구사항 요약, 디자인 시스템, API 문서를 볼 수 있고, Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)에 있습니다. 팀원이 자료를 올리는 위치와 브랜치 규칙은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를 보세요. 디자인 시안은 [Figma 파일](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1)에서 볼 수 있습니다.
+[`docs/index.md`](docs/index.md)에 단계별(리서치·기획·디자인 시스템·프로토타입·협업) 문서 목차가 있습니다. 만든 순서는 [`docs/process.md`](docs/process.md), 자료를 올리는 위치와 브랜치 규칙은 [`CONTRIBUTING.md`](CONTRIBUTING.md), Claude Code 작업 가이드는 [`CLAUDE.md`](CLAUDE.md)입니다. 디자인 시안은 [Figma 파일](https://www.figma.com/design/RPhFB3P8rftlJ1k0E9QmA7/UXPRESSO--%EC%9C%A0%EC%97%91%EC%8A%A4%ED%94%84%EB%A0%88%EC%86%8C-%ED%8C%80---%EC%B9%B4%ED%8E%98-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC-%EA%B0%9C%EC%84%A0?node-id=0-1)에서 볼 수 있습니다.
 
-디자인 시스템(2차, 모바일 앱 레퍼런스 기반)은 [`docs/design-system/`](docs/design-system/README.md)에 있습니다. 토큰: [`tokens.json`](docs/design-system/tokens.json), [`tokens.css`](docs/design-system/tokens.css).
+디자인 시스템(2차)은 [`docs/design-system/`](docs/design-system/README.md), 토큰은 [`tokens.json`](docs/design-system/tokens.json)·[`tokens.css`](docs/design-system/tokens.css)입니다.
 
 ## 구조
 
@@ -90,12 +94,11 @@ server.js          정적 파일 + 메뉴 API (의존성 없음)
 data/menus.json    테스트 메뉴 데이터
 data/coupons.json  테스트 쿠폰 정책 데이터
 data/payments.json 테스트 결제 수단 데이터
-public/index.html  키오스크 진입 페이지
-public/app.js      화면·상태·인터랙션
-public/style.css   디자인 토큰·컴포넌트 스타일
+public/v6/         키오스크 v6 시안 (루트 주소로 열림)
+public/index.html  이전 키오스크 프로토타입 (app.js, style.css)
 public/kit.html    버튼 UI Kit
 public/screens.html 시안 보드 (iframe으로 ?demo= 화면 모음)
-docs/              요구사항·디자인 시스템·API 문서, 리서치(research/), 회의록(meetings/), 발표 자료(presentation/)
+docs/              단계별 문서(process.md, index.md 참고), 리서치, 회의록, 발표 자료
 CONTRIBUTING.md    자료 올리는 위치·브랜치 규칙
 CLAUDE.md          Claude Code 작업 가이드
 ```
@@ -108,8 +111,8 @@ CLAUDE.md          Claude Code 작업 가이드
 
 ## 한계
 
-- 메뉴 이미지는 실제 제품 사진이 아닌 컵 일러스트이고, 가격·설명은 예시입니다.
-- 기존 키오스크(AS-IS) 재현 화면, UI Audit, 사용성 테스트 결과는 포함하지 않았습니다.
+- 이전 프로토타입의 상품 사진은 Unsplash 임시 이미지이고, 가격·설명은 예시입니다.
+- AS-IS 재현 화면과 UI Audit은 `docs/research/`에 있고, 사용성 테스트 결과는 아직 없습니다.
 - 챗봇형 자연어 검색·AI 질의응답은 넣지 않았습니다. PRD v3에 따라 **음성 주문(모의 입력)** 을 선택 기능으로 추가했습니다(결제·쿠폰은 항상 직접 터치, 실제 음성 인식 없음). 자세한 범위는 [docs/prd-v3-summary.md](docs/prd-v3-summary.md)
 - 쿠폰·결제는 모두 모의이며, 쿠폰 번호는 화면의 안내 문구에 있는 테스트 번호만 동작합니다.
 - 사전 주문 수령 플로우는 없습니다. '픽업하기'는 실제 포장 기능으로 가정해 **포장하기**로 표기했습니다.

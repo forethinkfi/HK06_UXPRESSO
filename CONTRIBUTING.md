@@ -10,7 +10,7 @@
 | 리서치 (AS-IS 분석, 현장 관찰, 인터뷰) | `docs/research/<주제>/` | 폴더마다 `README.md`로 요약 + 원본 자료 |
 | 사용성 테스트 | `docs/research/usability-test/` | 시나리오, 기록, 결과 |
 | 페르소나·기획·요구사항 | `docs/` | `prd.md`, `requirements.md`처럼 문서 1개 = 파일 1개 |
-| 디자인 시스템 | `docs/design-system/` | 기존 번호 문서(01~08)에 이어서 작성 |
+| 디자인 시스템 | `docs/design-system/` | 기존 번호 문서(01~08)에 이어서 작성. 대체된 옛 버전은 `docs/archive/` |
 | 시안 원본 | `docs/artboard/` | |
 | 발표 자료 | `docs/presentation/` | 최종본 PDF 또는 링크 |
 | 이미지 | 사용하는 문서와 같은 폴더의 `images/` | 문서에서 상대 경로로 연결 |
